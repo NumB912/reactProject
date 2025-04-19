@@ -1,0 +1,78 @@
+
+@import "tailwindcss";
+/* Container chính */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Tiêu đề chính */
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+/* Danh sách dịch vụ */
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Giảm kích thước item */
+  gap: 15px;
+}
+
+/* Thẻ dịch vụ */
+.service-card {
+  background-color: #fff;
+  border-radius: 8px;  /* Giảm bo góc */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.service-card:hover {
+  transform: translateY(-8px); /* Độ nhô lên nhỏ hơn */
+}
+
+/* Ảnh dịch vụ */
+.service-image {
+  width: 100%;
+  height: 180px; /* Giảm chiều cao ảnh */
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.service-card:hover .service-image {
+  opacity: 0.8;
+}
+
+/* Thông tin dịch vụ */
+.service-info {
+  padding: 15px;  /* Giảm padding */
+}
+
+.service-name {
+  font-size: 1.2rem;  /* Giảm kích thước font */
+  font-weight: bold;
+  color: #2980b9;
+  margin-bottom: 8px;
+}
+
+.service-description {
+  font-size: 0.95rem;  /* Giảm kích thước font */
+  color: #7f8c8d;
+  margin-bottom: 15px;
+}
+
+.service-details p {
+  font-size: 0.9rem;  /* Giảm kích thước font */
+  color: #34495e;
+  margin: 4px 0;  /* Giảm khoảng cách giữa các dòng */
+}
+
+/* Hiệu ứng hover trên các thông tin */
+.service-card:hover .service-info {
+  background-color: #f9f9f9;
+}
