@@ -1,0 +1,32 @@
+.thumb {
+  pointer-events: none;
+  appearance: none;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  height: 6px;
+  background: transparent;
+}
+
+.thumb::-webkit-slider-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background: white;
+  border:black 3px solid;
+  padding: 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+}
+
+.thumb::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  background: black;
+  border-radius: 9999px;
+  cursor: pointer;
+}
