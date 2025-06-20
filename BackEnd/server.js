@@ -1,32 +1,35 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
-const { Pool } = require("pg");
+const path = require("path");
+
 
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(express.static(path.join(__dirname, "public"))); 
 app.use(express.json());
+app.use(cors());
 
-const pool = new Pool({
-    host: 'localhost',
-    port: 5432,
-    database: 'app_travel',
-    user: 'postgres',
-    password: '123',
-  });
+// Các route
+const userRoute = require("./Routes/user");
+const authsRoute = require("./Routes/Auths");
+const tourServiceRoute = require("./Routes/Service/TourService")
+const RentalCarService = require("./Routes/Service/RentalCarService")
+const RentalCarProduct = require("./Routes/Product/RentalCarProduct")
+const HotelProduct = require("./Routes/Product/HotelProduct")
+const TourProduct = require("./Routes/Product/TourProduct")
 
-app.get("/", (req, res) => {
-  res.send("✅ Backend is running!");
+app.use("/api/users", userRoute);
+app.use("/api/auths", authsRoute);
+app.use("/api/tourServices",tourServiceRoute)
+app.use("/api/RentalCarServices",RentalCarService)
+app.use("/api/HotelServices",RentalCarService)
+app.use("/api/rentalCarProduct",RentalCarProduct)
+app.use("/api/HotelProduct",HotelProduct)
+app.use("/api/TourProduct",TourProduct)
+// app.use("/api/")
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
-
-app.get("/api/services", async (req, res) => {
-    const result = await pool.query("SELECT * FROM services");
-    res.json(result.rows);
-})
-
-
-app.listen(port, () => {
-  console.log(`🚀 Server is running on http://localhost:${port}`);
-})
