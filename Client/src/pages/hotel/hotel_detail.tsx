@@ -14,6 +14,9 @@ import Calendar_Hotel from "../../component/calendar/calendar_hotel";
 import useTravelerHotel from "../../store/traveler_store_hotel";
 import Traveler_Hotel from "../../component/travelers_quantity/traveler_hotel";
 import {Link} from "react-router"
+import FilterCheckInHotel from "../../component/FilterCheckIn/filterCheckInHotel";
+import ButtonSet from "../../component/Favorite/ButtonSet";
+import { FaHeart } from "react-icons/fa6";
 const HotelDetail = () => {
   const navigate = useNavigate();
     const {
@@ -31,83 +34,7 @@ const HotelDetail = () => {
     <div className="w-full py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
       <div className="info w-8/10">
        <div>
-          <div className="findTab w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 pb-7 border-b border-gray-300 ">
-                <div className="flex flex-col w-2/5 border-r border-gray-200 p-2 max-lg:hidden ">
-                  <p className="text-[15px] font-bold px-2">Location:</p>
-        
-                  <div className="relative flex items-center">
-                    <input
-                      type="text"
-                      className="bg-white p-2  w-full"
-                      placeholder="Find hotels...."
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
-                    >
-                      <i className="fa-solid fa-x"></i>
-                    </button>
-                  </div>
-                </div>
-        
-                <div
-                  className="w-3/5 gap-2 relative flex justify-start items-center self-end max-sm:flex-wrap max-lg:justify-center
-                *:flex *:justify-evenly *:items-center *:p-1.5 *:w-full *:gap-3 *:border *:border-gray-300 *:rounded-2xl max-lg:w-full *:max-md:w-3/4 *:max-sm:w-full *:shadow-sm"
-                >
-                  <div
-                    className="CheckInBlock relative"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowCheckIn(!showCheckIn);
-                    }}
-                  >
-                    <i className="fa-solid fa-calendar"></i>
-                    <div className="DCI text-center max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50">
-                      <p className="text-[10px]">Check In - Check Out</p>
-                      <p className="text-[13px] font-bold">
-                        {formatDate(dateSelectedBook)} -{" "}
-                        {formatDate(dateSelectedCheckOut)}
-                      </p>
-        
-                      <div
-                        className={`bg-white absolute w-[700px] top-[350px] left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 border border-gray-300 rounded-2xl z-10
-              max-lg:left-full max-2xl:left-0 ${showCheckIn ? "" : "hidden"}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <Calendar_Hotel />
-                      </div>
-                    </div>
-                    <i className="fa-solid fa-caret-down"></i>
-                  </div>
-                  <div
-                    className="roomAndGuest"
-                    onClick={(e) => {
-                      setShowRoomAndGuest(!showRoomAndGuest);
-                    }}
-                  >
-                    <i className="fa-solid fa-users"></i>
-                    <div className="RAG max-md:min-w-60 text-center max-sm:min-w-50">
-                      <p className="text-[10px]">Room/Guests</p>
-                      <p className="text-[13px] font-bold">{`${
-                        roomQuantity > 1
-                          ? `${roomQuantity} rooms`
-                          : `${roomQuantity} room`
-                      } ,${total > 1 ? `${total} guests` : `${total} guest`}`}</p>
-                    </div>
-                    <i className="fa-solid fa-caret-down"></i>
-        
-                    <div
-                      className={`bg-white absolute top-[62px] border border-gray-300 rounded-2xl z-10 ${
-                        showRoomAndGuest ? "" : "hidden"
-                      }`}
-                    >
-                      <Traveler_Hotel onClose={setShowRoomAndGuest} />
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <FilterCheckInHotel style={"mb-10"}/>
        </div>
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
@@ -140,9 +67,7 @@ const HotelDetail = () => {
               <p className="copyURL">
                 <i className="fa-solid fa-copy"></i>
               </p>
-              <button className="rounded-full border border-gray-200 p-3 w-24">
-                <i className="fa-solid fa-heart"></i> Save
-              </button>
+                 <ButtonSet icon={<FaHeart/>} iconColor="*:text-green-500" textStyle="w-fit" text="Save" containStyle=""/>
             </div>
             <div className="flex items-center gap-2">
               <p className="price text-3xl font-bold">$335</p>

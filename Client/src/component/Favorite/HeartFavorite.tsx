@@ -20,3 +20,4 @@ const HeartFavorite = ({ style="" }) => {
 };
 
 export default HeartFavorite;
+

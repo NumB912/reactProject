@@ -14,6 +14,7 @@ import RadioOption from "../../component/SIdeBarFilter/OptionType/RadioOption";
 import SliderRange from "../../component/sliderRange/sliderRange";
 import Button from "../../component/Button";
 import HeartFavorite from "../../component/Favorite/HeartFavorite";
+import FilterCheckInHotel from "../../component/FilterCheckIn/filterCheckInHotel";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -64,7 +65,8 @@ const filterData: FilterItem[] = [
 const Hotels = () => {
   const [price, setPrice] = useState(0);
      const [showRoomAndGuest, setShowRoomAndGuest] = useState(false);
-
+  const [showCheckIn, setShowCheckIn] = useState(false);
+  const { roomQuantity, total } = useTravelerHotel();
   const {
     dateSelectedBook,
     dateSelectedCheckOut,
@@ -77,35 +79,28 @@ const Hotels = () => {
     prevMonth,
     nextMonth
   } = useCalendarHotel();
-
-  const { roomQuantity, total } = useTravelerHotel();
-
-  const {
-    maxPrice,
-    minPrice,
-    location,
-    selectedAmenities,
-    selectedRating,
-    hotelClasses,
-    style,
-    selectedStars,
-    resetFilters,
-    setLocation,
-    setMaxPrice,
-    setMinPrice,
-    setRating,
-    setStyle,
-    toggleAmenity,
-    toggleStar,
-    toggleHotelClasses,
-    toggleHotelStyle,
-  } = useHotelFilter();
-
-  const [showCheckIn, setShowCheckIn] = useState(false);
-  useEffect(()=>{
+    const {
+      maxPrice,
+      minPrice,
+      location,
+      selectedAmenities,
+      selectedRating,
+      hotelClasses,
+      style,
+      selectedStars,
+      resetFilters,
+      setLocation,
+      setMaxPrice,
+      setMinPrice,
+      toggleAmenity,
+      toggleStar,
+      toggleHotelClasses,
+      toggleHotelStyle,
+    } = useHotelFilter();
+  useEffect(() => {
     setMaxPrice(100)
     setMinPrice(0)
-  },[])
+  }, [])
 
   return (
     <div className="w-3/4 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
@@ -114,57 +109,7 @@ const Hotels = () => {
           Your place you want to go
         </p>
       </div>
-      <div className="findTab w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 pb-7 border-b border-gray-300 ">
-        <div className="flex flex-col w-2/5 border-r border-gray-200 p-2 max-lg:hidden ">
-          <p className="text-[15px] font-bold px-2">Location:</p>
-
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              className="bg-white p-2  w-full"
-              placeholder="Find hotels...."
-            />
-            <button
-              type="button"
-              className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
-            >
-              <i className="fa-solid fa-x"></i>
-            </button>
-          </div>
-        </div>
-
-        <div
-          className="w-3/5 gap-2 relative flex justify-start items-center self-end max-sm:flex-wrap max-lg:justify-center
-        *:flex *:justify-evenly *:items-center *:p-1.5 *:w-full *:gap-3 *:border *:border-gray-300 *:rounded-2xl max-lg:w-full *:max-md:w-3/4 *:max-sm:w-full *:shadow-sm"
-        >
-            <Calendar_Hotel/>
-          <div
-            className="roomAndGuest"
-            onClick={(e) => {
-              setShowRoomAndGuest(!showRoomAndGuest);
-            }}
-          >
-            <i className="fa-solid fa-users"></i>
-            <div className="RAG max-md:min-w-60 text-center max-sm:min-w-50">
-              <p className="text-[10px]">Room/Guests</p>
-              <p className="text-[13px] font-bold">{`${
-                roomQuantity > 1
-                  ? `${roomQuantity} rooms`
-                  : `${roomQuantity} room`
-              } ,${total > 1 ? `${total} guests` : `${total} guest`}`}</p>
-            </div>
-            <i className="fa-solid fa-caret-down"></i>
-
-            <div
-              className={`bg-white absolute top-[62px] border border-gray-300 rounded-2xl z-10 ${
-                showRoomAndGuest ? "" : "hidden"
-              }`}
-            >
-              <Traveler_Hotel onClose={setShowRoomAndGuest} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <FilterCheckInHotel/>
 
       <div className="sideFilter max-lg:hidden w-full flex flex-col justify-start items-center *:font-bold *:border-t *:border-gray-300 *:w-full gap-5 *:py-1 ">
         <div className="OptionPrice">
@@ -204,7 +149,7 @@ const Hotels = () => {
               ]}
               checkBoxName="Amenities"
             >
-              {(item:string)=><p>{item}</p>}
+              {(item: string) => <p>{item}</p>}
 
             </CheckBoxOption>
           </div>
@@ -224,7 +169,7 @@ const Hotels = () => {
               ]}
               checkBoxName="HotelClass"
             >
-                {(item:string)=><p>{item}</p>}
+              {(item: string) => <p>{item}</p>}
             </CheckBoxOption>
           </div>
 
@@ -245,7 +190,7 @@ const Hotels = () => {
               ]}
               checkBoxName="HotelStyle"
             >
-                {(item:string)=><p>{item}</p>}
+              {(item: string) => <p>{item}</p>}
             </CheckBoxOption>
           </div>
         </div>
@@ -287,7 +232,7 @@ const Hotels = () => {
                 srcSet=""
                 className="w-full min-sm:rounded-l-xl max-sm:rounded-t-xl min-sm:aspect-square"
               />
-            <HeartFavorite />
+              <HeartFavorite />
             </div>
 
             <div className="flex w-9/12 justify-between items-start h-full p-1.5 max-sm:flex-col max-sm:w-full max-sm:*:w-full">

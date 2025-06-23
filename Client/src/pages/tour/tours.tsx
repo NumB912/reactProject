@@ -16,6 +16,7 @@ import Button from "../../component/Button";
 import { useTourCalendar } from "../../store/calendar_tour_store";
 import { useTourFilter } from "../../store/filter_tour_store";
 import Calendar_Tour from "../../component/calendar/calendar_tour";
+import ReusableSlider from "../../component/Slider/SliderComponent";
 const Hotels = () => {
   const [price, setPrice] = useState(0);
 
@@ -51,14 +52,30 @@ const Hotels = () => {
     setMinPrice(0);
   }, []);
 
+  const items: String[] = [
+    "10/2",
+    "20/3",
+    "12/12",
+    "13/4",
+    "30/4",
+    "10/3"
+  ]
+
+  const renderItemDateDeparture = (item) => {
+    return (
+      <div className="border-2 border-black w-full p-1.5 text-center font-bold rounded-md">
+        <p>{item}</p>
+      </div>)
+  }
+
   return (
-    <div className="w-3/4 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
+    <div className="w-8/10 max-md:w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
-      <div className="findTab w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 pb-7 border-b border-gray-300 ">
+      <div className="findTab w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 border-b border-gray-300 ">
         <div
           className="w-full gap-2 relative flex justify-start items-center self-end max-sm:flex-wrap max-lg:justify-center
         *:flex *:justify-evenly *:items-center *:p-1.5 *:gap-3 *:border *:border-gray-300 *:rounded-2xl max-lg:w-full *:max-md:w-3/4 *:max-sm:w-full *:shadow-sm"
@@ -85,7 +102,7 @@ const Hotels = () => {
                   e.stopPropagation();
                 }}
               >
-                <Calendar_Tour/>
+                <Calendar_Tour />
               </div>
             </div>
             <i className="fa-solid fa-caret-down"></i>
@@ -93,7 +110,9 @@ const Hotels = () => {
         </div>
       </div>
 
-      <div className="sideFilter max-lg:hidden w-full flex flex-col justify-start items-center *:font-bold *:border-t *:border-gray-300 *:w-full gap-5 *:py-1 ">
+      <div className="sideFilter w-full flex flex-col justify-start items-center 
+      bg-gray-50 p-5
+      *:font-bold  *:border-gray-300 *:w-full gap-5 *:py-1 max-xl:hidden">
         <div className="OptionPrice">
           <p>Prices</p>
           <SliderRange />
@@ -166,20 +185,23 @@ const Hotels = () => {
           </div>
         </div>
       </div>
+      <div className=" hidden max-xl:flex w-full justify-center items-center col-span-2 border border-gray-200 gap-2">
+              <div className=" w-full p-3 border-r border-gray-200 font-bold text-center"><i className="fa-solid fa-filter"></i> filter</div>
+              <div className=" w-full p-3 font-bold text-center"><i className="fa-solid fa-sort"></i> Sort</div>
+      </div>
+      <div className="w-full py-3 gap-1 flex flex-col items-center max-lg:w-full max-xl:col-span-2 p-3 ">
 
-      <div className="w-full py-3 gap-1 flex flex-col max-lg:w-full max-lg:col-span-2 p-3 ">
-
-        <div className="*:hover:shadow-md flex flex-col max-lg:w-full max-lg:col-span-2 p-3 gap-3">
+        <div className="*:hover:shadow-md flex flex-col max-lg:w-7/8 max-xl:col-span-2 gap-3">
           <div
             className="flex gap-3 justify-between rounded-xl border border-gray-200 
-        max-sm:flex-col"
+        max-lg:flex-col"
           >
-            <div className="w-4/12 h-full max-sm:w-full relative">
+            <div className="w-5/12 h-full relative max-lg:w-full">
               <img
                 src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/99/65/58/caption.jpg?w=800&h=600&s=1"
                 alt=""
                 srcSet=""
-                className=" min-sm:rounded-l-xl max-sm:rounded-t-xl min-sm:aspect-square"
+                className="min-md:rounded-l-xl max-sm:rounded-t-xl h-full w-full object-cover"
               />
 
               <div
@@ -197,40 +219,87 @@ const Hotels = () => {
               </div>
             </div>
 
-            <div className="flex w-9/12 justify-between items-start h-full p-1.5 max-sm:flex-col max-sm:w-full max-sm:*:w-full">
-              <div className="w-9/12 text-gray-600">
-                <p className="font-bold w-full text-black text-xl">
-                  1. Helicopter Tour
-                </p>
-                <div className="starRating *:mr-1.5">
-                  <span>4.5</span>
-                  <RatingStar stars={5} />
-                  <span>(503 Reviews)</span>
+            <div className="flex w-7/12 justify-between items-start h-full max-lg:flex-col max-lg:w-full p-5">
+              <div className="flex flex-col h-full w-full">
+                <div className="NameTour pb-3">
+                  <p className="line-clamp-2 text-2xl font-bold w-full ">Đà Nẵng - Bà Nà - Cầu Vàng - Sơn Trà - Phố Cổ Hội An - La Vang - Động Thiên Dường Và Động Phong Nha - Huế</p>
                 </div>
-                <p className="">
-                  <i className="fa-solid fa-check"></i> Private and luxury
-                </p>
-                <div className="amenties overflow-hidden">
-                  <p>
-                    <i className="fa-solid fa-check"></i> 12-20 minutes
-                  </p>
-                </div>
-                <div className="Detail">
-                    <p>Avoid the congestion of New York City down on the ground, and take to the sky to see Manhattan during this NYC helicopter…</p>
-                </div>
-              </div>
+                <div className="tag flex justify flex-wrap *:text-md gap-5 *:min-w-60 max-xl:min-w-20">
 
-              <div className=" w-3/12 flex flex-col items-center justify-center h-full text-center gap-3">
-                <div className="font-semibold text-gray-500 flex flex-col justify-start items-start text-lg">
-                  <p>From</p>
-                  <p>300$</p>
-                  <p>per adult</p>
+                  <div className="TourID">
+                    <div className="flex gap-3 items-center">
+                      <i className="fa-solid fa-ticket"></i>
+                      <p><span className="font-semibold">Tour ID:</span> NDKHASDK112</p>
+                    </div>
+                  </div>
+
+                  <div className="DeparturePoint">
+                    <div className="flex gap-3 items-center">
+                      <i className="fa-solid fa-location-dot"></i>
+                      <p><span className="font-semibold">Departure point:</span> TP. Hồ Chí Minh</p>
+                    </div>
+                  </div>
+
+                  <div className="TypeTour">
+                    <div className="flex gap-3 items-center">
+                     <i className="fa-regular fa-clock"></i>
+                      <p><span className="font-semibold">Type Tour:</span> 4N3Đ</p>
+                    </div>
+                  </div>
+
+                  <div className="Vehicle">
+                    <div className="flex gap-3 items-center">
+                      <i className="fa-regular fa-paper-plane"></i>
+                      <p><span className="font-semibold">Vehicle:</span> Máy bay</p>
+                    </div>
+                  </div>
+
+
                 </div>
 
-                <Button className="rounded-md" onClick={()=>navigate("/tours/123")}>
-                  
-                  Reverse
-                </Button>
+
+                <div className="DateDeparture py-4 w-full">
+                  <div className="flex gap-3 items-center">
+                    <i className="fa-solid fa-calendar"></i>
+                    <p><span className="font-semibold text-xl">Date departure:</span></p>
+                  </div>
+                  <div className="relative">
+                    <ReusableSlider
+                      items={items}
+                      renderItem={renderItemDateDeparture}
+                      containerClassName="w-full"
+                      itemWrapperClassName="px-1 py-1 w-full"
+                      sliderSettings={{
+                        slidesToShow: 5,
+                        dots: false,
+                        autoplay: false,
+                        infinite: false,
+                        responsive: [
+                          { breakpoint: 1500, settings: { slidesToShow: 5, slidesToScroll: 1 } },
+                          { breakpoint: 1300, settings: { slidesToShow: 4, slidesToScroll: 2 } },
+                          { breakpoint: 1000, settings: { slidesToShow: 3, slidesToScroll: 2 } },
+                          { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 1 } },
+                          { breakpoint: 576, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+                        ]
+                      }}
+                    />
+                  </div>
+
+
+                </div>
+
+                <div className="w-full flex max-xl:flex-col justify-between items-center">
+                  <div className="price text-2xl max-xl:w-full flex flex-col">
+                    <span className="text-sm font-semibold italic">Price: </span>
+                    <p className="font-bold text-black">9.000.000 VNĐ</p>
+                  </div>
+
+                  <div className="viewMore max-xl:w-full">
+                    <Button className="rounded-md w-full" onClick={() => { }}>
+                      View More
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
