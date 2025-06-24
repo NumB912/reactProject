@@ -9,9 +9,12 @@ export interface Prop{
 const Button = ({ children, onClick, className="" }: Prop) => {
 
   const combinedClassName = `text-white font-bold bg-black cursor-pointer rounded-full p-3
-               hover:scale-95
+              hover:bg-gray-800
+              active:scale-90
+              active:bg-gray-900
+              hover:scale-95
               transition-all
-              duration-300
+              duration-400
               ease-in-out
               ${className}`;
 
