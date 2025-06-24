@@ -23,9 +23,9 @@ export interface CalendarTwoMonth extends CalendarBaseProps{
     nextMonthDates: Date[];
     dateEndSelected?: Date | null;
     onEndSelected?: (date: Date) => void;
-    onSetThisMonth:()=>void;
-    onSetTodayMonth:()=>void;
-    onSetThisWeek:()=>void;
+    onSetThisMonth?:()=>void;
+    onSetTodayMonth?:()=>void;
+    onSetThisWeek?:()=>void;
 }
 
 
