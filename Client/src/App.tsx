@@ -3,8 +3,7 @@ import Home from './pages/home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { loadServices} from './pages/Services'
 import { loadService } from './pages/Service'
-import Services from './pages/Services'
-import Service from './pages/Service'
+import Service from './pages/Service';
 import Root from './pages/root'
 import About from './pages/about'
 import Contact from './pages/contact'
@@ -21,17 +20,14 @@ import Tour from './pages/tour/tours';
 import TourDetail from './pages/tour/tourDetail'
 import Book_TOUR from './pages/tour/book_tour';
 import Payment_Tour from './pages/tour/Payment_Tour';
+import servicesLoad from './pages/Services';
 import {Login} from './pages/Auths/login';
 
 const router = createBrowserRouter([
   {
     path:'/',
     element:<Root/>,
-    children:[{
-      path:'services',
-      element:<Services/>,
-      loader:loadServices
-    },
+    children:[
    {
     path:"service/:serviceID",
     element:<Service/>,

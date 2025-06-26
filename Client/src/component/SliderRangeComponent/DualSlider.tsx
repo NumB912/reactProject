@@ -30,7 +30,7 @@ const DualSlider = () => {
         max={maxPrice}
         value={rangeLeft}
         onChange={handleMinChange}
-        className="thumb absolute z-30"
+        className="thumb absolute z-10"
       />
       <input
         type="range"
@@ -38,7 +38,7 @@ const DualSlider = () => {
         max={maxPrice}
         value={rangeRight}
         onChange={handleMaxChange}
-        className="thumb absolute z-20"
+        className="thumb absolute z-10"
       />
 
       {/* Track */}

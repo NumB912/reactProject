@@ -3,7 +3,7 @@ import { useCalendarHotel } from '../../store/calendar_hotel_store';
 import { useHotelFilter } from '../../store/filter_store';
 import { formatDate } from '../../utils/TimeHandle';
 import Calendar_Hotel from '../calendar/calendar_hotel';
-import Traveler_Hotel from '../travelers_quantity/traveler_hotel';
+import Traveler_Hotel from '../SelectComponent/traveler_hotel';
 import useTravelerHotel from '../../store/traveler_store_hotel';
 
 interface Props{
@@ -61,7 +61,7 @@ const FilterCheckInHotel = ({style=""}:Props) => {
               </p>
 
               <div
-                className={`bg-white absolute w-[700px] top-[350px] left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 border border-gray-300 rounded-2xl z-10
+                className={`bg-white absolute w-[700px] top-[350px] left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 border border-gray-300 rounded-2xl z-20
       max-lg:left-full max-2xl:left-0 ${showCheckIn ? "" : "hidden"}`}
                 onClick={(e) => {
                   e.stopPropagation();

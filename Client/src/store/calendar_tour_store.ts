@@ -4,7 +4,6 @@ import { unstable_setDevServerHooks } from "react-router";
 
 export interface Prop {
   dateSelectedBook: Date;
-  dateSelectedCheckOut: Date | undefined;
   today: Date;
   datesBook: Date[];
   datesNextMonth: Date[];
@@ -12,9 +11,7 @@ export interface Prop {
   isSelectedCheckOut: boolean;
 
   setIsSelectedBook: (isSelected: boolean) => void;
-  setIsSelectedCheckOut: (isSelected: boolean) => void;
   setDateSelectedBook: (dateBook: Date) => void;
-  setDateSelectedCheckOut: (dateReturn: Date) => void;
   setDatesBook: (dates: Date[]) => void;
   setDatesNextMonth: (dates: Date[]) => void;
   prevMonth: () => void;
@@ -49,45 +46,12 @@ export const useTourCalendar = create<Prop>((set, get) => {
         return;
       }
 
-      if (get().dateSelectedCheckOut !== undefined && date > get().dateSelectedCheckOut!) {
-            
-        set({
-            dateSelectedBook:get().dateSelectedCheckOut,
-            dateSelectedCheckOut:date,
-        })
-
-        return;
-      }
-
       if (get().datesNextMonth.some((d) => isSameDay(date, d))) {
         get().nextMonth();
       }
 
       set({ dateSelectedBook: date });
       set({ isSelectedBook: true });
-    },
-
-    setDateSelectedCheckOut: (date: Date) => {
-      const { dateSelectedBook } = get();
-      if (isToday(date) || date < new Date()) {
-        return;
-      }
-      if (isSameDay(date, dateSelectedBook)) {
-        set({
-          dateSelectedCheckOut: undefined,
-          dateSelectedBook:undefined
-        });
-        return;
-      }
-
-      if (date < dateSelectedBook) {
-        set({
-          dateSelectedCheckOut: dateSelectedBook,
-          dateSelectedBook: date,
-        });
-        return;
-      }
-      set({ dateSelectedCheckOut: date });
     },
 
     setDatesBook: (dates: Date[]) => set({ datesBook: dates }),
@@ -136,7 +100,6 @@ export const useTourCalendar = create<Prop>((set, get) => {
       );
       set({
         dateSelectedBook: book,
-        dateSelectedCheckOut: ret,
         isSelectedBook: false,
         isSelectedCheckOut: false,
       });
@@ -156,7 +119,6 @@ export const useTourCalendar = create<Prop>((set, get) => {
       );
       set({
         dateSelectedBook: book,
-        dateSelectedCheckOut: ret,
         datesBook: DaysOfMonth(now.getMonth(), now.getFullYear()),
         datesNextMonth: DaysOfMonth(now.getMonth() + 1, now.getFullYear()),
         isSelectedBook: false,

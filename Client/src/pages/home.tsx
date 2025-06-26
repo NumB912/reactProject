@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import LoadData from "./Services";
 import { Link, Outlet, useNavigate } from "react-router";
 import "./styles/home.css";
-import SearchBar from "../component/search/SearchBar";
+import {SearchBar} from "../component/SearchComponent/SearchBar";
 import Banner from "../component/Banner";
 import RatingStars from "../component/StarRatingRadioOption";
-import ReusableSlider from "../component/Slider/SliderComponent";
+import ReusableSlider from "../component/SliderComponent/SliderComponent";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
@@ -13,7 +13,7 @@ import {
   HotelServices,
   RentalService,
 } from "../Services/getService";
-import HeartFavorite from "../component/Favorite/HeartFavorite";
+import { HeartFavorite } from "../component/ButtonComponent/Button";
 interface TravelItem {
   id: number | string;
   title: string;
@@ -32,10 +32,8 @@ interface Banner {
 }
 
 const Home = () => {  
-  const [tour, SetTour] = useState([]);
-  const [rentalCar, setRenTalCar] = useState([]);
+  const [tour, SetTour] = useState([])
   const [hotelServices, setHotelServices] = useState([]);
-  const nagative = useNavigate();
 
   const carouselItems: TravelItem[] = [
     {

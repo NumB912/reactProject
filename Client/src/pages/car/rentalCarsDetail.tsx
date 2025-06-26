@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useCalendarCarStore } from "../../store/calendar_car_store";
 import { useTimeStore } from "../../store/time_store";
-import Button from "../../component/Button";
+import { Button } from "../../component/ButtonComponent/Button";
 import Passengers from "../../component/travelers_quantity/passengers";
 import { Calendar_rentalCar } from "../../component/calendar/calendar_rentalCar";
 import { Link, useNavigate } from "react-router";

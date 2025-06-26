@@ -1,12 +1,12 @@
 import React from "react";
-import Button from "../Button";
+import {Button} from "../ButtonComponent/Button";
 import { useTraveler } from "../../store/traveler_store_Flight";
 
 interface TagTickerProps {
   onClose: () => void;
 }
 
-const TagTicker: React.FC<TagTickerProps> = ({ onClose }) => {
+export const TagTicker: React.FC<TagTickerProps> = ({ onClose }) => {
   const {
     adultQuantity,
     seniorQuantity,
@@ -110,4 +110,3 @@ const TagTicker: React.FC<TagTickerProps> = ({ onClose }) => {
   );
 };
 
-export default TagTicker;

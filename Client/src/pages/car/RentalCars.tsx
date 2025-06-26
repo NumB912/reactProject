@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
-import SideBarFilter from "../../component/SIdeBarFilter/filterSide";
-import RatingStar from "../../component/SIdeBarFilter/OptionType/OptionMaterial/StarRatingRadioOption";
 import { Link } from "react-router";
 import Calendar_Hotel from "../../component/calendar/calendar_hotel";
 import { useCalendarHotel } from "../../store/calendar_hotel_store";
 import { formatDate } from "../../utils/TimeHandle";
-import Traveler_Hotel from "../../component/travelers_quantity/traveler_hotel";
 import useTravelerHotel from "../../store/traveler_store_hotel";
 import { FilterItem } from "../../model/interface/interface_filter";
 import { useHotelFilter } from "../../store/filter_store";
-import CheckBoxOption from "../../component/SIdeBarFilter/OptionType/CheckBoxOption";
-import RadioOption from "../../component/SIdeBarFilter/OptionType/RadioOption";
-import SliderRange from "../../component/sliderRange/sliderRange";
-import Button from "../../component/Button";
+import CheckBoxOption from "../../component/SideFilterComponent/OptionType/CheckBoxOption";
+import SliderRange from "../../component/SliderRangeComponent/DualSlider";
+import { Button } from "../../component/ButtonComponent/Button";
 import small_car from "../../assets/small_car.jpg";
 import medium_car from "../../assets/medium_car.jpg";
 import large_car from "../../assets/large_car.jpg";
 import SUV from "../../assets/SUV.jpg";
 import wild from "../../assets/wild_card.jpg";
 import { useCalendarCarStore } from "../../store/calendar_car_store"; // <-- Add this import
-import Passengers from "../../component/travelers_quantity/passengers";
+import Passengers from "../../component/SelectComponent/passengers";
 import { Calendar_rentalCar } from "../../component/calendar/calendar_rentalCar";
 import { useTimeStore } from "../../store/time_store";
 const filterData: FilterItem[] = [

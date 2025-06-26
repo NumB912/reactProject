@@ -6,7 +6,7 @@ import {
   DaysOfMonth,
   getDateHandle,
 } from "../../utils/TimeHandle";
-import { TimeSelected } from "../timer/timeSelected";
+import { TimeSelected } from "../TimerComponent/timeSelected";
 import { useTimeStore } from "../../store/time_store";
 import Calendar_OneMonth_Timer from "./Calendar_OneMonthWithTime";
 import { CalendarOneMonthWithTimer } from "./interfaceCalendar/CalendarBaseProps";

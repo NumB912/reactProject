@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import SideBarFilter from "../../component/SIdeBarFilter/filterSide";
-import RatingStar from "../../component/SIdeBarFilter/OptionType/OptionMaterial/StarRatingRadioOption";
+import SideBarFilter from "../../component/SideFilterComponent/filterSide";
+import RatingStar from "../../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import { Link } from "react-router";
 import Calendar_Hotel from "../../component/calendar/calendar_hotel";
 import { useCalendarHotel } from "../../store/calendar_hotel_store";
 import { formatDate } from "../../utils/TimeHandle";
-import Traveler_Hotel from "../../component/travelers_quantity/traveler_hotel";
 import useTravelerHotel from "../../store/traveler_store_hotel";
 import { FilterItem } from "../../model/interface/interface_filter";
 import { useHotelFilter } from "../../store/filter_store";
-import CheckBoxOption from "../../component/SIdeBarFilter/OptionType/CheckBoxOption";
-import RadioOption from "../../component/SIdeBarFilter/OptionType/RadioOption";
-import SliderRange from "../../component/sliderRange/sliderRange";
-import Button from "../../component/Button";
-import HeartFavorite from "../../component/Favorite/HeartFavorite";
-import FilterCheckInHotel from "../../component/FilterCheckIn/filterCheckInHotel";
+import CheckBoxOption from "../../component/SideFilterComponent/OptionType/CheckBoxOption";
+import RadioOption from "../../component/SideFilterComponent/OptionType/RadioOption";
+import SliderRange from "../../component/SliderRangeComponent/DualSlider";
+import { Button } from "../../component/ButtonComponent/Button";
+import { HeartFavorite } from "../../component/ButtonComponent/Button";
+import FilterCheckInHotel from "../../component/FilterComponent/filterCheckInHotel";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -122,7 +121,7 @@ const Hotels = () => {
             handleChange={(valueStar: string | number) => {
               toggleStar(Number(valueStar));
             }}
-            arr={[
+            options={[
               { id: "RadioRatingStar1", value: 5 },
               { id: "RadioRatingStar2", value: 4 },
               { id: "RadioRatingStar3", value: 3 },
