@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Button from "../Button";
+import { Button } from "../ButtonComponent/Button";
 import Calendar from "../calendar/calendar";
 import { useChooseCalendar } from "../../store/calendar_store";
 import { data } from "react-router";
-import TagTicker from "../travelers_quantity/TagTicker";
 import { useTraveler } from "../../store/traveler_store_Flight";
-
-function SearchFlight() {
+import { TagTicker } from "../SelectComponent/tagTicker";
+export function SearchFlight() {
   const {
     dateSelectedBook,
     dateSelectedReturn,
@@ -74,7 +73,7 @@ function SearchFlight() {
           </p>
 
           <div
-            className={`bg-white absolute w-[700px] top-[326px] left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 border border-gray-300 rounded-2xl z-10
+            className={`bg-white absolute w-[700px] top-[326px] left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 border border-gray-300 rounded-2xl
       max-lg:left-full max-2xl:left-0 ${!showCalendar ? "hidden" : "block"}`}
             onClick={(e) => e.stopPropagation()}
           >
@@ -114,4 +113,3 @@ function SearchFlight() {
   );
 }
 
-export default SearchFlight;

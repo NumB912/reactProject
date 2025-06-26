@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button from "../Button";
-import Passengers from "../travelers_quantity/passengers";
+import { Button } from "../ButtonComponent/Button";
+import Passengers from "../SelectComponent/passengers";
 import { Calendar_rentalCar } from "../calendar/calendar_rentalCar";
 import { useCalendarCarStore } from "../../store/calendar_car_store";
 import { useTimeStore } from "../../store/time_store";

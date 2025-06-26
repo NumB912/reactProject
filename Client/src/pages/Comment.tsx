@@ -1,6 +1,6 @@
 import react from "react";
 import { Link } from "react-router";
-import RatingStar from "../component/SIdeBarFilter/OptionType/OptionMaterial/StarRatingRadioOption";
+import RatingStar from "../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import hotel1 from "../assets/42769_14072300320020409156.webp";
 const Comment = () => {
   return (
@@ -9,7 +9,7 @@ const Comment = () => {
         <div className="totalReview flex justify-between p-5">
           <p className="text-4xl font-bold">Reviews</p>
           <div className="review flex justify-between items-center gap-3">
-            <Link className="underline font-semibold">All Reviews(1,326)</Link>
+            <Link className="underline font-semibold" to={""}>All Reviews(1,326)</Link>
             <button className="bg-black text-white p-4 rounded-full font-bold cursor-pointer">
               Write reviews
             </button>
@@ -139,7 +139,7 @@ const Comment = () => {
             <div className="flex py-5">
               <div className="tag border-2 border-black p-2 w-20 text-center rounded-full">
                 <p>
-                  <i class="fa-solid fa-filter"></i> filter
+                  <i className="fa-solid fa-filter"></i> filter
                 </p>
               </div>
             </div>
@@ -246,7 +246,7 @@ const Comment = () => {
 
                   <div className="w-full flex justify-end">
                     <button className=" rounded-full p-3 hover:bg-gray-200">
-                      <i class="fa-solid fa-thumbs-up"></i> Helpful votes
+                      <i className="fa-solid fa-thumbs-up"></i> Helpful votes
                     </button>
                   </div>
                   <div className="border-l border-gray-40  pl-5 ">
@@ -387,7 +387,7 @@ const Comment = () => {
 
                   <div className="w-full flex justify-end">
                     <button className=" rounded-full p-3 hover:bg-gray-200">
-                      <i class="fa-solid fa-thumbs-up"></i> Helpful votes
+                      <i className="fa-solid fa-thumbs-up"></i> Helpful votes
                     </button>
                   </div>
                   <div className="border-l border-gray-40  pl-5 ">
@@ -528,7 +528,7 @@ const Comment = () => {
 
                   <div className="w-full flex justify-end">
                     <button className=" rounded-full p-3 hover:bg-gray-200">
-                      <i class="fa-solid fa-thumbs-up"></i> Helpful votes
+                      <i className="fa-solid fa-thumbs-up"></i> Helpful votes
                     </button>
                   </div>
                   <div className="border-l border-gray-40  pl-5 ">

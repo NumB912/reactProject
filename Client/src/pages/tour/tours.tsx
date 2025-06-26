@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from "react";
-import SideBarFilter from "../../component/SIdeBarFilter/filterSide";
-import RatingStar from "../../component/SIdeBarFilter/OptionType/OptionMaterial/StarRatingRadioOption";
+import RatingStar from "../../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import { Link, useNavigate } from "react-router";
 import Calendar_Hotel from "../../component/calendar/calendar_hotel";
 import { useCalendarHotel } from "../../store/calendar_hotel_store";
 import { formatDate } from "../../utils/TimeHandle";
-import Traveler_Hotel from "../../component/travelers_quantity/traveler_hotel";
 import useTravelerHotel from "../../store/traveler_store_hotel";
 import { FilterItem } from "../../model/interface/interface_filter";
 import { useHotelFilter } from "../../store/filter_store";
-import CheckBoxOption from "../../component/SIdeBarFilter/OptionType/CheckBoxOption";
-import RadioOption from "../../component/SIdeBarFilter/OptionType/RadioOption";
-import SliderRange from "../../component/sliderRange/sliderRange";
-import Button from "../../component/Button";
+import CheckBoxOption from "../../component/SideFilterComponent/OptionType/CheckBoxOption";
+import RadioOption from "../../component/SideFilterComponent/OptionType/RadioOption";
+
+import DualSlider from "../../component/SliderRangeComponent/DualSlider"
+import { Button } from "../../component/ButtonComponent/Button";
 import { useTourCalendar } from "../../store/calendar_tour_store";
 import { useTourFilter } from "../../store/filter_tour_store";
 import Calendar_Tour from "../../component/calendar/calendar_tour";
-import ReusableSlider from "../../component/Slider/SliderComponent";
-import DropDownSelect from "../../component/DropDownSelect/DropDownSelect";
+import ReusableSlider from "../../component/SliderComponent/SliderComponent";
+import DropDownSelect from "../../component/DropDownComponent/DropDownSelect"
 import { FaSort } from "react-icons/fa";
 import Calendar_OneMonth from "../../component/calendar/Calendar_OneMonth";
 import Modal from "../../component/Modal";
+import { HeartFavorite } from "../../component/ButtonComponent/Button";
 const Hotels = () => {
   const [price, setPrice] = useState(0);
-const [isShowsome, setShowsome] = useState(true);
-const [isShowSort, setShowSort] = useState(false);
+  const [isShowsome, setShowsome] = useState(false);
+  const [isShowSort, setShowSort] = useState(false);
   const {
     dateSelectedBook,
-    dateSelectedCheckOut,
-    isSelectedCheckOut,
-    isSelectedBook,
   } = useTourCalendar();
 
   const {
@@ -47,10 +44,9 @@ const [isShowSort, setShowSort] = useState(false);
     toggleStar,
   } = useTourFilter();
 
-  const navigate = useNavigate();
-
   const [showCheckIn, setShowCheckIn] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const nagative = useNavigate()
 
   useEffect(() => {
     setMaxPrice(100);
@@ -59,7 +55,7 @@ const [isShowSort, setShowSort] = useState(false);
 
   const items: String[] = ["10/2", "20/3", "12/12", "13/4", "30/4", "10/3"];
 
-  const renderItemDateDeparture = (item) => {
+  const renderItemDateDeparture = (item: string) => {
     return (
       <div className="border border-black w-full p-1.5 text-center font-bold rounded-sm">
         <p>{item}</p>
@@ -78,7 +74,7 @@ const [isShowSort, setShowSort] = useState(false);
         <div
           className="w-full gap-2 relative flex justify-start items-center self-end 
           cursor-pointer
-        *:flex *:justify-evenly *:items-center *:p-1.5 *:gap-3 *:border *:border-gray-300 *:rounded-2xl *:shadow-sm
+        *:flex *:justify-evenly *:items-center *:p-3 *:gap-3 *:border *:border-gray-300 *:rounded-md *:shadow-sm
         *:max-2xl:w-3/5 *:max-lg:w-full
         max-sm:flex-wrap max-2xl:justify-center max-lg:w-full"
         >
@@ -94,14 +90,13 @@ const [isShowSort, setShowSort] = useState(false);
               className="DCI text-center 
             max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50"
             >
-              <p className="text-[10px]">Check In - Check Out</p>
+              <p className="text-[10px]">Departure date</p>
               <p className="text-[13px] font-bold">
-                {formatDate(dateSelectedBook)} -{" "}
-                {formatDate(dateSelectedCheckOut)}
+                {formatDate(dateSelectedBook)}
               </p>
 
               <div
-                className={`bg-white absolute top-16 left-0  p-5 border border-gray-300 rounded-2xl z-40
+                className={`bg-white absolute top-16 left-0  p-5 border border-gray-300 rounded-2xl z-20
                  w-[400px]
                  max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:w-4/5  max-md:w-full
                  ${showCheckIn ? "" : "hidden"}`}
@@ -111,6 +106,8 @@ const [isShowSort, setShowSort] = useState(false);
               >
                 <Calendar_Tour />
               </div>
+
+
             </div>
             <i className="fa-solid fa-caret-down"></i>
           </div>
@@ -125,7 +122,7 @@ const [isShowSort, setShowSort] = useState(false);
       >
         <div className="OptionPrice">
           <p>Prices</p>
-          <SliderRange />
+          <DualSlider />
         </div>
         <div className="flex w-full flex-col">
           <p className="text-md">Rating</p>
@@ -133,7 +130,7 @@ const [isShowSort, setShowSort] = useState(false);
             handleChange={(valueStar: string | number) => {
               toggleStar(Number(valueStar));
             }}
-            arr={[
+            options={[
               { id: "RadioRatingStar1", value: 5 },
               { id: "RadioRatingStar2", value: 4 },
               { id: "RadioRatingStar3", value: 3 },
@@ -204,114 +201,132 @@ const [isShowSort, setShowSort] = useState(false);
         </div>
       </div>
 
-      <Modal isOpen={isShowsome} onClose={() => {setShowsome(false)}}
-        styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[500px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
+      <Modal isOpen={isShowsome} onClose={() => { setShowsome(false)}}
+        styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
         parentContainerStyle="min-xl:hidden"
-        >
+        styleButtonClose="cursor-pointer"
+      >
         <div className="flex flex-col justify-between items-center w-full">
           <div className="ContentName font-bold text-3xl">Filter</div>
-                 <div
-        className="SideFilter w-full flex flex-col justify-start items-center  p-5
+          <div
+            className="SideFilter w-full flex flex-col justify-start items-center  p-5
       *:font-bold  *:border-gray-300 *:w-full gap-5 *:py-1 
 "
-      >
-        <div className="OptionPrice">
-          <p>Prices</p>
-          <SliderRange />
-        </div>
-        <div className="flex w-full flex-col">
-          <p className="text-md">Rating</p>
-          <RadioOption
-            handleChange={(valueStar: string | number) => {
-              toggleStar(Number(valueStar));
-            }}
-            arr={[
-              { id: "RadioRatingStar1", value: 5 },
-              { id: "RadioRatingStar2", value: 4 },
-              { id: "RadioRatingStar3", value: 3 },
-              { id: "RadioRatingStar4", value: 2 },
-            ]}
-            nameRadio="RatingStar"
           >
-            {(item: number | string) => <RatingStar stars={Number(item)} />}
-          </RadioOption>
-        </div>
+            <div className="OptionPrice">
+              <p>Prices</p>
+              <DualSlider />
+            </div>
+            <div className="flex w-full flex-col">
+              <p className="text-md">Rating</p>
+              <RadioOption
+                handleChange={(valueStar: string | number) => {
+                  toggleStar(Number(valueStar));
+                  console.log(valueStar)
+                }}
+                options={[
+                  { id: "RadioRatingStar1", value: 5 },
+                  { id: "RadioRatingStar2", value: 4 },
+                  { id: "RadioRatingStar3", value: 3 },
+                  { id: "RadioRatingStar4", value: 2 },
+                ]}
+                nameRadio="RatingStar"
+              >
+                {(item: number | string) => <RatingStar stars={Number(item)} />}
+              </RadioOption>
+            </div>
 
-        <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
-          <div className="flex w-full flex-col">
-            <p className="text-md">Duration</p>
-            <CheckBoxOption
-              handleChange={(value: string | number) => {
-                setDuration(String(value));
-              }}
-              arr={[
-                { id: "CheckBoxDuration1", value: "Up to 1 hour" },
-                { id: "CheckBoxDuration2", value: "1 to 4 hours" },
-                { id: "CheckBoxDuration3", value: "4 hours to day" },
-              ]}
-              checkBoxName="HotelClass"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div>
+            <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
+              <div className="flex w-full flex-col">
+                <p className="text-md">Duration</p>
+                <CheckBoxOption
+                  handleChange={(value: string | number) => {
+                    setDuration(String(value));
+                  }}
+                  arr={[
+                    { id: "CheckBoxDuration1", value: "Up to 1 hour" },
+                    { id: "CheckBoxDuration2", value: "1 to 4 hours" },
+                    { id: "CheckBoxDuration3", value: "4 hours to day" },
+                  ]}
+                  checkBoxName="HotelClass"
+                >
+                  {(item: string) => <p>{item}</p>}
+                </CheckBoxOption>
+              </div>
 
-          <div className="flex w-full flex-col">
-            <p className="text-md">Product categories</p>
-            <CheckBoxOption
-              handleChange={(value: string | number) => {
-                setCategories(String(value));
-              }}
-              arr={[
-                {
-                  id: "checkBoxProductCategories1",
-                  value: "Sightseeing Tours",
-                },
-                { id: "heckBoxProductCategories2", value: "City Tours" },
-                {
-                  id: "heckBoxProductCategories3",
-                  value: "Historical * Heritage Tours",
-                },
-                { id: "heckBoxProductCategories4", value: "Bus Tours" },
-                { id: "heckBoxProductCategories5", value: "Walking Tours" },
-                { id: "heckBoxProductCategories6", value: "Helicopter Tours" },
-                { id: "heckBoxProductCategories7", value: "Hop-On Hop-Off" },
-                { id: "heckBoxProductCategories8", value: "Night Tours" },
-                { id: "heckBoxProductCategories9", value: "Private Tours" },
-                {
-                  id: "heckBoxProductCategories10",
-                  value: "Skips-the-line Tours",
-                },
-                {
-                  id: "heckBoxProductCategories11",
-                  value: "Literary, Art & Music Tours",
-                },
-                { id: "heckBoxProductCategories12", value: "Multi-day Tours" },
-                { id: "heckBoxProductCategories13", value: "Movie-TVs Tours" },
-              ]}
-              checkBoxName="HotelStyle"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
+              <div className="flex w-full flex-col">
+                <p className="text-md">Product categories</p>
+                <CheckBoxOption
+                  handleChange={(value: string | number) => {
+                    setCategories(String(value));
+                  }}
+                  arr={[
+                    {
+                      id: "checkBoxProductCategories1",
+                      value: "Sightseeing Tours",
+                    },
+                    { id: "checkBoxProductCategories2", value: "City Tours" },
+                    {
+                      id: "checkBoxProductCategories3",
+                      value: "Historical * Heritage Tours",
+                    },
+                    { id: "checkBoxProductCategories4", value: "Bus Tours" },
+                    { id: "checkBoxProductCategories5", value: "Walking Tours" },
+                    { id: "checkBoxProductCategories6", value: "Helicopter Tours" },
+                    { id: "checkBoxProductCategories7", value: "Hop-On Hop-Off" },
+                    { id: "checkBoxProductCategories8", value: "Night Tours" },
+                    { id: "checkBoxProductCategories9", value: "Private Tours" },
+                    {
+                      id: "checkBoxProductCategories10",
+                      value: "Skips-the-line Tours",
+                    },
+                    {
+                      id: "checkBoxProductCategories11",
+                      value: "Literary, Art & Music Tours",
+                    },
+                    { id: "checkBoxProductCategories12", value: "Multi-day Tours" },
+                    { id: "checkBoxProductCategories13", value: "Movie-TVs Tours" },
+                  ]}
+                  checkBoxName="HotelStyle"
+                >
+                  {(item: string) => <p>{item}</p>}
+                </CheckBoxOption>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      </div>
       </Modal>
 
-      <Modal isOpen={isShowSort} onClose={() => {setShowSort(false)}} 
-        styleContainer={"p-5 w-full h-[calc(100vh-100px)] max-w-[500px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"}
-        >
-        <div className="flex flex-col justify-between items-center w-full">
-          <div className="ContentName font-bold text-3xl">Sort</div>
+      <Modal isOpen={isShowSort} onClose={() => { setShowSort(false) }}
+        styleContainer={" rounded-none p-5 w-full h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"}
+        styleButtonClose={"cursor-pointer"}
+      >
+         <div className="ContentName font-bold text-3xl">Sort</div>
+        <div className="flex flex-col justify-between items-start w-full">
           <div className="sortOptions w-full flex flex-col gap-3">
-             <RadioOption 
-             arr={[
-               { id: "sortOption1", value: "Price: Low to High" },
-               { id: "sortOption2", value: "Price: High to Low" },
-               { id: "sortOption3", value: "Rating: High to Low" },
-               { id: "sortOption4", value: "Rating: Low to High" },
-             ]} handleChange={(value) => {}} nameRadio="SortOptions"
-              children={(value)=>{return (<div>{value}</div>)}} />
+            <RadioOption
+              options={[
+                { id: "sortOption1", value: "Price: Low to High" },
+                { id: "sortOption2", value: "Price: High to Low" },
+                { id: "sortOption3", value: "Rating: High to Low" },
+                { id: "sortOption4", value: "Rating: Low to High" },
+              ]} handleChange={(value) => { }} nameRadio="SortOptions"
+              children={(value) => { return (<div>{value}</div>) }} />
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 p-4 bottom-0 apply-reset self-end flex justify-between w-full *:w-[300px]">
+
+            <div className="reset">
+              <Button onClick={() => { }} className="w-full">
+                Reset
+              </Button>
+            </div>
+
+            <div className="apply">
+              <Button onClick={() => { }} className="w-full">
+                Apply
+              </Button>
+            </div>
+
           </div>
         </div>
       </Modal>
@@ -320,10 +335,10 @@ const [isShowSort, setShowSort] = useState(false);
       max-xl:flex
       "
       >
-        <div className=" w-full p-3 border-r border-gray-200 font-bold text-center" onClick={()=>setShowsome(true)}>
+        <div className=" w-full p-3 border-r border-gray-200 font-bold text-center" onClick={() => setShowsome(true)}>
           <i className="fa-solid fa-filter"></i> filter
         </div>
-        <div className=" w-full p-3 font-bold text-center" onClick={()=>setShowSort(true)}>
+        <div className=" w-full p-3 font-bold text-center" onClick={() => setShowSort(true)}>
           <i className="fa-solid fa-sort"></i> Sort
         </div>
       </div>
@@ -342,7 +357,7 @@ const [isShowSort, setShowSort] = useState(false);
           >
             <DropDownSelect
               icon={<FaSort />}
-              onClick={() => {}}
+              onClick={() => { }}
               containerStyle="w-full"
               defaultOption="Sort by"
               options={[
@@ -368,25 +383,13 @@ const [isShowSort, setShowSort] = useState(false);
           >
             <div className="w-5/12 h-full relative max-lg:w-full">
               <img
-                src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/99/65/58/caption.jpg?w=800&h=600&s=1"
+                src="https://media.travel.com.vn/Destination/tf_240325115147_056953_Hoi%20An%20Ve%20Dem%20(3).jpg"
                 alt=""
                 srcSet=""
                 className="min-md:rounded-l-xl max-sm:rounded-t-xl h-full w-full object-cover"
               />
 
-              <div
-                className="flex bg-white p-2 items-center justify-center absolute top-0 right-0 m-1 rounded-full"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setFavorite(!favorite);
-                }}
-              >
-                {favorite ? (
-                  <i className="fa-solid fa-heart text-red-500"></i>
-                ) : (
-                  <i className="fa-regular fa-heart"></i>
-                )}
-              </div>
+              <HeartFavorite key={1} style=""/>
             </div>
 
             <div
@@ -492,7 +495,7 @@ const [isShowSort, setShowSort] = useState(false);
                 </div>
 
                 <div className="w-full flex max-xl:flex-col justify-between items-center">
-                  <div className="price text-2xl max-xl:w-full flex flex-col">
+                  <div className="price text-2xl max-xl:w-full flex flex-col ">
                     <span className="text-sm font-semibold italic">
                       Price:{" "}
                     </span>
@@ -500,7 +503,7 @@ const [isShowSort, setShowSort] = useState(false);
                   </div>
 
                   <div className="viewMore max-xl:w-full">
-                    <Button className="rounded-md w-full" onClick={() => {}}>
+                    <Button className="rounded-md w-full" onClick={() => { nagative("/tours/123") }}>
                       View More
                     </Button>
                   </div>

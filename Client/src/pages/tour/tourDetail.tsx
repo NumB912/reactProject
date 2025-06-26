@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import RatingStar from "../../component/StarRatingRadioOption";
 import { Link, useNavigate } from "react-router";
-import Button from "../../component/Button";
 import Comment from "../Comment";
 import Calendar_Tour from "../../component/calendar/calendar_tour";
 import { useTourCalendar } from "../../store/calendar_tour_store";
 import { formatDate } from "../../utils/TimeHandle";
 import Calendar_OneMonth from "../../component/calendar/Calendar_OneMonth";
 import Calendar_Tour_OneMonth from "../../component/calendar/Calendar_tour_OneMonth";
-import Traveler_Hotel from "../../component/travelers_quantity/tour_Traveler";
-import Traveler_Tour from "../../component/travelers_quantity/tour_Traveler";
 import useTravelerTour from "../../store/traveler_store_tour";
+import { Button,ButtonIcon } from "../../component/ButtonComponent/Button";
+import { FaHeart } from "react-icons/fa";
 const TourDetail = () => {
   const navigate = useNavigate();
 
@@ -31,7 +30,7 @@ const TourDetail = () => {
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
             <p className="text-4xl font-bold">
-              New York Helicopter Tour: Ultimate Manhattan Sightseeing
+              Đà Nẵng - Bà Nà - Cầu Vàng - Sơn Trà - Phổ Cổ Hội An - La Vang - Động Thiên Đường & Động Phong Nha - Huế
             </p>
             <div className="flex items-center gap-2">
               <p>4.8</p>
@@ -62,15 +61,15 @@ const TourDetail = () => {
               <p className="copyURL">
                 <i className="fa-solid fa-copy"></i>
               </p>
-              <button className="rounded-full border border-gray-200 p-3 w-24">
-                <i className="fa-solid fa-heart"></i> Save
-              </button>
+          <ButtonIcon icon={<FaHeart/>} iconColor="*:text-green-500" containStyle="" onClick={()=>{}}>
+            Save
+            </ButtonIcon>
             </div>
             <div className="flex items-center gap-2">
               <p className="price text-3xl font-bold">$335</p>
-              <button className="rounded-full border border-gray-200 p-3 w-24">
+              <ButtonIcon>
                 View Deal
-              </button>
+              </ButtonIcon>
             </div>
           </div>
         </div>
@@ -79,7 +78,7 @@ const TourDetail = () => {
           <div className="photoMain w-9/12 h-[600px] overflow-hidden">
             <img
               src={
-                "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/6b/8f/2a.jpg"
+                "https://media.travel.com.vn/Tour/tfd__1_10656_banahill4.webp"
               }
               className="w-full h-full object-cover rounded-lg"
             />
@@ -88,7 +87,7 @@ const TourDetail = () => {
             <div className="traveler h-1/3 overflow-hidden">
               <img
                 src={
-                  "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/6b/8f/2a.jpg"
+                  "https://media.travel.com.vn/Tour/tfd__2_10656_hoianvedem6.webp"
                 }
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -96,7 +95,7 @@ const TourDetail = () => {
             <div className="RoomSuite h-1/3 overflow-hidden">
               <img
                 src={
-                  "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/6b/8f/2a.jpg"
+                  "https://media.travel.com.vn/Tour/tfd_240325114849_887163_CHUA%20THIEN%20MU%20(2).jpg"
                 }
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -104,7 +103,7 @@ const TourDetail = () => {
             <div className="video h-1/3 overflow-hidden">
               <img
                 src={
-                  "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/ed/d6/a5/caption.jpg?w=1400&h=-1&s=1"
+                  "https://media.travel.com.vn/Tour/tfd__0_10656_dongphongnha1.webp"
                 }
                 className="w-full h-full object-cover rounded-lg"
               />

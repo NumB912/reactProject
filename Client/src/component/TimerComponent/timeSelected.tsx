@@ -19,7 +19,6 @@ interface Prop {
 
 export const TimeSelected = ({ setIsTimeSelected, timeSelected, setTime}: Prop) => {
   const timeSlots = generateTimeSlots();
-  console.log(timeSelected)
   return (
     <div className="w-full">
       <div className="flex flex-col h-[400px] w-full overflow-y-scroll *:py-3 *:hover:bg-gray-200 *:text-sm">

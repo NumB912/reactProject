@@ -1,9 +1,9 @@
 import React from "react";
-import Button from "../../component/Button";
+import {Button} from "../../component/ButtonComponent/Button"
 import { Link, useNavigate } from "react-router";
 import wild from "../../assets/wild_card.jpg";
-import vnpay from "../../assets/icon_payment/vnpay.jpg"; // Ensure this path is correct
-import momo from "../../assets/icon_payment/momo.png"; // Ensure this path is correct
+import vnpay from "../../assets/icon_payment/vnpay.jpg";
+import momo from "../../assets/icon_payment/momo.png"; 
 import RatingStar from "../../component/StarRatingRadioOption";
 import { useTourCalendar } from "../../store/calendar_tour_store";
 import { formatDate } from "../../utils/TimeHandle";

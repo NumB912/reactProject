@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import RatingStar from "../../component/SIdeBarFilter/OptionType/OptionMaterial/StarRatingRadioOption";
+import RatingStar from "../../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import { useNavigate } from "react-router-dom";
 import mainImage from "../../assets/the-tusk-bar.jpg";
 import video from "../../assets/the-evelyn-hotel-1.jpg";
@@ -7,15 +7,13 @@ import suitable from "../../assets/nomad-suite-bedroom.jpg";
 import traveler from "../../assets/caption.jpg";
 import hotel1 from "../../assets/42769_14072300320020409156.webp";
 import Comment from "../Comment";
-import Button from "../../component/Button";
 import { formatDate } from "../../utils/TimeHandle";
 import { useCalendarHotel } from "../../store/calendar_hotel_store";
 import Calendar_Hotel from "../../component/calendar/calendar_hotel";
 import useTravelerHotel from "../../store/traveler_store_hotel";
-import Traveler_Hotel from "../../component/travelers_quantity/traveler_hotel";
 import {Link} from "react-router"
-import FilterCheckInHotel from "../../component/FilterCheckIn/filterCheckInHotel";
-import ButtonSet from "../../component/Favorite/ButtonSet";
+import FilterCheckInHotel from "../../component/FilterComponent/filterCheckInHotel";
+import {ButtonIcon,Button} from "../../component/ButtonComponent/Button";
 import { FaHeart } from "react-icons/fa6";
 const HotelDetail = () => {
   const navigate = useNavigate();
@@ -67,13 +65,15 @@ const HotelDetail = () => {
               <p className="copyURL">
                 <i className="fa-solid fa-copy"></i>
               </p>
-                 <ButtonSet icon={<FaHeart/>} iconColor="*:text-green-500" textStyle="w-fit" text="Save" containStyle=""/>
+                 <ButtonIcon icon={<FaHeart/>} iconColor="*:text-green-500" containStyle="">
+                    Save
+                 </ButtonIcon>
             </div>
             <div className="flex items-center gap-2">
               <p className="price text-3xl font-bold">$335</p>
-              <button className="rounded-full border border-gray-200 p-3 w-24">
+              <ButtonIcon>
                 View Deal
-              </button>
+              </ButtonIcon>
             </div>
           </div>
         </div>

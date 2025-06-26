@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getDateHandle, isBetween, isSameDay, isToday } from "../../utils/TimeHandle";
 import { CalendarOneMonthWithTimer } from "./interfaceCalendar/CalendarBaseProps";
-import { TimeSelected } from "../timer/timeSelected";
+import { TimeSelected } from "../TimerComponent/timeSelected";
 import { useCalendarCarStore } from "../../store/calendar_car_store";
 
 const Calendar_OneMonth_Timer = ({

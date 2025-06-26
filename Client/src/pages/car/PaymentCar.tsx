@@ -1,12 +1,12 @@
 import React from "react";
-import Button from "../../component/Button";
+import { Button } from "../../component/ButtonComponent/Button";
 import { Link } from "react-router";
 import wild from "../../assets/wild_card.jpg";
 import BillingAddressForm from "./BillingAddressForm";
 import DriverDetailForm from "./DriverDetailForm";
 import Payment from "./Payment";
-import vnpay from "../../assets/icon_payment/vnpay.jpg"; // Ensure this path is correct
-import momo from "../../assets/icon_payment/momo.png"; // Ensure this path is correct
+import vnpay from "../../assets/icon_payment/vnpay.jpg";
+import momo from "../../assets/icon_payment/momo.png";
 
 const PaymentCar = () => {
   return (

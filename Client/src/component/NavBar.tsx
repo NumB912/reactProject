@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "/src/assets/logo.png";
 import "./styles/style_nav.css";
-import Button from "./Button";
-import Modal from "../component/Modal";
+import { Button } from "./ButtonComponent/Button";
+import Modal from "./Modal";
 import { GoogleLogin } from "@react-oauth/google";
 import { Login } from "../pages/Auths/login";
 import useStateLogin from "../store/login_store";
@@ -124,29 +124,30 @@ const { isShow, setShow, isSuccess, setIsSuccess, login, logout } = useStateLogi
         </div>
       </div>
 
-      <div className="w-full h-fit justify-center items-center bg-white shadow-md sticky top-0 z-1 *:text-sm max-sm:flex hidden *:px-2">
+      <div className="w-full h-[80px] justify-center items-center bg-white shadow-md sticky top-0 z-50 *:text-sm max-sm:flex hidden *:px-2">
         <button
-          className="w-2/12 text-center h-full"
+          className="w-2/12 hover:bg-gray-200 text-center h-full cursor-pointer"
           onClick={() => {
             setShowsome(!isShowsome);
           }}
         >
-          <i class="fa-solid fa-bars h-full"></i>
+          <i className="fa-solid fa-bars"></i>
         </button>
 
         <div
           className={`w-3/4 max-[400px]:w-full absolute bg-white h-screen flex-col *:text-black *:text-[13px] top-[0px] shadow-2xl pt-10 pr-10 
-          transition-[left] ease-in duration-300 ${
+          transition-[left] ease-in duration-300
+          ${
             isShowsome ? "left-0" : "left-[-100%]"
           }`}
         >
           <button
-            className="absolute right-0 p-3.5 top-0 hover:bg-gray-200"
+            className="absolute right-0 p-3.5 top-0 hover:bg-gray-200 cursor-pointer"
             onClick={() => {
               setShowsome(!isShowsome);
             }}
           >
-            <i class="fa-solid fa-x"></i>
+            <i className="fa-solid fa-x"></i>
           </button>
           <div className="flex w-full flex-col border-t border-gray-200 my-1.5">
             <Link to="/home" className="hover:bg-gray-200 p-4">
@@ -168,8 +169,8 @@ const { isShow, setShow, isSuccess, setIsSuccess, login, logout } = useStateLogi
           <img src={logo} alt="Logo" className="w-35" />
         </div>
 
-        <Link className="w-2/12 text-center h-full">
-          <i class="fa-solid fa-user"></i>
+        <Link className="w-2/12 h-[80px] justify-center items-center bg-white sticky top-0 z-50 *:text-sm max-sm:flex hidden *:px-2 hover:bg-gray-200" to={""}>
+          <i className="fa-solid fa-user"></i>
         </Link>
       </div>
     </>

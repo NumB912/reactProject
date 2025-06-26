@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../component/Button";
+import { Button } from "../../component/ButtonComponent/Button";
 import { Link } from "react-router";
 import wild from "../../assets/wild_card.jpg";
 import BillingAddressForm from "./BillingAddressForm";

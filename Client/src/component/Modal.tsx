@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -8,7 +8,21 @@ interface ModalProps {
   parentContainerStyle?: string;
 }
 const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,parentContainerStyle}: ModalProps) => {
+  useEffect(() => {
+    console.log(isOpen)
+    console.log(document.body.classList)
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
 
   return (
     <div
@@ -22,7 +36,7 @@ const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,paren
         className={`relative bg-white rounded-md shadow-xl overflow-auto ${styleContainer} `}
       >
         <button
-          onClick={onClose}
+          onClick={onClose} 
           className={`absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl ${styleButtonClose}`}
         >
           ×
