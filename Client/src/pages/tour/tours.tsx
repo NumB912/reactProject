@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import RatingStar from "../../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import { Link, useNavigate } from "react-router";
-import Calendar_Hotel from "../../component/calendar/calendar_hotel";
-import { useCalendarHotel } from "../../store/calendar_hotel_store";
+import Calendar_Hotel from "../../component/calendar/CalendarHotel";
+import { useCalendarHotel } from "../../store/CalendarStore/calendar_hotel_store";
 import { formatDate } from "../../utils/TimeHandle";
-import useTravelerHotel from "../../store/traveler_store_hotel";
+import useTravelerHotel from "../../store/PassengerStore/traveler_store_hotel";
 import { FilterItem } from "../../model/interface/interface_filter";
-import { useHotelFilter } from "../../store/filter_store";
+import { useHotelFilter } from "../../store/FilterStore/filter_store";
 import CheckBoxOption from "../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import RadioOption from "../../component/SideFilterComponent/OptionType/RadioOption";
 
 import DualSlider from "../../component/SliderRangeComponent/DualSlider"
 import { Button } from "../../component/ButtonComponent/Button";
-import { useTourCalendar } from "../../store/calendar_tour_store";
-import { useTourFilter } from "../../store/filter_tour_store";
-import Calendar_Tour from "../../component/calendar/calendar_tour";
+import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";
+import { useTourFilter } from "../../store/FilterStore/filter_tour_store";
+import Calendar_Tour from "../../component/calendar/CalendarTour";
 import ReusableSlider from "../../component/SliderComponent/SliderComponent";
 import DropDownSelect from "../../component/DropDownComponent/DropDownSelect"
 import { FaSort } from "react-icons/fa";
-import Calendar_OneMonth from "../../component/calendar/Calendar_OneMonth";
+import Calendar_OneMonth from "../../component/calendar/CalendarBase/Calendar_OneMonth";
 import Modal from "../../component/Modal";
 import { HeartFavorite } from "../../component/ButtonComponent/Button";
 const Hotels = () => {
@@ -53,12 +53,19 @@ const Hotels = () => {
     setMinPrice(0);
   }, []);
 
-  const items: String[] = ["10/2", "20/3", "12/12", "13/4", "30/4", "10/3"];
+  const items = [
+    { id: 1, value: "10/2" },
+    { id: 2, value: "20/3" },
+    { id: 3, value: "12/12" },
+    { id: 4, value: "13/4" },
+    { id: 5, value: "30/4" },
+    { id: 6, value: "10/3" },
+  ];
 
-  const renderItemDateDeparture = (item: string) => {
+  const renderItemDateDeparture = (item: { id: string | number; value: string }) => {
     return (
       <div className="border border-black w-full p-1.5 text-center font-bold rounded-sm">
-        <p>{item}</p>
+        <p>{item.value}</p>
       </div>
     );
   };
@@ -71,47 +78,7 @@ const Hotels = () => {
         </p>
       </div>
       <div className="FindTab w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 border-b border-gray-300 ">
-        <div
-          className="w-full gap-2 relative flex justify-start items-center self-end 
-          cursor-pointer
-        *:flex *:justify-evenly *:items-center *:p-3 *:gap-3 *:border *:border-gray-300 *:rounded-md *:shadow-sm
-        *:max-2xl:w-3/5 *:max-lg:w-full
-        max-sm:flex-wrap max-2xl:justify-center max-lg:w-full"
-        >
-          <div
-            className="CheckInBlock relative"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowCheckIn(!showCheckIn);
-            }}
-          >
-            <i className="fa-solid fa-calendar"></i>
-            <div
-              className="DCI text-center 
-            max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50"
-            >
-              <p className="text-[10px]">Departure date</p>
-              <p className="text-[13px] font-bold">
-                {formatDate(dateSelectedBook)}
-              </p>
-
-              <div
-                className={`bg-white absolute top-16 left-0  p-5 border border-gray-300 rounded-2xl z-20
-                 w-[400px]
-                 max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:w-4/5  max-md:w-full
-                 ${showCheckIn ? "" : "hidden"}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
                 <Calendar_Tour />
-              </div>
-
-
-            </div>
-            <i className="fa-solid fa-caret-down"></i>
-          </div>
-        </div>
       </div>
 
       <div
@@ -332,6 +299,7 @@ const Hotels = () => {
       </Modal>
       <div
         className="SideResponsive hidden w-full justify-center items-center col-span-2 border border-gray-200 gap-2
+        *:cursor-pointer
       max-xl:flex
       "
       >

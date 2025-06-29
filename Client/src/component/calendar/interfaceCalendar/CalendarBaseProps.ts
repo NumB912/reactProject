@@ -2,9 +2,14 @@
 export interface CalendarBaseProps {
   dates: Date[];
   dateSelected: Date | null;
+  isOpen?:boolean;
+  setIsOpen?: (isOpen: boolean) => void;
   onSelected: (date: Date) => void;
   nextMonth: () => void;
   prevMonth: () => void;
+  onSetThisMonth?: () => void;
+  onSetTodayMonth?: () => void;
+  onSetThisWeek?: () => void;
   type: "hotel" | "rentalCar" | "Tour";
 }
 
@@ -15,7 +20,6 @@ export interface CalendarOneMonthWithTimer extends CalendarBaseProps{
   dateEndSelected?:Date|null;
   dateStartSelected?:Date|null;
   setSelectTime: (time: string) => void;
-  type:"rentalCar",
   titleTypeSeletedDate:string;
 }
 
@@ -23,9 +27,6 @@ export interface CalendarTwoMonth extends CalendarBaseProps{
     nextMonthDates: Date[];
     dateEndSelected?: Date | null;
     onEndSelected?: (date: Date) => void;
-    onSetThisMonth?:()=>void;
-    onSetTodayMonth?:()=>void;
-    onSetThisWeek?:()=>void;
 }
 
 

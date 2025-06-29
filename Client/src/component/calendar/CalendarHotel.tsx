@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useChooseCalendar } from "../../store/calendar_store";
+import { useChooseCalendar } from "../../store/CalendarStore/calendar_store";
 import {
   isToday,
   isSameDay,
@@ -7,8 +7,8 @@ import {
   isBetween,
   formatDate,
 } from "../../utils/TimeHandle";
-import { useCalendarHotel } from "../../store/calendar_hotel_store";
-import Calendar_TwoMonth from "./Calendar_TwoMonth";
+import { useCalendarHotel } from "../../store/CalendarStore/calendar_hotel_store";
+import Calendar_TwoMonth from "./CalendarBase/Calendar_TwoMonth";
 
 const Calendar_Hotel = () => {
   const {

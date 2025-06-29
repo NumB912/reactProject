@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ButtonComponent/Button";
-import Passengers from "../SelectComponent/passengers";
-import { Calendar_rentalCar } from "../calendar/calendar_rentalCar";
-import { useCalendarCarStore } from "../../store/calendar_car_store";
+import Passengers from "../SelectComponent/PassengersRentalCar";
+import { Calendar_rentalCar } from "../calendar/CalendarRentalCar";
+import { useCalendarCarStore } from "../../store/CalendarStore/calendar_car_store";
 import { useTimeStore } from "../../store/time_store";
 import { useNavigate } from "react-router-dom";
 

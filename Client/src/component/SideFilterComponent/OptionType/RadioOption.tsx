@@ -2,7 +2,7 @@ import React from "react";
 import RatingStar from "./OptionMaterial/StarRatingRadioOption";
 import TextRadioOption from "./OptionMaterial/TextRadioOption";
 import { FilterItem, FilterOption } from "../../../model/interface/interface_filter";
-import { useHotelFilter } from "../../../store/filter_store";
+import { useHotelFilter } from "../../../store/FilterStore/filter_store";
 
 interface Prop {
   options: FilterOption[];

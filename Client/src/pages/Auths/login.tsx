@@ -1,7 +1,7 @@
 // Login.js
 import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from "jwt-decode";
-import useStateLogin from '../../store/login_store';
+import useStateLogin from '../../store/LoginStore/login_store';
 export const Login=()=>{
   const {login,logout,setIsSuccess,setShow} = useStateLogin()
 const handleLoginSuccess = async (credentialResponse) => {

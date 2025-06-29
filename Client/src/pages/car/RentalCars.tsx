@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Calendar_Hotel from "../../component/calendar/calendar_hotel";
-import { useCalendarHotel } from "../../store/calendar_hotel_store";
-import { formatDate } from "../../utils/TimeHandle";
-import useTravelerHotel from "../../store/traveler_store_hotel";
+import useTravelerHotel from "../../store/PassengerStore/traveler_store_hotel";
 import { FilterItem } from "../../model/interface/interface_filter";
-import { useHotelFilter } from "../../store/filter_store";
+import { useHotelFilter } from "../../store/FilterStore/filter_store";
 import CheckBoxOption from "../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import SliderRange from "../../component/SliderRangeComponent/DualSlider";
 import { Button } from "../../component/ButtonComponent/Button";
@@ -14,9 +11,9 @@ import medium_car from "../../assets/medium_car.jpg";
 import large_car from "../../assets/large_car.jpg";
 import SUV from "../../assets/SUV.jpg";
 import wild from "../../assets/wild_card.jpg";
-import { useCalendarCarStore } from "../../store/calendar_car_store"; // <-- Add this import
-import Passengers from "../../component/SelectComponent/passengers";
-import { Calendar_rentalCar } from "../../component/calendar/calendar_rentalCar";
+import { useCalendarCarStore } from "../../store/CalendarStore/calendar_car_store"; // <-- Add this import
+import Passengers from "../../component/SelectComponent/PassengersRentalCar";
+import { Calendar_rentalCar } from "../../component/calendar/CalendarRentalCar";
 import { useTimeStore } from "../../store/time_store";
 const filterData: FilterItem[] = [
   {
@@ -79,8 +76,6 @@ const RentalCars = () => {
      timePickUpTimeSelected,
    } = useTimeStore();
 
-  const { roomQuantity, total } = useTravelerHotel();
-
   const {
     maxPrice,
     minPrice,
@@ -102,17 +97,7 @@ const RentalCars = () => {
     toggleHotelStyle,
   } = useHotelFilter();
 
-  const [showCheckIn, setShowCheckIn] = useState(false);
-  const [favorite, setFavorite] = useState(false);
-  const [showRoomAndGuest, setShowRoomAndGuest] = useState(false);
 
-  console.log(selectedAmenities);
-  console.log(style);
-  console.log(hotelClasses);
-  console.log(selectedRating);
-  console.log(selectedStars);
-  console.log(maxPrice);
-  console.log(minPrice);
   useEffect(() => {
     setMaxPrice(100);
     setMinPrice(0);
@@ -138,8 +123,7 @@ const RentalCars = () => {
       setDatesPickUpFromDate
     } = useCalendarCarStore();
 
-      const [passengers,setSelectedPassengers] = useState<string>("Select")
-      const [isSelectedPassenger,setIsSelectedPassenger] = useState<boolean>(false)
+
 
 
   return (
@@ -307,7 +291,7 @@ const RentalCars = () => {
             className={`bg-white w-full absolute top-[238px] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-gray-300 z-10 rounded-2xl ${isSelectedPassenger ? "" : "hidden"}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <Passengers setSelectedPassengers={setSelectedPassengers} setIsSelectedPassenger={setIsSelectedPassenger}/>
+            <Passengers/>
           </div>
         </div>
 

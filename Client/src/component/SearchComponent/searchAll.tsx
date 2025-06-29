@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {logo} from '../../assets/'
+import { Button } from '../ButtonComponent/Button';
 interface SearchAllProps {
   typeSearch: string;
 }
@@ -62,7 +63,7 @@ const SearchAll: React.FC<SearchAllProps> = ({ typeSearch }) => {
                   </div>
               </div>
             </div>
-            <button
+            <Button
               onClick={() => {
                 navigate(`/${typeSearch=="Tour"?"Tours":typeSearch=="Hotels"?"Hotels":""}`);
               }}
@@ -80,7 +81,7 @@ const SearchAll: React.FC<SearchAllProps> = ({ typeSearch }) => {
             "
             >
               Search
-            </button>
+            </Button>
           </div>
   )
 }

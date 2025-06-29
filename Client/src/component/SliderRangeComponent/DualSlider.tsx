@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./DualSlider.css";
-import { useHotelFilter } from "../../store/filter_store";
+import { useHotelFilter } from "../../store/FilterStore/filter_store";
 
 const DualSlider = () => {
   const {

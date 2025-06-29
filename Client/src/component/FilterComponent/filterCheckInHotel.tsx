@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { useCalendarHotel } from '../../store/calendar_hotel_store';
-import { useHotelFilter } from '../../store/filter_store';
+import { useCalendarHotel } from '../../store/CalendarStore/calendar_hotel_store';
 import { formatDate } from '../../utils/TimeHandle';
-import Calendar_Hotel from '../calendar/calendar_hotel';
-import Traveler_Hotel from '../SelectComponent/traveler_hotel';
-import useTravelerHotel from '../../store/traveler_store_hotel';
+import Calendar_Hotel from '../calendar/CalendarHotel';
+import Traveler_Hotel from '../SelectComponent/PassengersHotel';
+import useTravelerHotel from '../../store/PassengerStore/traveler_store_hotel';
 
 interface Props{
   style?:String

@@ -8,11 +8,11 @@ import traveler from "../../assets/caption.jpg";
 import hotel1 from "../../assets/42769_14072300320020409156.webp";
 import Comment from "../Comment";
 import { formatDate } from "../../utils/TimeHandle";
-import { useCalendarHotel } from "../../store/calendar_hotel_store";
+import { useCalendarHotel } from "../../store/CalendarStore/calendar_hotel_store";
 import Calendar_Hotel from "../../component/calendar/calendar_hotel";
-import useTravelerHotel from "../../store/traveler_store_hotel";
+import useTravelerHotel from "../../store/PassengerStore/traveler_store_hotel";
 import {Link} from "react-router"
-import FilterCheckInHotel from "../../component/FilterComponent/filterCheckInHotel";
+import FilterCheckInHotel from "../../component/FilterComponent/FilterCheckInHotel";
 import {ButtonIcon,Button} from "../../component/ButtonComponent/Button";
 import { FaHeart } from "react-icons/fa6";
 const HotelDetail = () => {

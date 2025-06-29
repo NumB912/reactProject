@@ -1,27 +1,25 @@
 import './App.css'
-import Home from './pages/home'
+import Home from './pages/Home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { loadServices} from './pages/Services'
 import { loadService } from './pages/Service'
 import Service from './pages/Service';
-import Root from './pages/root'
-import About from './pages/about'
-import Contact from './pages/contact'
-import Hotels from './pages/hotel/Hotels';
-import HotelDetail from './pages/hotel/hotel_detail';
-import RentalCars from './pages/car/RentalCars';
-import RentalCarsDetail from './pages/car/rentalCarsDetail';
-import CheckOut from './pages/car/BookCar';
-import Book_hotel from './pages/hotel/book_hotel';
-import Payment_Hotel from './pages/hotel/Payment_Hotel';
-import BookCar from './pages/car/BookCar';
-import PaymentCar from './pages/car/PaymentCar'
-import Tour from './pages/tour/tours';
-import TourDetail from './pages/tour/tourDetail'
-import Book_TOUR from './pages/tour/book_tour';
-import Payment_Tour from './pages/tour/Payment_Tour';
-import servicesLoad from './pages/Services';
-import {Login} from './pages/Auths/login';
+import Root from './pages/Root'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Hotels from './pages/Hotel/Hotels';
+import HotelDetail from './pages/Hotel/hotel_detail';
+import RentalCars from './pages/Car/RentalCars';
+import RentalCarsDetail from './pages/Car/rentalCarsDetail';
+import Book_hotel from './pages/Hotel/book_hotel';
+import Payment_Hotel from './pages/Hotel/Payment_Hotel';
+import BookCar from './pages/Car/BookCar';
+import PaymentCar from './pages/Car/PaymentCar'
+import Tour from './pages/Tour/Tours';
+import TourDetail from './pages/Tour/TourDetail'
+import Book_TOUR from './pages/Tour/TourBook';
+import Payment_Tour from './pages/Tour/TourPayment';
+import BookTour from './pages/Tour/TourBook';
 
 const router = createBrowserRouter([
   {
@@ -79,7 +77,7 @@ const router = createBrowserRouter([
     element:<TourDetail/>
    },{
     path:"Tours/:tourID/Booking",
-    element:<Book_TOUR/>
+    element:<BookTour/>
    },{
     path:"Tours/:tourID/Booking/payment",
     element:<Payment_Tour/>

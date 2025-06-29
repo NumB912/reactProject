@@ -1,20 +1,19 @@
 import React from "react";
-import {Button} from "../../component/ButtonComponent/Button"
+import { Button } from "../../component/ButtonComponent/Button";
 import { Link, useNavigate } from "react-router";
 import wild from "../../assets/wild_card.jpg";
-import vnpay from "../../assets/icon_payment/vnpay.jpg";
-import momo from "../../assets/icon_payment/momo.png"; 
-import RatingStar from "../../component/StarRatingRadioOption";
-import { useTourCalendar } from "../../store/calendar_tour_store";
 import { formatDate } from "../../utils/TimeHandle";
-import { TimeSelected } from "../../component/timer/timeSelected";
-import useTravelerTour from "../../store/traveler_store_tour";
-const Payment_Tour = () => {
+import { useTraveler } from "../../store/PassengerStore/traveler_store_Flight";
+import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";
+import RatingStar from "../../component/StarRatingRadioOption";
+
+const BookTour = () => {
+    const nagative = useNavigate()
+    const {childrenQuantity,adultQuantity,seniorQuantity} = useTraveler()
     const {dateSelectedBook} = useTourCalendar()
-    const {childrenQuantity,adultQuantity} = useTravelerTour()
   return (
     <div className="w-3/4">
-      <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-2 items-center">
+      <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-4 items-center">
         <div className="flex flex-col justify-center items-start p-4">
           <p className="font-bold">John F Kennedy International Airport</p>
           <p className="text-[12px]">Mon, Jun 2, 2025, 10:00 AM</p>
@@ -28,8 +27,7 @@ const Payment_Tour = () => {
           </div>
         </div>
       </div>
-
-      <div className="w-full flex items-center justify-center p-3 flex-wrap">
+            <div className="w-full flex items-center justify-center p-3 flex-wrap">
         {/* Progress Bar Background */}
         <div className="flex w-3/4  flex-row justify-between items-center relative">
           <div className="absolute w-full h-1 top-6 bg-gray-200 z-0"></div>
@@ -61,124 +59,65 @@ const Payment_Tour = () => {
           <p className="text-[15px] text-center">Confirmation</p>
         </div>
       </div>
-
       <p className="font-bold text-2xl">Your Deal</p>
       <div className="grid grid-cols-[1fr_350px] grid-rows-1 border-t border-gray-300 py-5 w-full">
         <div className="flex flex-col gap-3">
           <div className=" infoDriverDetailForm flex flex-col gap-3 border border-gray-300 rounded-md p-3">
             <div className="flex flex-col gap-1">
               <div className="flex flex-col justify-center ">
-                <p className="text-2xl font-bold">Payment method</p>
+                <p className="text-2xl font-bold">Contact Details</p>
               </div>
             </div>
-            <div className="flex flex-col gap-2 justify-center">
-              <div className="flex items-center justify-between gap-2 w-full">
-                <div className="w-full flex gap-3">
-                  <img
-                    src={vnpay}
-                    alt="Payment Method"
-                    className="w-10 h-10 object-cover"
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-1">
+                <div className="flex flex-col justify-center w-full gap-1">
+                  <label className="text-[14px] font-bold">First Name</label>
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                    className="border border-gray-300 rounded-md p-2 w-full"
                   />
-                  <p className="text-md">pay with vnPay</p>
                 </div>
-                <Button
-                  className="bg-black p-3 text-white rounded-md"
-                  onClick={() => {}}
-                >
-                  <Link
-                    to="/hotels/123/booking/123/payment"
-                    className="p-3 text-white rounded-md"
-                  >
-                    Choose
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="flex items-center justify-between gap-2 w-full">
-                <div className="w-full flex gap-3">
-                  <img
-                    src={momo}
-                    alt="Payment Method"
-                    className="w-10 h-10 object-cover"
+                <div className="flex flex-col justify-center w-full gap-1">
+                  <label className="text-[14px] font-bold">Last Name</label>
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                    className="border border-gray-300 rounded-md p-2 w-full"
                   />
-                  <p className="text-md">pay with momo</p>
                 </div>
-                <Button
-                  className="bg-black p-3 text-white rounded-md"
-                  onClick={() => {}}
-                >
-                  <Link
-                    to="/hotels/123/booking/123/payment"
-                    className=" p-3 text-white rounded-md"
-                  >
-                    Choose
-                  </Link>
-                </Button>
               </div>
-            </div>
-          </div>
 
-          <div className=" infoDriverDetailForm flex flex-col gap-3 border border-gray-300 rounded-md p-3">
-            <div className="flex flex-col gap-1">
-              <div className="flex flex-col justify-center ">
-                <p className="text-2xl font-bold">Credit card</p>
+              <div className="w-1/2 flex flex-col justify-center gap-1">
+                <label className="text-[14px] font-bold">Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                />
               </div>
-            </div>
-            <div className="flex gap-2 justify-center">
-              <div className="flex w-full gap-3 flex-col">
-                <div className="flex-1">
-                  <div className="flex-1">
-                    <label className="text-[14px] font-bold">
-                      Cardholder Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Cardholder Name"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-[14px] font-bold">Card Number</label>
-                    <input
-                      type="text"
-                      placeholder="Card Number"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                      maxLength={19}
-                    />
-                  </div>
-                </div>
 
-                <div className="w-full flex gap-3">
-                  <div className="flex flex-col w-1/2 gap-3">
-                    <label className="text-[14px] font-bold">Expiry Date</label>
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                      maxLength={5}
-                    />
-                  </div>
+              <div className="w-1/2 flex flex-col justify-center gap-1">
+                <label className="text-[14px] font-bold">Address</label>
+                <input
+                  type="Address"
+                  placeholder="Address"
+                  name="Address"
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                />
+              </div>
 
-                  <div className="flex flex-col w-1/2 gap-3">
-                    <label className="text-[14px] font-bold">CVC</label>
-                    <input
-                      type="text"
-                      placeholder="CVC"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                      maxLength={4}
-                    />
-                  </div>
-                  
-                </div>
-
-                   <div className="w-full">
-                    <Button
-                      className="w-full bg-black text-white py-2 rounded-md"
-                      onClick={() => {}}
-                    >
-                      Pay Now
-                    </Button>
-                  </div> 
+              <div className="w-1/2 flex flex-col justify-center gap-1">
+                <label className="text-[14px] font-bold">Number Phone</label>
+                <input
+                  type="tel"
+                  placeholder="Number Phone"
+                  name="Number Phone"
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                />
               </div>
             </div>
           </div>
@@ -238,6 +177,9 @@ const Payment_Tour = () => {
               <p className="text-[16px] font-bold">Total</p>
               <p className="text-[16px] font-bold">$ 130.00</p>
             </div>
+                        <Button className="" onClick={()=>nagative("/Tours/123/booking/payment")}>
+                            Done
+                        </Button>
           </div>
           {/* <div className="furtherDetails flex flex-col gap-3 border border-gray-300 rounded-md p-3 w-full mt-3">
             <p className="font-bold py-3 w-full text-xl">Further details</p>
@@ -259,4 +201,4 @@ const Payment_Tour = () => {
   );
 };
 
-export default Payment_Tour;
+export default BookTour;

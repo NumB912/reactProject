@@ -1,11 +1,12 @@
 import React from "react";
-import { CalendarTwoMonth } from "./interfaceCalendar/CalendarBaseProps";
+import { CalendarTwoMonth } from "../interfaceCalendar/CalendarBaseProps";
 import {
   getDateHandle,
   isBetween,
   isSameDay,
   isToday,
-} from "../../utils/TimeHandle";
+} from "../../../utils/TimeHandle";
+import CalendarWrap from "./CalendarWrap";
 
 const Calendar_TwoMonth = ({
   dates,
@@ -70,9 +71,8 @@ const Calendar_TwoMonth = ({
   };
 
   let renderItemTwoMonth = (
-    <div>
-      <div className="calendar">
-        <div className="p-4 pt-0 border-b-2 border-gray-300 mb-5">
+    <CalendarWrap>
+       <div className="p-4 pt-0 border-b-2 border-gray-300 mb-5">
           <i className="fa-solid fa-calendar"></i> Select your dates to find
           best prices for your trip
         </div>
@@ -185,8 +185,7 @@ const Calendar_TwoMonth = ({
             This month
           </div>
         </div>
-      </div>
-    </div>
+    </CalendarWrap>
   );
 
   return <div>{renderItemTwoMonth}</div>;

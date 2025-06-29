@@ -3,17 +3,17 @@ import SideBarFilter from "../../component/SideFilterComponent/filterSide";
 import RatingStar from "../../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import { Link } from "react-router";
 import Calendar_Hotel from "../../component/calendar/calendar_hotel";
-import { useCalendarHotel } from "../../store/calendar_hotel_store";
+import { useCalendarHotel } from "../../store/CalendarStore/calendar_hotel_store";
 import { formatDate } from "../../utils/TimeHandle";
-import useTravelerHotel from "../../store/traveler_store_hotel";
+import useTravelerHotel from "../../store/PassengerStore/traveler_store_hotel";
 import { FilterItem } from "../../model/interface/interface_filter";
-import { useHotelFilter } from "../../store/filter_store";
+import { useHotelFilter } from "../../store/FilterStore/filter_store";
 import CheckBoxOption from "../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import RadioOption from "../../component/SideFilterComponent/OptionType/RadioOption";
 import SliderRange from "../../component/SliderRangeComponent/DualSlider";
 import { Button } from "../../component/ButtonComponent/Button";
 import { HeartFavorite } from "../../component/ButtonComponent/Button";
-import FilterCheckInHotel from "../../component/FilterComponent/filterCheckInHotel";
+import FilterCheckInHotel from "../../component/FilterComponent/FilterCheckInHotel";
 const filterData: FilterItem[] = [
   {
     type: "Radio",

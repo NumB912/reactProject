@@ -1,5 +1,5 @@
 import React from "react";
-import { useChooseCalendar } from "../../store/calendar_store";
+import { useChooseCalendar } from "../../store/CalendarStore/calendar_store";
 import { isToday, isSameDay, getDateHandle } from "../../utils/TimeHandle";
 const Calendar = () => {
   const {
