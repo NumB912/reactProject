@@ -1,5 +1,5 @@
 import React from "react";
-import { useHotelFilter } from "../../../store/filter_store";
+import { useHotelFilter } from "../../../store/FilterStore/filter_store";
 import { FilterOption } from "../../../model/interface/interface_filter";
 interface Prop {
   arr: FilterOption[];

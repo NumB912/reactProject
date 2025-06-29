@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import RatingStar from "../../component/StarRatingRadioOption";
 import { Link, useNavigate } from "react-router";
 import Comment from "../Comment";
-import Calendar_Tour from "../../component/calendar/calendar_tour";
-import { useTourCalendar } from "../../store/calendar_tour_store";
+import Calendar_Tour from "../../component/calendar/CalendarTour";
+import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";
 import { formatDate } from "../../utils/TimeHandle";
-import Calendar_OneMonth from "../../component/calendar/Calendar_OneMonth";
-import Calendar_Tour_OneMonth from "../../component/calendar/Calendar_tour_OneMonth";
-import useTravelerTour from "../../store/traveler_store_tour";
+import Calendar_OneMonth from "../../component/calendar/CalendarBase/Calendar_OneMonth";
+import Calendar_Tour_OneMonth from "../../component/calendar/CalendarTourOneMonth";
+import useTravelerTour from "../../store/PassengerStore/traveler_store_tour";
 import { Button,ButtonIcon } from "../../component/ButtonComponent/Button";
 import { FaHeart } from "react-icons/fa";
 const TourDetail = () => {

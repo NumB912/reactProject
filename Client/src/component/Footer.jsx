@@ -1,6 +1,4 @@
 import React from "react";
-import Calendar_OneMonth from "./calendar/Calendar_OneMonth";
-import Calendar_Tour_OneMonth from "./calendar/Calendar_tour_OneMonth";
 
 const Footer = () => {
   return (

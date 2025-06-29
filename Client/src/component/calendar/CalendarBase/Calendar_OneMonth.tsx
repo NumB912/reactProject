@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { getDateHandle, isBetween, isSameDay, isToday } from "../../utils/TimeHandle";
-import { CalendarBaseProps, CalendarOneMonthWithTimer } from "./interfaceCalendar/CalendarBaseProps";
-import { TimeSelected } from "../Timer/timeSelected";
-import { useCalendarCarStore } from "../../store/calendar_car_store";
-import Calendar_Tour_OneMonth from "./Calendar_tour_OneMonth";
+import { getDateHandle, isBetween, isSameDay, isToday } from "../../../utils/TimeHandle";
+import { CalendarBaseProps, CalendarOneMonthWithTimer } from "../interfaceCalendar/CalendarBaseProps";
+import CalendarWrap from "./CalendarWrap";
+
 
 const Calendar_OneMonth = ({
   dates,
@@ -11,13 +10,16 @@ const Calendar_OneMonth = ({
   nextMonth,
   prevMonth,
   onSelected,
+  onSetThisMonth,
+  onSetThisWeek,
+  onSetTodayMonth,
 }: CalendarBaseProps) => {
   const renderItemOneMonth =(
   dates: Date[],
   onSelected: (date: Date) => void,
 )=>(
     <>
-      <div className="Calendar_rentalCar">
+      <CalendarWrap>
         <div className="flex w-full relative justify-center items-center border-b-2 gap-10 border-gray-300 *:p-3">
           <div className="calendar w-full flex flex-col">
             <div className="nameMonth w-full text-center p-2">
@@ -72,7 +74,20 @@ const Calendar_OneMonth = ({
             </div>
           </div>
         </div>
-      </div>
+        
+        <div className="flex w-full pt-3 px-5 gap-3 *:font-semibold *:hover:bg-black *:hover:cursor-pointer *:hover:text-white">
+          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetTodayMonth}>
+            Today
+          </div>
+          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetThisWeek}>
+            This week
+          </div>
+          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetTodayMonth}>
+            This month
+          </div>
+        </div>
+      </CalendarWrap>
+
     </>
   );
 

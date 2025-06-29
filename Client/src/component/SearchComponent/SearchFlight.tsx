@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ButtonComponent/Button";
-import Calendar from "../calendar/calendar";
-import { useChooseCalendar } from "../../store/calendar_store";
+import Calendar from "../calendar/Calendar";
+import { useChooseCalendar } from "../../store/CalendarStore/calendar_store";
 import { data } from "react-router";
-import { useTraveler } from "../../store/traveler_store_Flight";
-import { TagTicker } from "../SelectComponent/tagTicker";
+import { useTraveler } from "../../store/PassengerStore/traveler_store_Flight";
+import { TagTicker } from "../SelectComponent/PassengersFlight";
 export function SearchFlight() {
   const {
     dateSelectedBook,

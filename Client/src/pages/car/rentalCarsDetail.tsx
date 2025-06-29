@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useCalendarCarStore } from "../../store/calendar_car_store";
+import { useCalendarCarStore } from "../../store/CalendarStore/calendar_car_store";
 import { useTimeStore } from "../../store/time_store";
 import { Button } from "../../component/ButtonComponent/Button";
-import Passengers from "../../component/travelers_quantity/passengers";
-import { Calendar_rentalCar } from "../../component/calendar/calendar_rentalCar";
+import { Calendar_rentalCar } from "../../component/calendar/CalendarRentalCar";
 import { Link, useNavigate } from "react-router";
 import wild from "../../assets/wild_card.jpg";
 const RentalCarsDetail = () => {

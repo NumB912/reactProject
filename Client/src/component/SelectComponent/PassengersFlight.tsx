@@ -1,6 +1,6 @@
 import React from "react";
 import {Button} from "../ButtonComponent/Button";
-import { useTraveler } from "../../store/traveler_store_Flight";
+import { useTraveler } from "../../store/PassengerStore/traveler_store_Flight";
 
 interface TagTickerProps {
   onClose: () => void;

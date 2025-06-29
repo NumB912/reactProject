@@ -1,30 +1,25 @@
 import React from "react";
-import {Button} from "../ButtonComponent/Button";
-import useTravelerHotel from "../../store/traveler_store_hotel";
+import { Button } from "../ButtonComponent/Button";
+import useTravelerTour from "../../store/PassengerStore/traveler_store_tour";
 
 interface TagTickerProps {
-  onClose: (show:boolean) => void;
+  onClose: (isShown:boolean) => void;
 }
 
-const Traveler_Hotel: React.FC<TagTickerProps> = ({ onClose }) => {
+const Traveler_Tour: React.FC<TagTickerProps> = ({ onClose }) => {
   const {
     incrementAdult,
     decrementAdult,
     incrementChildren,
     decrementChildren,
-    incrementRoom,
-    decrementRoom,
     tempAdultQuantity,
     tempChildrenQuantity,
-    tempRoomQuantity,
     submitTravelerData,
     maxAdultQuantity,
-    maxRoomQuantity,
     minAdultQuantity,
-    minRoomQuantity,
     setTotal,
     resetTempTravelerData
-  } = useTravelerHotel();
+  } = useTravelerTour();
   return (
     <div className="traverSelected relative p-10 w-[340px]" onClick={(e)=>{e.stopPropagation()}}>
       <div className="absolute top-0 right-0 p-4" onClick={()=>{
@@ -37,21 +32,6 @@ const Traveler_Hotel: React.FC<TagTickerProps> = ({ onClose }) => {
         <div className="flex justify-between items-center border-b border-gray-300 pb-3">
           <div className="w-1/2">
             <p className="font-bold">Room</p>
-          </div>
-          <div className="select flex gap-2 items-center w-1/2 justify-end">
-            <button
-              className={`minus bg-black rounded-full text-center flex p-3 cursor-pointer ${tempRoomQuantity==minRoomQuantity?"bg-gray-200":""}`}
-              onClick={() => decrementRoom()}
-            >
-              <i className="fa-solid fa-minus text-white"></i>
-            </button>
-            <p className="quantity text-center text-md w-6">{tempRoomQuantity}</p>
-            <button
-              className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer ${tempRoomQuantity==maxRoomQuantity?"bg-gray-200":""}`}
-              onClick={() => incrementRoom()}
-            >
-              <i className="fa-solid fa-plus text-white"></i>
-            </button>
           </div>
         </div>
 
@@ -95,7 +75,7 @@ const Traveler_Hotel: React.FC<TagTickerProps> = ({ onClose }) => {
               {tempChildrenQuantity}
             </p>
             <button
-              className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer ${tempChildrenQuantity==Math.min(20,tempRoomQuantity*10)?"bg-gray-400":""}`}
+              className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer`}
               onClick={() => incrementChildren()}
             >
               <i className="fa-solid fa-plus text-white"></i>
@@ -124,4 +104,4 @@ const Traveler_Hotel: React.FC<TagTickerProps> = ({ onClose }) => {
   );
 };
 
-export default Traveler_Hotel;
+export default Traveler_Tour;

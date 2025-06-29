@@ -1,9 +1,11 @@
 import { create } from "zustand";
-import { DaysOfMonth } from "../utils/TimeHandle";
+import { DaysOfMonth } from "../../utils/TimeHandle";
 
 export interface Prop {
   datesPickUp: Date[];
   datesDropOff: Date[];
+  timePickUpTimeSelected: string;
+  timeDropOffTimeSelected: string;
   dateSelectedPickUp: Date;
   isDateSelectedPickUp: boolean;
   isDateSelected: boolean;
@@ -12,9 +14,10 @@ export interface Prop {
   today: Date;
 
   setDateSelectedPickup: (date: Date) => void;
-  setIsDateSelectedPickUp: (bl: boolean) => void;
-  setIsDateSelectedDropOff: (bl: boolean) => void;
   setdateSelectedDropOff: (date: Date) => void;
+
+  
+
   nextMonthDatesPickUp: () => void;
   prevMonthDatesPickUp: () => void;
   nextMonthDatesDropOff: () => void;
@@ -30,6 +33,8 @@ export interface Prop {
 export const useCalendarCarStore = create<Prop>((set, get) => ({
   datesPickUp: DaysOfMonth(new Date().getMonth(), new Date().getFullYear()),
   datesDropOff: DaysOfMonth(new Date().getMonth() + 1, new Date().getFullYear()),
+  timePickUpTimeSelected: "",
+  timeDropOffTimeSelected: "",
   isDateSelectedDropOff: false,
   dateSelectedPickUp: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1),
   isDateSelectedPickUp: false,
@@ -44,11 +49,11 @@ export const useCalendarCarStore = create<Prop>((set, get) => ({
     set({ dateSelectedPickUp: date });
   },
 
-  setIsDateSelectedPickUp: (bl) => {
+  setIsDateSelectedPickUp: (bl: any) => {
     set({ isDateSelectedPickUp: bl });
   },
 
-  setIsDateSelectedDropOff: (bl) => {
+  setIsDateSelectedDropOff: (bl: any) => {
     set({ isDateSelectedDropOff: bl });
   },
 

@@ -6,7 +6,7 @@ import { Button } from "./ButtonComponent/Button";
 import Modal from "./Modal";
 import { GoogleLogin } from "@react-oauth/google";
 import { Login } from "../pages/Auths/login";
-import useStateLogin from "../store/login_store";
+import useStateLogin from "../store/LoginStore/login_store";
 
 const NavBar = () => {
   const [isShowsome, setShowsome] = useState(false);

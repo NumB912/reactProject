@@ -9,8 +9,6 @@ interface ModalProps {
 }
 const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,parentContainerStyle}: ModalProps) => {
   useEffect(() => {
-    console.log(isOpen)
-    console.log(document.body.classList)
     if (isOpen) {
       document.body.classList.add("overflow-hidden");
     } else {
@@ -27,7 +25,7 @@ const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,paren
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 z-50 flex items-center justify-center w-full h-full ${parentContainerStyle}`}
+      className={`fixed inset-0 z-50 flex items-center justify-center w-full h-full cursor-pointer ${parentContainerStyle}`}
     >
       <div className="absolute inset-0 bg-black opacity-30"></div>
 
@@ -37,7 +35,7 @@ const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,paren
       >
         <button
           onClick={onClose} 
-          className={`absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl ${styleButtonClose}`}
+          className={`absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl cursor-pointer ${styleButtonClose}`}
         >
           ×
         </button>
