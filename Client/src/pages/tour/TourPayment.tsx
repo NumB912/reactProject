@@ -7,7 +7,6 @@ import momo from "../../assets/icon_payment/momo.png";
 import RatingStar from "../../component/StarRatingRadioOption";
 import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";
 import { formatDate } from "../../utils/TimeHandle";
-import { TimeSelected } from "../../component/timer/timeSelected";
 import useTravelerTour from "../../store/PassengerStore/traveler_store_tour";
 const Payment_Tour = () => {
     const {dateSelectedBook} = useTourCalendar()

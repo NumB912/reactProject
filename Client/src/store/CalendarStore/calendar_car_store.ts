@@ -4,30 +4,41 @@ import { DaysOfMonth } from "../../utils/TimeHandle";
 export interface Prop {
   datesPickUp: Date[];
   datesDropOff: Date[];
-  timePickUpTimeSelected: string;
-  timeDropOffTimeSelected: string;
+  timePickUpSelected: string;
+  timeDropOffSelected: string;
   dateSelectedPickUp: Date;
   isDateSelectedPickUp: boolean;
   isDateSelected: boolean;
   dateSelectedDropOff: Date;
   isDateSelectedDropOff: boolean;
   today: Date;
+  isDropOffTimeSelected: boolean;
+  isPickUpTimeSelected:boolean;
+
+  setIsDropOffTimeSelected: (selected: boolean) => void;
+  setTimeDropOffSelected: (time: string) => void;
+  setIsPickUpTimeSelected:(selected:boolean)=>void;
+  setTimePickUpTimeSelected:(time:string)=>void
 
   setDateSelectedPickup: (date: Date) => void;
   setdateSelectedDropOff: (date: Date) => void;
 
-  
+  setIsDateSelectedPickUp:(isDateSelectedPickup:boolean)=>void;
+  setIsDateSelectedDropOff:(isDateSelectedDropOff:boolean)=>void;
 
   nextMonthDatesPickUp: () => void;
   prevMonthDatesPickUp: () => void;
   nextMonthDatesDropOff: () => void;
   prevMonthDatesDropOFf: () => void;
-  setDatesPickUp: (dates: Date[]) => void;
-  setDatesDropOff:(dates:Date[])=>void
-  reset: () => void;
-  SetToday: () => void;
+
   setDatesPickUpFromDate: (date: Date) => void;
   setDatesDropOffFromDate: (date: Date) => void;
+
+  setDatesPickUp: (dates: Date[]) => void;
+  setDatesDropOff:(dates:Date[])=>void
+
+  reset: () => void;
+  SetToday: () => void;
 }
 
 export const useCalendarCarStore = create<Prop>((set, get) => ({
@@ -41,6 +52,16 @@ export const useCalendarCarStore = create<Prop>((set, get) => ({
   dateSelectedDropOff: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2),
   isDateSelected: false,
   today: new Date(),
+  isDropOffTimeSelected: false,
+  timeDropOffSelected: "10:00 AM",
+  isPickUpTimeSelected: false,
+  timePickUpSelected: "10:00 AM",
+
+  setIsDropOffTimeSelected: (selected: boolean) => set({ isDropOffTimeSelected: selected }),
+  setTimeDropOffSelected: (time: string) => set({ timeDropOffSelected: time }),
+  setIsPickUpTimeSelected: (selected: boolean) => set({ isPickUpTimeSelected: selected }),
+  setTimePickUpTimeSelected: (time: string) => set({ timePickUpSelected: time }),
+  
 
   setDateSelectedPickup: (date) => {
     if (date >= get().dateSelectedDropOff) {

@@ -1,31 +1,50 @@
-import { useState } from 'react';
+import React, { useEffect } from "react";
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  styleContainer?: String;
+  styleButtonClose?: String;
+  parentContainerStyle?: string;
+}
+const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,parentContainerStyle}: ModalProps) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
 
-export default function ExampleModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  if (!isOpen) return null;
+
 
   return (
-    <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        Mở Modal
-      </button>
+    <div
+      onClick={onClose}
+      className={`fixed inset-0 z-50 flex items-center justify-center w-full h-full cursor-pointer ${parentContainerStyle}`}
+    >
+      <div className="absolute inset-0 bg-black opacity-30"></div>
 
-      {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-xl max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Tiêu đề Modal</h2>
-            <p>Nội dung bên trong modal.</p>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
-            >
-              Đóng
-            </button>
-          </div>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full bg-white rounded-md shadow-xl overflow-auto ${styleContainer} `}
+      >
+        <div className="sticky w-full top-0">
+                  <button
+          onClick={onClose} 
+          className={`absolute top-1 right-1 text-gray-500 hover:text-red-500 text-xl cursor-pointer ${styleButtonClose}`}
+        >
+          ×
+        </button>
         </div>
-      )}
-    </>
+        {children}
+      </div>
+    </div>
   );
-}
+};
+
+export default Modal;

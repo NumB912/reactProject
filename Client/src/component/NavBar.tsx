@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "/src/assets/logo.png";
 import "./styles/style_nav.css";
 import { Button } from "./ButtonComponent/Button";
-import Modal from "./Modal";
+import Modal from "./ModalComponent/Modal";
 import { GoogleLogin } from "@react-oauth/google";
 import { Login } from "../pages/Auths/login";
 import useStateLogin from "../store/LoginStore/login_store";

@@ -2,7 +2,7 @@ import React from 'react';
 import { usePassengerCar } from '../../store/PassengerStore/traveler_store_car';
 
 const Passengers = () => {
-  const { setNumberPassenger, setNumberPassengerOptions,numberPassenger,numberPassengerOptions } = usePassengerCar();
+  const { setNumberPassenger,numberPassengerOptions } = usePassengerCar();
 
   return (
     <div className="passengers w-full">

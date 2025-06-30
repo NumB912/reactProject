@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "../../component/ButtonComponent/Button";
 import { Link, useNavigate } from "react-router";
-import wild from "../../assets/wild_card.jpg";
 import { formatDate } from "../../utils/TimeHandle";
 import { useTraveler } from "../../store/PassengerStore/traveler_store_Flight";
 import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";

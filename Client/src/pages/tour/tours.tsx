@@ -19,7 +19,7 @@ import ReusableSlider from "../../component/SliderComponent/SliderComponent";
 import DropDownSelect from "../../component/DropDownComponent/DropDownSelect"
 import { FaSort } from "react-icons/fa";
 import Calendar_OneMonth from "../../component/calendar/CalendarBase/Calendar_OneMonth";
-import Modal from "../../component/Modal";
+import Modal from "../../component/ModalComponent/Modal";
 import { HeartFavorite } from "../../component/ButtonComponent/Button";
 const Hotels = () => {
   const [price, setPrice] = useState(0);

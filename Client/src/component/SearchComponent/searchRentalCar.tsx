@@ -9,40 +9,11 @@ import { useNavigate } from "react-router-dom";
 function SearchRental() {
   const navigate = useNavigate();
 
-  const {
-    setdateSelectedDropOff,
-    setDateSelectedPickup,
-    dateSelectedPickUp,
-    dateSelectedDropOff,
-    isDateSelectedDropOff,
-    isDateSelectedPickUp,
-    setIsDateSelectedDropOff,
-    setIsDateSelectedPickUp,
-    nextMonthDatesDropOff,
-    nextMonthDatesPickUp,
-    prevMonthDatesDropOFf,
-    prevMonthDatesPickUp,
-    datesPickUp,
-    datesDropOff,
-    setDatesDropOffFromDate,
-    setDatesPickUpFromDate
-  } = useCalendarCarStore();
-  
-  const {
-    setTimeDropOffSelected,
-    setTimePickUpTimeSelected,
-    timeDropOffSelected,
-    timePickUpTimeSelected,
-  } = useTimeStore();
+
 
   const [passengers,setSelectedPassengers] = useState<string>("Select")
   const [isSelectedPassenger,setIsSelectedPassenger] = useState<boolean>(false)
 
-  useEffect(()=>{
-    const currentDay = new Date();
-    setDateSelectedPickup(new Date(currentDay.getFullYear(),currentDay.getMonth(),currentDay.getDate()+1))
-    setdateSelectedDropOff(new Date(currentDay.getFullYear(),currentDay.getMonth(),currentDay.getDate()+2))
-  },[])
 
 
   return (
@@ -63,103 +34,11 @@ function SearchRental() {
       <div
         className="gap-2 relative flex items-center max-lg:flex-wrap max-lg:justify-center *:gap-3 max-lg:w-3/4 max-xl:w-8/10 "
       >
-        <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap *:border *:w-full *:p-4 *:flex *:items-center *:gap-3 *:rounded-md *:min-xl:min-w-48">
-          <div
-            className="CheckInBlock border"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsDateSelectedPickUp(!isDateSelectedPickUp);
-              setIsDateSelectedDropOff(false);
-              setIsSelectedPassenger(false)
-              setDatesPickUpFromDate(dateSelectedPickUp)
-            }}
-          >
-            <i className="fa-solid fa-calendar"></i>
-            <div className="DCI">
-              <p className="text-[13px] font-bold">
-                {" "}
-                {dateSelectedPickUp.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                }) +
-                  " - " +
-                  timePickUpTimeSelected}
-              </p>
-            </div>
-            <div
-              className={`bg-white absolute w-[400px] top-14 left-0 p-5 border border-gray-300 rounded-2xl z-10
-      max-lg:left-full max-2xl:left-0 ${isDateSelectedPickUp ? "" : "hidden"}`}
-            >
-              <Calendar_rentalCar
-                titleTypeSeletedDate="Pick Up"
-                type="rentalCar"
-                dates={datesPickUp}
-                dateSelected={dateSelectedPickUp}
-                onSelected={(date: Date) => {
-                  setDateSelectedPickup(date);
-                }}
-                selectTime={timePickUpTimeSelected}
-                setSelectTime={(time: string) => {
-                  setTimePickUpTimeSelected(time);
-                }}
-                nextMonth={nextMonthDatesPickUp}
-                prevMonth={nextMonthDatesDropOff}
-              />
-            </div>
-          </div>
-
-          <div
-            className="CheckInBlock relative"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsDateSelectedDropOff(!isDateSelectedDropOff);
-              setIsDateSelectedPickUp(false);
-              setIsSelectedPassenger(false);  
-              setDatesDropOffFromDate(dateSelectedDropOff)
-
-            }}
-          >
-            <i className="fa-solid fa-calendar"></i>
-            <div className="DCI">
-              <p className="text-[13px] font-bold">
-                {dateSelectedDropOff.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                }) +
-                  " - " +
-                  timeDropOffSelected}
-              </p>
-            </div>
-
-            <div
-              className={`bg-white absolute w-[400px] top-14 left-0 p-5 border border-gray-300 rounded-2xl z-10
-      max-lg:left-full max-2xl:left-0 ${isDateSelectedDropOff ? "" : "hidden"}`}
-            >
-             <Calendar_rentalCar
-             titleTypeSeletedDate="Drop Off"
-                type="rentalCar"
-                dates={datesDropOff}
-                dateSelected={dateSelectedDropOff}
-                onSelected={(date: Date) => {
-                  setdateSelectedDropOff(date);
-                }}
-                selectTime={timeDropOffSelected}
-                setSelectTime={(time: string) => {
-                  setTimeDropOffSelected(time);
-                }}
-                nextMonth={nextMonthDatesDropOff}
-                prevMonth={prevMonthDatesDropOFf}
-              />
-            </div>
-          </div>
-        </div>
-
+        <Calendar_rentalCar/>
         <div className="roomAndGuest relative border p-4 pr-8 flex items-center gap-3 rounded-md max-lg:w-full *:min-xl:min-w-10"
             onClick={(e)=>{
               e.stopPropagation()
               setIsSelectedPassenger(true)
-              setIsDateSelectedPickUp(false);
-              setIsDateSelectedDropOff(false);
 
             }}
         >
@@ -171,7 +50,7 @@ function SearchRental() {
             className={`bg-white absolute top-14 left-0 w-full border border-gray-300 z-10 rounded-md ${isSelectedPassenger ? "" : "hidden"}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <Passengers setSelectedPassengers={setSelectedPassengers} setIsSelectedPassenger={setIsSelectedPassenger}/>
+            <Passengers/>
           </div>
         </div>
       </div>
