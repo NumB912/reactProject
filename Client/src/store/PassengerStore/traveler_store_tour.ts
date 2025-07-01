@@ -15,6 +15,9 @@ interface TravelerState {
   minAdultQuantity:number;
   total:number;
 
+  isShow:boolean;
+
+  setIsShow:(isShow:boolean)=>void;
   setTotal:()=>void;
   setTempAdultQuantity: (adults: number) => void;
   setTempChildrenQuantity: (children: number) => void;
@@ -43,6 +46,11 @@ const useTravelerTour = create<TravelerState>((set, get) => (
   tempAdultQuantity: 0,
   tempSeniorQuantity: 0,
   total: 0,
+  isShow:false,
+  
+  setIsShow(isShow:boolean) {
+    set({isShow:isShow})
+  },
 
   setTempAdultQuantity: (adults) => set({ tempAdultQuantity: adults }),
   setTempChildrenQuantity: (children) =>

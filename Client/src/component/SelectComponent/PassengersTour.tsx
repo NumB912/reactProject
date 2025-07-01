@@ -1,12 +1,14 @@
 import React from "react";
 import { Button } from "../ButtonComponent/Button";
 import useTravelerTour from "../../store/PassengerStore/traveler_store_tour";
+import PassengerWrap from "./PassengersWrap";
 
-interface TagTickerProps {
-  onClose: (isShown:boolean) => void;
+interface PassengersTourProp{
+  containerStyle?:string;
+  passengerStyle?:string
 }
 
-const Traveler_Tour: React.FC<TagTickerProps> = ({ onClose }) => {
+const PassengersTour = ({containerStyle,passengerStyle}:PassengersTourProp) => {
   const {
     incrementAdult,
     decrementAdult,
@@ -18,90 +20,129 @@ const Traveler_Tour: React.FC<TagTickerProps> = ({ onClose }) => {
     maxAdultQuantity,
     minAdultQuantity,
     setTotal,
-    resetTempTravelerData
+    total,
+    setIsShow,
+    isShow,
+    resetTempTravelerData,
   } = useTravelerTour();
   return (
-    <div className="traverSelected relative p-10 w-[340px]" onClick={(e)=>{e.stopPropagation()}}>
-      <div className="absolute top-0 right-0 p-4" onClick={()=>{
-        onClose(false)}}>
-        <i className="fa-solid fa-xmark"></i>
+    <div
+      className="tourPassenger w-full flex border justify-evenly items-center p-1.5 gap-3 rounded-sm"
+      onClick={(e) => {
+        setIsShow(!isShow);
+      }}
+    >
+      <i className="fa-solid fa-users"></i>
+      <div className="RAG text-center ">
+        <p className="text-[10px]">Passengers</p>
+        <p className="text-[10=3px] font-bold">{total}</p>
       </div>
+      <i className="fa-solid fa-caret-down"></i>
 
-      <div className="flex gap-6 flex-col border-b pb-4 border-gray-300">
-        {/* Room */}
-        <div className="flex justify-between items-center border-b border-gray-300 pb-3">
-          <div className="w-1/2">
-            <p className="font-bold">Room</p>
-          </div>
-        </div>
-
-        {/* AdultAdult */}
-        <div className="flex justify-between items-center">
-          <div className="w-1/2">
-            <p className="font-bold">Adult</p>
-          </div>
-          <div className="select flex gap-2 items-center w-1/2 justify-end">
-            <button
-              className={`minus bg-black rounded-full text-center flex p-3 cursor-pointer ${minAdultQuantity==tempAdultQuantity?"bg-gray-200":""}`}
-              onClick={() => decrementAdult()}
-              disabled={minAdultQuantity==tempAdultQuantity?true:false}
-            >
-              <i className="fa-solid fa-minus text-white"></i>
-            </button>
-            <p className="quantity text-center text-md w-6">{tempAdultQuantity}</p>
-            <button
-              className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer ${maxAdultQuantity==tempAdultQuantity?"bg-gray-200":""}`}
-              onClick={() => incrementAdult()}
-              disabled={maxAdultQuantity==tempAdultQuantity?true:false}
-            >
-              <i className="fa-solid fa-plus text-white"></i>
-            </button>
-          </div>
-        </div>
-
-        {/* Children */}
-        <div className="flex justify-between items-center">
-          <div className="w-1/2">
-            <p className="font-bold">Children</p>
-          </div>
-          <div className="select flex gap-2 items-center w-1/2 justify-end">
-            <button
-              className={`minus bg-black rounded-full text-center flex p-3 cursor-pointer ${tempChildrenQuantity==0?"bg-gray-200":""}`}
-              onClick={() => decrementChildren()}
-            >
-              <i className="fa-solid fa-minus text-white"></i>
-            </button>
-            <p className="quantity text-center text-md w-6">
-              {tempChildrenQuantity}
-            </p>
-            <button
-              className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer`}
-              onClick={() => incrementChildren()}
-            >
-              <i className="fa-solid fa-plus text-white"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Reset + Apply */}
-      <div className="tagHandle pt-4 flex justify-between items-center">
+      <div
+        className={`bg-white absolute top-28 border border-gray-300 rounded-sm z-10 ${
+          isShow ? "" : "hidden"
+        }`}
+      >
         <div
-          className="underline text-black font-semibold cursor-pointer"
-          onClick={resetTempTravelerData}
+          className="traverSelected relative p-10 w-[400px]"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
-          Reset
+          <div
+            className="absolute top-0 right-0 p-4"
+            onClick={() => {
+              setIsShow(!isShow);
+            }}
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+
+          <div className="flex gap-6 flex-col border-b pb-4 border-gray-300">
+  
+            <div className="flex justify-between items-center">
+              <div className="w-1/2">
+                <p className="font-bold">Adult</p>
+              </div>
+              <div className="select flex gap-2 items-center w-1/2 justify-end">
+                <button
+                  className={`minus bg-black rounded-full text-center flex p-3 cursor-pointer ${
+                    minAdultQuantity == tempAdultQuantity ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => decrementAdult()}
+                  disabled={
+                    minAdultQuantity == tempAdultQuantity ? true : false
+                  }
+                >
+                  <i className="fa-solid fa-minus text-white"></i>
+                </button>
+                <p className="quantity text-center text-md w-6">
+                  {tempAdultQuantity}
+                </p>
+                <button
+                  className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer ${
+                    maxAdultQuantity == tempAdultQuantity ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => incrementAdult()}
+                  disabled={
+                    maxAdultQuantity == tempAdultQuantity ? true : false
+                  }
+                >
+                  <i className="fa-solid fa-plus text-white"></i>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div className="w-1/2">
+                <p className="font-bold">Children</p>
+              </div>
+              <div className="select flex gap-2 items-center w-1/2 justify-end">
+                <button
+                  className={`minus bg-black rounded-full text-center flex p-3 cursor-pointer ${
+                    tempChildrenQuantity == 0 ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => decrementChildren()}
+                >
+                  <i className="fa-solid fa-minus text-white"></i>
+                </button>
+                <p className="quantity text-center text-md w-6">
+                  {tempChildrenQuantity}
+                </p>
+                <button
+                  className={`plus bg-black rounded-full text-center flex p-3 cursor-pointer`}
+                  onClick={() => incrementChildren()}
+                >
+                  <i className="fa-solid fa-plus text-white"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="tagHandle pt-4 flex justify-between items-center">
+            <div
+              className="underline text-black font-semibold cursor-pointer"
+              onClick={resetTempTravelerData}
+            >
+              Reset
+            </div>
+
+            <Button
+              className="w-30"
+              onClick={() => {
+                submitTravelerData();
+                setTotal();
+                setIsShow(!isShow)
+              }}
+            >
+              <p>Update</p>
+            </Button>
+          </div>
         </div>
-
-        <Button className="w-30" onClick={()=>{submitTravelerData()
-          setTotal()
-
-        }}>
-          <p>Update</p>
-        </Button>
       </div>
     </div>
   );
 };
 
-export default Traveler_Tour;
+export default PassengersTour;

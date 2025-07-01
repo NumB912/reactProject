@@ -9,12 +9,9 @@ import { useNavigate } from "react-router-dom";
 function SearchRental() {
   const navigate = useNavigate();
 
-
-
-  const [passengers,setSelectedPassengers] = useState<string>("Select")
-  const [isSelectedPassenger,setIsSelectedPassenger] = useState<boolean>(false)
-
-
+  const [passengers, setSelectedPassengers] = useState<string>("Select");
+  const [isSelectedPassenger, setIsSelectedPassenger] =
+    useState<boolean>(false);
 
   return (
     <div className="flex justify-center items-center gap-2 flex-wrap w-8/10">
@@ -31,34 +28,15 @@ function SearchRental() {
         </div>
       </div>
 
-      <div
-        className="gap-2 relative flex items-center max-lg:flex-wrap max-lg:justify-center *:gap-3 max-lg:w-3/4 max-xl:w-8/10 "
-      >
-        <Calendar_rentalCar/>
-        <div className="roomAndGuest relative border p-4 pr-8 flex items-center gap-3 rounded-md max-lg:w-full *:min-xl:min-w-10"
-            onClick={(e)=>{
-              e.stopPropagation()
-              setIsSelectedPassenger(true)
-
-            }}
-        >
-          <i className="fa-solid fa-users"></i>
-          <div className="RAG">
-            <p className="text-[13px] font-bold min-w-23"> {passengers=="1"?`${passengers} passenger`:passengers=="Select"?`passenger`:`${passengers} passengers`}</p>
-          </div>
-          <div
-            className={`bg-white absolute top-14 left-0 w-full border border-gray-300 z-10 rounded-md ${isSelectedPassenger ? "" : "hidden"}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Passengers/>
-          </div>
-        </div>
+      <div className="gap-2 relative flex items-center max-lg:flex-wrap max-lg:justify-center *:gap-3 max-lg:w-3/4 max-xl:w-8/10 ">
+        <Calendar_rentalCar />
+        <Passengers />
       </div>
 
       <Button
         className="p-4 w-[150px] max-lg:w-3/4 max-xl:w-8/10 max-2xl:w-11/12"
         onClick={() => {
-          navigate("/rentalcar")
+          navigate("/rentalcar");
         }}
       >
         Search

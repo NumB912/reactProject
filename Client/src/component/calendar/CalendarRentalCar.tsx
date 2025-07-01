@@ -10,8 +10,9 @@ import { TimeSelected } from "../TimerComponent/timeSelected";
 import { useTimeStore } from "../../store/time_store";
 import Calendar_OneMonth_Timer from "./CalendarBase/Calendar_OneMonthWithTime";
 import { CalendarOneMonthWithTimer } from "./interfaceCalendar/CalendarBaseProps";
+import { usePassengerCar } from "../../store/PassengerStore/traveler_store_car";
 export const Calendar_rentalCar = () => {
-  const [isSelectedPassenger, setIsSelectedPassenger] = useState<boolean>(false)
+ const {setIsSelectedPassenger} = usePassengerCar()
     const {
       datesPickUp,
       setdateSelectedDropOff,
@@ -43,7 +44,9 @@ export const Calendar_rentalCar = () => {
   },[])
 
   return (
-        <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap *:border *:w-full *:p-4 *:flex *:items-center *:gap-3 *:rounded-md *:min-xl:min-w-48">
+        <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap 
+        *:border *:w-full *:p-4 *:flex *:items-center *:gap-3 *:rounded-md *:cursor-pointer
+        *:min-xl:min-w-48">
           <div
             className="CheckInBlock border"
             onClick={(e) => {

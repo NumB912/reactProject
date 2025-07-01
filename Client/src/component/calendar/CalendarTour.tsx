@@ -3,7 +3,13 @@ import React from "react";
 import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";
 import Calendar_OneMonth from "./CalendarBase/Calendar_OneMonth";
 import { formatDate } from "../../utils/TimeHandle";
-const Calendar_Tour = () => {
+
+interface CalendarTourProp{
+  containerStyle?:String;
+  CalendarStyleTour?:String;
+}
+
+const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
   const {
     dateSelectedBook,
     datesBook,
@@ -14,15 +20,8 @@ const Calendar_Tour = () => {
     isOpen,
   } = useTourCalendar();
   return (
-    <div
-      className="w-full gap-2 relative flex justify-start items-center self-end 
-              cursor-pointer
-            *:flex *:justify-evenly *:items-center *:p-3 *:gap-3 *:border *:border-gray-300 *:rounded-md *:shadow-sm
-            *:max-2xl:w-3/5 *:max-lg:w-full
-            max-sm:flex-wrap max-2xl:justify-center max-lg:w-full"
-    >
       <div
-        className="CheckInBlock relative"
+        className={`CheckInBlock relative w-full flex border justify-evenly items-center p-1.5 gap-3 rounded-sm ${containerStyle}`}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
@@ -31,7 +30,8 @@ const Calendar_Tour = () => {
         <i className="fa-solid fa-calendar"></i>
         <div
           className="DCI text-center 
-                max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50"
+            "
+            // 
         >
           <p className="text-[10px]">Departure date</p>
           <p className="text-[13px] font-bold">
@@ -39,9 +39,9 @@ const Calendar_Tour = () => {
           </p>
 
           <div
-            className={`bg-white absolute top-16 left-0  p-5 border border-gray-300 rounded-2xl z-20
-                     w-[400px]
-                     max-xl:left-1/2 max-xl:-translate-x-1/2 max-xl:w-4/5  max-md:w-full ${isOpen ? "" : "hidden"}`}
+            className={`bg-white absolute top-13 left-1/2 -translate-x-1/2 p-5 border border-gray-300 rounded-sm z-20
+                     w-[400px] ${CalendarStyleTour}
+                     max-md:w-full ${isOpen ? "" : "hidden"}`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -58,7 +58,6 @@ const Calendar_Tour = () => {
         </div>
         <i className="fa-solid fa-caret-down"></i>
       </div>
-    </div>
   );
 };
 

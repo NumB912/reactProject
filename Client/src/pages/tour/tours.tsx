@@ -77,8 +77,26 @@ const Hotels = () => {
           Your place you want to go
         </p>
       </div>
-      <div className="FindTab w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 border-b border-gray-300 ">
-                <Calendar_Tour />
+      <div className="Calendar w-full col-span-2 flex justify-center items-end gap-3">
+        <div className="flex flex-col w-full border-r border-gray-200 p-2 max-lg:hidden ">
+          <p className="text-[15px] font-bold px-2">Location:</p>
+
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              className="bg-white p-2 w-full"
+              placeholder="Find hotels...."
+            />
+            <button
+              type="button"
+              className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
+            >
+              <i className="fa-solid fa-x"></i>
+            </button>
+          </div>
+        </div>
+
+                <Calendar_Tour containerStyle={"w-1/5 max-h-15"} CalendarStyleTour={"top-12 w-full"}/>
       </div>
 
       <div

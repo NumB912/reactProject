@@ -10,6 +10,7 @@ import Calendar_Tour_OneMonth from "../../component/calendar/CalendarTourOneMont
 import useTravelerTour from "../../store/PassengerStore/traveler_store_tour";
 import { Button,ButtonIcon } from "../../component/ButtonComponent/Button";
 import { FaHeart } from "react-icons/fa";
+import Traveler_Tour from "../../component/SelectComponent/PassengersTour";
 const TourDetail = () => {
   const navigate = useNavigate();
 
@@ -282,32 +283,11 @@ const TourDetail = () => {
                 </div> */}
                 <div className="font-bold">Select date and travelers</div>
                 <div
-                  className="w-full gap-2 relative flex justify-start items-center self-end max-sm:flex-wrap max-lg:justify-center
-        *:flex *:justify-evenly *:items-center *:p-1.5 *:gap-3 *:border *:border-gray-300 *:rounded-2xl max-lg:w-full *:max-md:w-3/4 *:max-sm:w-full *:shadow-sm"
+                  className="w-full gap-2 relative flex flex-wrap justify-start items-center self-end max-sm:flex-wrap max-lg:justify-center max-lg:w-full"
                 >
-                  <Calendar_Tour_OneMonth />
+                  <Calendar_Tour containerStyle={""} CalendarStyleTour={""}/>
 
-                  <div
-                    className="tourPassenger"
-                    onClick={(e) => {
-                      setShowCheckIn(true);
-                    }}
-                  >
-                    <i className="fa-solid fa-users"></i>
-                    <div className="RAG max-md:min-w-60 text-center max-sm:min-w-50">
-                      <p className="text-[10px]">Passengers</p>
-                      <p className="text-[10px]">{total}</p>
-                    </div>
-                    <i className="fa-solid fa-caret-down"></i>
-
-                    <div
-                      className={`bg-white absolute top-[62px] border border-gray-300 rounded-2xl z-10 ${
-                        showCheckIn ? "" : "hidden"
-                      }`}
-                    >
-                      <Traveler_Tour onClose={setShowCheckIn} />
-                    </div>
-                  </div>
+                  <Traveler_Tour/>
                 </div>
 
                 <div className="option">

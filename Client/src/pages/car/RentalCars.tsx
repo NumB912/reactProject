@@ -125,28 +125,8 @@ const RentalCars = () => {
 
         <div className="w-3/5 gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-lg:2/5 max-sm:w-full max-md:w-7/8">
           <Calendar_rentalCar/>
-         <div className="roomAndGuest relative border p-1 pr-8 flex items-center gap-3 max-lg:w-full w-full rounded-md"
-            onClick={(e)=>{
-              e.stopPropagation()
-              // setIsSelectedPassenger(!isSelectedPassenger);
-              // setIsDateSelectedPickUp(false);
-              // setIsDateSelectedDropOff(false);
-            }}
-        >
-          <i className="fa-solid fa-users"></i>
-          <div className="RAG flex flex-col justify-center items-start">
-            <p className="text-[10px] font-normal">passenger</p>
-            {/* <p className="text-[13px] font-bold min-w-23"> {passengers=="1"?`${passengers} passenger`:passengers=="Select"?`passenger`:`${passengers} passengers`}</p> */}
-          </div>
-          <div
-            className={`bg-white w-full absolute top-[238px] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-gray-300 z-10 rounded-2xl` 
-              // ${isSelectedPassenger ? "" : "hidden"}
-              }
-            onClick={(e) => e.stopPropagation()}
-          >
             <Passengers/>
-          </div>
-        </div>
+
 
           <div className="search w-full">
             <Button

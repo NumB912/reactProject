@@ -20,7 +20,7 @@ const Calendar_Tour_OneMonth = () => {
   const [showCheckIn, setShowCheckIn] = useState(false);
   return (
       <div
-        className="CheckInBlock relative"
+        className="CheckInBlock relative w-full"
         onClick={(e) => {
           e.stopPropagation();
           setShowCheckIn(!showCheckIn);
@@ -49,7 +49,6 @@ const Calendar_Tour_OneMonth = () => {
             />
           </div>
         </div>
-        <i className="fa-solid fa-caret-down"></i>
       </div>
   );
 };
