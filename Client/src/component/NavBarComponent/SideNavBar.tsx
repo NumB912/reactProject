@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router';
 import logo from "../../../src/assets/logo.png";
-import Tabs from './tabs';
+import Tabs, { Tab } from './tabs';
 const SideNavBar = () => {
     const [isShowsome, setShowsome] = useState(false);
 
@@ -16,6 +16,28 @@ const SideNavBar = () => {
             document.body.style.overflow = "auto";
         };
     }, [isShowsome]);
+
+        const navArrs:Tab[] = [{
+        navigationID: "1",
+        contentNavigation: "Home",
+        urlNavigation: "/Home"
+    },
+    {
+        navigationID:"2",
+        contentNavigation: "About",
+        urlNavigation: "/About"
+    },
+    {
+        navigationID: "3",
+        contentNavigation: "Services",
+        urlNavigation: "/Service"
+    },
+    {
+        navigationID: "4",
+        contentNavigation: "Contact",
+        urlNavigation: "/Contact"
+    },
+    ]
 
     return (
         <>
@@ -45,7 +67,7 @@ const SideNavBar = () => {
                     <i className="fa-solid fa-x"></i>
                 </button>
 
-                <Tabs onClose={() => setShowsome(!isShowsome)} classNameContainerStyle=" flex w-full flex-col border-t border-gray-200 my-1.5" contentNaigationStyle='p-4' />
+                <Tabs activeStyle='bg-gray-200 font-semibold' elseActiveStyle='hover:bg-gray-200' tabs={navArrs} onClose={() => setShowsome(!isShowsome)} classNameContainerStyle=" flex w-full flex-col border-t border-gray-200 my-1.5" contentNaigationStyle='p-4' />
 
             </div>
 

@@ -17,10 +17,15 @@ import BookCar from './pages/Car/BookCar';
 import PaymentCar from './pages/Car/PaymentCar'
 import Tour from './pages/Tour/Tours';
 import TourDetail from './pages/Tour/TourDetail'
-import Book_TOUR from './pages/Tour/TourBook';
 import Payment_Tour from './pages/Tour/TourPayment';
 import BookTour from './pages/Tour/TourBook';
 import InfoClient from './pages/Auths/InfoClient/InfoClient'
+import Reviews from './pages/Auths/InfoClient/reviews';
+import Photos from './pages/Auths/InfoClient/Photos';
+import Trips from './pages/Auths/InfoClient/Trips';
+import Favorites from './pages/Auths/InfoClient/Favorites';
+import Coupons from './pages/Auths/InfoClient/Coupon';
+import Booking from './pages/Auths/InfoClient/Booking';
 
 const router = createBrowserRouter([
   {
@@ -84,8 +89,29 @@ const router = createBrowserRouter([
     element:<Payment_Tour/>
    },
    {
-    path:"Profile/:userID",
-    element:<InfoClient/>
+    path:"Profile/:id",
+    element:<InfoClient/>,
+    children:[{
+      path:"reviews",
+      element:<Reviews/>
+    },{
+      path:"photos",
+      element:<Photos/>
+    },
+  {
+      path:"trips",
+      element:<Trips/>
+    },
+  {
+      path:"favorites",
+      element:<Favorites/>
+    },  {
+      path:"coupons",
+      element:<Coupons/>
+    },{
+      path:"bookings",
+      element:<Booking/>
+    }]
    }
   ]
   }

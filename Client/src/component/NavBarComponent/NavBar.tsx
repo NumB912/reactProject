@@ -8,7 +8,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { Login } from "../../pages/Auths/login";
 import useStateLogin from "../../store/LoginStore/login_store";
 import SideNavBar from "./SideNavBar";
-import Tabs from "./tabs";
+import Tabs, { Tab } from "./tabs";
 
 const NavBar = () => {
   const [isShowsome, setShowsome] = useState(false);
@@ -23,6 +23,27 @@ const NavBar = () => {
     await logout();
   };
 
+           const navArrs:Tab[] = [{
+           navigationID: "1",
+           contentNavigation: "Home",
+           urlNavigation: "/Home"
+       },
+       {
+           navigationID:"2",
+           contentNavigation: "About",
+           urlNavigation: "/About"
+       },
+       {
+           navigationID: "3",
+           contentNavigation: "Services",
+           urlNavigation: "/Service"
+       },
+       {
+           navigationID: "4",
+           contentNavigation: "Contact",
+           urlNavigation: "/Contact"
+       },
+       ]
 
   return (
     <>
@@ -30,7 +51,7 @@ const NavBar = () => {
         <div className="w-3/12 max-sm:hidden">
           <img src={logo} alt="Logo" className="w-20 m-auto" />
         </div>
-        <Tabs classNameContainerStyle="p-2 flex gap-2 justify-center items-center w-6/12 *:font-thin" contentNaigationStyle="p-2"/>
+        <Tabs activeStyle='bg-gray-200 font-semibold' elseActiveStyle='hover:bg-gray-200' tabs={navArrs} classNameContainerStyle="p-2 flex gap-2 justify-center items-center w-6/12 *:font-thin" contentNaigationStyle="p-2"/>
         <div className="h-full flex items-center justify-between w-3/12 max-sm:hidden">
           {/* <img className='object-cover w-10 h-10 rounded-full border border-gray-500 hidden' src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Bocchi_the_Rock%21_logo.svg/512px-Bocchi_the_Rock%21_logo.svg.png" alt="User Profile" />*}
             {/* <span className='userName hidden'>Username</span> */}

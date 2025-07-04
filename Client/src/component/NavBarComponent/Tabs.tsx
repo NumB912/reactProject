@@ -4,42 +4,30 @@ import { Link, NavLink } from 'react-router'
 interface TabsProp{
     classNameContainerStyle?:string;
     contentNaigationStyle?:string;
+    activeStyle:string;
+    elseActiveStyle:string;
     onClose?:()=>void;
+    tabs:Tab[];
 }
 
-const Tabs = ({classNameContainerStyle,contentNaigationStyle,onClose}:TabsProp) => {
-    const navArrs = [{
-        navigationID: 1,
-        contentNavigation: "Home",
-        urlNavigation: "/Home"
-    },
-    {
-        navigationID: 2,
-        contentNavigation: "About",
-        urlNavigation: "/About"
-    },
-    {
-        navigationID: 3,
-        contentNavigation: "Services",
-        urlNavigation: "/Service"
-    },
-    {
-        navigationID: 4,
-        contentNavigation: "Contact",
-        urlNavigation: "/Contact"
-    },
-    ]
+export interface Tab{
+    navigationID: string,
+    contentNavigation: string,
+    urlNavigation: string
+}
+
+const Tabs = ({classNameContainerStyle,contentNaigationStyle,tabs,activeStyle,elseActiveStyle,onClose}:TabsProp) => {
 
     return (
         <div className={`${classNameContainerStyle}`}>
             {
-                navArrs.map((item, index) => {
+                tabs.map((item, index) => {
                     return (
                         <NavLink
                             key={index}
                             to={item.urlNavigation}
                             className={({ isActive }) =>
-                                `${contentNaigationStyle} ${isActive ? "bg-gray-200 font-semibold" : "hover:bg-gray-100"}`
+                                `${contentNaigationStyle} ${isActive ? activeStyle : elseActiveStyle}`
                             }
                             onClick={()=>{onClose?onClose():()=>{}}}
                         >
