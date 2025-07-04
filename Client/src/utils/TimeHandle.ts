@@ -1,4 +1,3 @@
-//liệt kê ngày trong tháng
 export function DaysOfMonth(month: number, year: number): Date[] {
   const date: Date[] = [];
   const days = new Date(year, month, 1);
@@ -11,15 +10,12 @@ export function DaysOfMonth(month: number, year: number): Date[] {
   return date;
 }
 
-
-//trừ ngày
 export const getDaysBetween = (d1: Date, d2: Date): number => {
   const diffTime = Math.abs(d2.getTime() - d1.getTime());
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 };
 
 
-//trừ ngày
 export const getDayDiff = (d1: Date, d2: Date): number => {
   const date1 = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate());
   const date2 = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
@@ -28,7 +24,6 @@ export const getDayDiff = (d1: Date, d2: Date): number => {
   return Math.floor(diffTime / (1000 * 60 * 60 * 24));
 };
 
-//Kiểm tra có phải hôm nay không
 export const isToday = (d?: Date) =>
   d instanceof Date &&
   !isNaN(d.getTime()) &&
@@ -43,7 +38,6 @@ export const isSameDay = (d1?: Date, d2?: Date): boolean => {
   );
 };
 
-//Tạo ngày để cho phù hợp với thứ
 export function getDateHandle(datesBook: Date[]): (Date | undefined)[] {
   if (datesBook.length === 0 || !datesBook[0] || !datesBook.at(-1)) {
     return [];
@@ -54,7 +48,6 @@ export function getDateHandle(datesBook: Date[]): (Date | undefined)[] {
 
   return [...startPadding, ...datesBook, ...endPadding];
 }
-//chỉnh dạng cho ngày
 export function formatDate(date?: Date | null): string {
   if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
     return "";
@@ -67,7 +60,28 @@ export function formatDate(date?: Date | null): string {
   });
 }
 
-export const isBetween = (date: Date, start: Date, end: Date) => {
+export function getEndOfWeek(fromDate: Date = new Date()): Date {
+  const date = new Date(fromDate);
+  const day = date.getDay(); 
+  const diff = 7 - day; 
+  date.setDate(date.getDate() + diff % 7);
+  return date;
+}
+
+
+export function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function getStartOfNextWeek(from: Date = new Date()): Date {
+  const day = from.getDay();
+  const diffToNextMonday = (8 - day) % 7;
+  return addDays(from, diffToNextMonday);
+}
+
+export function isBetween(date: Date, start: Date, end: Date):boolean{
   return date > start && date < end;
 };
 

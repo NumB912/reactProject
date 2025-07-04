@@ -3,7 +3,7 @@ import React, { ReactNode, useState } from "react";
 export interface Button {
   onClick: () => void;
   children: React.ReactNode;
-  className: string
+  className?: string
 }
 
 

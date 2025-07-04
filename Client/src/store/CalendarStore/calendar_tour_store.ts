@@ -1,28 +1,11 @@
 import { create } from "zustand";
-import { DaysOfMonth, isSameDay, isToday } from "../../utils/TimeHandle";
+import { addDays, DaysOfMonth, getEndOfWeek, isSameDay, isToday } from "../../utils/TimeHandle";
 import { unstable_setDevServerHooks } from "react-router";
+import { TourCalenDarStore } from "./interface/CalendarStore";
 
-export interface Prop {
-  dateSelectedBook: Date;
-  today: Date;
-  datesBook: Date[];
-  datesNextMonth: Date[];
-  isSelectedBook: boolean;
-  isOpen: boolean;
 
-  setIsOpen: (isOpen: boolean) => void;
-  setIsSelectedBook: (isSelected: boolean) => void;
-  setDateSelectedBook: (dateBook: Date) => void;
-  setDatesBook: (dates: Date[]) => void;
-  setDatesNextMonth: (dates: Date[]) => void;
-  prevMonth: () => void;
-  nextMonth: () => void;
-  SetToday: () => void;
-  resetDatesOnly: () => void;
-  resetAll: () => void;
-}
 
-export const useTourCalendar = create<Prop>((set, get) => {
+export const useTourCalendar = create<TourCalenDarStore>((set, get) => {
   const today = new Date();
 
   return {
@@ -84,6 +67,14 @@ export const useTourCalendar = create<Prop>((set, get) => {
       const now = new Date();
       set({
         datesBook: DaysOfMonth(now.getMonth(), now.getFullYear()),
+      });
+    },
+
+    setThisMonth() {
+      const now = new Date();
+      set({
+        datesBook: DaysOfMonth(now.getMonth(), now.getFullYear()),
+        datesNextMonth: DaysOfMonth(now.getMonth() + 1, now.getFullYear()),
       });
     },
 

@@ -18,10 +18,11 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
     setDateSelectedBook,
     setIsOpen,
     isOpen,
+    SetToday
   } = useTourCalendar();
   return (
       <div
-        className={`CheckInBlock relative w-full flex border justify-evenly items-center p-1.5 gap-3 rounded-sm ${containerStyle}`}
+        className={`CheckInBlock relative flex border justify-evenly items-center p-1.5 gap-3 rounded-sm cursor-pointer ${containerStyle}`}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
@@ -52,6 +53,7 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
               nextMonth={nextMonth}
               prevMonth={prevMonth}
               onSelected={setDateSelectedBook}
+              onSetToday={SetToday}
               type="hotel"
             />
           </div>

@@ -7,6 +7,8 @@ import {
   isToday,
 } from "../../../utils/TimeHandle";
 import CalendarWrap from "./CalendarWrap";
+import ToggleCalendar from "./ToggleNextPrev/ToggleCalendar";
+import BottomToggle from "./BottomToggle/BottomToggle";
 
 const Calendar_TwoMonth = ({
   dates,
@@ -16,11 +18,10 @@ const Calendar_TwoMonth = ({
   dateEndSelected,
   onSelected,
   prevMonth,
-  type,
   onEndSelected,
-  onSetThisMonth,
+  onSetNextWeek,
   onSetThisWeek,
-  onSetTodayMonth
+  onSetToday
 }: CalendarTwoMonth) => {
   const renderDaysTwoMonth = (
     dates: Date[],
@@ -47,7 +48,7 @@ const Calendar_TwoMonth = ({
       return (
         <div
           key={index}
-          className={`day 
+          className={`day cursor-pointer
               ${!date ? "opacity-0 cursor-default pointer-events-none" : ""}
               ${isToday(date) ? "bg-pink-400 text-white" : ""}
               ${isStartDate ? "bg-black text-white" : ""}
@@ -59,7 +60,7 @@ const Calendar_TwoMonth = ({
             if (!date || isToday(date)) return;
             if (!dateSelected) {
               onSelected(date);
-            } else {
+            } else if(dateSelected){
               onSelectedCheckOut?.(date);
             }
           }}
@@ -146,15 +147,7 @@ const Calendar_TwoMonth = ({
             </div>
           </div>
 
-          <div className="toggle flex justify-between items-center absolute top-0 w-full px-3 *:hover:bg-gray-300 *:rounded-full *:aspect-square *:w-10 *:text-center">
-            <div className="toggle right p-2" onClick={prevMonth}>
-              <i className="fa-solid fa-angle-left"></i>
-            </div>
-
-            <div className="toggle right p-2" onClick={nextMonth}>
-              <i className="fa-solid fa-angle-right"></i>
-            </div>
-          </div>
+              <ToggleCalendar nextMonth={nextMonth} prevMonth={prevMonth}/>
         </div>
 
         <div className="flex p-3 gap-3">
@@ -174,17 +167,7 @@ const Calendar_TwoMonth = ({
           </div>
         </div>
 
-        <div className="flex w-full pt-3 px-5 gap-3 *:font-semibold *:hover:bg-black *:hover:cursor-pointer *:hover:text-white">
-          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetTodayMonth}>
-            Today
-          </div>
-          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetThisWeek}>
-            This week
-          </div>
-          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetTodayMonth}>
-            This month
-          </div>
-        </div>
+        <BottomToggle onSetThisWeek={onSetThisWeek} onSetNextWeek={onSetNextWeek} onSetToday={onSetToday}/>
     </CalendarWrap>
   );
 

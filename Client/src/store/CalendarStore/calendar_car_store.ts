@@ -1,47 +1,8 @@
 import { create } from "zustand";
-import { DaysOfMonth } from "../../utils/TimeHandle";
+import { DaysOfMonth, getEndOfWeek } from "../../utils/TimeHandle";
+import { CarCalendarStore } from "./interface/CalendarStore";
 
-export interface Prop {
-  datesPickUp: Date[];
-  datesDropOff: Date[];
-  timePickUpSelected: string;
-  timeDropOffSelected: string;
-  dateSelectedPickUp: Date;
-  isDateSelectedPickUp: boolean;
-  isDateSelected: boolean;
-  dateSelectedDropOff: Date;
-  isDateSelectedDropOff: boolean;
-  today: Date;
-  isDropOffTimeSelected: boolean;
-  isPickUpTimeSelected:boolean;
-
-  setIsDropOffTimeSelected: (selected: boolean) => void;
-  setTimeDropOffSelected: (time: string) => void;
-  setIsPickUpTimeSelected:(selected:boolean)=>void;
-  setTimePickUpTimeSelected:(time:string)=>void
-
-  setDateSelectedPickup: (date: Date) => void;
-  setdateSelectedDropOff: (date: Date) => void;
-
-  setIsDateSelectedPickUp:(isDateSelectedPickup:boolean)=>void;
-  setIsDateSelectedDropOff:(isDateSelectedDropOff:boolean)=>void;
-
-  nextMonthDatesPickUp: () => void;
-  prevMonthDatesPickUp: () => void;
-  nextMonthDatesDropOff: () => void;
-  prevMonthDatesDropOFf: () => void;
-
-  setDatesPickUpFromDate: (date: Date) => void;
-  setDatesDropOffFromDate: (date: Date) => void;
-
-  setDatesPickUp: (dates: Date[]) => void;
-  setDatesDropOff:(dates:Date[])=>void
-
-  reset: () => void;
-  SetToday: () => void;
-}
-
-export const useCalendarCarStore = create<Prop>((set, get) => ({
+export const useCalendarCarStore = create<CarCalendarStore>((set, get) => ({
   datesPickUp: DaysOfMonth(new Date().getMonth(), new Date().getFullYear()),
   datesDropOff: DaysOfMonth(new Date().getMonth() + 1, new Date().getFullYear()),
   timePickUpTimeSelected: "",
@@ -172,5 +133,6 @@ export const useCalendarCarStore = create<Prop>((set, get) => ({
       datesDropOff: DaysOfMonth(current.getMonth() + 1, current.getFullYear()),
     });
   },
+ 
 }));
 

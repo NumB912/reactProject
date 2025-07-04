@@ -25,7 +25,7 @@ const DropDownSelect = ({onClick, icon, containerStyle, defaultOption, options, 
 
   return (
     <div className={`relative ${defaultContainerStyle}`} onClick={() => setIsOpen(!isOpen)}>
-            <div className={`select__trigger p-3 bg-white shadow-sm min-w-40 border border-gray-100 rounded-sm ${defaultOptionStyle}`}>
+            <div className={`select__trigger p-3 bg-white min-w-50 border rounded-sm ${defaultOptionStyle}`}>
                 <span className={`select__icon inline-block mr-2 ${defaultStyleIcon}`}>
                     {icon ? icon : <FaSort />}
                 </span>

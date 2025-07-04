@@ -20,6 +20,7 @@ import TourDetail from './pages/Tour/TourDetail'
 import Book_TOUR from './pages/Tour/TourBook';
 import Payment_Tour from './pages/Tour/TourPayment';
 import BookTour from './pages/Tour/TourBook';
+import InfoClient from './pages/Auths/InfoClient/InfoClient'
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
    },{
     path:"Tours/:tourID/Booking/payment",
     element:<Payment_Tour/>
+   },
+   {
+    path:"Profile/:userID",
+    element:<InfoClient/>
    }
   ]
   }

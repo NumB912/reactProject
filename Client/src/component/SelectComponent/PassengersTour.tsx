@@ -27,7 +27,7 @@ const PassengersTour = ({containerStyle,passengerStyle}:PassengersTourProp) => {
   } = useTravelerTour();
   return (
     <div
-      className="tourPassenger w-full flex border justify-evenly items-center p-1.5 gap-3 rounded-sm"
+      className="tourPassenger flex border justify-evenly items-center p-1.5 gap-3 rounded-sm"
       onClick={(e) => {
         setIsShow(!isShow);
       }}

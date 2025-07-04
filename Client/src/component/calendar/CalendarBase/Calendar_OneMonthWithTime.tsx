@@ -8,6 +8,8 @@ import {
 import { CalendarOneMonthWithTimer } from "../interfaceCalendar/CalendarBaseProps";
 import { TimeSelected } from "../../TimerComponent/timeSelected";
 import CalendarWrap from "./CalendarWrap";
+import ToggleCalendar from "./ToggleNextPrev/ToggleCalendar";
+import BottomToggle from "./BottomToggle/BottomToggle";
 
 const Calendar_OneMonth_Timer = ({
   selectTime,
@@ -19,14 +21,12 @@ const Calendar_OneMonth_Timer = ({
   prevMonth,
   onSelected,
   setSelectTime,
-  onSetThisMonth,
+  onSetNextWeek,
   onSetThisWeek,
-  onSetTodayMonth,
+  onSetToday,
   titleTypeSeletedDate,
 }: CalendarOneMonthWithTimer) => {
-  const [isTimeDropdownVisible, setIsTimeDropdownVisible] =
-    useState<boolean>(false);
-
+  const [isTimeOpen, setIsTimeOpen] = useState<boolean>(false)
   const renderItemOneMonth = (
     dates: Date[],
     onSelected: (date: Date) => void
@@ -38,18 +38,18 @@ const Calendar_OneMonth_Timer = ({
           <div className="time border p-3 border-gray-300 relative w-[110px]"
             onClick={(e) => {
               e.stopPropagation();
-              setIsTimeDropdownVisible(true);
+              setIsTimeOpen(true);
             }}
           >
             {selectTime} <i className="fa-solid fa-caret-down"></i>
             <div
               className={`bg-white absolute top-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-gray-300 z-10 w-[110px]
-                ${isTimeDropdownVisible ? "" : "hidden"}`}
+                ${isTimeOpen ? "" : "hidden"}`}
             >
               <TimeSelected
-                setIsTimeSelected={setIsTimeDropdownVisible}
+                setIsTimeSelected={setIsTimeOpen}
                 timeSelected={selectTime}
-                isTimeSelected={isTimeDropdownVisible}
+                isTimeSelected={isTimeOpen}
                 setTime={(time) => {
                   setSelectTime(time);
                 }}
@@ -63,8 +63,8 @@ const Calendar_OneMonth_Timer = ({
             <div className="nameMonth w-full text-center p-2">
               {dates[0]
                 ? dates[0].toLocaleString("en-US", { month: "short" }) +
-                  " " +
-                  dates[0].getFullYear()
+                " " +
+                dates[0].getFullYear()
                 : ""}
             </div>
             <div
@@ -88,41 +88,11 @@ const Calendar_OneMonth_Timer = ({
               {renderDayOneMonth(dates, onSelected)}
             </div>
           </div>
-          <div className="toggle flex justify-between items-center absolute top-0 w-full px-3 *:hover:bg-gray-300 *:rounded-full *:aspect-square *:w-10 *:text-center">
-            <div
-              className="toggle right p-2"
-              onClick={(e) => {
-                e.stopPropagation();
-                prevMonth();
-              }}
-            >
-              <i className="fa-solid fa-angle-left"></i>
-            </div>
-
-            <div
-              className="toggle right p-2"
-              onClick={(e) => {
-                e.stopPropagation();
-                nextMonth();
-              }}
-            >
-              <i className="fa-solid fa-angle-right"></i>
-            </div>
-          </div>
+          <ToggleCalendar nextMonth={nextMonth} prevMonth={prevMonth} />
         </div>
 
-        
-        <div className="flex w-full pt-3 px-5 gap-3 *:font-semibold *:hover:bg-black *:hover:cursor-pointer *:hover:text-white">
-          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetTodayMonth}>
-            Today
-          </div>
-          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetThisWeek}>
-            This week
-          </div>
-          <div className="p-2 rounded-full min-w-27 border text-center" onClick={onSetThisMonth}>
-            This month
-          </div>
-        </div>
+{/* 
+                <BottomToggle onSetNextWeek={onSetNextWeek} onSetThisWeek={onSetThisWeek} onSetToday={onSetToday}/> */}
       </CalendarWrap>
     </>
   );
@@ -154,14 +124,13 @@ const Calendar_OneMonth_Timer = ({
                 ${isEndDate ? "bg-blue text-white" : ""}
                 ${isDisabled && !isab ? "text-gray-400" : ""}
                 ${isEndDate ? "bg-blue-400" : ""}
-                ${
-                  date &&
-                  dateStartSelected &&
-                  dateEndSelected &&
-                  isBetween(date, dateStartSelected, dateEndSelected)
-                    ? "bg-gray-300 text-white"
-                    : ""
-                }
+                ${date &&
+              dateStartSelected &&
+              dateEndSelected &&
+              isBetween(date, dateStartSelected, dateEndSelected)
+              ? "text-gray-400"
+              : ""
+            }
               `}
           onClick={() => {
             if (!date || isToday(date)) return;

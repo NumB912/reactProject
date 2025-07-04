@@ -7,40 +7,6 @@ import { Link, useNavigate } from "react-router";
 import wild from "../../assets/wild_card.jpg";
 const RentalCarsDetail = () => {
   const nagative = useNavigate()
-  const {
-    setdateSelectedDropOff,
-    setDateSelectedPickup,
-    dateSelectedPickUp,
-    dateSelectedDropOff,
-    datesDropOff,
-    datesPickUp,
-    setDatesDropOffFromDate,
-    setDatesPickUpFromDate,
-    isDateSelected,
-    isDateSelectedDropOff,
-    isDateSelectedPickUp,
-    setIsDateSelectedDropOff,
-    setIsDateSelectedPickUp,
-    prevMonthDatesDropOFf,
-    prevMonthDatesPickUp,
-    nextMonthDatesDropOff,
-    nextMonthDatesPickUp,
-  } = useCalendarCarStore();
-
-  const {
-    setIsDropOffTimeSelected,
-    setIsPickUpTimeSelected,
-    setTimeDropOffSelected,
-    setTimePickUpTimeSelected,
-    isDropOffTimeSelected,
-    isPickUpTimeSelected,
-    timeDropOffSelected,
-    timePickUpTimeSelected,
-  } = useTimeStore();
-
-  const [passengers, setSelectedPassengers] = useState<string>("Select");
-  const [isSelectedPassenger, setIsSelectedPassenger] =
-    useState<boolean>(false);
   return (
     <div className="RentalCarsDetail">
       <div className="findTab w-full gap-1 flex flex-wrap justify-center items-center inset-shadow-2xs py-4 pb-7 ">
@@ -61,100 +27,8 @@ const RentalCarsDetail = () => {
         </div>
 
         <div className="w-full gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-sm:w-3/4">
-          <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap *:border *:w-full *:p-1 *:flex *:items-center *:gap-3 *:rounded-md">
-            <div
-              className="CheckInBlock border"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsDateSelectedPickUp(!isDateSelectedPickUp);
-                setIsDateSelectedDropOff(false);
-                setIsSelectedPassenger(false);
-              }}
-            >
-              <i className="fa-solid fa-calendar"></i>
-              <div className="DCI flex flex-col justify-center w-full">
-                <p className="text-[10px] font-normal">Pick up</p>
-                <p className="text-[13px] font-bold">
-                  {" "}
-                  {dateSelectedPickUp.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  }) +
-                    " - " +
-                    timePickUpTimeSelected}
-                </p>
-              </div>
-              <div
-                className={`bg-white absolute w-[400px] top-14 left-0 p-5 border border-gray-300 rounded-md z-10
-                max-lg:left-full max-2xl:left-0 ${
-                  isDateSelectedPickUp ? "" : "hidden"
-                }`}
-              >
-                <Calendar_rentalCar
-                  titleTypeSeletedDate="Pick Up"
-                  type="rentalCar"
-                  dates={datesPickUp} // Provide the appropriate dates array here
-                  dateSelected={dateSelectedPickUp}
-                  dateEndSelected={dateSelectedDropOff}
-                  onSelected={(date: Date) => {
-                    setDateSelectedPickup(date);
-                  }}
-                  selectTime={timePickUpTimeSelected}
-                  setSelectTime={(time: string) => {
-                    setTimePickUpTimeSelected(time);
-                  }}
-                  nextMonth={nextMonthDatesPickUp}
-                  prevMonth={prevMonthDatesPickUp}
-                />
-              </div>
-            </div>
-
-            <div
-              className="CheckInBlock relative"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsDateSelectedDropOff(!isDateSelectedDropOff);
-                setIsDateSelectedPickUp(false);
-                setIsSelectedPassenger(false);
-              }}
-            >
-              <i className="fa-solid fa-calendar"></i>
-              <div className="DCI flex flex-col justify-center w-full">
-                <p className="text-[10px] font-normal">Drop off</p>
-                <p className="text-[13px] font-bold">
-                  {dateSelectedDropOff.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  }) +
-                    " - " +
-                    timeDropOffSelected}
-                </p>
-              </div>
-
-              <div
-                className={`bg-white absolute w-[400px] top-14 left-0 p-5 border border-gray-300 rounded-md z-10
-                max-lg:left-full max-2xl:left-0 ${
-                  isDateSelectedDropOff ? "" : "hidden"
-                }`}
-              >
-                <Calendar_rentalCar
-                  titleTypeSeletedDate="Drop Off"
-                  type="rentalCar"
-                  dates={datesDropOff} // Provide the appropriate dates array here
-                  dateSelected={dateSelectedDropOff}
-                  onSelected={(date: Date) => {
-                    setdateSelectedDropOff(date);
-                  }}
-                  dateEndSelected={dateSelectedDropOff}
-                  selectTime={timeDropOffSelected}
-                  setSelectTime={(time: string) => {
-                    setTimeDropOffSelected(time);
-                  }}
-                  nextMonth={nextMonthDatesDropOff}
-                  prevMonth={prevMonthDatesDropOFf}
-                />
-              </div>
-            </div>
+          <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap">
+      <Calendar_rentalCar/>
           </div>
           <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap *:flex *:items-center *:gap-3 *:rounded-md">
             <div className="search w-full">

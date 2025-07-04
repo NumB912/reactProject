@@ -261,7 +261,7 @@ const Home = () => {
         </div> */}
       </div>
 
-      <div className="w-full flex-col flex items-center justify-center font-bold p-20 ">
+      {/* <div className="w-full flex-col flex items-center justify-center font-bold p-20 ">
         <div className="flex items-center gap-3 *:text-7xl p-3">
           <p>Favorite places </p>
           <i className="fa-solid fa-heart text-red-500"></i>
@@ -371,7 +371,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

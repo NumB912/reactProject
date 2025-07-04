@@ -1,5 +1,4 @@
 import React from 'react'
-import imgPic from '/src/assets/1000_F_819405928_oazziidHQmjeH8dx6CTtIzragN8AbJXa.jpg';
 const Banner = () => {
   return (
     <div className='w-full flex justify-center max-sm:order-[-1]'>

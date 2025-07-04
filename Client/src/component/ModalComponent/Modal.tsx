@@ -31,7 +31,7 @@ const Modal = ({ isOpen, onClose, children,styleButtonClose,styleContainer,paren
 
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`relative w-full bg-white rounded-md shadow-xl overflow-auto ${styleContainer} `}
+        className={`relative bg-white rounded-md shadow-xl overflow-auto ${styleContainer} `}
       >
         <div className="sticky w-full top-0">
                   <button

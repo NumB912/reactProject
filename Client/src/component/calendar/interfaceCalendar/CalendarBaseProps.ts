@@ -7,9 +7,9 @@ export interface CalendarBaseProps {
   onSelected: (date: Date) => void;
   nextMonth: () => void;
   prevMonth: () => void;
-  onSetThisMonth?: () => void;
-  onSetTodayMonth?: () => void;
-  onSetThisWeek?: () => void;
+  onSetToday?: () => void;
+  onSetThisWeek?:()=>void;
+  onSetNextWeek?: () => void;
   type: "hotel" | "rentalCar" | "Tour";
 }
 

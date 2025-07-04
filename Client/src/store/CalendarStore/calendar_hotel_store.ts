@@ -1,35 +1,11 @@
 import { create } from "zustand";
-import { DaysOfMonth, isSameDay, isToday } from "../../utils/TimeHandle";
+import { addDays, DaysOfMonth, getEndOfWeek, isSameDay, isToday } from "../../utils/TimeHandle";
 import { unstable_setDevServerHooks } from "react-router";
+import { HotelCalendarStore } from "./interface/CalendarStore";
 
-export interface Prop {
-  dateSelectedBook: Date;
-  dateSelectedCheckOut: Date | undefined;
-  today: Date;
-  datesBook: Date[];
-  datesNextMonth: Date[];
-  isSelectedBook: boolean;
-  isSelectedCheckOut: boolean;
-  isShowCalendar?: boolean;
 
-  setIsShowCalendar?: (isShow: boolean) => void
-  setIsSelectedBook: (isSelected: boolean) => void;
-  setIsSelectedCheckOut: (isSelected: boolean) => void;
-  setDateSelectedBook: (dateBook: Date) => void;
-  setDateSelectedCheckOut: (dateReturn: Date) => void;
-  setDatesBook: (dates: Date[]) => void;
-  setDatesNextMonth: (dates: Date[]) => void;
-  setThisMonth:()=>void;
-  setTodayMonth: () => void;
-  setThisWeek: () => void;
-  prevMonth: () => void;
-  nextMonth: () => void;
-  SetToday: () => void;
-  resetDatesOnly: () => void;
-  resetAll: () => void;
-}
 
-export const useCalendarHotel = create<Prop>((set, get) => {
+export const useCalendarHotel = create<HotelCalendarStore>((set, get) => {
   const today = new Date();
 
   return {
@@ -183,6 +159,28 @@ export const useCalendarHotel = create<Prop>((set, get) => {
         isSelectedCheckOut: false,
       });
     },
+  SetThisWeek:()=>{
+    const today = new Date()
+    const sunday = getEndOfWeek(today)
+    if(today === sunday){
+      return
+    }
+
+    set({
+        dateSelectedBook:today,
+        dateSelectedCheckOut:sunday,
+    })
+  },
+SetNextWeek: () => {
+  const today = new Date();
+  const nextMonday = addDays(getEndOfWeek(today),1);
+  const nextSunday = addDays(nextMonday, 6);
+
+  set({
+    dateSelectedBook: nextMonday,
+    dateSelectedCheckOut: nextSunday,
+  })
+},
 
     resetAll: () => {
       const now = new Date();

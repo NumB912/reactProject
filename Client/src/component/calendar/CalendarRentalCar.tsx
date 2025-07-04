@@ -34,7 +34,8 @@ export const Calendar_rentalCar = () => {
       timePickUpSelected,
       timeDropOffSelected,
       setTimeDropOffSelected,
-      setTimePickUpTimeSelected
+      setTimePickUpTimeSelected,
+      SetToday
     } = useCalendarCarStore();
 
   useEffect(()=>{
@@ -49,8 +50,7 @@ export const Calendar_rentalCar = () => {
         *:min-xl:min-w-48">
           <div
             className="CheckInBlock border"
-            onClick={(e) => {
-              e.stopPropagation();
+                                    onClick={() => {
               setIsDateSelectedPickUp(!isDateSelectedPickUp);
               setIsDateSelectedDropOff(false);
               setIsSelectedPassenger(false)
@@ -58,7 +58,7 @@ export const Calendar_rentalCar = () => {
             }}
           >
             <i className="fa-solid fa-calendar"></i>
-            <div className="DCI">
+            <div className="DCI" >
               <p className="text-[13px] font-bold">
                 {" "}
                 {dateSelectedPickUp.toLocaleDateString("en-US", {
@@ -70,8 +70,9 @@ export const Calendar_rentalCar = () => {
               </p>
             </div>
             <div
-              className={`bg-white absolute w-[400px] top-14 left-0 p-5 border border-gray-300 rounded-2xl z-10
+              className={`bg-white absolute w-[400px] top-15 left-0 p-5 border border-gray-300 rounded-2xl z-10
       max-lg:left-full max-2xl:left-0 ${isDateSelectedPickUp ? "" : "hidden"}`}
+      onClick={(e)=>{e.stopPropagation()}}
             >
               <Calendar_OneMonth_Timer
                 dateSelected={dateSelectedPickUp}
@@ -85,14 +86,15 @@ export const Calendar_rentalCar = () => {
                 selectTime={timePickUpSelected}
                 onSelected={setDateSelectedPickup}
                 setSelectTime={setTimePickUpTimeSelected}
+                onSetToday={SetToday}
               />
             </div>
           </div>
 
           <div
             className="DropOff relative"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
+              // e.stopPropagation();
               setIsDateSelectedDropOff(!isDateSelectedDropOff);
               setIsDateSelectedPickUp(false);
               setIsSelectedPassenger(false);  
@@ -113,23 +115,23 @@ export const Calendar_rentalCar = () => {
             </div>
 
             <div
-              className={`bg-white absolute w-[400px] top-14 left-0 p-5 border border-gray-300 rounded-2xl z-10
+              className={`bg-white absolute w-[400px] top-15 left-0 p-5 border border-gray-300 rounded-2xl z-10
       max-lg:left-full max-2xl:left-0 ${isDateSelectedDropOff ? "" : "hidden"}`}
+                onClick={(e)=>e.stopPropagation()}
             >
              <Calendar_OneMonth_Timer
                 titleTypeSeletedDate="Drop Off"
                 type="rentalCar"
                 dates={datesDropOff}
+                dateStartSelected={dateSelectedPickUp}
+                dateEndSelected={dateSelectedDropOff}
                 dateSelected={dateSelectedDropOff}
-                onSelected={(date: Date) => {
-                  setdateSelectedDropOff(date);
-                }}
+                onSelected={setdateSelectedDropOff}
                 selectTime={timeDropOffSelected}
-                setSelectTime={(time: string) => {
-                  setTimeDropOffSelected(time)
-                }}
+                setSelectTime={setTimeDropOffSelected}
                 nextMonth={nextMonthDatesDropOff}
                 prevMonth={prevMonthDatesDropOFf}
+                onSetToday={SetToday}
               />
             </div>
           </div>

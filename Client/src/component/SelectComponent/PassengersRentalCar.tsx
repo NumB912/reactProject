@@ -33,26 +33,25 @@ const Passengers = () => {
           {numberPassenger == "1"
             ? `${numberPassenger} passenger`
             : numberPassenger == "Select"
-            ? `passenger`
+            ? `Select`
             : `${numberPassenger} passengers`}
         </p>
       </div>
       <div
-        className={`bg-white w-full absolute top-[238px] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-gray-300 z-10 rounded-2xl ${
+        className={`bg-white w-full absolute top-12 border border-gray-300 z-10 rounded-sm ${
           isSelectedPassenger ? "" : "hidden"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="passengers w-full">
-          <div className="flex flex-col text-center rounded-2xl overflow-hidden shadow-md">
+          <div className="flex flex-col text-center overflow-hidden shadow-md">
             {numberPassengerOptions.map((label: string, index) => (
               <div
                 key={index}
-                className={`p-3 hover:bg-gray-200 cursor-pointer transition ${
-                  index === 0 ? "bg-gray-100 font-semibold" : ""
-                }`}
+                className={`p-3 hover:bg-gray-200 cursor-pointer transition`}
                 onClick={() => {
                   setNumberPassenger(label);
+                  setIsSelectedPassenger(!isSelectedPassenger)
                 }}
               >
                 {label}

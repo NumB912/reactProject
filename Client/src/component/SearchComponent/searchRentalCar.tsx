@@ -9,10 +9,6 @@ import { useNavigate } from "react-router-dom";
 function SearchRental() {
   const navigate = useNavigate();
 
-  const [passengers, setSelectedPassengers] = useState<string>("Select");
-  const [isSelectedPassenger, setIsSelectedPassenger] =
-    useState<boolean>(false);
-
   return (
     <div className="flex justify-center items-center gap-2 flex-wrap w-8/10">
       <div className="flex gap-2 max-lg:w-3/4 flex-wrap max-xl:w-8/10">

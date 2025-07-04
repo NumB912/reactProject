@@ -77,7 +77,7 @@ const Hotels = () => {
           Your place you want to go
         </p>
       </div>
-      <div className="Calendar w-full col-span-2 flex justify-center items-end gap-3">
+      <div className="w-full col-span-2 flex justify-center items-end gap-3 border-b border-gray-200 pb-5">
         <div className="flex flex-col w-full border-r border-gray-200 p-2 max-lg:hidden ">
           <p className="text-[15px] font-bold px-2">Location:</p>
 
@@ -96,7 +96,7 @@ const Hotels = () => {
           </div>
         </div>
 
-                <Calendar_Tour containerStyle={"w-1/5 max-h-15"} CalendarStyleTour={"top-12 w-full"}/>
+        <Calendar_Tour containerStyle={"w-full max-h-15 max-w-[400px]"} CalendarStyleTour={"top-12"} />
       </div>
 
       <div
@@ -186,7 +186,7 @@ const Hotels = () => {
         </div>
       </div>
 
-      <Modal isOpen={isShowsome} onClose={() => { setShowsome(false)}}
+      <Modal isOpen={isShowsome} onClose={() => { setShowsome(false) }}
         styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
         parentContainerStyle="min-xl:hidden"
         styleButtonClose="cursor-pointer"
@@ -286,7 +286,7 @@ const Hotels = () => {
         styleContainer={" rounded-none p-5 w-full h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"}
         styleButtonClose={"cursor-pointer"}
       >
-         <div className="ContentName font-bold text-3xl">Sort</div>
+        <div className="ContentName font-bold text-3xl">Sort</div>
         <div className="flex flex-col justify-between items-start w-full">
           <div className="sortOptions w-full flex flex-col gap-3">
             <RadioOption
@@ -337,29 +337,29 @@ const Hotels = () => {
           <div className="TotalSearch max-xl:w-full">
             Found <span className="font-bold">35</span> results
           </div>
-          <div
-            className="SortBy flex gap-2 items-center 
+                  <div
+          className="SortBy flex gap-2 items-center 
         max-xl:hidden"
-          >
-            <DropDownSelect
-              icon={<FaSort />}
-              onClick={() => { }}
-              containerStyle="w-full"
-              defaultOption="Sort by"
-              options={[
-                "Price: Low to High",
-                "Price: High to Low",
-                "Rating: High to Low",
-                "Rating: Low to High",
-              ]}
-              styleOption="text-[clamp(1rem, 2.5vw, 2rem);] hover:bg-gray-200 hover:cursor-pointer"
-              styleIcon="text-[clamp(1rem, 2.5vw, 2rem);]"
-            />
-          </div>
+        >
+          <DropDownSelect
+            icon={<FaSort />}
+            onClick={() => { }}
+            containerStyle="w-full"
+            defaultOption="Sort by"
+            options={[
+              "Price: Low to High",
+              "Price: High to Low",
+              "Rating: High to Low",
+              "Rating: Low to High",
+            ]}
+            styleOption="text-[clamp(1rem, 2.5vw, 2rem);] hover:bg-gray-200 hover:cursor-pointer"
+            styleIcon="text-[clamp(1rem, 2.5vw, 2rem);]"
+          />
+        </div>
         </div>
 
         <div
-          className=" flex flex-col max-lg:w-7/8 max-xl:col-span-2 gap-3 
+          className=" flex flex-col max-lg:w-full max-xl:col-span-2 gap-3 
         *:hover:shadow-md
         "
         >
@@ -375,7 +375,7 @@ const Hotels = () => {
                 className="min-md:rounded-l-xl max-sm:rounded-t-xl h-full w-full object-cover"
               />
 
-              <HeartFavorite key={1} style=""/>
+              <HeartFavorite key={1} style="" />
             </div>
 
             <div
