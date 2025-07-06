@@ -1,6 +1,5 @@
 import React from "react";
-import { usePassengerCar } from "../../store/PassengerStore/traveler_store_car";
-import { useCalendarCarStore } from "../../store/CalendarStore/calendar_car_store";
+import { usePassengerCar,useCalendarCarStore } from "../../store";
 import PassengerWrap from "./PassengersWrap";
 
 const Passengers = () => {

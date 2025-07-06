@@ -3,7 +3,7 @@ import { useCalendarHotel } from '../../store/CalendarStore/calendar_hotel_store
 import { formatDate } from '../../utils/TimeHandle';
 import Calendar_Hotel from '../calendar/CalendarHotel';
 import Traveler_Hotel from '../SelectComponent/PassengersHotel';
-import useTravelerHotel from '../../store/PassengerStore/traveler_store_hotel';
+import useTravelerHotel from '../../store/PassengerStore/CustomerHotelStore';
 import PassengersHotel from '../SelectComponent/PassengersHotel';
 
 interface Props{

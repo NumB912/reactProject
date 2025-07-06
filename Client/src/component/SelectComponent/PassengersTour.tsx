@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "../ButtonComponent/Button";
-import useTravelerTour from "../../store/PassengerStore/traveler_store_tour";
+import { Button } from "../UI";
+import useTravelerTour from "../../store/PassengerStore/TravelerTourStore";
 import PassengerWrap from "./PassengersWrap";
 
 interface PassengersTourProp{

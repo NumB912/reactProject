@@ -6,12 +6,11 @@ import {
   DaysOfMonth,
   getDateHandle,
 } from "../../utils/TimeHandle";
-import { TimeSelected } from "../TimerComponent/timeSelected";
 import { useTimeStore } from "../../store/time_store";
 import Calendar_OneMonth_Timer from "./CalendarBase/Calendar_OneMonthWithTime";
 import { CalendarOneMonthWithTimer } from "./interfaceCalendar/CalendarBaseProps";
-import { usePassengerCar } from "../../store/PassengerStore/traveler_store_car";
-export const Calendar_rentalCar = () => {
+import { usePassengerCar } from "../../store/PassengerStore/PassengerRentalCarStore";
+ const CalendarRentalCar = () => {
  const {setIsSelectedPassenger} = usePassengerCar()
     const {
       datesPickUp,
@@ -139,3 +138,5 @@ export const Calendar_rentalCar = () => {
 
   );
 };
+
+export default CalendarRentalCar

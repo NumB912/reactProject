@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router';
 import logo from "../../../src/assets/logo.png";
-import Tabs, { Tab } from './tabs';
+import Tabs, { Tab } from '../UI/Tabs';
 const SideNavBar = () => {
     const [isShowsome, setShowsome] = useState(false);
 

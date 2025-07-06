@@ -16,8 +16,7 @@ interface Prop {
   setTime: (timeSelected: string) => void;
   setIsTimeSelected: (isSelected: boolean) => void;
 }
-
-export const TimeSelected = ({ setIsTimeSelected, timeSelected, setTime}: Prop) => {
+ const TimeSelected = ({ setIsTimeSelected, timeSelected, setTime}: Prop) => {
   const timeSlots = generateTimeSlots();
   return (
     <div className="w-full">
@@ -45,3 +44,5 @@ export const TimeSelected = ({ setIsTimeSelected, timeSelected, setTime}: Prop) 
     </div>
   );
 };
+
+export default TimeSelected

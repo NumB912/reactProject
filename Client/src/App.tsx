@@ -1,32 +1,31 @@
 import './App.css'
-import Home from './pages/Home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { loadServices} from './pages/Services'
-import { loadService } from './pages/Service'
-import Service from './pages/Service';
-import Root from './pages/Root'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Hotels from './pages/Hotel/Hotels';
-import HotelDetail from './pages/Hotel/hotel_detail';
-import RentalCars from './pages/Car/RentalCars';
-import RentalCarsDetail from './pages/Car/rentalCarsDetail';
-import Book_hotel from './pages/Hotel/book_hotel';
-import Payment_Hotel from './pages/Hotel/Payment_Hotel';
-import BookCar from './pages/Car/BookCar';
-import PaymentCar from './pages/Car/PaymentCar'
-import Tour from './pages/Tour/Tours';
-import TourDetail from './pages/Tour/TourDetail'
-import Payment_Tour from './pages/Tour/TourPayment';
-import BookTour from './pages/Tour/TourBook';
-import InfoClient from './pages/Auths/InfoClient/InfoClient'
-import Reviews from './pages/Auths/InfoClient/reviews';
+import Root from './pages/root';
+import Service, { loadService } from './pages/Service';
+import React from 'react';
+import Home from './pages/home';
+import About from './pages/about';
+import Contact from './pages/contact';
+import Hotels from './pages/Service/hotel/Hotels';
+import HotelDetail from './pages/Service/hotel/hotel_detail';
+import Book_Hotel from './pages/Service/hotel/book_hotel';
+import Payment_Hotel from './pages/Service/hotel/Payment_Hotel';
+import RentalCars from './pages/Service/car/RentalCars';
+import RentalCarsDetail from './pages/Service/car/rentalCarsDetail';
+import BookCar from './pages/Service/car/BookCar';
+import PaymentCar from './pages/Service/car/PaymentCar';
+import TourDetail from './pages/Service/tour/tourDetail';
+import BookTour from './pages/Service/tour/TourBook';
+import Payment_Tour from './pages/Service/tour/TourPayment';
+import InfoClient from './pages/Auths/InfoClient/InfoClient';
+import Reviews from './pages/Auths/InfoClient/Reviews';
 import Photos from './pages/Auths/InfoClient/Photos';
 import Trips from './pages/Auths/InfoClient/Trips';
 import Favorites from './pages/Auths/InfoClient/Favorites';
-import Coupons from './pages/Auths/InfoClient/Coupon';
 import Booking from './pages/Auths/InfoClient/Booking';
-
+import PostReviews from './pages/ReviewAndPost/Reviews/PostReviews';
+import PostPhoto from './pages/ReviewAndPost/Photos/PostPhoto';
+import Tours from './pages/Service/tour/tours';
 const router = createBrowserRouter([
   {
     path:'/',
@@ -58,7 +57,7 @@ const router = createBrowserRouter([
    },
     {
     path:"hotels/:hotelID/booking/:RoomID",
-    element:<Book_hotel/>
+    element:<Book_Hotel/>
    },{
     path:"hotels/:hotelID/booking/:roomID/payment",
     element:<Payment_Hotel/>
@@ -77,7 +76,7 @@ const router = createBrowserRouter([
     element:<PaymentCar/>
    },{
     path:"Tours",
-    element:<Tour/>
+    element:<Tours/>
    },{
     path:"Tours/:tourID",
     element:<TourDetail/>
@@ -105,13 +104,16 @@ const router = createBrowserRouter([
   {
       path:"favorites",
       element:<Favorites/>
-    },  {
-      path:"coupons",
-      element:<Coupons/>
     },{
       path:"bookings",
       element:<Booking/>
     }]
+   },{
+    path:"WriteReview/:id",
+    element:<PostReviews/>
+   },{
+    path:"PostPhotos",
+    element:<PostPhoto/>
    }
   ]
   }

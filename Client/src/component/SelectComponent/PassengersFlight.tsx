@@ -1,6 +1,6 @@
 import React from "react";
-import {Button} from "../ButtonComponent/Button";
-import { useTraveler } from "../../store/PassengerStore/traveler_store_Flight";
+import {Button} from "../UI";
+import { useTravelerFlight } from "../../store";
 
 interface TagTickerProps {
   onClose: () => void;
@@ -18,7 +18,7 @@ export const TagTicker: React.FC<TagTickerProps> = ({ onClose }) => {
     setMinusChildrenQuantity,
     setMinusSeniorQuantity,
     setReset,
-  } = useTraveler();
+  } = useTravelerFlight();
 
   return (
     <div className="tagTicker">

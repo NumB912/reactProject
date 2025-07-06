@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {logo} from '../../assets/'
-import { Button } from '../ButtonComponent/Button';
+import { Button } from '../UI'
 interface SearchAllProps {
   typeSearch: string;
 }
 
-const SearchAll: React.FC<SearchAllProps> = ({ typeSearch }) => {
+const Search: React.FC<SearchAllProps> = ({ typeSearch }) => {
   const navigate = useNavigate();
   const [focus,setFocus] = useState(false)
   const [tour,setTour] = useState("")
-
-  const [destination,setDestination] = useState("")
-  const HandleTour = ()=>{
-
-  }
 
 
   return (
@@ -86,4 +80,4 @@ const SearchAll: React.FC<SearchAllProps> = ({ typeSearch }) => {
   )
 }
 
-export default SearchAll
+export default Search

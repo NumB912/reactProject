@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "../ButtonComponent/Button";
-import useTravelerHotel from "../../store/PassengerStore/traveler_store_hotel";
+import { Button } from "../UI";
+import useTravelerHotel from "../../store/PassengerStore/CustomerHotelStore";
 
 
 const PassengersHotel = ({ onClose }) => {

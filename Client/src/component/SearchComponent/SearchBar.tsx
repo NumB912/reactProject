@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, useNavigation } from "react-router";
-import { Button } from "../ButtonComponent/Button";
-import {SearchFlight} from "./SearchFlight";
+
 import SearchRental from "./searchRentalCar";
 import SearchAll from "./searchAll";
-export const SearchBar = () => {
+import SearchFlight from "./SearchFlight";
+ const SearchBar = () => {
   const [Type, setType] = useState("SearchALL");
-  const navigate = useNavigate();
 
   return (
     <>
@@ -80,3 +79,4 @@ export const SearchBar = () => {
   );
 };
 
+export default SearchBar

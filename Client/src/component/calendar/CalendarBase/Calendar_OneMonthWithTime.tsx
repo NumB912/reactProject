@@ -6,10 +6,10 @@ import {
   isToday,
 } from "../../../utils/TimeHandle";
 import { CalendarOneMonthWithTimer } from "../interfaceCalendar/CalendarBaseProps";
-import { TimeSelected } from "../../TimerComponent/timeSelected";
 import CalendarWrap from "./CalendarWrap";
 import ToggleCalendar from "./ToggleNextPrev/ToggleCalendar";
 import BottomToggle from "./BottomToggle/BottomToggle";
+import TimeSelected from "../../TimerComponent/timeSelected";
 
 const Calendar_OneMonth_Timer = ({
   selectTime,

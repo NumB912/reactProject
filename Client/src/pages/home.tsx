@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import LoadData from "./Services";
+import { HeartFavorite } from "../component/UI";
 import { Link, Outlet, useNavigate } from "react-router";
 import "./styles/home.css";
-import {SearchBar} from "../component/SearchComponent/SearchBar";
-import Banner from "../component/Banner";
-import RatingStars from "../component/StarRatingRadioOption";
+import { SearchBar } from "../component";
+import Banner from "../component/UI/Banner";
+import RatingStars from "../component/UI/StarRatingRadioOption";
 import ReusableSlider from "../component/SliderComponent/SliderComponent";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,7 +13,6 @@ import {
   HotelServices,
   RentalService,
 } from "../Services/getService";
-import { HeartFavorite } from "../component/ButtonComponent/Button";
 interface TravelItem {
   id: number | string;
   title: string;

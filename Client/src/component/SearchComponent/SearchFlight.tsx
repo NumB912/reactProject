@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "../ButtonComponent/Button";
-import Calendar from "../calendar/Calendar";
+import { Button } from "../UI";
+import Calendar from "../calendar/CalendarFlight";
 import { useChooseCalendar } from "../../store/CalendarStore/calendar_store";
 import { data } from "react-router";
-import { useTraveler } from "../../store/PassengerStore/traveler_store_Flight";
+import { useTravelerFlight } from "../../store";
 import { TagTicker } from "../SelectComponent/PassengersFlight";
-export function SearchFlight() {
+ function SearchFlight() {
   const {
     dateSelectedBook,
     dateSelectedReturn,
-    setDateSelectedBook,
-    setDateSelectedReturn,
-    today,
   } = useChooseCalendar();
 
-  const {total} = useTraveler();
+  const {total} = useTravelerFlight();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTraveler, setTraveler] = useState(false);
 
@@ -113,3 +110,4 @@ export function SearchFlight() {
   );
 }
 
+export default SearchFlight

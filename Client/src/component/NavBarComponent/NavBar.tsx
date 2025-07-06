@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-// import "./styles/style_nav.css";
-import { Button } from "../ButtonComponent/Button";
-import Modal from "../ModalComponent/Modal";
+import { Tabs,Modal,Button } from "../UI";
 import { GoogleLogin } from "@react-oauth/google";
 import { Login } from "../../pages/Auths/login";
 import useStateLogin from "../../store/LoginStore/login_store";
 import SideNavBar from "./SideNavBar";
-import Tabs, { Tab } from "./tabs";
+import { Tab } from "../UI/Tabs";
 
 const NavBar = () => {
   const [isShowsome, setShowsome] = useState(false);

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "../ButtonComponent/Button";
+import { Button } from "../UI";
 import Passengers from "../SelectComponent/PassengersRentalCar";
-import { Calendar_rentalCar } from "../calendar/CalendarRentalCar";
-import { useCalendarCarStore } from "../../store/CalendarStore/calendar_car_store";
-import { useTimeStore } from "../../store/time_store";
+import {CalendarRentalCar} from "../../component"
 import { useNavigate } from "react-router-dom";
 
 function SearchRental() {
@@ -25,7 +23,7 @@ function SearchRental() {
       </div>
 
       <div className="gap-2 relative flex items-center max-lg:flex-wrap max-lg:justify-center *:gap-3 max-lg:w-3/4 max-xl:w-8/10 ">
-        <Calendar_rentalCar />
+        <CalendarRentalCar />
         <Passengers />
       </div>
 
