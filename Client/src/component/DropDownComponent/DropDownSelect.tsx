@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import {FaSort} from 'react-icons/fa'
 
-interface Prop{
-    onClick:()=>void;
-    icon:React.ReactNode;
-    containerStyle?:string;
-    defaultOption?:string;
-    styleOption?:string;
-    styleIcon?:string;
-    options?:string[];
-    styleOptions?:string;
+interface DropDownProp {
+    onClick: (value: string) => void; // truyền giá trị được chọn
+    icon?: React.ReactNode;
+    containerStyle?: string;
+    defaultOption?: string;
+    styleOption?: string;
+    styleIcon?: string;
+    options?: string[];
+    styleOptions?: string;
 }
 
-const DropDownSelect = ({onClick, icon, containerStyle, defaultOption, options, styleOptions, styleOption, styleIcon}:Prop) => {
+
+const DropDownSelect = ({onClick, icon, containerStyle, defaultOption, options, styleOptions, styleOption, styleIcon}:DropDownProp) => {
     const [isOpen, setIsOpen] = useState(false);
     const [optionSelected, setOptionSelected] = useState<string | null>(defaultOption || null);
     const defaultContainerStyle = containerStyle || 'w-64';
     const defaultOptionText = defaultOption || 'Select an option';
-    const defaultIcon = icon || <FaSort />;
     const defaultOptionStyle = styleOption || '';
     const defaultStyleIcon = styleIcon || '';
     const defaultStyleOptions = styleOptions || '';
@@ -25,13 +25,13 @@ const DropDownSelect = ({onClick, icon, containerStyle, defaultOption, options, 
 
   return (
     <div className={`relative ${defaultContainerStyle}`} onClick={() => setIsOpen(!isOpen)}>
-            <div className={`select__trigger p-3 bg-white min-w-50 border rounded-sm ${defaultOptionStyle}`}>
-                <span className={`select__icon inline-block mr-2 ${defaultStyleIcon}`}>
-                    {icon ? icon : <FaSort />}
+            <div className={`select-trigger p-3 bg-white min-w-50 border rounded-sm ${defaultOptionStyle}`}>
+                <span className={`select-icon inline-block mr-2 ${defaultStyleIcon}`}>
+                    {icon ? icon : ""}
                 </span>
-                <span className={`select__label`}>{optionSelected || defaultOptionText}</span>
+                <span className={`select-label`}>{optionSelected || defaultOptionText}</span>
             </div>
-            <div className={`select__options absolute bg-white shadow-lg rounded-sm mt-1 w-full z-10 
+            <div className={`select-options absolute bg-white shadow-lg rounded-sm mt-1 w-full z-10 
             ${defaultStyleOptions}
             *:p-3 *:hover:bg-gray-200 *:hover:cursor-pointer
              ${isOpen ? 'block' : 'hidden'}`}>

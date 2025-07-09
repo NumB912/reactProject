@@ -325,12 +325,14 @@ const Tours = () => {
           className="SortBy flex gap-2 items-center 
         max-xl:hidden"
         >
+          <p className="sort-by font-bold w-full">Sort by:</p>
           <DropDownSelect
             icon={<FaSort />}
             onClick={() => { }}
             containerStyle="w-full"
-            defaultOption="Sort by"
+            defaultOption="Recommended"
             options={[
+              "Recommended",
               "Price: Low to High",
               "Price: High to Low",
               "Rating: High to Low",
@@ -359,7 +361,7 @@ const Tours = () => {
                 className="min-md:rounded-l-xl max-sm:rounded-t-xl h-full w-full object-cover"
               />
 
-              <HeartFavorite key={1} style="" />
+              <HeartFavorite style="" />
             </div>
 
             <div

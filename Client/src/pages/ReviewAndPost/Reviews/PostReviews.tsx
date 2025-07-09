@@ -1,4 +1,6 @@
 import React from 'react'
+import { RatingStar } from '../../../component/UI'
+import { DropDown } from '../../../component'
 
 interface ReviewPostProp {
   id?: string
@@ -52,8 +54,16 @@ const PostReviews = ({ id }: ReviewPostProp) => {
         </div>
       </div>
 
-      <div className="post-review-content">
-        <p>s</p>
+      <div className="post-review-content flex flex-col gap-3 ">
+          <div className='post-review-content__rating flex flex-col gap-3'>
+              <p className='post-review-content__rating__title font-bold text-2xl'>How would you rate your experience?</p>
+              <RatingStar stars={5}/>
+          </div>
+
+          <div className='post-review-content__time-signature flex flex-col gap-3'>
+            <p className='post-review-content__time-signature__title font-bold text-2xl '>When did you go?</p>
+              <DropDown options={["July 2025","June 2025","May 2025"]} onClick={()=>{}}/>
+          </div>
       </div>
     </div>
 

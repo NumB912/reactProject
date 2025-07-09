@@ -1,7 +1,8 @@
-import react from "react";
+
 import { Link } from "react-router";
 import RatingStar from "../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
 import hotel1 from "../assets/42769_14072300320020409156.webp";
+import React from "react";
 const Comment = () => {
   return (
     <div className="w-full bg-gray-100 m-10 flex justify-center items-center flex-col">

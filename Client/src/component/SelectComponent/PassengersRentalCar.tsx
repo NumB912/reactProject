@@ -1,6 +1,8 @@
 import React from "react";
 import { usePassengerCar,useCalendarCarStore } from "../../store";
 import PassengerWrap from "./PassengersWrap";
+import { DropDown } from "..";
+import DropDownOutLineItem from "../DropDownComponent/DropDownOutLineItem";
 
 const Passengers = () => {
   const {
@@ -14,19 +16,14 @@ const Passengers = () => {
     useCalendarCarStore();
 
   return (
-    <PassengerWrap styleContainer="border p-2 max-lg:w-full w-full rounded-sm h-full">
-    <div
-      className="relative flex items-center gap-3"
-      onClick={(e) => {
-        e.stopPropagation();
+    <PassengerWrap styleContainer=" w-full rounded-sm h-full">
+      <DropDownOutLineItem handleOnClick={()=>{        
         setIsSelectedPassenger(!isSelectedPassenger);
         setIsDateSelectedPickUp(false);
-        setIsDateSelectedDropOff(false);
-      }}
-    >
+        setIsDateSelectedDropOff(false);}}>
       <i className="fa-solid fa-users"></i>
       <div className="RAG flex flex-col justify-center items-start">
-        <p className="text-[10px] font-normal">passenger</p>
+        <p className="text-[10px] font-semibold">Passenger</p>
         <p className="text-[13px] font-bold min-w-23">
           {" "}
           {numberPassenger == "1"
@@ -37,7 +34,7 @@ const Passengers = () => {
         </p>
       </div>
       <div
-        className={`bg-white w-full absolute top-12 border border-gray-300 z-10 rounded-sm ${
+        className={`bg-white w-full absolute left-0 top-15 border border-gray-300 z-10 rounded-sm ${
           isSelectedPassenger ? "" : "hidden"
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -47,7 +44,7 @@ const Passengers = () => {
             {numberPassengerOptions.map((label: string, index) => (
               <div
                 key={index}
-                className={`p-3 hover:bg-gray-200 cursor-pointer transition`}
+                className={`p-3 hover:bg-gray-200 cursor-pointer`}
                 onClick={() => {
                   setNumberPassenger(label);
                   setIsSelectedPassenger(!isSelectedPassenger)
@@ -59,7 +56,7 @@ const Passengers = () => {
           </div>
         </div>
       </div>
-    </div>
+      </DropDownOutLineItem>
     </PassengerWrap>
 
   );

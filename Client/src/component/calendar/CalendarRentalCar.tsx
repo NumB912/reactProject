@@ -10,6 +10,8 @@ import { useTimeStore } from "../../store/time_store";
 import Calendar_OneMonth_Timer from "./CalendarBase/Calendar_OneMonthWithTime";
 import { CalendarOneMonthWithTimer } from "./interfaceCalendar/CalendarBaseProps";
 import { usePassengerCar } from "../../store/PassengerStore/PassengerRentalCarStore";
+import CalendarParent from "../DropDownComponent/DropDownOutLineItem";
+import DropDownOutLineItem from "../DropDownComponent/DropDownOutLineItem";
  const CalendarRentalCar = () => {
  const {setIsSelectedPassenger} = usePassengerCar()
     const {
@@ -44,22 +46,18 @@ import { usePassengerCar } from "../../store/PassengerStore/PassengerRentalCarSt
   },[])
 
   return (
-        <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap 
-        *:border *:w-full *:p-4 *:flex *:items-center *:gap-3 *:rounded-md *:cursor-pointer
-        *:min-xl:min-w-48">
-          <div
-            className="CheckInBlock border"
-                                    onClick={() => {
+        <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap ">
+          <DropDownOutLineItem handleOnClick={() => {
               setIsDateSelectedPickUp(!isDateSelectedPickUp);
               setIsDateSelectedDropOff(false);
               setIsSelectedPassenger(false)
               setDatesPickUpFromDate(dateSelectedPickUp)
-            }}
-          >
+            }}>
+
             <i className="fa-solid fa-calendar"></i>
             <div className="DCI" >
+              <p className="text-[10px] font-semibold">Pick up</p>
               <p className="text-[13px] font-bold">
-                {" "}
                 {dateSelectedPickUp.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -88,21 +86,17 @@ import { usePassengerCar } from "../../store/PassengerStore/PassengerRentalCarSt
                 onSetToday={SetToday}
               />
             </div>
-          </div>
+          </DropDownOutLineItem>
 
-          <div
-            className="DropOff relative"
-            onClick={() => {
-              // e.stopPropagation();
-              setIsDateSelectedDropOff(!isDateSelectedDropOff);
+
+                <DropDownOutLineItem handleOnClick={()=>{  setIsDateSelectedDropOff(!isDateSelectedDropOff);
               setIsDateSelectedPickUp(false);
               setIsSelectedPassenger(false);  
-              setDatesDropOffFromDate(dateSelectedDropOff)
-
-            }}
-          >
+              setDatesDropOffFromDate(dateSelectedDropOff)}}>
+       
             <i className="fa-solid fa-calendar"></i>
             <div className="DCI">
+              <p className="text-[10px] font-semibold">Drop off</p>
               <p className="text-[13px] font-bold">
                 {dateSelectedDropOff.toLocaleDateString("en-US", {
                   month: "short",
@@ -133,7 +127,7 @@ import { usePassengerCar } from "../../store/PassengerStore/PassengerRentalCarSt
                 onSetToday={SetToday}
               />
             </div>
-          </div>
+                </DropDownOutLineItem>
         </div>
 
   );
