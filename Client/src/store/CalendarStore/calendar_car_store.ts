@@ -24,26 +24,26 @@ export const useCalendarCarStore = create<CarCalendarStore>((set, get) => ({
   setTimePickUpTimeSelected: (time: string) => set({ timePickUpSelected: time }),
   
 
-  setDateSelectedPickup: (date) => {
+  setDateSelectedPickup: (date:Date) => {
     if(date <= new Date()){
       return
     }
 
     if (date >= get().dateSelectedDropOff) {
-      set({ dateSelectedDropOff: new Date(date.getFullYecdar(), date.getMonth(), date.getDate() + 1) });
+      set({ dateSelectedDropOff: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1) });
     }
     set({ dateSelectedPickUp: date });
   },
 
-  setIsDateSelectedPickUp: (bl: any) => {
+  setIsDateSelectedPickUp: (bl: boolean) => {
     set({ isDateSelectedPickUp: bl });
   },
 
-  setIsDateSelectedDropOff: (bl: any) => {
+  setIsDateSelectedDropOff: (bl: boolean) => {
     set({ isDateSelectedDropOff: bl });
   },
 
-  setdateSelectedDropOff: (date) => {
+  setdateSelectedDropOff: (date: Date) => {
     const pickUpDate = get().dateSelectedPickUp;
     if (date <= pickUpDate) {
       set({

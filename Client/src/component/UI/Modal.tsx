@@ -33,7 +33,7 @@ const Modal = ({
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 z-50 flex items-center  justify-center w-full h-full cursor-pointer
+      className={`fixed inset-0 z-50 flex items-center justify-center w-full h-full cursor-pointer
         bg-black/30 transition-all duration-200 ${parentContainerStyle}`}
     >
       <div
