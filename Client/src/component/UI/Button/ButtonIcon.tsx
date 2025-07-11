@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactNode, useState } from "react";
 
 export interface ButtonIconProp {
@@ -17,7 +18,7 @@ export interface ButtonIconProp {
   }
 
   return (
-    <button className={`rounded-full border border-gray-200 p-3 w-24 flex items-center gap-2 cursor-pointer ${containStyle}`} onClick={handleSet}>
+    <button className={`rounded-full border border-gray-200 p-3 w-24 flex items-center justify-center gap-2 cursor-pointer ${containStyle}`} onClick={handleSet}>
       {icon && <span className={`${isIconStyle ? iconColor : ""}`}>{icon}</span>}
       {children}
     </button>

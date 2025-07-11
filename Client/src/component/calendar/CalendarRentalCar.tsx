@@ -89,7 +89,7 @@ import DropDownOutLineItem from "../DropDownComponent/DropDownOutLineItem";
           </DropDownOutLineItem>
 
 
-                <DropDownOutLineItem handleOnClick={()=>{  setIsDateSelectedDropOff(!isDateSelectedDropOff);
+          <DropDownOutLineItem handleOnClick={()=>{  setIsDateSelectedDropOff(!isDateSelectedDropOff);
               setIsDateSelectedPickUp(false);
               setIsSelectedPassenger(false);  
               setDatesDropOffFromDate(dateSelectedDropOff)}}>

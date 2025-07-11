@@ -1,12 +1,17 @@
-import React from 'react'
-import { RatingStar } from '../../../component/UI'
+import React, { useEffect, useState } from 'react'
+import { ButtonCircle, ButtonIcon, RatingStar } from '../../../component/UI'
 import { DropDown } from '../../../component'
+import ButtonBorder from '../../../component/UI/Button/ButtonBorder'
+import ButtonSelectOne, { buttonSelectProp } from '../../../component/ButtonSelectOne'
+import UploadPhoto from '../../../component/UploadPhoto'
 
 interface ReviewPostProp {
   id?: string
 }
 
 const PostReviews = ({ id }: ReviewPostProp) => {
+  const [value,setvalue] = useState<buttonSelectProp>()
+
   return (
     <div className="post-review grid gap-3 w-8/10 justify-center items-center p-5">
 
@@ -23,7 +28,7 @@ const PostReviews = ({ id }: ReviewPostProp) => {
 
             <div className="post-review__service-info">
               <p className="post-review__service-name font-bold">The Mekong River in Southwest Vietnam</p>
-              <p className="post-review__service-address">Tiền Giang</p>
+              <p className="post-review__service-address text-gray-500">Kiên Giang</p>
             </div>
           </div>
 
@@ -54,16 +59,37 @@ const PostReviews = ({ id }: ReviewPostProp) => {
         </div>
       </div>
 
-      <div className="post-review-content flex flex-col gap-3 ">
-          <div className='post-review-content__rating flex flex-col gap-3'>
-              <p className='post-review-content__rating__title font-bold text-2xl'>How would you rate your experience?</p>
-              <RatingStar stars={5}/>
+      <div className="post-review-content grid grid-cols-2 gap-10">
+        <div className='flex flex-col gap-10 *:*:mt-5'>
+          <div className='post-review-content__rating flex flex-col gap-3 w-full'>
+            <p className='post-review-content__rating__title font-bold text-2xl'>How would you rate your experience?</p>
+            <RatingStar stars={5} />
           </div>
 
-          <div className='post-review-content__time-signature flex flex-col gap-3'>
-            <p className='post-review-content__time-signature__title font-bold text-2xl '>When did you go?</p>
-              <DropDown options={["July 2025","June 2025","May 2025"]} onClick={()=>{}}/>
+
+          <div className='post-review-content__title'>
+            <p className='post-review-content__title_text font-bold text-2xl w-full'>Your title review</p>
+            <input type='text' className='post-review-content__title__input border p-3 rounded-sm w-full' placeholder='Give us the gist of your experience...' />
           </div>
+
+          <div className='post-review-content__time-signature'>
+            <p className='post-review-content__time-signature__title font-bold text-2xl '>When did you go?</p>
+            <DropDown options={["July 2025", "June 2025", "May 2025"]} onClick={() => { }} />
+          </div>
+
+          <div className='post-review-content'>
+            <p className='post font-bold text-2xl'>Who did you go with?</p>
+            <ButtonSelectOne value={value} setValue={setvalue}/>
+          </div>
+        </div>
+        <UploadPhoto/>
+
+
+        <div className='post-review-content flex gap-10 w-full col-span-2'>
+          <textarea className='min-h-[280px] p-5 border rounded-sm w-1/2' placeholder='Tell about your experience...' />
+          <p className='post-review-content__text-title font-bold text-[4vw] w-1/2'>Tell us about your experiences</p>
+
+        </div>
       </div>
     </div>
 
