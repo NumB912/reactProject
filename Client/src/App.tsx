@@ -91,8 +91,11 @@ const router = createBrowserRouter([
     path:"Profile/:id",
     element:<InfoClient/>,
     children:[{
-      path:"reviews",
+      index:true,
       element:<Reviews/>
+    },{
+      path:"reviews",
+      element:<Reviews/>,
     },{
       path:"photos",
       element:<Photos/>

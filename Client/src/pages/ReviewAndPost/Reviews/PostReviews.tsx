@@ -12,6 +12,8 @@ import ButtonSelectOne, {
 } from "../../../component/ButtonSelectOne";
 import UploadPhoto from "../../../component/UploadPhoto";
 import { Checkbox } from "@mui/material";
+import Star from "../../../component/UI/star";
+import StarRatingComponent from "../../../component/StarRatingComponent";
 
 interface ReviewPostProp {
   id?: string;
@@ -83,7 +85,7 @@ const PostReviews = ({ id }: ReviewPostProp) => {
             <p className="post-review-content__rating__title font-bold text-2xl">
               How would you rate your experience?
             </p>
-            <RatingStar stars={5} />
+            <StarRatingComponent/>
           </div>
 
           <div className="post-review-content__title">
