@@ -26,6 +26,7 @@ import Booking from './pages/Auths/InfoClient/Booking';
 import PostReviews from './pages/ReviewAndPost/Reviews/PostReviews';
 import PostPhoto from './pages/ReviewAndPost/Photos/PostPhoto';
 import Tours from './pages/Service/tour/tours';
+import FoundServiceReviews from './pages/ReviewAndPost/Reviews/FoundServiceReviews';
 const router = createBrowserRouter([
   {
     path:'/',
@@ -111,6 +112,9 @@ const router = createBrowserRouter([
       path:"bookings",
       element:<Booking/>
     }]
+   },{
+    path:"WriteReview",
+    element:<FoundServiceReviews/>
    },{
     path:"WriteReview/:id",
     element:<PostReviews/>

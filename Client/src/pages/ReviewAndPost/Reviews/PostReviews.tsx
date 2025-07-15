@@ -6,13 +6,12 @@ import {
   RatingStar,
 } from "../../../component/UI";
 import { DropDown } from "../../../component";
-import ButtonBorder from "../../../component/UI/Button/ButtonBorder";
+import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
 import ButtonSelectOne, {
   buttonSelectProp,
 } from "../../../component/ButtonSelectOne";
 import UploadPhoto from "../../../component/UploadPhoto";
 import { Checkbox } from "@mui/material";
-import Star from "../../../component/UI/star";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 
 interface ReviewPostProp {
@@ -81,7 +80,7 @@ const PostReviews = ({ id }: ReviewPostProp) => {
 
       <div className="post-review-content grid grid-cols-2 gap-10">
         <div className="flex flex-col gap-10 *:*:mt-5">
-          <div className="post-review-content__rating flex flex-col gap-3 w-full">
+          <div className="post-review-content__rating w-full">
             <p className="post-review-content__rating__title font-bold text-2xl">
               How would you rate your experience?
             </p>
@@ -136,7 +135,7 @@ const PostReviews = ({ id }: ReviewPostProp) => {
                 className=" w-5 h-5"
               />
             </span>
-            <span className="text-gray-900 text-md">
+            <span className="text-gray-900 text-sm">
               <label htmlFor="td" className="cursor-pointer">
                 {" "}
                 I certify that this review is based on my own experience and is

@@ -1,22 +1,16 @@
-import React, { ReactNode } from 'react'
-import { buttonSelectProp } from '../../ButtonSelectOne';
+import React from 'react'
 
 interface ButtonBorderProp{
-    onClick:(value:buttonSelectProp)=>void;
-    className?:string;
-    children:React.ReactNode;
-    active?:boolean;
-    value:buttonSelectProp
+    onClick:()=>void,
+    className:string,
+    children:React.ReactNode
 }
 
-
-const ButtonBorder = ({onClick,className,children,active,value}:ButtonBorderProp) => {
+const ButtonBorder = ({onClick,children,className}:ButtonBorderProp) => {
   return (
-   <button onClick={()=>{
-    onClick(value)
-   }} className={`min-w-25 p-2 rounded-full cursor-pointer ${className} ${active?"border-black border-2":"border border-gray-200"}`}>
+    <button onClick={onClick} className={`hover:bg-gray-300 bg-white aspect-square rounded-full w-8 h-8 cursor-pointer ${className}`}>
         {children}
-   </button>
+    </button>
   )
 }
 

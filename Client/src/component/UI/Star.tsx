@@ -1,11 +1,10 @@
 import React, { MouseEventHandler } from 'react'
 interface StarProp {
     isLight?: boolean;
-    onMouseEnter: () => void;
-    onMouseLeave: () => void;
-    onClick: () => void ;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
+    onClick?: () => void ;
     styleStar?:string;
-    index: number;
 }
 const Star = ({ isLight = false, onMouseEnter,onMouseLeave, onClick,styleStar }: StarProp) => {
 

@@ -13,3 +13,5 @@ export {default as CalendarFlight} from "./calendar/CalendarFlight"
 export {default as CalendarRentalCar} from "./calendar/CalendarRentalCar"
 export {default as CalendarHotel} from "./calendar/CalendarHotel"
 export {default as CalendarTour} from "./calendar/CalendarTour"
+
+export {default as StarRatingStatic} from "./StarRatingStatic"

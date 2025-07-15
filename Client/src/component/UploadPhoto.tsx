@@ -12,14 +12,17 @@ const UploadPhoto: React.FC = () => {
   const inputPhotos = useRef<HTMLInputElement | null>(null);
   const [photos, setPhotos] = useState<ImageUrlProp[]>([]);
   const [isOpen, setOpen] = useState<boolean>(false);
+  const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
+
+
 
   const handleClick = () => {
     inputPhotos.current?.click();
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e)
     if (!e.target.files) return;
-
     const files = Array.from(e.target.files);
     const imageUrls = files.map((file) => ({
       url: URL.createObjectURL(file),
@@ -38,8 +41,8 @@ const UploadPhoto: React.FC = () => {
     const revokePhoto = photos[indexToRemove];
     URL.revokeObjectURL(revokePhoto.url);
     setPhotos((prev) => prev.filter((_, index) => index !== indexToRemove));
-    if(photos.length==0){
-        setOpen(false)
+    if (photos.length == 0) {
+      setOpen(false)
     }
   };
 
@@ -64,6 +67,18 @@ const UploadPhoto: React.FC = () => {
     }
   };
 
+  const handleDescriptionChange = (index: number, value: string) => {
+    setPhotos((prevPhotos) =>
+      prevPhotos.map((photo, i) =>
+        i === index ? { ...photo, description: value } : photo
+      )
+    );
+  };
+
+const handleOpenModal =async (index: number) => {
+  await setOpen(true);
+   inputRefs.current[index]?.focus();
+};
 
   return (
     <div className="post-review-content__add-more-photo row-span-2 flex-col flex gap-5">
@@ -75,11 +90,13 @@ const UploadPhoto: React.FC = () => {
       <div className={`option-photos ${photos.length == 0 ? "hidden" : ""}`}>
         <div className="list-photos flex gap-3 overflow-x-auto">
           {photos.map((photo, index) => (
-            <div key={index} className="relative min-w-60">
+            <div key={index} className="relative min-w-60" >
               <img
                 src={photo.url}
                 alt={`uploaded-${index}`}
-                className="object-cover w-60 h-40 rounded-md"
+                className="object-cover w-60 h-40 rounded-md cursor-pointer"
+                onClick={() => handleOpenModal(index)}
+                
               />
               <ButtonCircle
                 className="absolute top-2 right-2"
@@ -108,7 +125,6 @@ const UploadPhoto: React.FC = () => {
         isOpen={isOpen}
         onClose={() => setOpen(!isOpen)}
       >
-        {/* Title */}
         <div className="mb-4">
           <p className="font-bold text-3xl">Add photos</p>
         </div>
@@ -125,7 +141,6 @@ const UploadPhoto: React.FC = () => {
               key={index}
               className="flex flex-col md:flex-row gap-4 items-start"
             >
-              {/* Photo Thumbnail */}
               <div className="relative w-full md:w-auto">
                 <img
                   src={photo.url}
@@ -145,9 +160,13 @@ const UploadPhoto: React.FC = () => {
                   onChange={(e) =>
                     handleDescriptionChange(index, e.target.value)
                   }
+                  ref={(el) => {
+                    inputRefs.current[index] = el;
+                  }}
                   className="w-full border border-gray-300 p-4 bg-gray-50 rounded-md resize-none"
                   rows={4}
                 />
+
               </div>
             </div>
           ))}
@@ -188,9 +207,9 @@ const UploadPhoto: React.FC = () => {
           aria-hidden="true"
         />
       </div>
-        <div className="text-gray-500 text-sm mt-2">
-            You can add up to 10 photos. Photos should be in JPG, JPEG, GIF, or PNG
-            format.</div>
+      <div className="text-gray-500 text-sm">
+        Photos should be in JPG, JPEG, GIF, or PNG
+        format.</div>
     </div>
   );
 };

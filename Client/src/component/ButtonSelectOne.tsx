@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ButtonBorder from './UI/Button/ButtonBorder'
+import ButtonBorderSelect from './UI/Button/ButtonBorderSelect';
 
 interface ButtonSelectOneProp{
     setValue:(value:buttonSelectProp)=>void;
@@ -18,7 +18,7 @@ const ButtonSelectOne = ({setValue,value}:ButtonSelectOneProp) => {
         <div className='flex gap-3'>
             {buttonArr.map((item)=>{
                 return (
-                    <ButtonBorder value={item} onClick={setValue} active={value?.id==item.id}>{item.value} </ButtonBorder>
+                    <ButtonBorderSelect value={item} onClick={setValue} active={value?.id==item.id}>{item.value} </ButtonBorderSelect>
                 )
             })}
         </div>

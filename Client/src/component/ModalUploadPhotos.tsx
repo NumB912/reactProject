@@ -1,4 +1,5 @@
 import React from 'react'
+import { Modal, ButtonCircle, Button } from './UI'
 
 const ModalUploadPhotos = () => {
   return (

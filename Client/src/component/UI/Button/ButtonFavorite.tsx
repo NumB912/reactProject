@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 const HeartFavorite = ({ style = "" }) => {
   const [favorite, setFavorite] = useState(false);
