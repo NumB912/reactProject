@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử bạn có icon X ở đây
 import Photos from "../pages/Auths/InfoClient/Photos";
 
-interface ImageUrlProp {
+export interface ImageUrlProp {
   id: string;
   url: string;
   description: string;

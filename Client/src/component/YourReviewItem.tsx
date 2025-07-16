@@ -3,6 +3,9 @@ import { ButtonBorder } from "./UI";
 import StarRatingStatic from "./StarRatingStatic";
 import DropDownOutLineItem from "./DropDownComponent/DropDownOutLineItem";
 import DropDownSelect from "./DropDownComponent/DropDownSelect";
+import PostReviewPhoto from "./postReviewPhoto";
+import { ImageUrlProp } from "./UploadPhoto";
+import Photos from "../pages/Auths/InfoClient/Photos";
 interface YourReviewedItemProps {
   image: string;
   titleService: string;
@@ -10,6 +13,7 @@ interface YourReviewedItemProps {
   address: string;
   rating: number;
   contentReview: string;
+  postReviewPhotos?: ImageUrlProp[];
 }
 
 const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
@@ -19,9 +23,10 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
   rating,
   titleReview,
   contentReview,
+  postReviewPhotos,
 }) => {
-    const [openOption,setOpenOption] = useState<boolean>(false)
-    const optionRef = useRef<HTMLDivElement>(null);
+  const [openOption, setOpenOption] = useState<boolean>(false);
+  const optionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,9 +44,8 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
     };
   }, []);
 
-
   return (
-    <div className="w-full border border-gray-300 p-4 rounded-md shadow-sm bg-white">
+    <div className="w-full border border-gray-300 p-4 rounded-md shadow-md bg-white">
       <div className="w-full relative flex gap-3">
         <img
           src={image}
@@ -55,16 +59,23 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
         </div>
 
         <div className="top-2 right-2 absolute flex gap-3" ref={optionRef}>
-
-          <div className={`bg-white *:hover:bg-gray-200 *:p-3 border border-gray-200 cursor-pointer *:text-sm rounded-md ${openOption?"":"hidden"}`}>
+          <div
+            className={`bg-white *:hover:bg-gray-200 *:p-3 border border-gray-200 cursor-pointer *:text-sm rounded-md ${
+              openOption ? "" : "hidden"
+            }`}
+          >
             <p>Delete your review</p>
             <p>Share your review</p>
             <p>See detail</p>
           </div>
-          <ButtonBorder className="" onClick={() => {setOpenOption(!openOption)}}>
+          <ButtonBorder
+            className=""
+            onClick={() => {
+              setOpenOption(!openOption);
+            }}
+          >
             <i className="fa-solid fa-ellipsis"></i>
           </ButtonBorder>
-
         </div>
       </div>
 
@@ -73,6 +84,10 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
         <p className="text-md font-bold">{titleReview}</p>
         <p className="text-sm text-gray-800">{contentReview}</p>
       </div>
+
+      <PostReviewPhoto
+        photos={postReviewPhotos || []}
+      />
     </div>
   );
 };
