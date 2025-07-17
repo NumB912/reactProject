@@ -27,6 +27,8 @@ import PostReviews from './pages/ReviewAndPost/Reviews/PostReviews';
 import PostPhoto from './pages/ReviewAndPost/Photos/PostPhoto';
 import Tours from './pages/Service/tour/tours';
 import FoundServiceReviews from './pages/ReviewAndPost/Reviews/FoundServiceReviews';
+import FoundServicePostPhoto from './pages/ReviewAndPost/Photos/SearchServicePostPhoto';
+import SearchServicePostPhoto from './pages/ReviewAndPost/Photos/SearchServicePostPhoto';
 const router = createBrowserRouter([
   {
     path:'/',
@@ -120,6 +122,9 @@ const router = createBrowserRouter([
     element:<PostReviews/>
    },{
     path:"PostPhotos",
+    element:<SearchServicePostPhoto/>
+   },{
+    path:"PostPhotos/:id",
     element:<PostPhoto/>
    }
   ]
