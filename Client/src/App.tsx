@@ -26,7 +26,7 @@ import Booking from './pages/Auths/InfoClient/Booking';
 import PostReviews from './pages/ReviewAndPost/Reviews/PostReviews';
 import PostPhoto from './pages/ReviewAndPost/Photos/PostPhoto';
 import Tours from './pages/Service/tour/tours';
-import FoundServiceReviews from './pages/ReviewAndPost/Reviews/FoundServiceReviews';
+import FoundServiceReviews from './pages/ReviewAndPost/Reviews/SearchServiceReviews';
 import FoundServicePostPhoto from './pages/ReviewAndPost/Photos/SearchServicePostPhoto';
 import SearchServicePostPhoto from './pages/ReviewAndPost/Photos/SearchServicePostPhoto';
 const router = createBrowserRouter([

@@ -1,32 +1,29 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử bạn có icon X ở đây
 import Photos from "../pages/Auths/InfoClient/Photos";
-import UploadPhotos, { ImageUrlProp } from "./UploadPhotos";
+import UploadPhotos, { ImageUrlProp, UploadPhotosHandle } from "./UploadPhotos";
+import { useUploadPhotoStore } from "../store/useUploadPhoto";
 
-const UploadPhoto: React.FC = () => {
+const UploadPhotosReview: React.FC = () => {
   const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
-  const [photos, setPhotos] = useState<ImageUrlProp[]>([]);
+  const {photos,removePhoto,addPhotos,updateDescription} = useUploadPhotoStore()
   const [isOpen, setOpen] = useState<boolean>(false);
-
+  const uploadRef = useRef<UploadPhotosHandle>(null)
   const handleRemovePhoto = (indexToRemove: number) => {
     const revokePhoto = photos[indexToRemove];
     URL.revokeObjectURL(revokePhoto.url);
-    setPhotos((prev) => prev.filter((_, index) => index !== indexToRemove));
+    removePhoto(indexToRemove)
     if (photos.length == 0) {
       setOpen(false);
     }
   };
 
   const handleDescriptionChange = (index: number, value: string) => {
-    setPhotos((prevPhotos) =>
-      prevPhotos.map((photo, i) =>
-        i === index ? { ...photo, description: value } : photo
-      )
-    );
+    updateDescription(index,value)
   };
 
-  const handleOpenModal = async (index: number) => {
-    await setOpen(true);
+  const handleOpenModal =  (index: number) => {
+     setOpen(true);
     inputRefs.current[index]?.focus();
   };
 
@@ -120,7 +117,7 @@ const UploadPhoto: React.FC = () => {
         </div>
 
         <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
-          <Button onClick={() => {}} className="rounded-md min-w-40">
+          <Button onClick={() => {uploadRef.current?.openFileDialog()}} className="rounded-md min-w-40">
             Add photo
           </Button>
           <Button
@@ -131,7 +128,7 @@ const UploadPhoto: React.FC = () => {
           </Button>
         </div>
       </Modal>
-      <UploadPhotos photos={photos} setPhotos={setPhotos} />
+      <UploadPhotos ref={uploadRef}/>
       <div className="text-gray-500 text-sm">
         Photos should be in JPG, JPEG, GIF, or PNG format.
       </div>
@@ -139,4 +136,4 @@ const UploadPhoto: React.FC = () => {
   );
 };
 
-export default UploadPhoto;
+export default UploadPhotosReview;

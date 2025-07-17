@@ -149,7 +149,7 @@ const InfoClient = () => {
             setShowEdit(false);
           }}
         >
-          <div className="grid w-screen grid-cols-[100px_1fr] max-w-[700px] p-10 gap-10">
+          <div className="grid h-screen w-screen grid-cols-[100px_1fr] max-w-[700px] p-5 gap-10">
             <div className="profile-edit-img w-full">
               <img
                 src=""
@@ -197,6 +197,35 @@ const InfoClient = () => {
                 </span>
               </div>
 
+
+              <div className="info-edit_name w-full">
+                <p className="font-semibold text-[10px] mb-1">Email</p>
+                <span className="relative">
+                  <input
+                    className="border border-gray-300 p-1.5 w-full pl-8 text-sm"
+                    type="text"
+                    placeholder="Email"
+                  />
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
+                 <i className="fa-solid fa-envelope"></i>
+                  </span>
+                </span>
+              </div>
+
+              
+              <div className="info-edit_name w-full">
+                <p className="font-semibold text-[10px] mb-1">Phone number</p>
+                <span className="relative">
+                  <input
+                    className="border border-gray-300 p-1.5 w-full pl-8 text-sm"
+                    type="text"
+                    placeholder="Phone number"
+                  />
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
+                    <i className="fa-solid fa-phone"></i>
+                  </span>
+                </span>
+              </div>
 
                 <div className="info-edit_name w-full">
                 <p className="font-semibold text-[10px] mb-1">About me</p>

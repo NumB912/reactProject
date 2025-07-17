@@ -4,7 +4,7 @@ import { StarRatingStatic } from "../../../component";
 import { ButtonBorder } from "../../../component/UI";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 import YourReviewedItem from "../../../component/YourReviewItem";
-const FoundServiceReviews = () => {
+const SearchServiceReviews = () => {
 const yourReviews = [
   {
     id: "1",
@@ -275,4 +275,4 @@ const yourReviews = [
   );
 };
 
-export default FoundServiceReviews;
+export default SearchServiceReviews;

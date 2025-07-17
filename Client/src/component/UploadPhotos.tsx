@@ -1,96 +1,74 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Button, ButtonCircle, Modal } from "./UI";
+import React, {
+  useRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { useUploadPhotoStore } from "../store/useUploadPhoto";
+import { CssBaselineProps } from "@mui/material";
+
 export interface ImageUrlProp {
   id: string;
   url: string;
   description: string;
 }
 
-interface UploadPhotosProps {
-  setPhotos: React.Dispatch<React.SetStateAction<ImageUrlProp[]>>;
-  photos: ImageUrlProp[];
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  open?: boolean;
+export interface UploadPhotosHandle {
+  openFileDialog: () => void;
 }
 
-const UploadPhotos: React.FC<UploadPhotosProps> = ({
-  setPhotos,
-  photos,
-  setOpen,
-  open,
-}) => {
-  const inputPhotos = useRef<HTMLInputElement | null>(null);
+interface uploadPhotoProp{
+  style?:React.CSSProperties
+}
 
-  const handleClick = () => {
-    inputPhotos.current?.click();
-  };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const files = Array.from(e.target.files);
-    const imageUrls = files.map((file) => ({
-      url: URL.createObjectURL(file),
-      id: crypto.randomUUID(),
-      description: "",
-    }));
+const UploadPhotos = forwardRef<UploadPhotosHandle,uploadPhotoProp>((props, ref) => {
+  const { addPhotos } = useUploadPhotoStore();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    setPhotos((prev) => [...prev, ...imageUrls]);
+  useImperativeHandle(ref, () => ({
+    openFileDialog: () => {
+      inputRef.current?.click();
+    },
+  }));
 
-    if (!open && setOpen) {
-      setOpen(true);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      addPhotos(Array.from(e.target.files));
     }
   };
 
-  const handleDragPhoto = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-  };
-
-  const handleDropPhoto = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (!e.dataTransfer.files) return;
-    const files = Array.from(e.dataTransfer.files);
-    const imageUrls = files.map((file) => ({
-      url: URL.createObjectURL(file),
-      id: crypto.randomUUID(),
-      description: "",
-    }));
-
-    setPhotos((prev) => [...prev, ...imageUrls]);
-
-    if (!open && setOpen) {
-      setOpen(true);
+    if (e.dataTransfer.files) {
+      addPhotos(Array.from(e.dataTransfer.files));
     }
   };
 
-  useEffect(() => {
-    return () => {
-      photos.forEach((photo) => URL.revokeObjectURL(photo.url));
-    };
-  }, [photos]);
+  
 
   return (
-    <div>
+    <div className="space-y-4" style={props.style}>
       <div
+        onClick={() => inputRef.current?.click()}
+        onDrop={handleDrop}
+        onDragOver={(e) => e.preventDefault()}
         className="bg-gray-100 flex flex-col justify-center items-center w-full h-full rounded-md min-h-[300px] max-h-[400px] cursor-pointer"
-        onClick={handleClick}
-        onDragOver={handleDragPhoto}
-        onDrop={handleDropPhoto}
       >
         <i className="fa-solid fa-camera text-3xl mb-2"></i>
         <p className="font-bold">Click to add photos</p>
         <p className="text-sm font-thin">or drag and drop</p>
-        <input
-          type="file"
-          multiple
-          accept=".jpg,.jpeg,.gif,.png"
-          ref={inputPhotos}
-          onChange={handleChange}
-          className="hidden"
-          aria-hidden="true"
-        />
       </div>
+      <input
+        ref={inputRef}
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={handleFileChange}
+        className="hidden"
+      />
     </div>
   );
-};
+});
 
 export default UploadPhotos;
