@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -17,6 +18,8 @@ const Modal = ({
   styleContainer,
   parentContainerStyle,
 }: ModalProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-y-hidden");
@@ -28,30 +31,36 @@ const Modal = ({
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleClose = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClose);
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, [onClose]);
+
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
+  <div
+    className={`fixed inset-0 z-[9999] flex items-center justify-center cursor-pointer
+      bg-black/30 transition-all duration-200 w-full ${parentContainerStyle}`}
+  >
     <div
-      onClick={onClose}
-      className={`fixed inset-0 z-50 flex items-center justify-center w-full h-full cursor-pointer
-        bg-black/30 transition-all duration-200 ${parentContainerStyle}`}
+      ref={ref}
+      onClick={(e) => e.stopPropagation()}
+      className={`relative bg-white rounded-md shadow-xl max-h-[90vh] ${styleContainer}`}
     >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={`relative bg-white rounded-md shadow-xl max-h-[90vh] ${styleContainer}`}
-      >
-        <div className="sticky w-full top-0">
-          <button
-            onClick={onClose}
-            className={`absolute top-1 right-1 text-gray-500 hover:text-red-500 text-xl cursor-pointer ${styleButtonClose}`}
-          >
-            ×
-          </button>
-        </div>
-        {children}
-      </div>
+      {children}
     </div>
-  );
+  </div>,
+  document.body
+);
 };
 
 export default Modal;

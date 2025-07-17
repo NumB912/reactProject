@@ -9,9 +9,6 @@ import SideNavBar from "./SideNavBar";
 import { Tab } from "../UI/Tabs";
 
 const NavBar = () => {
-  const [isShowsome, setShowsome] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const { isShow, setShow, isSuccess, setIsSuccess, login, logout } = useStateLogin();
 
@@ -111,8 +108,8 @@ const NavBar = () => {
                 Log in
               </Button>
 
-              <Modal isOpen={isShow} onClose={() => setShow(false)}>
-                <div className="bg-white p-3 w-[400px] flex flex-col h-[300px] items-center justify-center">
+              <Modal parentContainerStyle={'w-[1000px]'} isOpen={isShow} onClose={() => setShow(false)}>
+                <div className="bg-white p-3 w-full flex flex-col h-[300px] items-center justify-center">
                   <img src={logo} className="w-32" />
                   <div className="title text-lg font-semibold my-3">
                     Welcome to Login
