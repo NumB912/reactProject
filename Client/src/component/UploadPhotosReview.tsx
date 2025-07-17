@@ -1,69 +1,19 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử bạn có icon X ở đây
 import Photos from "../pages/Auths/InfoClient/Photos";
-
-export interface ImageUrlProp {
-  id: string;
-  url: string;
-  description: string;
-}
+import UploadPhotos, { ImageUrlProp } from "./UploadPhotos";
 
 const UploadPhoto: React.FC = () => {
-  const inputPhotos = useRef<HTMLInputElement | null>(null);
+  const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
   const [photos, setPhotos] = useState<ImageUrlProp[]>([]);
   const [isOpen, setOpen] = useState<boolean>(false);
-  const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
-
-
-
-  const handleClick = () => {
-    inputPhotos.current?.click();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e)
-    if (!e.target.files) return;
-    const files = Array.from(e.target.files);
-    const imageUrls = files.map((file) => ({
-      url: URL.createObjectURL(file),
-      id: crypto.randomUUID(),
-      description: "",
-    }));
-
-    setPhotos((prev) => [...prev, ...imageUrls]);
-
-    if (!isOpen) {
-      setOpen(true);
-    }
-  };
 
   const handleRemovePhoto = (indexToRemove: number) => {
     const revokePhoto = photos[indexToRemove];
     URL.revokeObjectURL(revokePhoto.url);
     setPhotos((prev) => prev.filter((_, index) => index !== indexToRemove));
     if (photos.length == 0) {
-      setOpen(false)
-    }
-  };
-
-  const handleDragPhoto = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
-
-  const handleDropPhoto = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (!e.dataTransfer.files) return;
-    const files = Array.from(e.dataTransfer.files);
-    const imageUrls = files.map((file) => ({
-      url: URL.createObjectURL(file),
-      id: crypto.randomUUID(),
-      description: "",
-    }));
-
-    setPhotos((prev) => [...prev, ...imageUrls]);
-
-    if (!isOpen) {
-      setOpen(true);
+      setOpen(false);
     }
   };
 
@@ -75,10 +25,10 @@ const UploadPhoto: React.FC = () => {
     );
   };
 
-const handleOpenModal =async (index: number) => {
-  await setOpen(true);
-   inputRefs.current[index]?.focus();
-};
+  const handleOpenModal = async (index: number) => {
+    await setOpen(true);
+    inputRefs.current[index]?.focus();
+  };
 
   return (
     <div className="post-review-content__add-more-photo row-span-2 flex-col flex gap-5">
@@ -86,17 +36,15 @@ const handleOpenModal =async (index: number) => {
         <p className=" font-bold text-2xl">Add some photos</p>
         <p className="text-md">Optional</p>
       </div>
-
       <div className={`option-photos ${photos.length == 0 ? "hidden" : ""}`}>
         <div className="list-photos flex gap-3 overflow-x-auto">
           {photos.map((photo, index) => (
-            <div key={index} className="relative min-w-60" >
+            <div key={index} className="relative min-w-60">
               <img
                 src={photo.url}
                 alt={`uploaded-${index}`}
                 className="object-cover w-60 h-40 rounded-md cursor-pointer"
                 onClick={() => handleOpenModal(index)}
-                
               />
               <ButtonCircle
                 className="absolute top-2 right-2"
@@ -166,14 +114,13 @@ const handleOpenModal =async (index: number) => {
                   className="w-full border border-gray-300 p-4 bg-gray-50 rounded-md resize-none"
                   rows={4}
                 />
-
               </div>
             </div>
           ))}
         </div>
 
         <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
-          <Button onClick={handleClick} className="rounded-md min-w-40">
+          <Button onClick={() => {}} className="rounded-md min-w-40">
             Add photo
           </Button>
           <Button
@@ -184,32 +131,10 @@ const handleOpenModal =async (index: number) => {
           </Button>
         </div>
       </Modal>
-
-      <div
-        className="bg-gray-100 flex flex-col justify-center items-center w-full h-full rounded-md min-h-[300px] max-h-[400px] cursor-pointer"
-        onClick={handleClick}
-        onDrag={() => {
-          console.log("onDrag");
-        }}
-        onDragOver={handleDragPhoto}
-        onDrop={handleDropPhoto}
-      >
-        <i className="fa-solid fa-camera text-3xl mb-2"></i>
-        <p className="font-bold">Click to add photos</p>
-        <p className="text-sm font-thin">or drag and drop</p>
-        <input
-          type="file"
-          multiple
-          accept=".jpg,.jpeg,.gif,.png"
-          ref={inputPhotos}
-          onChange={handleChange}
-          className="hidden"
-          aria-hidden="true"
-        />
-      </div>
+      <UploadPhotos photos={photos} setPhotos={setPhotos} />
       <div className="text-gray-500 text-sm">
-        Photos should be in JPG, JPEG, GIF, or PNG
-        format.</div>
+        Photos should be in JPG, JPEG, GIF, or PNG format.
+      </div>
     </div>
   );
 };

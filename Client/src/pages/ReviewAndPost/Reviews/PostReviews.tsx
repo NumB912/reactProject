@@ -10,7 +10,7 @@ import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
 import ButtonSelectOne, {
   buttonSelectProp,
 } from "../../../component/ButtonSelectOne";
-import UploadPhoto from "../../../component/UploadPhoto";
+import UploadPhoto from "../../../component/UploadPhotosReview";
 import { Checkbox } from "@mui/material";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 

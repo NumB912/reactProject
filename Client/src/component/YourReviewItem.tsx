@@ -4,7 +4,7 @@ import StarRatingStatic from "./StarRatingStatic";
 import DropDownOutLineItem from "./DropDownComponent/DropDownOutLineItem";
 import DropDownSelect from "./DropDownComponent/DropDownSelect";
 import PostReviewPhoto from "./postReviewPhoto";
-import { ImageUrlProp } from "./UploadPhoto";
+import { ImageUrlProp } from "./UploadPhotos"; 
 import Photos from "../pages/Auths/InfoClient/Photos";
 interface YourReviewedItemProps {
   image: string;
