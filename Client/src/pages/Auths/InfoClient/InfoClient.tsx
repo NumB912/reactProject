@@ -149,7 +149,7 @@ const InfoClient = () => {
             setShowEdit(false);
           }}
         >
-          <div className="grid h-screen w-screen grid-cols-[100px_1fr] max-w-[700px] p-5 gap-10">
+          <div className="grid w-screen grid-cols-[100px_1fr] max-w-[700px] p-5 gap-10">
             <div className="profile-edit-img w-full">
               <img
                 src=""

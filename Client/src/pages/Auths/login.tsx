@@ -2,6 +2,8 @@
 import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from "jwt-decode";
 import useStateLogin from '../../store/LoginStore/login_store';
+import { ButtonBorder } from '../../component/UI';
+import React from 'react';
 export const Login=()=>{
   const {login,logout,setIsSuccess,setShow} = useStateLogin()
 const handleLoginSuccess = async (credentialResponse) => {
@@ -45,14 +47,17 @@ const handleLoginSuccess = async (credentialResponse) => {
   };
   return (
     <div className='p-3'>
-      <GoogleLogin
+      {/* <GoogleLogin
       onSuccess={credentialResponse => {
         handleLoginSuccess(credentialResponse)
       }}
       onError={() => {
         handleLoginError()
       }}
-    />
+    /> */}
+      <ButtonBorder className='' onClick={()=>{}}>
+          <p></p>
+      </ButtonBorder>
     </div>
   
   );

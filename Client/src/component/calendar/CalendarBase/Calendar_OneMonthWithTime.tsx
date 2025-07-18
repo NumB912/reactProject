@@ -91,8 +91,6 @@ const Calendar_OneMonth_Timer = ({
           <ToggleCalendar nextMonth={nextMonth} prevMonth={prevMonth} />
         </div>
 
-{/* 
-                <BottomToggle onSetNextWeek={onSetNextWeek} onSetThisWeek={onSetThisWeek} onSetToday={onSetToday}/> */}
       </CalendarWrap>
     </>
   );

@@ -32,7 +32,6 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
         <div
           className="DCI text-center 
             "
-            // 
         >
           <p className="text-[10px]">Departure date</p>
           <p className="text-[13px] font-bold">
@@ -54,7 +53,7 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
               prevMonth={prevMonth}
               onSelected={setDateSelectedBook}
               onSetToday={SetToday}
-              type="hotel"
+              type="Tour"
             />
           </div>
         </div>

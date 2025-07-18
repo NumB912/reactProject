@@ -54,7 +54,7 @@ const Modal = ({
     <div
       ref={ref}
       onClick={(e) => e.stopPropagation()}
-      className={`relative bg-white rounded-md shadow-xl max-h-[90vh] ${styleContainer}`}
+      className={`relative bg-white rounded-md shadow-xl max-h-[90vh] max-sm:w-full ${styleContainer}`}
     >
       {children}
     </div>

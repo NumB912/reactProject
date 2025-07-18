@@ -238,7 +238,7 @@ const RentalCars = () => {
       </div>
 
       <div className="w-full py-3 gap-1 flex flex-col max-lg:w-full max-lg:col-span-2 p-3 ">
-        <div className="filter-tag flex justify-between items-center p-1 rounded-2xl w-full">
+        {/* <div className="filter-tag flex justify-between items-center p-1 rounded-2xl w-full">
           <div className="flex gap-3 overflow-x-scroll max-lg:max-w-4xl max-2xl:max-w-3xl min-2xl:max-w-4xl *:w-50">
             <div className="typeCar flex flex-col items-center justify-center p-3 border shadow-md border-gray-300 rounded-md shrink-0">
               <img src={small_car} alt="" className="w-24" />
@@ -387,7 +387,7 @@ const RentalCars = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="*:hover:shadow-md flex flex-col max-lg:w-full max-lg:col-span-2 p-3 gap-3">
           <div
