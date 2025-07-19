@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { RatingStar,Button,ButtonIcon } from "../../../component/UI";
 import { useNavigate } from "react-router-dom";
-import mainImage from "../../../assets/the-tusk-bar.jpg";
-import video from "../../../assets/the-evelyn-hotel-1.jpg";
-import suitable from "../../../assets/nomad-suite-bedroom.jpg";
-import traveler from "../../../assets/caption.jpg";
-import hotel1 from "../../../assets/42769_14072300320020409156.webp";
 import {Link} from "react-router"
 import { FaHeart } from "react-icons/fa6";
 import FilterCheckInHotel from "../../../component/FilterComponent/filterCheckInHotel";
@@ -65,26 +60,26 @@ const HotelDetail = () => {
         <div className="img flex my-4 gap-1 w-full justify-center">
           <div className="photoMain w-9/12 h-[600px] overflow-hidden">
             <img
-              src={mainImage}
+              src={"https://via.placeholder.com/150"}
               className="w-full h-full object-cover rounded-lg"
             />
           </div>
           <div className="flex flex-col w-2/12 gap-1 h-[600px]">
             <div className="traveler h-1/3 overflow-hidden">
               <img
-                src={traveler}
+                src={"https://via.placeholder.com/150"}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
             <div className="RoomSuite h-1/3 overflow-hidden">
               <img
-                src={suitable}
+                src={"https://via.placeholder.com/150"}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
             <div className="video h-1/3 overflow-hidden">
               <img
-                src={video}
+                src={"https://via.placeholder.com/150"}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
@@ -230,7 +225,7 @@ const HotelDetail = () => {
           <div className="flex flex-wrap *:w-[calc(33%-1rem)] gap-5">
             <div className="flex flex-col items-start flex-wrap ">
               <div className="images w-full">
-                <img src={hotel1} className="rounded-t-md w-full"></img>
+                <img src={"https://via.placeholder.com/150"} className="rounded-t-md w-full"></img>
               </div>
               <div className="border border-gray-300 p-5 rounded-b-2xl w-full">
                 <div className="infoRoom ">

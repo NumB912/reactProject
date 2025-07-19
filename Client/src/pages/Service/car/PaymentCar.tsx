@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router";
-import wild from "../../../assets/wild_card.jpg";
+
 import BillingAddressForm from "./BillingAddressForm";
 import DriverDetailForm from "./DriverDetailForm";
 import Payment from "./Payment";
-import vnpay from "../../../assets/icon_payment/vnpay.jpg";
-import momo from "../../../assets/icon_payment/momo.png";
 import { Button } from "../../../component/UI";
 
 const PaymentCar = () => {
@@ -43,7 +41,7 @@ const PaymentCar = () => {
                 </p>
               </div>
               <img
-                src={wild}
+                src={"https://via.placeholder.com/150"}
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"
@@ -114,7 +112,7 @@ const PaymentCar = () => {
               <div className="flex items-center justify-between gap-2 w-full">
                 <div className="w-full flex gap-3">
                   <img
-                    src={vnpay}
+                    src={"https://via.placeholder.com/150"}
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />
@@ -136,7 +134,7 @@ const PaymentCar = () => {
               <div className="flex items-center justify-between gap-2 w-full">
                 <div className="w-full flex gap-3">
                   <img
-                    src={momo}
+                    src={ "https://via.placeholder.com/150" }
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />

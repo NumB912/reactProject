@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import small_car from "../../../assets/small_car.jpg";
-
-import wild from "../../../assets/wild_card.jpg";
 import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import { CalendarRentalCar } from "../../../component";
@@ -402,7 +399,7 @@ const RentalCars = () => {
                 </p>
               </div>
               <img
-                src={wild}
+                src={"https://via.placeholder.com/150"}
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"

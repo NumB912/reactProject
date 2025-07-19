@@ -1,8 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
-import wild from "../../assets/wild_card.jpg";
-import vnpay from "../../../assets/icon_payment/vnpay.jpg";
-import momo from "../../../assets/icon_payment/momo.png"
 import { useTourCalendar, useTravelerTour } from "../../../store";
 import { RatingStar,Button} from "../../../component/UI";
 import { formatDate } from "../../../utils/TimeHandle";
@@ -72,7 +69,7 @@ const Payment_Tour = () => {
               <div className="flex items-center justify-between gap-2 w-full">
                 <div className="w-full flex gap-3">
                   <img
-                    src={vnpay}
+                    src={"https://via.placeholder.com/150"}
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />
@@ -94,7 +91,7 @@ const Payment_Tour = () => {
               <div className="flex items-center justify-between gap-2 w-full">
                 <div className="w-full flex gap-3">
                   <img
-                    src={momo}
+                    src={"https://via.placeholder.com/150"}
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />

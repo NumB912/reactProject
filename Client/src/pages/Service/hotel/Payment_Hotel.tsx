@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import wild from "../../../assets/Wild_Card.jpg";
-import vnpay from "../../../assets/icon_payment/vnpay.jpg"; // Ensure this path is correct
-import momo from "../../../assets/icon_payment/momo.png"; // Ensure this path is correct
 import { Button } from "../../../component/UI";
 const Payment_Hotel = () => {
   return (
@@ -68,7 +65,7 @@ const Payment_Hotel = () => {
               <div className="flex items-center justify-between gap-2 w-full">
                 <div className="w-full flex gap-3">
                   <img
-                    src={vnpay}
+                    src={"https://via.placeholder.com/150"}
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />
@@ -90,7 +87,7 @@ const Payment_Hotel = () => {
               <div className="flex items-center justify-between gap-2 w-full">
                 <div className="w-full flex gap-3">
                   <img
-                    src={momo}
+                    src={"https://via.placeholder.com/150"}
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />
@@ -258,7 +255,7 @@ const Payment_Hotel = () => {
               <div className="infoRoom flex gap-3">
                 <div className="flex gap-2">
                   <img
-                    src={wild}
+                    src={"https://via.placeholder.com/150"}
                     alt="Hotel"
                     className="w-20 h-20 object-cover rounded-md"
                   />

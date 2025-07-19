@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "../../../component/UI";
 import { Link } from "react-router";
-import wild from "../../../assets/Wild_card.jpg";
 import BillingAddressForm from "./BillingAddressForm";
 import DriverDetailForm from "./DriverDetailForm";
 import Payment from "./Payment";
@@ -41,7 +40,7 @@ const BookCar = () => {
                 </p>
               </div>
               <img
-                src={wild}
+                src={ "https://via.placeholder.com/150" }
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"

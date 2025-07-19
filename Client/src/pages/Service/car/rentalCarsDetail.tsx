@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {useNavigate } from "react-router";
-import wild from "../../../assets/wild_card.jpg";
 import { CalendarRentalCar } from "../../../component";
 import { Button } from "../../../component/UI";
 const RentalCarsDetail = () => {
@@ -55,7 +54,7 @@ const RentalCarsDetail = () => {
                 </p>
               </div>
               <img
-                src={wild}
+                src={"https://via.placeholder.com/150"}
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"

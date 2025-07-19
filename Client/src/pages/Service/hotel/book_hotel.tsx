@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "../../../component/UI";
 import { Link } from "react-router";
-import wild from "../../../assets/wild_card.jpg";
 
 const Book_Hotel = () => {
   return (
@@ -189,7 +188,7 @@ const Book_Hotel = () => {
               <div className="infoRoom flex gap-3">
                 <div className="flex gap-2">
                   <img
-                    src={wild}
+                    src={"https://via.placeholder.com/150"}
                     alt="Hotel"
                     className="w-20 h-20 object-cover rounded-md"
                   />
