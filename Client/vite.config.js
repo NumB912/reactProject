@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: '0.0.0.0',                 // Cho phép truy cập từ bên ngoài
-    port: process.env.PORT || 5173  // Dùng PORT do Render cung cấp
+    port: process.env.PORT || 5173,  // Dùng PORT do Render cung cấp
     allowedHosts: ['reactproject-2-iyda.onrender.com']
   }
 })
