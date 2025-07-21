@@ -60,26 +60,26 @@ const HotelDetail = () => {
         <div className="img flex my-4 gap-1 w-full justify-center">
           <div className="photoMain w-9/12 h-[600px] overflow-hidden">
             <img
-              src={"https://via.placeholder.com/150"}
+              src={"https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg"}
               className="w-full h-full object-cover rounded-lg"
             />
           </div>
           <div className="flex flex-col w-2/12 gap-1 h-[600px]">
             <div className="traveler h-1/3 overflow-hidden">
               <img
-                src={"https://via.placeholder.com/150"}
+                src={"https://www.kayak.com/rimg/himg/b0/2c/df/leonardo-878836-186563354-395441.jpg?width=1366&height=768&crop=true"}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
             <div className="RoomSuite h-1/3 overflow-hidden">
               <img
-                src={"https://via.placeholder.com/150"}
+                src={"https://content.r9cdn.net/rimg/himg/b7/96/b8/leonardo-878836-186563362-407114.jpg?width=500&height=350&xhint=1620&yhint=1000&crop=true"}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
             <div className="video h-1/3 overflow-hidden">
               <img
-                src={"https://via.placeholder.com/150"}
+                src={"https://images.trvl-media.com/lodging/9000000/8090000/8082700/8082639/33e6873e.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
@@ -225,7 +225,7 @@ const HotelDetail = () => {
           <div className="flex flex-wrap *:w-[calc(33%-1rem)] gap-5">
             <div className="flex flex-col items-start flex-wrap ">
               <div className="images w-full">
-                <img src={"https://via.placeholder.com/150"} className="rounded-t-md w-full"></img>
+                <img src={"https://pix10.agoda.net/hotelImages/502321/1125725260/6d6c453ebc4b5bb90036b70a71027ec7.jpg?ce=2&s=414x232"} className="rounded-t-md w-full"></img>
               </div>
               <div className="border border-gray-300 p-5 rounded-b-2xl w-full">
                 <div className="infoRoom ">

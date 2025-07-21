@@ -399,7 +399,7 @@ const RentalCars = () => {
                 </p>
               </div>
               <img
-                src={"https://via.placeholder.com/150"}
+                src={"https://cdn.rcstatic.com/images/car_images/web/ford/focus_lrg.jpg"}
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"

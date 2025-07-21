@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import {useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { CalendarRentalCar } from "../../../component";
 import { Button } from "../../../component/UI";
 const RentalCarsDetail = () => {
-  const nagative = useNavigate()
+  const nagative = useNavigate();
   return (
     <div className="RentalCarsDetail">
       <div className="findTab w-full gap-1 flex flex-wrap justify-center items-center inset-shadow-2xs py-4 pb-7 ">
@@ -25,7 +25,7 @@ const RentalCarsDetail = () => {
 
         <div className="w-full gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-sm:w-3/4">
           <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap">
-      <CalendarRentalCar/>
+            <CalendarRentalCar />
           </div>
           <div className="w-full flex items-center justify-center gap-3 max-sm:flex-wrap *:flex *:items-center *:gap-3 *:rounded-md">
             <div className="search w-full">
@@ -54,7 +54,7 @@ const RentalCarsDetail = () => {
                 </p>
               </div>
               <img
-                src={"https://via.placeholder.com/150"}
+                src={"https://cdn.rcstatic.com/images/car_images/web/ford/focus_lrg.jpg"}
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"
@@ -264,14 +264,14 @@ const RentalCarsDetail = () => {
               <p className="text-[16px] font-bold">$ 130.00</p>
             </div>
 
-              <Button
-                className="w-full mt-3"
-                onClick={() => {
-                  nagative("/rentalCar/123/Booking/payment")
-                }}
-              >
-                Book Now
-              </Button>
+            <Button
+              className="w-full mt-3"
+              onClick={() => {
+                nagative("/rentalCar/123/Booking/payment");
+              }}
+            >
+              Book Now
+            </Button>
           </div>
         </div>
       </div>
