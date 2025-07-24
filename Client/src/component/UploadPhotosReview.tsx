@@ -3,12 +3,15 @@ import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử b�
 import Photos from "../pages/Auths/InfoClient/Photos";
 import UploadPhotos, { ImageUrlProp, UploadPhotosHandle } from "./UploadPhotos";
 import { useUploadPhotoStore } from "../store/useUploadPhoto";
+import useUploadPhoto from "../hook/useUploadPhoto";
 
 const UploadPhotosReview: React.FC = () => {
   const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
-  const {photos,removePhoto,addPhotos,updateDescription} = useUploadPhotoStore()
+  const {photos,removePhoto,addPhotos,updateDescription} = useUploadPhoto()
   const [isOpen, setOpen] = useState<boolean>(false);
   const uploadRef = useRef<UploadPhotosHandle>(null)
+
+
   const handleRemovePhoto = (indexToRemove: number) => {
     const revokePhoto = photos[indexToRemove];
     URL.revokeObjectURL(revokePhoto.url);
@@ -22,10 +25,13 @@ const UploadPhotosReview: React.FC = () => {
     updateDescription(index,value)
   };
 
-  const handleOpenModal =  (index: number) => {
+  const handleOpenModal = (index: number) => {
      setOpen(true);
-    inputRefs.current[index]?.focus();
+     setTimeout(() => {
+       inputRefs.current[index]?.focus();
+     }, 0);
   };
+
 
   return (
     <div className="post-review-content__add-more-photo row-span-2 flex-col flex gap-5">
@@ -100,13 +106,14 @@ const UploadPhotosReview: React.FC = () => {
 
               <div className="w-full">
                 <textarea
+                key={index}
                   placeholder="What's this of? Why is this special?"
                   value={photo.description || ""}
                   onChange={(e) =>
                     handleDescriptionChange(index, e.target.value)
                   }
                   ref={(el) => {
-                    inputRefs.current[index] = el;
+                      inputRefs.current[index] = el;
                   }}
                   className="w-full border border-gray-300 p-4 bg-gray-50 rounded-md resize-none"
                   rows={4}
@@ -128,7 +135,7 @@ const UploadPhotosReview: React.FC = () => {
           </Button>
         </div>
       </Modal>
-      <UploadPhotos ref={uploadRef}/>
+      <UploadPhotos ref={uploadRef} handleDrop={addPhotos}/>
       <div className="text-gray-500 text-sm">
         Photos should be in JPG, JPEG, GIF, or PNG format.
       </div>

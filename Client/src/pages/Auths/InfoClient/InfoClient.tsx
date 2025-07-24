@@ -3,9 +3,14 @@ import Logo from "../../../assets/logo.png";
 import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import { Button, Modal } from "../../../component/UI";
+import UploadPhotos from "../../../component/UploadPhotos";
 const InfoClient = () => {
   const { id } = useParams();
   const [isShowEdit, setShowEdit] = useState<boolean>(false);
+  const [isOpenModalUploadImageWallpaper, setIsOpenModalUploadImageWallpaper] =
+    useState<boolean>(false);
+  const [isOpenModalUploadImageAvatar, setIsOpenModalUploadImageAvatar] =
+    useState<boolean>(false);
   const nav: Tab[] = [
     {
       navigationID: "1",
@@ -43,11 +48,27 @@ const InfoClient = () => {
     <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
       <div className="bg-gray-300 opacity-40 w-full h-[400px] flex justify-center items-center">
         <div className=" w-full h-full flex justify-center items-center">
-          <div className="upload-image cursor-pointer flex gap-3 justify-center items-center">
+          <div className="upload-image cursor-pointer flex gap-3 justify-center items-center" onClick={() => setIsOpenModalUploadImageWallpaper(true)}>
             <i className="fa-solid fa-image"></i>
             <p>Upload image</p>
           </div>
         </div>
+        <Modal
+          isOpen={isOpenModalUploadImageWallpaper}
+          onClose={() => {
+            setIsOpenModalUploadImageWallpaper(false);
+          }}
+        >
+          <div className="w-screen max-w-[700px] p-5 gap-10">
+
+                <UploadPhoto photos={}>
+                   <div className="upload-wallpaper text-gray-500">
+                        <p>Upload your wallpaper</p>
+                   </div>
+                </UploadPhoto>
+
+          </div>
+        </Modal>
       </div>
       <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-11/12 z-30 gap-3 mb-5">
         <div className="profile flex-col flex *:p-5 gap-3 *:bg-white">
@@ -197,7 +218,6 @@ const InfoClient = () => {
                 </span>
               </div>
 
-
               <div className="info-edit_name w-full">
                 <p className="font-semibold text-[10px] mb-1">Email</p>
                 <span className="relative">
@@ -207,12 +227,11 @@ const InfoClient = () => {
                     placeholder="Email"
                   />
                   <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
-                 <i className="fa-solid fa-envelope"></i>
+                    <i className="fa-solid fa-envelope"></i>
                   </span>
                 </span>
               </div>
 
-              
               <div className="info-edit_name w-full">
                 <p className="font-semibold text-[10px] mb-1">Phone number</p>
                 <span className="relative">
@@ -227,16 +246,36 @@ const InfoClient = () => {
                 </span>
               </div>
 
-                <div className="info-edit_name w-full">
+              <div className="info-edit_name w-full">
                 <p className="font-semibold text-[10px] mb-1">About me</p>
                 <span className="relative">
-                  <textarea className="border border-gray-300 p-1.5 w-full text-sm h-25" placeholder="introduce about yourself"/>
+                  <textarea
+                    className="border border-gray-300 p-1.5 w-full text-sm h-25"
+                    placeholder="introduce about yourself"
+                  />
                 </span>
               </div>
 
               <div className="button-submit flex justify-end gap-2">
-                  <Button className="w-30" style={{backgroundColor:"white",color:"black",border:"1px solid black",padding:"5px"}} onClick={()=>{}}>Cancel</Button>
-                  <Button className="w-30" style={{padding:"5px"}} onClick={()=>{}}>Save</Button>
+                <Button
+                  className="w-30"
+                  style={{
+                    backgroundColor: "white",
+                    color: "black",
+                    border: "1px solid black",
+                    padding: "5px",
+                  }}
+                  onClick={() => {}}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="w-30"
+                  style={{ padding: "5px" }}
+                  onClick={() => {}}
+                >
+                  Save
+                </Button>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { Tabs, Modal, Button, ButtonBorder } from "../UI";
@@ -8,15 +8,38 @@ import useStateLogin from "../../store/LoginStore/login_store";
 import SideNavBar from "./SideNavBar";
 import { Tab } from "../UI/Tabs";
 import InputShow from "../UI/Input/InputShow";
+import DropDownOutLineItem from "../DropDownComponent/DropDownOutLineItem";
+import Dropdown from "../DropDownComponent/Dropdown";
+import ListItem from "../UI/ListItem";
 
 const NavBar = () => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const { isShow, setShow, isSuccess, setIsSuccess, login, logout } =
     useStateLogin();
-
+  const [password, setPassword] = useState<string>("");
+  const [modalStep, setModalStep] = useState<
+    "loginOptions" | "loginEmail" | "forgotPassword"
+  >("loginOptions");
+  const [isOpenProfileTab, setIsOpenProfileTab] = useState<boolean>(false);
+  const profileInfo = useRef<HTMLDivElement>(null);
   const handleLogout = async () => {
-    setIsSuccess(false);
     await logout();
+    setIsSuccess(false);
+  };
+
+  const handleSignIn = async (refreshToken: string, expireDate: string, accessToken: string) => {
+    try {
+      await login(refreshToken, expireDate, accessToken);
+      setIsSuccess(true);
+      setShow(false);
+    } catch (error) {
+      setError("Login failed. Please try again.");
+    }
+  };
+
+  const handleSignUp = () => {
+    // Logic for sign up can be added here
+    console.log("Sign up clicked");
   };
 
   const navArrs: Tab[] = [
@@ -42,77 +65,67 @@ const NavBar = () => {
     },
   ];
 
-  const [modalStep, setModalStep] = useState<
-    "loginOptions" | "loginEmail" | "forgotPassword"
-  >("loginOptions");
+  useEffect(()=>{
 
-const [password,setPassword] = useState<string>("")
+    const handleClickOutside = (event: MouseEvent) => {
+      
+      if (profileInfo.current && !profileInfo.current.contains(event.target as Node)) {
+        setIsOpenProfileTab(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+
+  },[isOpenProfileTab]);
 
   return (
     <>
       <div className="w-full flex justify-center items-center bg-white sticky top-0 *:text-sm max-sm:hidden p-2 z-50">
-        <div className="w-3/12 max-sm:hidden">
+        <div className=" max-sm:hidden">
           <img src={logo} alt="Logo" className="w-20 m-auto" />
         </div>
         <Tabs
           activeStyle="bg-gray-200 font-semibold"
           elseActiveStyle="hover:bg-gray-200"
           tabs={navArrs}
-          classNameContainerStyle="p-2 flex gap-2 justify-center items-center w-6/12 *:font-thin"
+          classNameContainerStyle="p-2 flex gap-2 justify-center items-center w-8/12 *:font-thin"
           contentNaigationStyle="p-2"
         />
-        <div className="h-full flex items-center justify-between w-3/12 max-sm:hidden">
-          {/* <img className='object-cover w-10 h-10 rounded-full border border-gray-500 hidden' src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Bocchi_the_Rock%21_logo.svg/512px-Bocchi_the_Rock%21_logo.svg.png" alt="User Profile" />*}
-            {/* <span className='userName hidden'>Username</span> */}
-          <div className="signLog rounded-4xl flex items-center justify-center w-full *:rounded-4xl gap-1 *:text-sm">
+        <div className="h-full flex items-center justify-between max-sm:hidden">
+          <div className="flex items-center justify-center w-full *:rounded-4xl gap-1 *:text-sm">
             <div
-              className={`Logout flex gap-2 w-full ${
+              className={`profile-info w-full relative cursor-pointer ${
                 !isSuccess ? "hidden" : ""
-              } flex-1`}
+              }`}
+              ref={profileInfo}
             >
-              <Button
-                className={`bg-black text-center *:px-10
-                w-1/2
-             hover:scale-90
-             hover:bg-black
-              duration-300
-              ease-in-out
-            text-white
-              font-bold max-w-30`}
-                onClick={handleLogout}
-              >
-                Log out
-              </Button>
-              <div className="img w-1/2">
-                <img src={logo} className="max-w-20" />
+
+              <div className="img border-l border-gray-200 pl-2 pr-3 flex items-center"
+              onClick={() => setIsOpenProfileTab(!isOpenProfileTab)}>
+                <img src={logo} className="max-w-25" />
               </div>
+
+              <Dropdown className="my-5 w-[200px] right-0" IsOpen={isOpenProfileTab} handleIsOpen={() => setIsOpenProfileTab(false)}>
+                    <ListItem>
+                        <Link to={`./Profile/123`} className="w-full">My profile</Link>
+                        <Link to={`./Profile/123/reviews`} className="w-full">My reviews</Link>
+                        <Link to={`./Profile/123/trips`} className="w-full">My trips</Link>
+                        <Link to={`./Profile/123/bookings`} className="w-full">My bookings</Link>
+                        <Link to={`./Profile/123/wishlist`} className="w-full">My wishlist</Link>
+                        <Link to={`./Profile/123/notifications`} className="w-full">My notifications</Link>
+                        <div className="w-full" onClick={handleLogout}>sign out</div>
+                    </ListItem>
+              </Dropdown>
+
+
             </div>
-            {/* <Link className=' bg-black text-center w-1/2
-             hover:scale-90
-             hover:bg-black
-              transition-all
-              duration-300
-              ease-in-out
-            text-white
-              font-bold
-             '>
-                Sign up
-            </Link> */}
-            {/* <Link className=' bg-black text-center w-1/2
-             hover:scale-90
-             hover:bg-black
-              transition-all
-              duration-300
-              ease-in-out
-            text-white
-              font-bold
-             '>
-                Log in
-            </Link> */}
             <div
               className={`${
                 isSuccess ? "hidden" : ""
-              } w-full flex justify-center items-center`}
+              } signIn w-full flex justify-center items-center`}
             >
               <Button
                 className="bg-black text-center w-full max-w-30
@@ -162,8 +175,7 @@ const [password,setPassword] = useState<string>("")
                       <Button
                         className="w-full bg-white border border-gray-400 hover:bg-white active:bg-gray-300"
                         style={{ color: "black", padding: "10px" }}
-                        onClick={() => {
-                        }}
+                        onClick={() => {handleSignIn("refreshToken", "expireDate", "accessToken")}}
                       >
                         <div className="w-full flex justify-start items-center *:ml-5">
                           <i className="fa-brands fa-google"></i>
@@ -224,7 +236,7 @@ const [password,setPassword] = useState<string>("")
                         <p className="font-semibold text-[10px] mb-1">
                           Password
                         </p>
-                      <InputShow setValue={setPassword} value={password}/>
+                        <InputShow setValue={setPassword} value={password} />
                       </div>
                       <div className="w-full flex justify-between">
                         <button
@@ -234,7 +246,7 @@ const [password,setPassword] = useState<string>("")
                           Forgot your password?
                         </button>
                         <Button
-                          onClick={() => {}}
+                          onClick={() => {handleSignIn("refreshToken", "expireDate", "accessToken")}}
                           className="p-[10px] text-[13px] w-1/3"
                         >
                           Login

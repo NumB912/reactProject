@@ -18,13 +18,13 @@ export interface UploadPhotosHandle {
 
 interface uploadPhotoProp {
   style?: React.CSSProperties;
-  photos?: ImageUrlProp[];
-  handleDrop?: (files: File[]) => void;
+  photo?: ImageUrlProp;
+  handleDrop?: (files: File) => void;
   children?: React.ReactNode;
 }
 
 const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
-  ({ style, handleDrop, photos, children }: uploadPhotoProp, ref) => {
+  ({ style, handleDrop, photo, children }: uploadPhotoProp, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const borderRef = useRef<HTMLDivElement>(null);
 
@@ -35,16 +35,16 @@ const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
     }));
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        handleDrop?.(Array.from(e.target.files));
-      }
+     if (e.target.files && e.target.files[0]) {
+        handleDrop?.(e.target.files[0]);
+     }
     };
 
     const handleDropSetting = (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
 
       if (e.dataTransfer.files) {
-        handleDrop?.(Array.from(e.dataTransfer.files));
+        handleDrop?.(e.dataTransfer.files[0]);
       }
     };
 
@@ -77,7 +77,6 @@ const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
         <input
           ref={inputRef}
           type="file"
-          multiple
           accept="image/*"
           onChange={handleFileChange}
           className="hidden"

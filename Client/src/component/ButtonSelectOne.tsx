@@ -16,9 +16,9 @@ const ButtonSelectOne = ({setValue,value}:ButtonSelectOneProp) => {
 
     return (    
         <div className='flex gap-3'>
-            {buttonArr.map((item)=>{
+            {buttonArr.map((item,index)=>{
                 return (
-                    <ButtonBorderSelect value={item} onClick={setValue} active={value?.id==item.id}>{item.value} </ButtonBorderSelect>
+                    <ButtonBorderSelect key={index} value={item} onClick={setValue} active={value?.id==item.id}>{item.value} </ButtonBorderSelect>
                 )
             })}
         </div>

@@ -2,16 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { Button, ButtonCircle } from "./UI";
 import { useUploadPhotoStore } from "../store/useUploadPhoto";
 import UploadPhotos, { UploadPhotosHandle } from "./UploadPhotos";
+import useUploadPhoto from "../hook/useUploadPhoto";
 
 
 
 const UploadPostPhoto = () => {
-  const {
-    photos,
-    removePhoto,
-    updateDescription,
-  } = useUploadPhotoStore();
-
+  const { photos, addPhotos, removePhoto, updateDescription } = useUploadPhoto();
   const uploadRef = useRef<UploadPhotosHandle>(null);
 
   useEffect(() => {
@@ -20,10 +16,7 @@ const UploadPostPhoto = () => {
 
   return (
     <div className="upload-post-photo flex flex-col gap-5">
-          <UploadPhotos ref={uploadRef}style={{ display: photos.length === 0 ? "block" : "none" }}/>
-
-      
-
+      <UploadPhotos handleDrop={addPhotos} ref={uploadRef} style={{ display: photos.length === 0 ? "block" : "none" }}/>
       {photos.length > 0 && (
         <>
           <div className="upload overflow-y-auto min-h-[400px] max-h-[800px] space-y-4 mb-4 pr-1">
