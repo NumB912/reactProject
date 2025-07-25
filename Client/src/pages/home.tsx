@@ -8,11 +8,7 @@ import RatingStars from "../component/UI/StarRatingRadioOption";
 import ReusableSlider from "../component/SliderComponent/SliderComponent";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {
-  ServiceTour,
-  HotelServices,
-  RentalService,
-} from "../Services/getService";
+
 interface TravelItem {
   id: number | string;
   title: string;
@@ -178,13 +174,6 @@ const Home = () => {
   );
 
 
-  useEffect(() => {
-    const loadData = async () => {
-      SetTour(await ServiceTour());
-      setHotelServices(await HotelServices());
-    };
-    loadData();
-  }, []);
 
   return (
     <>

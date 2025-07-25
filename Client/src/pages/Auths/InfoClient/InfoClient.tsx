@@ -3,7 +3,10 @@ import Logo from "../../../assets/logo.png";
 import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import { Button, Modal } from "../../../component/UI";
-import UploadPhotos from "../../../component/UploadPhotos";
+import PhotoGallery from "../../../component/PhotoGallery";
+import useUploadPhoto from "../../../hook/useUploadPhoto";
+import UploadPhoto from "../../../component/UploadPhoto";
+import { ImageUrlProp } from "../../../interface/ImagePhotoUrl";
 const InfoClient = () => {
   const { id } = useParams();
   const [isShowEdit, setShowEdit] = useState<boolean>(false);
@@ -11,6 +14,9 @@ const InfoClient = () => {
     useState<boolean>(false);
   const [isOpenModalUploadImageAvatar, setIsOpenModalUploadImageAvatar] =
     useState<boolean>(false);
+  const { photo, addphoto, deletePhoto, editPhoto,clearPhoto} = useUploadPhoto();
+  const [photoImageWallpaper, setPhotoImageWallpaper] =
+    useState<ImageUrlProp>();
   const nav: Tab[] = [
     {
       navigationID: "1",
@@ -44,33 +50,85 @@ const InfoClient = () => {
     },
   ];
 
+  const handleSaveImageWallpaper = () => {
+    setPhotoImageWallpaper(photo);
+    setIsOpenModalUploadImageWallpaper(false)
+    clearPhoto()
+  };
+
+  const handleCancelUpload = ()=>{
+    clearPhoto()
+    setIsOpenModalUploadImageWallpaper(false)
+  }
+
   return (
     <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
-      <div className="bg-gray-300 opacity-40 w-full h-[400px] flex justify-center items-center">
-        <div className=" w-full h-full flex justify-center items-center">
-          <div className="upload-image cursor-pointer flex gap-3 justify-center items-center" onClick={() => setIsOpenModalUploadImageWallpaper(true)}>
-            <i className="fa-solid fa-image"></i>
-            <p>Upload image</p>
+      <div className="bg-gray-300 w-full h-[400px] flex justify-center items-center">
+        {photoImageWallpaper ? (
+          <div className="w-screen">
+               <div
+            className="upload-image w-full "
+            onClick={() => setIsOpenModalUploadImageWallpaper(true)}
+          >
+            <img src={photoImageWallpaper.url} className="w-full object-cover h-[400px]" />
           </div>
-        </div>
+          </div>
+        ) : (
+          <div className=" w-full h-full flex justify-center items-center">
+            <div
+              className="upload-image cursor-pointer flex gap-3 justify-center items-center"
+              onClick={() => setIsOpenModalUploadImageWallpaper(true)}
+            >
+              <i className="fa-solid fa-image"></i>
+              <p>Upload image</p>
+            </div>
+          </div>
+        )}
         <Modal
           isOpen={isOpenModalUploadImageWallpaper}
           onClose={() => {
             setIsOpenModalUploadImageWallpaper(false);
           }}
         >
-          <div className="w-screen max-w-[700px] p-5 gap-10">
+          <div
+            className={`w-screen ${!photo ? "max-w-[700px]" : ""} p-5 gap-10`}
+          >
+            {photo ? (
+              <div className="w-full">
+                <img
+                  src={photo.url}
+                  className=" object-cover w-full h-[400px]"
+                />
 
-                <UploadPhoto photos={}>
-                   <div className="upload-wallpaper text-gray-500">
-                        <p>Upload your wallpaper</p>
-                   </div>
-                </UploadPhoto>
+                <div className="option-image flex justify-end *:ml-2 *:mt-5">
+                  <Button onClick={handleCancelUpload} className="w-[200px]">
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleSaveImageWallpaper}
+                    className="w-[200px]"
+                  >
+                    Done
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
 
+            <UploadPhoto
+              photo={photo}
+              handleDrop={addphoto}
+              style={{ display: !photo ? "block" : "none" }}
+            >
+              <div className="upload-wallpaper text-gray-500">
+                <p>Upload your wallpaper</p>
+              </div>
+            </UploadPhoto>
           </div>
         </Modal>
       </div>
-      <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-11/12 z-30 gap-3 mb-5">
+      <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
         <div className="profile flex-col flex *:p-5 gap-3 *:bg-white">
           <div className="border border-gray-200 shadow">
             <div className="image-avatar">
@@ -171,12 +229,15 @@ const InfoClient = () => {
           }}
         >
           <div className="grid w-screen grid-cols-[100px_1fr] max-w-[700px] p-5 gap-10">
-            <div className="profile-edit-img w-full">
+            <div className="profile-edit-img w-full" >
               <img
                 src=""
                 className="profile-edit-img w-full aspect-square object-cover rounded-full border border-gray-300 "
               />
             </div>
+            <Modal onClose={()=>{setIsOpenModalUploadImageAvatar(false)}} isOpen={isOpenModalUploadImageAvatar}>
+                <UploadPhoto photo={phot}></UploadPhoto>
+            </Modal>
 
             <div className="info-edit w-full *:mt-8">
               <div className="info-edit_name w-full">
@@ -280,7 +341,7 @@ const InfoClient = () => {
             </div>
           </div>
         </Modal>
-        <div className="content-profile p-3 bg-white">
+        <div className="content-profile p-3 bg-white border border-gray-200">
           <Tabs
             activeStyle="border-b-3 font-bold transition-all ease-in"
             elseActiveStyle="hover:bg-gray-200"

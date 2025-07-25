@@ -3,7 +3,7 @@ import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử b�
 import Photos from "../pages/Auths/InfoClient/Photos";
 import UploadPhotos, { ImageUrlProp, UploadPhotosHandle } from "./UploadPhotos";
 import { useUploadPhotoStore } from "../store/useUploadPhoto";
-import useUploadPhoto from "../hook/useUploadPhoto";
+import useUploadPhoto from "../hook/useUploadPhotos";
 
 const UploadPhotosReview: React.FC = () => {
   const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);

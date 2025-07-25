@@ -1,42 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { ImageUrlProp } from '../interface/ImagePhotoUrl';
 import { v4 as uuidv4 } from 'uuid';
-import UploadPhotos, { ImageUrlProp } from '../component/UploadPhotos';
 
 const useUploadPhoto = () => {
-  const [photos,setPhotos] = React.useState<ImageUrlProp[]>([]);
-  const addPhotos = (files:File[]) =>{
-    if(files.length === 0) return;
+  const [photo,setPhoto] = useState<ImageUrlProp|undefined>();
 
-    const newPhotos = files.map((files,index)=>{
-      return {
-        id: uuidv4(),
-        url:URL.createObjectURL(files),
-        description: "",
-      }
-    })
-
-    return newPhotos.length > 0 && setPhotos((prev) => [...prev, ...newPhotos]);
+  const addphoto = (file:File)=>{
+    if(file){
+        const url = URL.createObjectURL(file)
+        setPhoto({
+            description:"",
+            id:uuidv4(),
+            url:url
+        })
+    }
   }
 
-  const removePhoto = (index:number) => {
-    if(index < 0 || index >= photos.length) return;
-    setPhotos((prev)=> prev.filter((_,i)=> i !== index));
+  const deletePhoto = ()=>{
+    if(photo){
+        URL.revokeObjectURL(photo.url)
+        setPhoto(undefined)
+    }
   }
 
-  const updateDescription = (index:number,description:string)=>{
-    if(index < 0 || index >= photos.length) return;
-    setPhotos((prev) => {
-      const updatePhotos = prev[index];
-      if(description === updatePhotos.description) return prev;
-      return prev.map((item)=>{return item.id === updatePhotos.id ? {...item, description} : item;})
+  const editPhoto = (file:File)=>{
+    if(!photo) return;
+    URL.revokeObjectURL(photo.url)
+    const url = URL.createObjectURL(file)
+    setPhoto({
+           description:"",
+            id:uuidv4(),
+            url:url
     })
+  }
+
+  const clearPhoto = ()=>{
+    setPhoto(undefined)
   }
 
   return {
-    addPhotos,
-    removePhoto,
-    updateDescription,
-    photos,
+    photo,
+    addphoto,
+    deletePhoto,
+    editPhoto,
+    clearPhoto
   }
 }
 

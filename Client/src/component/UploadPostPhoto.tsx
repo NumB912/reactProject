@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { Button, ButtonCircle } from "./UI";
 import { useUploadPhotoStore } from "../store/useUploadPhoto";
 import UploadPhotos, { UploadPhotosHandle } from "./UploadPhotos";
-import useUploadPhoto from "../hook/useUploadPhoto";
+import useUploadPhotos from "../hook/useUploadPhotos";
 
 
 
 const UploadPostPhoto = () => {
-  const { photos, addPhotos, removePhoto, updateDescription } = useUploadPhoto();
+  const { photos, addPhotos, removePhoto, updateDescription } = useUploadPhotos();
   const uploadRef = useRef<UploadPhotosHandle>(null);
 
   useEffect(() => {

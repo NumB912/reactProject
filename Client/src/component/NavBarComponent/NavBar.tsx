@@ -83,7 +83,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="w-full flex justify-center items-center bg-white sticky top-0 *:text-sm max-sm:hidden p-2 z-50">
+      <div className="w-full flex justify-center items-center bg-white sticky top-0 border-gray-200 border-b shadow *:text-sm max-sm:hidden p-2 z-50">
         <div className=" max-sm:hidden">
           <img src={logo} alt="Logo" className="w-20 m-auto" />
         </div>

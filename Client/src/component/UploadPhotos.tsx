@@ -4,13 +4,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-
-
-export interface ImageUrlProp {
-  id: string;
-  url: string;
-  description: string;
-}
+import { ImageUrlProp } from "../interface/ImagePhotoUrl";
 
 export interface UploadPhotosHandle {
   openFileDialog: () => void;

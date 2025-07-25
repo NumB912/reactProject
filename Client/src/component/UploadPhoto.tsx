@@ -5,12 +5,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 
-
-export interface ImageUrlProp {
-  id: string;
-  url: string;
-  description: string;
-}
+import { ImageUrlProp } from "../interface/ImagePhotoUrl";
 
 export interface UploadPhotosHandle {
   openFileDialog: () => void;
@@ -23,7 +18,7 @@ interface uploadPhotoProp {
   children?: React.ReactNode;
 }
 
-const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
+const UploadPhoto = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
   ({ style, handleDrop, photo, children }: uploadPhotoProp, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const borderRef = useRef<HTMLDivElement>(null);
@@ -35,8 +30,9 @@ const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
     }));
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(photo)
      if (e.target.files && e.target.files[0]) {
-        handleDrop?.(e.target.files[0]);
+        handleDrop?.(e.target.files[0]);  
      }
     };
 
@@ -86,4 +82,4 @@ const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
   }
 );
 
-export default UploadPhotos;
+export default UploadPhoto;
