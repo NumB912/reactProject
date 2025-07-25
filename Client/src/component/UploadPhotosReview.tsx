@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử bạn có icon X ở đây
 import Photos from "../pages/Auths/InfoClient/Photos";
-import UploadPhotos, { ImageUrlProp, UploadPhotosHandle } from "./UploadPhotos";
+import UploadPhotos, { UploadPhotosHandle } from "./UploadPhotos";
 import { useUploadPhotoStore } from "../store/useUploadPhoto";
 import useUploadPhoto from "../hook/useUploadPhotos";
 

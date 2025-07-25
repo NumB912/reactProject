@@ -10,7 +10,7 @@ import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
 import ButtonSelectOne, {
   buttonSelectProp,
 } from "../../../component/ButtonSelectOne";
-import UploadPhoto from "../../../component/UploadPhotosReview";
+import UploadPhotosReview from "../../../component/UploadPhotosReview";
 import { Checkbox } from "@mui/material";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 
@@ -113,7 +113,7 @@ const PostReviews = ({ id }: ReviewPostProp) => {
             <ButtonSelectOne value={value} setValue={setvalue} />
           </div>
         </div>
-        <UploadPhoto />
+        <UploadPhotosReview />
 
         <div className="post-review-content flex gap-10 w-full col-span-2">
           <textarea
