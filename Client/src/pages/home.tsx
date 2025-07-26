@@ -100,8 +100,8 @@ const Home = () => {
         <SearchBar />
         <Banner />
 
-        <div className="content-items w-full">
-                  <div className="w-full mt-20">
+        <div className="content-items w-full my-20">
+        <div className="w-full">
           <ReusableSlider
             items={carouselItems}
             renderItem={renderTravelItem}
@@ -129,7 +129,7 @@ const Home = () => {
             items={carouselItems}
             renderItem={RenderRecommend}
             title="Maybe you like it"
-            subtitle="2025’s Travelers’ Choice Awards Best of the Best Things to Do"
+            subtitle="Try to get a new experience"
             containerClassName="w-full"
             itemWrapperClassName="px-2 py-3"
             sliderSettings={{
@@ -149,7 +149,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="w-full flex-col my-40 flex items-center justify-center font-bold p-20 border-t border-gray-200">
+      <div className="w-full flex-col flex items-center justify-center font-bold p-20 border-t border-gray-200">
         <div className="flex items-center gap-3 *:text-7xl p-3">
           <p>Favorite places </p>
           <i className="fa-solid fa-heart text-red-500"></i>

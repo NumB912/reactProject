@@ -58,8 +58,8 @@ const ReusableSlider = <T extends { id: number | string}>({
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    prevArrow: <div></div>,
-    nextArrow: <div></div>,
+    prevArrow: <CustomPrevArrow/>,
+    nextArrow: <CustomNextArrow/>,
     responsive: [
       { breakpoint: 1400, settings: { slidesToShow: 5 } },
       { breakpoint: 1200, settings: { slidesToShow: 4 } },
@@ -74,9 +74,9 @@ const ReusableSlider = <T extends { id: number | string}>({
   return (
     <div className={containerClassName}>
       {(title || subtitle) && ( 
-        <div className="Tittle py-3">
+        <div className="Tittle py-3 w-1/2">
           {title && <p className="text-2xl max-sm:text-2xl font-bold">{title}</p>}
-          {subtitle && <p className="text-sm">{subtitle}</p>}
+          {subtitle && <p className="text-lg">{subtitle}</p>}
         </div>
       )}
 

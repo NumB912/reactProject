@@ -3,7 +3,6 @@ import {
   Button,
   ButtonCircle,
   ButtonIcon,
-  RatingStar,
 } from "../../../component/UI";
 import { DropDown } from "../../../component";
 import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
