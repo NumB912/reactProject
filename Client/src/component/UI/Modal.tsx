@@ -6,17 +6,17 @@ interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
   styleContainer?: string;
-  styleButtonClose?: string;
   parentContainerStyle?: string;
+  zIndex?: number; // thêm zIndex
 }
 
 const Modal = ({
   isOpen,
   onClose,
   children,
-  styleButtonClose,
   styleContainer,
   parentContainerStyle,
+  zIndex = 999, // mặc định nếu không truyền
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,36 +31,24 @@ const Modal = ({
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    const handleClose = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClose);
-    return () => {
-      document.removeEventListener("mousedown", handleClose);
-    };
-  }, [onClose]);
-
   if (!isOpen) return null;
 
   return createPortal(
-  <div
-    className={`fixed inset-0 z-[9999] flex items-center justify-center cursor-pointer
-      bg-black/30 transition-all duration-200 w-full ${parentContainerStyle}`}
-  >
     <div
-      ref={ref}
-      onClick={(e) => e.stopPropagation()}
-      className={`relative bg-white rounded-md shadow-xl max-h-[90vh] max-sm:w-full ${styleContainer}`}
+      className={`fixed inset-0 flex items-center justify-center bg-black/30 transition-all duration-200 w-full ${parentContainerStyle ?? ""}`}
+      style={{ zIndex:zIndex }}
+      onClick={onClose}
     >
-      {children}
-    </div>
-  </div>,
-  document.body
-);
+      <div
+        ref={ref}
+        className={`relative bg-white rounded-md shadow-xl max-h-[90vh] max-sm:w-full ${styleContainer ?? ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
 };
 
 export default Modal;

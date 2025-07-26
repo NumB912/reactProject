@@ -21,7 +21,6 @@ interface uploadPhotoProp {
 const UploadPhoto = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
   ({ style, handleDrop, photo, children }: uploadPhotoProp, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const borderRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(ref, () => ({
       openFileDialog: () => {
@@ -30,8 +29,9 @@ const UploadPhoto = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
     }));
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(photo)
+    
      if (e.target.files && e.target.files[0]) {
+        console.log(e.target.files[0])
         handleDrop?.(e.target.files[0]);  
      }
     };
@@ -53,7 +53,8 @@ const UploadPhoto = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
     return (
       <div className="" style={style}>
         <div
-          onClick={() => inputRef.current?.click()}
+          onClick={() => {inputRef.current?.click() 
+          }}
           onDrop={handleDropSetting}
           onDragOver={handleDropOverSetting}
           className="bg-gray-10 relative flex flex-col justify-center items-center w-full h-full rounded-md min-h-[300px] max-h-[400px] cursor-pointer *:z-20 border-2 border-dashed border-gray-300 hover:border-gray-500"

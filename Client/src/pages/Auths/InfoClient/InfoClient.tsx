@@ -1,22 +1,40 @@
 import React, { useState } from "react";
-import Logo from "../../../assets/logo.png";
 import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import { Button, Modal } from "../../../component/UI";
 import PhotoGallery from "../../../component/PhotoGallery";
 import useUploadPhoto from "../../../hook/useUploadPhoto";
-import UploadPhoto from "../../../component/UploadPhoto";
+import UploadPhoto, {
+  UploadPhotosHandle,
+} from "../../../component/UploadPhoto";
 import { ImageUrlProp } from "../../../interface/ImagePhotoUrl";
+import UploadPhotoWallpaper from "../../../component/UploadPhotoWallpaper";
 const InfoClient = () => {
   const { id } = useParams();
   const [isShowEdit, setShowEdit] = useState<boolean>(false);
-  const [isOpenModalUploadImageWallpaper, setIsOpenModalUploadImageWallpaper] =
-    useState<boolean>(false);
-  const [isOpenModalUploadImageAvatar, setIsOpenModalUploadImageAvatar] =
-    useState<boolean>(false);
-  const { photo, addphoto, deletePhoto, editPhoto,clearPhoto} = useUploadPhoto();
+
+  const {
+    photo: avatarPhoto,
+    addphoto: addAvatarPhoto,
+    deletePhoto: clearAvatarPhoto,
+  } = useUploadPhoto();
+
+  const {
+    photo: wallpaperPhoto,
+    addphoto: addWallpaperPhoto,
+    editPhoto: editWallpaperPhoto,
+    deletePhoto: clearWallpaperPhoto,
+  } = useUploadPhoto();
+
+  const inputRefWallpaper = React.useRef<UploadPhotosHandle>(null);
+  const inputRefAvatar = React.useRef<UploadPhotosHandle>(null);
   const [photoImageWallpaper, setPhotoImageWallpaper] =
     useState<ImageUrlProp>();
+  const [photoImageAvatar, setPhotoImageAvatar] = useState<ImageUrlProp>();
+  const [isOpenModalUploadImageWallpaper, setIsOpenModalUploadImageWallpaper] =
+    useState(false);
+  const [isOpenModalUploadImageAvatar, setIsOpenModalUploadImageAvatar] =
+    useState(false);
   const nav: Tab[] = [
     {
       navigationID: "1",
@@ -50,28 +68,38 @@ const InfoClient = () => {
     },
   ];
 
-  const handleSaveImageWallpaper = () => {
-    setPhotoImageWallpaper(photo);
-    setIsOpenModalUploadImageWallpaper(false)
-    clearPhoto()
+  const closeWallpaperModal = () => {
+    setIsOpenModalUploadImageWallpaper(false);
   };
 
-  const handleCancelUpload = ()=>{
-    clearPhoto()
-    setIsOpenModalUploadImageWallpaper(false)
-  }
+  const handleCancelImageWallpaper = () => {
+    if (!photoImageWallpaper) {
+      clearWallpaperPhoto();
+    }
+    closeWallpaperModal();
+  };
+
+  const handleSaveImageWallpaper = () => {
+    if (wallpaperPhoto) {
+      setPhotoImageWallpaper(wallpaperPhoto);
+    }
+
+    closeWallpaperModal();
+  };
 
   return (
     <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
       <div className="bg-gray-300 w-full h-[400px] flex justify-center items-center">
         {photoImageWallpaper ? (
           <div className="w-screen">
-               <div
-            className="upload-image w-full "
-            onClick={() => setIsOpenModalUploadImageWallpaper(true)}
-          >
-            <img src={photoImageWallpaper.url} className="w-full object-cover h-[400px]" />
-          </div>
+            <div
+              className="upload-image w-full "
+            >
+              <img
+                src={photoImageWallpaper.url}
+                className="w-full object-cover h-[400px]"
+              />
+            </div>
           </div>
         ) : (
           <div className=" w-full h-full flex justify-center items-center">
@@ -91,17 +119,29 @@ const InfoClient = () => {
           }}
         >
           <div
-            className={`w-screen ${!photo ? "max-w-[700px]" : ""} p-5 gap-10`}
+            className={`w-screen ${
+              !wallpaperPhoto ? "max-w-[700px]" : ""
+            } p-5 gap-10`}
           >
-            {photo ? (
+            {wallpaperPhoto ? (
               <div className="w-full">
-                <img
-                  src={photo.url}
-                  className=" object-cover w-full h-[400px]"
-                />
-
+                <div
+                  className="upload-image w-full relative"
+                  onClick={() => {
+                    inputRefWallpaper.current?.openFileDialog();
+                  }}
+                >
+                  <i className="text-2xl text-gray-300 fa-solid fa-camera absolute top-1/2 left-1/2 -translate-1/2 z-[9002]"></i>
+                  <img
+                    src={wallpaperPhoto.url}
+                    className=" object-cover w-full h-[400px]"
+                  />
+                </div>
                 <div className="option-image flex justify-end *:ml-2 *:mt-5">
-                  <Button onClick={handleCancelUpload} className="w-[200px]">
+                  <Button
+                    onClick={handleCancelImageWallpaper}
+                    className="w-[200px]"
+                  >
                     Cancel
                   </Button>
                   <Button
@@ -117,9 +157,10 @@ const InfoClient = () => {
             )}
 
             <UploadPhoto
-              photo={photo}
-              handleDrop={addphoto}
-              style={{ display: !photo ? "block" : "none" }}
+              ref={inputRefWallpaper}
+              photo={wallpaperPhoto}
+              handleDrop={addWallpaperPhoto}
+              style={{ display: !wallpaperPhoto ? "block" : "none" }}
             >
               <div className="upload-wallpaper text-gray-500">
                 <p>Upload your wallpaper</p>
@@ -131,8 +172,14 @@ const InfoClient = () => {
       <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
         <div className="profile flex-col flex *:p-5 gap-3 *:bg-white">
           <div className="border border-gray-200 shadow">
-            <div className="image-avatar">
-              <img src={Logo}></img>
+            <div className="image-avatar w-full flex justify-center items-center p-3">
+              <img
+                src="https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"
+                className="w-[200px] aspect-square object-cover rounded-full border border-gray-300 cursor-pointer bg-center"
+                onClick={() => {
+                  setIsOpenModalUploadImageAvatar(true);
+                }}
+              ></img>
             </div>
             <div className="flex justify-between items-center border-b-gray-200">
               <div className="profile-name">
@@ -227,17 +274,30 @@ const InfoClient = () => {
           onClose={() => {
             setShowEdit(false);
           }}
+          zIndex={100}
         >
           <div className="grid w-screen grid-cols-[100px_1fr] max-w-[700px] p-5 gap-10">
-            <div className="profile-edit-img w-full" >
-              <img
-                src=""
-                className="profile-edit-img w-full aspect-square object-cover rounded-full border border-gray-300 "
-              />
+            <div className="profile-edit-img w-full">
+              <div
+                className="relative w-full aspect-square rounded-full overflow-hidden cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpenModalUploadImageAvatar(
+                    !isOpenModalUploadImageAvatar
+                  );
+                }}
+              >
+                <img
+                  src="https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black opacity-50"></div>
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center">
+                  <i className="fa-solid fa-camera mb-1"></i>
+                  <p>Change Photo</p>
+                </div>
+              </div>
             </div>
-            <Modal onClose={()=>{setIsOpenModalUploadImageAvatar(false)}} isOpen={isOpenModalUploadImageAvatar}>
-                <UploadPhoto photo={phot}></UploadPhoto>
-            </Modal>
 
             <div className="info-edit w-full *:mt-8">
               <div className="info-edit_name w-full">
@@ -340,6 +400,20 @@ const InfoClient = () => {
               </div>
             </div>
           </div>
+        </Modal>
+
+        <Modal
+          onClose={() => {
+            setIsOpenModalUploadImageAvatar(false);
+          }}
+          isOpen={isOpenModalUploadImageAvatar}
+          zIndex={1000}
+        > 
+          <UploadPhoto
+            ref={inputRefAvatar}
+            photo={photoImageAvatar}
+            style={{ display: !avatarPhoto ? "block" : "none" }}
+          ></UploadPhoto>
         </Modal>
         <div className="content-profile p-3 bg-white border border-gray-200">
           <Tabs

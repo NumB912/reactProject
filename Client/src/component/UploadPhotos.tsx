@@ -20,7 +20,6 @@ interface uploadPhotoProp {
 const UploadPhotos = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
   ({ style, handleDrop, photos, children }: uploadPhotoProp, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const borderRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(ref, () => ({
       openFileDialog: () => {
