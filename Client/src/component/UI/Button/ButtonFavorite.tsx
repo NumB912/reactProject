@@ -4,7 +4,7 @@ const HeartFavorite = ({ style = "" }) => {
   const [favorite, setFavorite] = useState(false);
   return (
     <div
-      className={`cursor-pointer flex bg-white p-2 items-center justify-center absolute top-0 right-0 m-2 rounded-full ${style}`}
+      className={`cursor-pointer z-10 flex bg-white p-2 items-center justify-center absolute top-0 right-0 m-2 rounded-full ${style}`}
       onClick={(e) => {
         e.stopPropagation();
         setFavorite(!favorite);

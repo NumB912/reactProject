@@ -1,5 +1,5 @@
 import React from "react";
-import Star from "./UI/Star";
+import Star from "./Star";
 
 interface StarRatingStaticProp {
   starNumber: number;

@@ -14,11 +14,8 @@ import UploadPhoto from "../../../component/UploadPhotosReview";
 import { Checkbox } from "@mui/material";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 
-interface ReviewPostProp {
-  id?: string;
-}
 
-const PostReviews = ({ id }: ReviewPostProp) => {
+const PostReviews = () => {
   const [value, setvalue] = useState<buttonSelectProp>();
 
   return (

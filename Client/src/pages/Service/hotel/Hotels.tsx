@@ -3,9 +3,10 @@ import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import FilterCheckInHotel from "../../../component/FilterComponent/filterCheckInHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
-import { HeartFavorite, RadioOption, RatingStar } from "../../../component/UI";
+import { HeartFavorite } from "../../../component/UI";
 import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import { Link } from "react-router";
+import { StarRatingStatic } from "../../../component";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -184,7 +185,7 @@ const Hotels = () => {
               <p>Free Lunch</p>
             </div>
             <div className="tag">
-              <RatingStar stars={4} />
+              <StarRatingStatic starNumber={4} />
             </div>
           </div>
 
@@ -217,7 +218,7 @@ const Hotels = () => {
                 </p>
                 <div className="starRating *:mr-1.5">
                   <span>4.5</span>
-                  <RatingStar stars={5} />
+                  <StarRatingStatic starNumber={5} />
                   <span>(503 Reviews)</span>
                 </div>
                 <p className="">

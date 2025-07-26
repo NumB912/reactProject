@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonBorder } from "./UI";
-import StarRatingStatic from "./StarRatingStatic";
+import StarRatingStatic from "./UI/StarRatingStatic";
 import DropDownOutLineItem from "./DropDownComponent/DropDownOutLineItem";
 import DropDownSelect from "./DropDownComponent/DropDownSelect";
 import PostReviewPhoto from "./postReviewPhoto";
-import { ImageUrlProp } from "./UploadPhotos"; 
 import Photos from "../pages/Auths/InfoClient/Photos";
+import { Image } from "../interface/ImagePhotoUrl";
 interface YourReviewedItemProps {
   image: string;
   titleService: string;
@@ -13,7 +13,7 @@ interface YourReviewedItemProps {
   address: string;
   rating: number;
   contentReview: string;
-  postReviewPhotos?: ImageUrlProp[];
+  postReviewPhotos?: Image[];
 }
 
 const YourReviewedItem: React.FC<YourReviewedItemProps> = ({

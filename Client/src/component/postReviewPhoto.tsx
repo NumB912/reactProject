@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal } from './UI';
-import { ImageUrlProp } from './UploadPhotos';
+import { Image } from '../interface/ImagePhotoUrl';
 interface PostReviewPhotoProps {
-  photos?: ImageUrlProp[];
+  photos?: Image[];
 }
 
 const PostReviewPhoto = ({ photos = [] }: PostReviewPhotoProps) => {

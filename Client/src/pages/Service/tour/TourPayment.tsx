@@ -1,8 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
 import { useTourCalendar, useTravelerTour } from "../../../store";
-import { RatingStar,Button} from "../../../component/UI";
+import { Button} from "../../../component/UI";
 import { formatDate } from "../../../utils/TimeHandle";
+import { StarRatingStatic } from "../../../component";
 const Payment_Tour = () => {
     const {dateSelectedBook} = useTourCalendar()
     const {childrenQuantity,adultQuantity} = useTravelerTour()
@@ -193,7 +194,7 @@ const Payment_Tour = () => {
                   <p className="font-semibold text-sm">
                     Helicopter
                   </p>
-                  <RatingStar stars={5}/>
+                  <StarRatingStatic starNumber={5}/>
                 </div>
               </div>
               <div className="Amenities flex flex-col gap-2 p-3 border-t border-gray-400">

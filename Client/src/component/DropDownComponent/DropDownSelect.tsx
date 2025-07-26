@@ -13,7 +13,7 @@ interface DropDownProp {
 }
 
 
-const DropDownSelect = ({onClick, icon, containerStyle, defaultOption, options, styleOptions, styleOption, styleIcon}:DropDownProp) => {
+const DropDownSelect = ({icon, containerStyle, defaultOption, options, styleOptions, styleOption, styleIcon}:DropDownProp) => {
     const [isOpen, setIsOpen] = useState(false);
     const [optionSelected, setOptionSelected] = useState<string | null>(defaultOption || null);
     const defaultContainerStyle = containerStyle || 'w-64';

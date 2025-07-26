@@ -4,33 +4,19 @@ import { Link, Outlet, useNavigate } from "react-router";
 import "./styles/home.css";
 import { SearchBar } from "../component";
 import Banner from "../component/UI/Banner";
-import RatingStars from "../component/UI/StarRatingRadioOption";
 import ReusableSlider from "../component/SliderComponent/SliderComponent";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { renderTravelItem } from "../component/ServiceRender/TravelRender";
+import { Travel } from "../interface/Service/TravelInterface";
+import { RenderRecommend } from "../component/ServiceRender/RenderRecommend";
 
-interface TravelItem {
-  id: number | string;
-  title: string;
-  description: string;
-  image: string;
-  rating?: number; // Có thể có hoặc không
-  reviews?: number; // Có thể có hoặc không
-}
-
-interface Banner {
-  id: number | string;
-  title: string;
-  description: string;
-  image: string;
-  link?: string;
-}
 
 const Home = () => {  
   const [tour, SetTour] = useState([])
   const [hotelServices, setHotelServices] = useState([]);
 
-  const carouselItems: TravelItem[] = [
+  const carouselItems: Travel[] = [
     {
       id: 1,
       title: "Khám phá Vịnh Hạ Long",
@@ -105,104 +91,17 @@ const Home = () => {
     },
   ];
 
-  const renderTravelItem = (item:TravelItem) => (
-    <div
-      className={`flex flex-col w-full max-sm:min-w-55 max-lg:min-w-45 aspect-square rounded-2xl`}
-    >
-      <div className="image w-full h-full relative">
-        <img
-          src={
-            item.image ||
-            "https://imgcdn.tapchicongthuong.vn/tcct-media/21/11/3/du-lich-vung-dong-bang-song-cuu-long.jpg"
-          }
-          alt=""
-          className="w-full h-full rounded-t-md object-cover"
-        />
-
-            <HeartFavorite />
-      </div>
-      <div className="detail bg-gray-50 px-3 py-5 rounded-b-md w-full">
-        <p className="font-bold text-md overflow-hidden w-full">{item.title}</p>
-        <div className="flex items-center *:mr-1 *:text-[16px]">
-          <p className="avg">4.1</p>
-
-          <RatingStars stars={4.1} />
-          <p className="quantity">(101)</p>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderItemBanner = (item: Banner) => (
-    <div className="Banner flex max-lg:w-full flex-nowrap gap-3 *:rounded-md max-lg:overflow-x-auto overflow-hidden ">
-      <Link to={item.link || "#"} className="w-full h-full">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="w-full h-full object-cover rounded-md"
-        />
-        <div className="absolute bottom-0 left-0 p-4 bg-gradient-to-t from-black to-transparent text-white">
-          <h3 className="text-lg font-bold text-[]">{item.title}</h3>
-          <p className="text-sm">{item.description}</p>
-        </div>
-      </Link>
-    </div>
-  );
-
-  const renderMightFavorite = (item: TravelItem) => (
-    <div className="flex flex-col w-full max-sm:min-w-55 max-lg:min-w-45 aspect-square">
-      <div className="image w-full h-full relative">
-        <img
-          src={
-            item.image ||
-            "https://cdn3.ivivu.com/2022/08/Capella-Hanoi-ivivu.jpg"
-          }
-          alt=""
-          className="w-full h-full rounded-md object-cover"
-        />
-            <HeartFavorite />
-      </div>
-      <div className="detail">
-        <p className="font-bold text-[25px]">{item.title}</p>
-        <div className="flex items-center *:mr-1 *:text-[16px]">
-          <p className="avg">4.1</p>
-          <RatingStars stars={4.1} />
-          <p className="quantity">(101)</p>
-        </div>
-      </div>
-    </div>
-  );
 
 
 
   return (
     <>
-      <div className="flex flex-col items-center w-9/10 max-md:w-full">
+      <div className="flex flex-col items-center w-8/12 max-md:w-full">
         <SearchBar />
         <Banner />
-        {/* <div className="flex w-3/4 flex-col m-0">
-          <div className=" m-0"></div>
-          <ReusableSlider
-            items={}
-            renderItem={renderItemBanner}
-            containerClassName="w-full mx-auto"
-            itemWrapperClassName="px-2 py-3"
-            sliderSettings={{
-              slidesToShow: 3,
-              autoplaySpeed: 4000,
-              dots: true,
-              responsive: [
-                { breakpoint: 1400, settings: { slidesToShow: 2 } },
-                { breakpoint: 1200, settings: { slidesToShow: 1 } },
-                { breakpoint: 992, settings: { slidesToShow: 1 } },
-                { breakpoint: 768, settings: { slidesToShow: 1 } },
-                { breakpoint: 576, settings: { slidesToShow: 1 } },
-              ],
-            }}
-          />
-        </div> */}
 
-        <div className="w-full max-md:w-4/5">
+        <div className="content-items w-full">
+                  <div className="w-full mt-20">
           <ReusableSlider
             items={carouselItems}
             renderItem={renderTravelItem}
@@ -225,31 +124,32 @@ const Home = () => {
           />
         </div>
 
-        {/* <div className="flex justify-center w-3/4 items-center flex-col my-10">
+        <div className="w-full">
           <ReusableSlider
-            items={hotelServices}
-            renderItem={renderMightFavorite}
-            title="Might be your favorite"
-            subtitle="Những điểm đến được yêu thích"
-            containerClassName="w-full mx-auto"
+            items={carouselItems}
+            renderItem={RenderRecommend}
+            title="Maybe you like it"
+            subtitle="2025’s Travelers’ Choice Awards Best of the Best Things to Do"
+            containerClassName="w-full"
             itemWrapperClassName="px-2 py-3"
             sliderSettings={{
               slidesToShow: 4,
               autoplaySpeed: 4000,
               dots: false,
               responsive: [
-                { breakpoint: 1400, settings: { slidesToShow: 3 } },
-                { breakpoint: 1200, settings: { slidesToShow: 2 } },
+                { breakpoint: 1400, settings: { slidesToShow: 4 } },
+                { breakpoint: 1200, settings: { slidesToShow: 3 } },
                 { breakpoint: 992, settings: { slidesToShow: 2 } },
-                { breakpoint: 768, settings: { slidesToShow: 1 } },
+                { breakpoint: 768, settings: { slidesToShow: 2 } },
                 { breakpoint: 576, settings: { slidesToShow: 1 } },
               ],
             }}
           />
-        </div> */}
+        </div>
+        </div>
       </div>
 
-      <div className="w-full flex-col flex items-center justify-center font-bold p-20 ">
+      <div className="w-full flex-col my-40 flex items-center justify-center font-bold p-20 border-t border-gray-200">
         <div className="flex items-center gap-3 *:text-7xl p-3">
           <p>Favorite places </p>
           <i className="fa-solid fa-heart text-red-500"></i>

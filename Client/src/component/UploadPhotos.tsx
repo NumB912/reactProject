@@ -4,7 +4,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import { ImageUrlProp } from "../interface/ImagePhotoUrl";
+import { Image } from "../interface/ImagePhotoUrl";
 
 export interface UploadPhotosHandle {
   openFileDialog: () => void;
@@ -12,7 +12,7 @@ export interface UploadPhotosHandle {
 
 interface uploadPhotoProp {
   style?: React.CSSProperties;
-  photos?: ImageUrlProp[];
+  photos?: Image[];
   handleDrop?: (files: File[]) => void;
   children?: React.ReactNode;
 }
