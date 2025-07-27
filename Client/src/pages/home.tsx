@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { HeartFavorite } from "../component/UI";
 import { Link, Outlet, useNavigate } from "react-router";
 import "./styles/home.css";
-import { SearchBar } from "../component";
+import { SearchBar, StarRatingStatic } from "../component";
 import Banner from "../component/UI/Banner";
 import RatingStars from "../component/UI/StarRatingRadioOption";
 import ReusableSlider from "../component/SliderComponent/SliderComponent";
@@ -126,7 +126,7 @@ const Home = () => {
         <div className="flex items-center *:mr-1 *:text-[16px]">
           <p className="avg">4.1</p>
 
-          <RatingStars stars={4.1} />
+          <StarRatingStatic starNumber={4.1} />
           <p className="quantity">(101)</p>
         </div>
       </div>
