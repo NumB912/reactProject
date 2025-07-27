@@ -6,7 +6,7 @@ export {default as NavBarSide} from "./NavBarComponent/SideNavBar"
 export {default as SearchBar} from "./SearchComponent/SearchBar"
 export {default as SearchFlight} from "./SearchComponent/SearchFlight"
 export {default as SearchRentalCar} from "./SearchComponent/searchRentalCar"
-export {default as Search} from "./SearchComponent/searchAll"
+export {default as Search} from "./SearchComponent/searchOnly"
 export {default as TimeSelected} from "./TimerComponent/timeSelected"
 
 export {default as CalendarFlight} from "./calendar/CalendarFlight"
@@ -15,3 +15,4 @@ export {default as CalendarHotel} from "./calendar/CalendarHotel"
 export {default as CalendarTour} from "./calendar/CalendarTour"
 
 export {default as StarRatingStatic} from "./UI/StarRatingStatic"
+export {default as InputSquare} from "./inputSearch/inputSquare"

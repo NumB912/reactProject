@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "../UI";
 import useTravelerHotel from "../../store/PassengerStore/CustomerHotelStore";
+import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 
 
-const PassengersHotel = ({ onClose }) => {
+const PassengersHotel = () => {
   const {
     incrementAdult,
     decrementAdult,
@@ -26,12 +27,9 @@ const PassengersHotel = ({ onClose }) => {
   const { roomQuantity, total } = useTravelerHotel();
   const [showRoomAndGuest, setShowRoomAndGuest] = useState(false);
   return (
-    <div
-      className="roomAndGuest"
-      onClick={(e) => {
+    <WrapDropDownOutLineItem handleOnClick={ () => {
         setShowRoomAndGuest(!showRoomAndGuest)
-      }}
-    >
+      }}>
       <i className="fa-solid fa-users"></i>
       <div className="RAG max-md:min-w-60 text-center max-sm:min-w-50">
         <p className="text-[10px]">Room/Guests</p>
@@ -139,7 +137,8 @@ const PassengersHotel = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </WrapDropDownOutLineItem>
+
 
   );
 };

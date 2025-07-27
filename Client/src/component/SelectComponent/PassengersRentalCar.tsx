@@ -2,7 +2,7 @@ import React from "react";
 import { usePassengerCar,useCalendarCarStore } from "../../store";
 import PassengerWrap from "./PassengersWrap";
 import { DropDown } from "..";
-import DropDownOutLineItem from "../DropDownComponent/DropDownOutLineItem";
+import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 
 const Passengers = () => {
   const {
@@ -16,13 +16,13 @@ const Passengers = () => {
     useCalendarCarStore();
 
   return (
-    <PassengerWrap styleContainer=" w-full rounded-sm h-full">
       <DropDownOutLineItem handleOnClick={()=>{        
         setIsSelectedPassenger(!isSelectedPassenger);
         setIsDateSelectedPickUp(false);
-        setIsDateSelectedDropOff(false);}}>
-      <i className="fa-solid fa-users"></i>
-      <div className="RAG flex flex-col justify-center items-start">
+        setIsDateSelectedDropOff(false);}}
+      >
+        <i className="fa-solid fa-users"></i>
+      <div className="RAG flex flex-col justify-center items-center">
         <p className="text-[10px] font-semibold">Passenger</p>
         <p className="text-[13px] font-bold min-w-23">
           {" "}
@@ -57,7 +57,6 @@ const Passengers = () => {
         </div>
       </div>
       </DropDownOutLineItem>
-    </PassengerWrap>
 
   );
 };

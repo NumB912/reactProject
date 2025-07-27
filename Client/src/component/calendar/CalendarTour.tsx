@@ -3,6 +3,7 @@ import React from "react";
 import { useTourCalendar } from "../../store/CalendarStore/calendar_tour_store";
 import Calendar_OneMonth from "./CalendarBase/Calendar_OneMonth";
 import { formatDate } from "../../utils/TimeHandle";
+import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 
 interface CalendarTourProp{
   containerStyle?:String;
@@ -21,8 +22,9 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
     SetToday
   } = useTourCalendar();
   return (
+    <WrapDropDownOutLineItem handleOnClick={()=>{}}>
       <div
-        className={`CheckInBlock relative flex border justify-evenly items-center p-1.5 gap-3 rounded-sm cursor-pointer ${containerStyle}`}
+        className={`relative flex justify-center items-center gap-3 rounded-full cursor-pointer ${containerStyle}`}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
@@ -39,7 +41,7 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
           </p>
 
           <div
-            className={`bg-white absolute top-13 left-1/2 -translate-x-1/2 p-5 border border-gray-300 rounded-sm z-20
+            className={`bg-white absolute mt-5 left-1/2 -translate-x-1/2 p-5 border border-gray-300 rounded-sm z-20
                      w-[400px] ${CalendarStyleTour}
                      max-md:w-full ${isOpen ? "" : "hidden"}`}
             onClick={(e) => {
@@ -59,6 +61,7 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
         </div>
         <i className="fa-solid fa-caret-down"></i>
       </div>
+    </WrapDropDownOutLineItem>
   );
 };
 

@@ -5,7 +5,7 @@ interface InputBarProps {
   placeholder?: string;
   foundServices?: Service[];
   recommendService?: Service[];
-  onSearch?: (value: string) => void;
+  onChange: (value: string) => void;
 }
 
 export interface Service {
@@ -16,7 +16,7 @@ export interface Service {
 
 const InputBar: React.FC<InputBarProps> = ({
   placeholder,
-  onSearch,
+  onChange,
   foundServices,
 }) => {
   const [isClose, setIsClose] = useState(false);
@@ -50,9 +50,7 @@ const InputBar: React.FC<InputBarProps> = ({
             setIsClose(true);
           }}
           onChange={(e) => {
-            if (onSearch) {
-              onSearch(e.target.value);
-            }
+            onChange(e.target.value)
           }}
         />
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonBorder } from "./UI";
 import StarRatingStatic from "./UI/StarRatingStatic";
-import DropDownOutLineItem from "./DropDownComponent/DropDownOutLineItem";
+import DropDownOutLineItem from "./DropDownComponent/WrapDropDownOutLineItem";
 import DropDownSelect from "./DropDownComponent/DropDownSelect";
 import PostReviewPhoto from "./postReviewPhoto";
 import Photos from "../pages/Auths/InfoClient/Photos";
