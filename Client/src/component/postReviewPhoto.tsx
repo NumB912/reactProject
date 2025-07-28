@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal } from './UI';
-import { ImageUrlProp } from './UploadPhotos';
+import { Image } from '../interface/ImagePhotoUrl';
 interface PostReviewPhotoProps {
-  photos?: ImageUrlProp[];
+  photos?: Image[];
 }
 
 const PostReviewPhoto = ({ photos = [] }: PostReviewPhotoProps) => {
@@ -26,7 +26,7 @@ const PostReviewPhoto = ({ photos = [] }: PostReviewPhotoProps) => {
         </div>
       ))}
 
-      <Modal isOpen={isOpen} onClose={() => { setOpen(false) }} styleButtonClose='p-4'>
+      <Modal isOpen={isOpen} onClose={() => { setOpen(false) }}>
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-4">Review Photos</h2>
           <div className="grid grid-cols-3 gap-4">

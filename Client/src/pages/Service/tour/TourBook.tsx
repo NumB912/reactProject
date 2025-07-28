@@ -1,8 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
-import { Button, RatingStar } from "../../../component/UI"; 
+import { Button } from "../../../component/UI"; 
 import { useTourCalendar, useTravelerTour } from "../../../store";
 import { formatDate } from "../../../utils/TimeHandle";
+import { StarRatingStatic } from "../../../component";
 const BookTour = () => {
     const nagative = useNavigate()
     const {childrenQuantity,adultQuantity,seniorQuantity} = useTravelerTour()
@@ -134,7 +135,7 @@ const BookTour = () => {
                   <p className="font-semibold text-sm">
                     Helicopter
                   </p>
-                  <RatingStar stars={5}/>
+                  <StarRatingStatic starNumber={5}/>
                 </div>
               </div>
               <div className="Amenities flex flex-col gap-2 p-3 border-t border-gray-400">

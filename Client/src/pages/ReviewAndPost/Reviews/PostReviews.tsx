@@ -3,7 +3,6 @@ import {
   Button,
   ButtonCircle,
   ButtonIcon,
-  RatingStar,
 } from "../../../component/UI";
 import { DropDown } from "../../../component";
 import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
@@ -14,11 +13,8 @@ import UploadPhotosReview from "../../../component/UploadPhotosReview";
 import { Checkbox } from "@mui/material";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 
-interface ReviewPostProp {
-  id?: string;
-}
 
-const PostReviews = ({ id }: ReviewPostProp) => {
+const PostReviews = () => {
   const [value, setvalue] = useState<buttonSelectProp>();
 
   return (

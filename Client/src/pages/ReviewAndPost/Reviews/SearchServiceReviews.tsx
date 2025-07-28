@@ -1,9 +1,11 @@
 import React from "react";
-import { ButtonIcon, InputBar, RatingStar } from "../../../component/UI";
+import { ButtonIcon, InputBar } from "../../../component/UI";
 import { StarRatingStatic } from "../../../component";
 import { ButtonBorder } from "../../../component/UI";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 import YourReviewedItem from "../../../component/YourReviewItem";
+import { Service } from "../../../component/UI/InputBar";
+
 const SearchServiceReviews = () => {
     const [startIndex, setStartIndex] = React.useState(3);
   const [endIndex, setEndIndex] = React.useState(6);
@@ -140,7 +142,14 @@ const SearchServiceReviews = () => {
       }
     ];
 
-
+const foundServices: Service[] = Array.from({ length: 6 }, (_, i) => ({
+  id: (i + 1).toString(),
+  img: {
+    url: `https://static.lag.vn/upload/news/22/11/11/anime-bocchi-the-rock-duoc-yeu-thich-toan-cau-2_WLIW.jpg?w=800&encoder=wic&subsampling=444`,
+    description: `Hình ảnh dịch vụ ${i + 1}`,
+  },
+  nameService: `Dịch vụ du lịch ${i + 1}`,
+}));
   const handleChangePage = (index:number) => {
     setStartIndex(index * 3);
     setEndIndex(index * 3 + 3);
@@ -155,7 +164,7 @@ const SearchServiceReviews = () => {
           <p className="post-review_title font-bold text-6xl">
             Write a review, make someone's trip
           </p>
-          <InputBar />
+          <InputBar foundServices={foundServices}  onSearch={()=>{}} placeholder="What would you like to review?"/>
         </div>
       </div>
 

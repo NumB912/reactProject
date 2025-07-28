@@ -10,7 +10,7 @@ const clientId = environment.GG_CLIENT_ID
 if (rootElement) {
   createRoot(rootElement).render(
       <GoogleOAuthProvider clientId={clientId}>
-      <App/>
+        <App/>
       </GoogleOAuthProvider>
   );
 } else {

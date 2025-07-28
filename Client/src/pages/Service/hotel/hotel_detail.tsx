@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { RatingStar,Button,ButtonIcon } from "../../../component/UI";
+import { Button,ButtonIcon } from "../../../component/UI";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router"
 import { FaHeart } from "react-icons/fa6";
 import FilterCheckInHotel from "../../../component/FilterComponent/filterCheckInHotel";
 import Comment from "../../Comment";
+import { StarRatingStatic } from "../../../component";
 const HotelDetail = () => {
   const navigate = useNavigate();
   return (
@@ -19,7 +20,7 @@ const HotelDetail = () => {
             <div className="flex items-center gap-2">
               <p>4.8</p>
 
-              <RatingStar stars={5} />
+              <StarRatingStatic starNumber={5} />
 
               <p>(1.645 Reviews)</p>
             </div>

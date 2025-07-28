@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router";
 import Comment from "../../Comment";
 import { FaHeart } from "react-icons/fa";
 import { useTourCalendar, useTravelerTour } from "../../../store";
-import { Button, ButtonIcon, RatingStar } from "../../../component/UI";
+import { Button, ButtonIcon } from "../../../component/UI";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
 import PassengersTour from "../../../component/SelectComponent/PassengersTour";
+import { StarRatingStatic } from "../../../component";
 const TourDetail = () => {
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const TourDetail = () => {
             <div className="flex items-center gap-2">
               <p>4.8</p>
 
-              <RatingStar stars={5} />
+              <StarRatingStatic starNumber={4}/>
 
               <p>(1.645 Reviews)</p>
             </div>
