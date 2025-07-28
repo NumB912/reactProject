@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import { CalendarRentalCar } from "../../../component";
-import Passengers from "../../../component/SelectComponent/PassengersRentalCar";
+import Passengers from "../../../component/Passengers/PassengersRentalCar";
 import { Button } from "../../../component/UI";
 import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
@@ -54,10 +54,7 @@ const filterData: FilterItem[] = [
   },
 ];
 
-
-
 const RentalCars = () => {
-
   const {
     maxPrice,
     minPrice,
@@ -79,15 +76,10 @@ const RentalCars = () => {
     toggleHotelStyle,
   } = useHotelFilter();
 
-
   useEffect(() => {
     setMaxPrice(100);
     setMinPrice(0);
   }, []);
-
-
-
-
 
   return (
     <div className="w-3/4 max-xl:w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
@@ -96,51 +88,56 @@ const RentalCars = () => {
           Your place you want to go
         </p>
       </div>
-      <div className="findTab max-md:w-3/4 w-full gap-1 flex col-span-2 justify-center items-center inset-shadow-2xs py-4 pb-7 border-b border-gray-300 ">
-        <div className="flex flex-col w-full border-r border-gray-200 p-2 max-lg:hidden">
-          <p className="text-[15px] font-bold px-2">Location:</p>
+      <div className=" w-full gap-1 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5">
+        <div className=" w-full gap-1 flex col-span-2 justify-center items-center  max-lg:flex-wrap">
+          <div className="flex flex-col w-full border-r border-gray-200 p-2">
+            <p className="text-[15px] font-bold px-2">Location:</p>
 
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              className="bg-white p-2 w-full"
-              placeholder="Find hotels...."
-            />
-            <button
-              type="button"
-              className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
-            >
-              <i className="fa-solid fa-x"></i>
-            </button>
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                className="bg-white p-2 w-full"
+                placeholder="Find hotels...."
+              />
+              <button
+                type="button"
+                className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
+              >
+                <i className="fa-solid fa-x"></i>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="w-3/5 gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-lg:2/5 max-sm:w-full max-md:w-7/8">
-          <CalendarRentalCar/>
-            <Passengers/>
+          <div className="w-full gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-lg:2/5 max-sm:w-full max-md:w-7/8 ">
+            <CalendarRentalCar />
+            <Passengers />
 
-
-          <div className="search w-full">
-            <Button
-              onClick={() => {
-                console.log("hello");
-              }}
-              className="w-full"
-            >
-              Search
-            </Button>
+            <div className="search w-full">
+              <Button
+                onClick={() => {
+                  console.log("hello");
+                }}
+                className="w-full"
+              >
+                Search
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-full hidden max-lg:flex justify-center items-center col-span-2 gap-3 max-sm:flex-wrap">
-        <div className="filter border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
-          <div className="text-center w-full"><i className="fa-solid fa-filter"></i> filter</div>
-        </div>
-        <div className="sort border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
-          <div className="text-center w-full"><i className="fa-solid fa-sort"></i> sort</div>
-        </div>
-      </div>
 
+       <div className="w-full hidden max-lg:flex justify-center items-center col-span-2 gap-3 max-sm:flex-wrap">
+          <div className="filter border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
+            <div className="text-center w-full">
+              <i className="fa-solid fa-filter"></i> filter
+            </div>
+          </div>
+          <div className="sort border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
+            <div className="text-center w-full">
+              <i className="fa-solid fa-sort"></i> sort
+            </div>
+          </div>
+        </div>
       <div className="sideFilter max-lg:hidden flex flex-col justify-start items-center font-bold w-full gap-5 py-1 ">
         <div className="OptionPrice w-full">
           <p>Prices</p>
@@ -155,20 +152,28 @@ const RentalCars = () => {
                 <p className="text-sm font-semibold">passengers</p>
               </div>
               <div className="flex w-full gap-1 items-center justify-end">
-                <div className="minus p-1 bg-black text-white cursor-pointer"><i className="fa-solid fa-minus"></i></div>
+                <div className="minus p-1 bg-black text-white cursor-pointer">
+                  <i className="fa-solid fa-minus"></i>
+                </div>
                 <div className="content p-2 ">4</div>
-                <div className="add p-1 bg-black text-white cursor-pointer"><i className="fa-solid fa-plus"></i></div>
+                <div className="add p-1 bg-black text-white cursor-pointer">
+                  <i className="fa-solid fa-plus"></i>
+                </div>
               </div>
             </div>
 
-               <div className="flex justify-between items-center gap-3">
+            <div className="flex justify-between items-center gap-3">
               <div>
                 <p className="text-sm font-semibold">Bags</p>
               </div>
               <div className="flex w-full gap-1 items-center justify-end">
-                <div className="minus p-1 bg-black text-white cursor-pointer"><i className="fa-solid fa-minus"></i></div>
+                <div className="minus p-1 bg-black text-white cursor-pointer">
+                  <i className="fa-solid fa-minus"></i>
+                </div>
                 <div className="content p-2 ">4</div>
-                <div className="add p-1 bg-black text-white cursor-pointer"><i className="fa-solid fa-plus"></i></div>
+                <div className="add p-1 bg-black text-white cursor-pointer">
+                  <i className="fa-solid fa-plus"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -399,7 +404,9 @@ const RentalCars = () => {
                 </p>
               </div>
               <img
-                src={"https://cdn.rcstatic.com/images/car_images/web/ford/focus_lrg.jpg"}
+                src={
+                  "https://cdn.rcstatic.com/images/car_images/web/ford/focus_lrg.jpg"
+                }
                 alt=""
                 srcSet=""
                 className=" object-cover w-50 max-sm:w-full"

@@ -1,21 +1,14 @@
 import React, { useState } from "react";
-import { useChooseCalendar } from "../../store/CalendarStore/calendar_store";
-import {
-  isToday,
-  isSameDay,
-  getDateHandle,
-  isBetween,
-  formatDate,
-} from "../../utils/TimeHandle";
-import { useCalendarHotel } from "../../store/CalendarStore/calendar_hotel_store";
+import { formatDate } from "../../utils/TimeHandle";
+import { useCalendarHotel } from "../../store/CalendarStore/CalendarHotelStore";
 import Calendar_TwoMonth from "./CalendarBase/Calendar_TwoMonth";
+import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 
-interface CalendarHotelProp{
-  CalendarHotelContainerStyle?:string,
-  CalendarHotelStyle?:string
+interface CalendarHotelProp {
+  CalendarHotelStyle?: string;
 }
 
-const Calendar_Hotel = ({CalendarHotelContainerStyle,CalendarHotelStyle}:CalendarHotelProp) => {
+const Calendar_Hotel = ({ CalendarHotelStyle }: CalendarHotelProp) => {
   const {
     datesBook,
     datesNextMonth,
@@ -27,32 +20,31 @@ const Calendar_Hotel = ({CalendarHotelContainerStyle,CalendarHotelStyle}:Calenda
     prevMonth,
     SetNextWeek,
     SetThisWeek,
-    SetToday
+    SetToday,
   } = useCalendarHotel();
 
-  const [isShow,setIsShow] = useState(false)
+  const [isShow, setIsShow] = useState(false);
   return (
     <>
-      <div
-        className={`CheckInBlock relative cursor-pointer ${CalendarHotelContainerStyle}`}
-        onClick={(e) => {
-          e.stopPropagation();
+      <WrapDropDownOutLineItem
+        handleClickOutSide={() => {
+          setIsShow(false);
+        }}
+        handleShow={() => {
           setIsShow(!isShow);
-          // if (showRoomAndGuest) {
-          //   setShowRoomAndGuest(!showRoomAndGuest)
-          // }
         }}
       >
         <i className="fa-solid fa-calendar"></i>
-        <div className="DCI text-center max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50">
+        <div className="DCI text-center">
           <p className="text-[10px]">Check In - Check Out</p>
           <p className="text-[13px] font-bold">
             {formatDate(dateSelectedBook)} - {formatDate(dateSelectedCheckOut)}
           </p>
 
           <div
-            className={`bg-white absolute w-[700px] top-[350px] left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 border border-gray-300 rounded-2xl z-20
-      max-lg:left-full max-2xl:left-0 ${isShow ? "" : "hidden"} ${CalendarHotelStyle}`}
+            className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 left-0 rounded z-20 max-md:w-full ${
+              isShow ? "" : "hidden"
+            } ${CalendarHotelStyle}`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -74,8 +66,7 @@ const Calendar_Hotel = ({CalendarHotelContainerStyle,CalendarHotelStyle}:Calenda
           </div>
         </div>
         <i className="fa-solid fa-caret-down"></i>
-      </div>
-
+      </WrapDropDownOutLineItem>
     </>
   );
 };

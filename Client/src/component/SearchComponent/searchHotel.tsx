@@ -1,9 +1,9 @@
-import React from 'react'
-import { useNavigate } from 'react-router';
-import Search from './searchOnly';
+import React from "react";
+import Search from "./searchOnly";
+import { useNavigate } from "react-router";
 
-const SearchAll = () => {
-   const navigate = useNavigate();
+const SearchHotel = () => {
+  const navigate = useNavigate();
 
   return (
     <div className="w-full max-w-6xl">
@@ -12,6 +12,6 @@ const SearchAll = () => {
       } } />
     </div>
   );
-}
+};
 
-export default SearchAll
+export default SearchHotel;

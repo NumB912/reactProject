@@ -8,7 +8,7 @@ import useStateLogin from "../../store/LoginStore/login_store";
 import SideNavBar from "./SideNavBar";
 import { Tab } from "../UI/Tabs";
 import InputShow from "../UI/Input/InputShow";
-import DropDownOutLineItem from "../DropDownComponent/DropDownOutLineItem";
+import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import Dropdown from "../DropDownComponent/Dropdown";
 import ListItem from "../UI/ListItem";
 

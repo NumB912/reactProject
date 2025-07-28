@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "../UI";
 import useTravelerHotel from "../../store/PassengerStore/CustomerHotelStore";
+import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 
 
-const PassengersHotel = ({ onClose }) => {
+const PassengersHotel = () => {
   const {
     incrementAdult,
     decrementAdult,
@@ -24,14 +25,14 @@ const PassengersHotel = ({ onClose }) => {
   } = useTravelerHotel();
 
   const { roomQuantity, total } = useTravelerHotel();
-  const [showRoomAndGuest, setShowRoomAndGuest] = useState(false);
+  const [isShow, setIsShow] = useState(false);
+  const [isPassenger,setIsPassenger] = useState(false)
   return (
-    <div
-      className="roomAndGuest"
-      onClick={(e) => {
-        setShowRoomAndGuest(!showRoomAndGuest)
+    <WrapDropDownOutLineItem handleClickOutSide={ () => {
+        setIsShow(false)
       }}
-    >
+      handleShow={()=>{setIsShow(!isShow)}}
+      >
       <i className="fa-solid fa-users"></i>
       <div className="RAG max-md:min-w-60 text-center max-sm:min-w-50">
         <p className="text-[10px]">Room/Guests</p>
@@ -43,11 +44,11 @@ const PassengersHotel = ({ onClose }) => {
       <i className="fa-solid fa-caret-down"></i>
 
       <div
-        className={`bg-white absolute top-[62px] border border-gray-300 rounded-2xl z-10 ${showRoomAndGuest ? "" : "hidden"
+        className={`bg-white absolute top-[62px] border border-gray-300 rounded-2xl z-10 ${isShow ? "" : "hidden"
           }`}
       > <div className="traverSelected relative p-10 w-[340px]" onClick={(e) => { e.stopPropagation() }}>
           <div className="absolute top-0 right-0 p-4 cursor-pointer" onClick={() => {
-            setShowRoomAndGuest(!showRoomAndGuest)
+            setIsShow(!isShow)
           }}>
             <i className="fa-solid fa-xmark"></i>
           </div>
@@ -139,7 +140,8 @@ const PassengersHotel = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </WrapDropDownOutLineItem>
+
 
   );
 };

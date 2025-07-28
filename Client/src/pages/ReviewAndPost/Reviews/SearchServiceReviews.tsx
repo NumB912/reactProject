@@ -150,6 +150,7 @@ const foundServices: Service[] = Array.from({ length: 6 }, (_, i) => ({
   },
   nameService: `Dịch vụ du lịch ${i + 1}`,
 }));
+
   const handleChangePage = (index:number) => {
     setStartIndex(index * 3);
     setEndIndex(index * 3 + 3);

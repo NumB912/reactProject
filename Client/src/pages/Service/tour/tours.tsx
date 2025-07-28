@@ -5,7 +5,7 @@ import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/Ch
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { useTourFilter } from "../../../store";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
-import { Button, HeartFavorite, Modal, RadioOption, RatingStar } from "../../../component/UI";
+import { Button, HeartFavorite, Modal } from "../../../component/UI";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
 import ReusableSlider from "../../../component/SliderComponent/SliderComponent";
 const Tours = () => {
@@ -61,26 +61,32 @@ const Tours = () => {
           Your place you want to go
         </p>
       </div>
-      <div className="w-full col-span-2 flex justify-center items-end gap-3 border-b border-gray-200 pb-5">
-        <div className="flex flex-col w-full border-r border-gray-200 p-2 max-lg:hidden ">
-          <p className="text-[15px] font-bold px-2">Location:</p>
+      <div className="w-8/10 max-w-[1000px] gap-1 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5">
+        <div className="flex flex-col w-full border-r border-gray-200 pr-3">
+        <p className="text-[15px] font-bold">Location:</p>
 
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              className="bg-white p-2 w-full"
-              placeholder="Find hotels...."
-            />
-            <button
-              type="button"
-              className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
-            >
-              <i className="fa-solid fa-x"></i>
-            </button>
-          </div>
+        <div className="relative flex items-center border-2 border-gray-200">
+          <input
+            type="text"
+            className="bg-white p-3 w-full "
+            placeholder="Find hotels...."
+          />
+          <button
+            type="button"
+            className="absolute right-3 p-1 w-[30px] rounded-[10px] bg-black text-white"
+          >
+            <i className="fa-solid fa-x"></i>
+          </button>
         </div>
+      </div>
 
-        <Calendar_Tour containerStyle={"w-full max-h-15 max-w-[400px]"} CalendarStyleTour={"top-12"} />
+      <div className="w-fit flex items-center justify-center gap-2">
+   <Calendar_Tour containerStyle={"w-full justify-space"} CalendarStyleTour={"top-12"} />
+        <Button className="" onClick={()=>{}}>
+          Search
+        </Button>
+      </div>
+       
       </div>
 
       <div
@@ -173,7 +179,6 @@ const Tours = () => {
       <Modal isOpen={isShowsome} onClose={() => { setShowsome(false) }}
         styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
         parentContainerStyle="min-xl:hidden"
-        styleButtonClose="cursor-pointer"
       >
         <div className="flex flex-col justify-between items-center w-full">
           <div className="ContentName font-bold text-3xl">Filter</div>
@@ -188,21 +193,6 @@ const Tours = () => {
             </div>
             <div className="flex w-full flex-col">
               <p className="text-md">Rating</p>
-              {/* <RadioOption
-                handleChange={(valueStar: string | number) => {
-                  toggleStar(Number(valueStar));
-                  console.log(valueStar)
-                }}
-                options={[
-                  { id: "RadioRatingStar1", value: 5 },
-                  { id: "RadioRatingStar2", value: 4 },
-                  { id: "RadioRatingStar3", value: 3 },
-                  { id: "RadioRatingStar4", value: 2 },
-                ]}
-                nameRadio="RatingStar"
-              >
-                {(item: number | string) => <RatingStar stars={Number(item)} />}
-              </RadioOption> */}
             </div>
 
             <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
@@ -268,7 +258,6 @@ const Tours = () => {
 
       <Modal isOpen={isShowSort} onClose={() => { setShowSort(false) }}
         styleContainer={" rounded-none p-5 w-full h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"}
-        styleButtonClose={"cursor-pointer"}
       >
         <div className="ContentName font-bold text-3xl">Sort</div>
         <div className="flex flex-col justify-between items-start w-full">

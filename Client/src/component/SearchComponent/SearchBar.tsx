@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { useNavigate, useNavigation } from "react-router";
 
 import SearchRental from "./searchRentalCar";
-import SearchAll from "./searchAll";
 import SearchFlight from "./SearchFlight";
+import searchHotel from "./searchHotel";
+import SearchHotel from "./searchHotel";
+import SearchTour from "./searchTour";
+import SearchAll from "./searchAll";
  const SearchBar = () => {
   const [Type, setType] = useState("SearchALL");
 
   return (
     <>
-      <div className="flex w-full h-2/12 flex-col justify-center items-center my-3 bg-white max-sm:mt-[-30px]">
+      <div className="flex w-full flex-col justify-center items-center my-3 bg-white">
         <h1 className="text-[3vw] font-bold text-center m-4 max-sm:hidden">
           {Type === "SearchALL" && <p>Showing all results...</p>}
           {Type === "Hotels" && <p>Find the best hotels for your trip.</p>}
@@ -67,13 +70,15 @@ import SearchFlight from "./SearchFlight";
           </div>
         </div>
 
-        {Type == "Flights" ? (
-          <SearchFlight />
-        ) : Type == "RentalCar" ? (
-          <SearchRental />
-        ) : (
-          <SearchAll typeSearch={Type} />
-        )}
+      <div className="w-full flex justify-center px-5">
+              {Type == "Flights" ? (
+                <SearchFlight />
+              ) : Type == "RentalCar" ? (
+                <SearchRental />
+              ) : Type == "Tour"?(
+                <SearchTour/>
+              ):Type=="Hotels"?(<SearchHotel/>):(<SearchAll/>)}
+      </div>
       </div>
     </>
   );

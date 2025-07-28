@@ -54,6 +54,18 @@ export function formatDate(date?: Date | null): string {
   }
 
   return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
+
+export function formatDateWeek(date?: Date | null): string {
+  if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",

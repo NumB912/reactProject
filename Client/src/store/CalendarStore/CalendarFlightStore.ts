@@ -27,7 +27,7 @@ export interface Prop {
   resetAll: () => void;
 }
 
-export const useChooseCalendar = create<Prop>((set, get) => {
+export const useCalendarFlight = create<Prop>((set, get) => {
   const today = new Date();
 
   return {
