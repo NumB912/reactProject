@@ -79,7 +79,7 @@ const Hotels = () => {
   }, [])
 
   return (
-    <div className="w-3/4 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
+    <div className="w-8/10 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 p-3 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
@@ -173,29 +173,6 @@ const Hotels = () => {
       </div>
 
       <div className="w-full py-3 gap-1 flex flex-col max-lg:w-full max-lg:col-span-2 p-3 ">
-        <div className="filter-tag flex justify-between items-center p-1 rounded-2xl">
-          <div className="flex gap-2 *:p-1.5 *:border *:rounded-3xl *:text-[10px] *:font-bold *:border-gray-400 *:max-sm:hidden">
-            <div className="tag">
-              <p>Free wifi</p>
-            </div>
-            <div className="tag">
-              <p>Free Parking</p>
-            </div>
-            <div className="tag">
-              <p>Free Lunch</p>
-            </div>
-            <div className="tag">
-              <StarRatingStatic starNumber={4} />
-            </div>
-          </div>
-
-          <div className="Filter-tool *:p-1.5 *:border *:rounded-3xl *:text-[10px] *:font-bold *:border-gray-400 min-lg:hidden">
-            <Link to="#">
-              <i className="fa-solid fa-filter"></i> Filter
-            </Link>
-          </div>
-        </div>
-
         <div className="*:hover:shadow-md flex flex-col max-lg:w-full max-lg:col-span-2 p-3 gap-3">
           <div
             className="flex gap-3 justify-between rounded-xl border border-gray-200 
@@ -253,20 +230,6 @@ const Hotels = () => {
         </div>
       </div>
     </div>
-
-    // <>
-    //   <Calendar_base
-    //     dateSelected={dateSelectedBook}
-    //     dates={datesBook}
-    //     dateSelectedCheckOut={dateSelectedCheckOut}
-    //     nextMonthDates={datesNextMonth}
-    //     onSelected={setDateSelectedBook}
-    //     onSelectedCheckOut={setDateSelectedCheckOut}
-    //     nextMonth={() => {}} 
-    //     prevMonth={() => {}}
-    //     type="hotel"
-    //   />
-    // </>
   );
 };
 

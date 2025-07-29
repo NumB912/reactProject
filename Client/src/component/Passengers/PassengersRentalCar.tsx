@@ -23,7 +23,7 @@ const Passengers = () => {
      handleShow={()=>{setIsPassengerOpen(!isPassengerOpen)}}
       >
         <i className="fa-solid fa-users"></i>
-      <div className="RAG flex flex-col justify-center items-center">
+      <div className="RAG flex flex-col justify-center">
         <p className="text-[10px] font-semibold">Passenger</p>
         <p className="text-[13px] font-bold min-w-23">
           {" "}

@@ -34,7 +34,7 @@ const PassengersHotel = () => {
       handleShow={()=>{setIsShow(!isShow)}}
       >
       <i className="fa-solid fa-users"></i>
-      <div className="RAG max-md:min-w-60 text-center max-sm:min-w-50">
+      <div className="RAG">
         <p className="text-[10px]">Room/Guests</p>
         <p className="text-[13px] font-bold">{`${roomQuantity > 1
           ? `${roomQuantity} rooms`

@@ -89,7 +89,7 @@ const RentalCars = () => {
         </p>
       </div>
       <div className=" w-full gap-1 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5">
-        <div className=" w-full gap-1 flex col-span-2 justify-center items-center  max-lg:flex-wrap">
+        <div className=" w-full gap-1 flex col-span-2 justify-center items-center max-lg:flex-wrap">
           <div className="flex flex-col w-full border-r border-gray-200 p-2">
             <p className="text-[15px] font-bold px-2">Location:</p>
 
@@ -108,7 +108,7 @@ const RentalCars = () => {
             </div>
           </div>
 
-          <div className="w-full gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-lg:2/5 max-sm:w-full max-md:w-7/8 ">
+          <div className="w-full gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-lg:w-full">
             <CalendarRentalCar />
             <Passengers />
 
@@ -126,18 +126,18 @@ const RentalCars = () => {
         </div>
       </div>
 
-       <div className="w-full hidden max-lg:flex justify-center items-center col-span-2 gap-3 max-sm:flex-wrap">
-          <div className="filter border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
-            <div className="text-center w-full">
-              <i className="fa-solid fa-filter"></i> filter
-            </div>
-          </div>
-          <div className="sort border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
-            <div className="text-center w-full">
-              <i className="fa-solid fa-sort"></i> sort
-            </div>
+      <div className="w-full hidden max-lg:flex justify-center items-center col-span-2 gap-3 max-sm:flex-wrap">
+        <div className="filter border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
+          <div className="text-center w-full">
+            <i className="fa-solid fa-filter"></i> filter
           </div>
         </div>
+        <div className="sort border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
+          <div className="text-center w-full">
+            <i className="fa-solid fa-sort"></i> sort
+          </div>
+        </div>
+      </div>
       <div className="sideFilter max-lg:hidden flex flex-col justify-start items-center font-bold w-full gap-5 py-1 ">
         <div className="OptionPrice w-full">
           <p>Prices</p>

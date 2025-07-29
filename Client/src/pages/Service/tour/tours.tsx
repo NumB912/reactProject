@@ -30,7 +30,7 @@ const Tours = () => {
 
   const [showCheckIn, setShowCheckIn] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  const nagative = useNavigate()
+  const nagative = useNavigate();
 
   useEffect(() => {
     setMaxPrice(100);
@@ -46,7 +46,10 @@ const Tours = () => {
     { id: 6, value: "10/3" },
   ];
 
-  const renderItemDateDeparture = (item: { id: string | number; value: string }) => {
+  const renderItemDateDeparture = (item: {
+    id: string | number;
+    value: string;
+  }) => {
     return (
       <div className="border border-black w-full p-1.5 text-center font-bold rounded-sm">
         <p>{item.value}</p>
@@ -61,32 +64,31 @@ const Tours = () => {
           Your place you want to go
         </p>
       </div>
-      <div className="w-8/10 max-w-[1000px] gap-1 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5">
-        <div className="flex flex-col w-full border-r border-gray-200 pr-3">
-        <p className="text-[15px] font-bold">Location:</p>
+      <div className="w-full max-w-[1000px] gap-2 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5 max-xl:flex-wrap">
+        <div className="flex flex-col w-full min-xl:pr-3 min-xl:border-gray-200 min-xl:border-r">
+          <p className="text-[15px] font-bold">Location:</p>
 
-        <div className="relative flex items-center border-2 border-gray-200">
-          <input
-            type="text"
-            className="bg-white p-3 w-full "
-            placeholder="Find hotels...."
-          />
-          <button
-            type="button"
-            className="absolute right-3 p-1 w-[30px] rounded-[10px] bg-black text-white"
-          >
-            <i className="fa-solid fa-x"></i>
-          </button>
+          <div className="relative flex items-center border-2 border-gray-200 mt-2">
+            <input
+              type="text"
+              className="bg-white p-3 w-full "
+              placeholder="Find hotels...."
+            />
+            <button
+              type="button"
+              className="absolute right-3 p-1 w-[30px] rounded-[10px] bg-black text-white"
+            >
+              <i className="fa-solid fa-x"></i>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="w-fit flex items-center justify-center gap-2">
-   <Calendar_Tour containerStyle={"w-full justify-space"} CalendarStyleTour={"top-12"} />
-        <Button className="" onClick={()=>{}}>
-          Search
-        </Button>
-      </div>
-       
+        <div className="w-fit flex items-center justify-center gap-2 max-sm:flex-wrap max-xl:w-full">
+          <Calendar_Tour />
+          <Button className="w-fit max-xl:w-full" onClick={() => {}}>
+            Search
+          </Button>
+        </div>
       </div>
 
       <div
@@ -176,7 +178,11 @@ const Tours = () => {
         </div>
       </div>
 
-      <Modal isOpen={isShowsome} onClose={() => { setShowsome(false) }}
+      <Modal
+        isOpen={isShowsome}
+        onClose={() => {
+          setShowsome(false);
+        }}
         styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
         parentContainerStyle="min-xl:hidden"
       >
@@ -230,11 +236,23 @@ const Tours = () => {
                       value: "Historical * Heritage Tours",
                     },
                     { id: "checkBoxProductCategories4", value: "Bus Tours" },
-                    { id: "checkBoxProductCategories5", value: "Walking Tours" },
-                    { id: "checkBoxProductCategories6", value: "Helicopter Tours" },
-                    { id: "checkBoxProductCategories7", value: "Hop-On Hop-Off" },
+                    {
+                      id: "checkBoxProductCategories5",
+                      value: "Walking Tours",
+                    },
+                    {
+                      id: "checkBoxProductCategories6",
+                      value: "Helicopter Tours",
+                    },
+                    {
+                      id: "checkBoxProductCategories7",
+                      value: "Hop-On Hop-Off",
+                    },
                     { id: "checkBoxProductCategories8", value: "Night Tours" },
-                    { id: "checkBoxProductCategories9", value: "Private Tours" },
+                    {
+                      id: "checkBoxProductCategories9",
+                      value: "Private Tours",
+                    },
                     {
                       id: "checkBoxProductCategories10",
                       value: "Skips-the-line Tours",
@@ -243,8 +261,14 @@ const Tours = () => {
                       id: "checkBoxProductCategories11",
                       value: "Literary, Art & Music Tours",
                     },
-                    { id: "checkBoxProductCategories12", value: "Multi-day Tours" },
-                    { id: "checkBoxProductCategories13", value: "Movie-TVs Tours" },
+                    {
+                      id: "checkBoxProductCategories12",
+                      value: "Multi-day Tours",
+                    },
+                    {
+                      id: "checkBoxProductCategories13",
+                      value: "Movie-TVs Tours",
+                    },
                   ]}
                   checkBoxName="HotelStyle"
                 >
@@ -256,8 +280,14 @@ const Tours = () => {
         </div>
       </Modal>
 
-      <Modal isOpen={isShowSort} onClose={() => { setShowSort(false) }}
-        styleContainer={" rounded-none p-5 w-full h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"}
+      <Modal
+        isOpen={isShowSort}
+        onClose={() => {
+          setShowSort(false);
+        }}
+        styleContainer={
+          " rounded-none p-5 w-full h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
+        }
       >
         <div className="ContentName font-bold text-3xl">Sort</div>
         <div className="flex flex-col justify-between items-start w-full">
@@ -272,19 +302,17 @@ const Tours = () => {
               children={(value) => { return (<div>{value}</div>) }} /> */}
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 p-4 bottom-0 apply-reset self-end flex justify-between w-full *:w-[300px]">
-
             <div className="reset">
-              <Button onClick={() => { }} className="w-full">
+              <Button onClick={() => {}} className="w-full">
                 Reset
               </Button>
             </div>
 
             <div className="apply">
-              <Button onClick={() => { }} className="w-full">
+              <Button onClick={() => {}} className="w-full">
                 Apply
               </Button>
             </div>
-
           </div>
         </div>
       </Modal>
@@ -294,10 +322,16 @@ const Tours = () => {
       max-xl:flex
       "
       >
-        <div className=" w-full p-3 border-r border-gray-200 font-bold text-center" onClick={() => setShowsome(true)}>
+        <div
+          className=" w-full p-3 border-r border-gray-200 font-bold text-center"
+          onClick={() => setShowsome(true)}
+        >
           <i className="fa-solid fa-filter"></i> filter
         </div>
-        <div className=" w-full p-3 font-bold text-center" onClick={() => setShowSort(true)}>
+        <div
+          className=" w-full p-3 font-bold text-center"
+          onClick={() => setShowSort(true)}
+        >
           <i className="fa-solid fa-sort"></i> Sort
         </div>
       </div>
@@ -310,27 +344,27 @@ const Tours = () => {
           <div className="TotalSearch max-xl:w-full">
             Found <span className="font-bold">35</span> results
           </div>
-                  <div
-          className="SortBy flex gap-2 items-center 
+          <div
+            className="SortBy flex gap-2 items-center 
         max-xl:hidden"
-        >
-          <p className="sort-by font-bold w-full">Sort by:</p>
-          <DropDownSelect
-            icon={<FaSort />}
-            onClick={() => { }}
-            containerStyle="w-full"
-            defaultOption="Recommended"
-            options={[
-              "Recommended",
-              "Price: Low to High",
-              "Price: High to Low",
-              "Rating: High to Low",
-              "Rating: Low to High",
-            ]}
-            styleOption="text-[clamp(1rem, 2.5vw, 2rem);] hover:bg-gray-200 hover:cursor-pointer"
-            styleIcon="text-[clamp(1rem, 2.5vw, 2rem);]"
-          />
-        </div>
+          >
+            <p className="sort-by font-bold w-full">Sort by:</p>
+            <DropDownSelect
+              icon={<FaSort />}
+              onClick={() => {}}
+              containerStyle="w-full"
+              defaultOption="Recommended"
+              options={[
+                "Recommended",
+                "Price: Low to High",
+                "Price: High to Low",
+                "Rating: High to Low",
+                "Rating: Low to High",
+              ]}
+              styleOption="text-[clamp(1rem, 2.5vw, 2rem);] hover:bg-gray-200 hover:cursor-pointer"
+              styleIcon="text-[clamp(1rem, 2.5vw, 2rem);]"
+            />
+          </div>
         </div>
 
         <div
@@ -464,7 +498,12 @@ const Tours = () => {
                   </div>
 
                   <div className="viewMore max-xl:w-full">
-                    <Button className="rounded-md w-full" onClick={() => { nagative("/tours/123") }}>
+                    <Button
+                      className="rounded-md w-full"
+                      onClick={() => {
+                        nagative("/tours/123");
+                      }}
+                    >
                       View More
                     </Button>
                   </div>

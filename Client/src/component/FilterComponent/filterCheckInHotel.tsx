@@ -15,12 +15,12 @@ interface Props {
 const FilterCheckInHotel = ({ style = "" }: Props) => {
   return (
     <div
-      className={`findTab w-full gap-1 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5 ${style}`}
+      className={`findTab w-full gap-1 flex col-span-2 items-end rounded-xl shadow-sm border border-gray-200 p-5 m-5 max-xl:flex-wrap ${style}`}
     >
-      <div className="flex flex-col w-2/3 border-r border-gray-200 pr-3 max-lg:hidden ">
+      <div className="flex flex-col w-full min-xl:border-r min-xl:border-gray-200 min-xl:pr-3">
         <p className="text-[15px] font-bold">Location:</p>
 
-        <div className="relative flex items-center border-2 border-gray-200">
+        <div className="relative flex items-center border-2 border-gray-200 mt-2">
           <input
             type="text"
             className="bg-white p-3 w-full "
@@ -35,10 +35,12 @@ const FilterCheckInHotel = ({ style = "" }: Props) => {
         </div>
       </div>
 
-      <div className="w-full flex items-center justify-center gap-2">
-        <Calendar_Hotel />
-        <PassengersHotel />
-        <Button className="" onClick={()=>{}}>
+      <div className="w-full flex items-center justify-center gap-2 mt-2 max-lg:flex-wrap">
+        <div className="flex w-full gap-2 max-sm:flex-wrap">
+          <Calendar_Hotel />
+          <PassengersHotel />
+        </div>
+        <Button className="w-fit max-lg:w-full" onClick={() => {}}>
           Search
         </Button>
       </div>

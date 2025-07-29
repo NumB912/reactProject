@@ -7,7 +7,7 @@ const Root = () => {
   return (
 
     <>
-        <div className='flex flex-col justify-center items-center font-sans'>
+        <div className='flex flex-col justify-center items-center font-sans bg-white'>
               <NavBar/>
               <Outlet/>
               <Footer/>
