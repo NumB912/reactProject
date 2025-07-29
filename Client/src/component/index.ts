@@ -15,4 +15,4 @@ export {default as CalendarHotel} from "./calendar/CalendarHotel"
 export {default as CalendarTour} from "./calendar/CalendarTour"
 
 export {default as StarRatingStatic} from "./UI/StarRatingStatic"
-export {default as InputSquare} from "./inputSearch/inputSquare"
+export {default as InputSquare} from "./InputComponent/inputSquare" 

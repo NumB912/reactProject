@@ -32,6 +32,7 @@ const PassengersHotel = () => {
         setIsShow(false)
       }}
       handleShow={()=>{setIsShow(!isShow)}}
+      className="w-full"
       >
       <i className="fa-solid fa-users"></i>
       <div className="RAG">

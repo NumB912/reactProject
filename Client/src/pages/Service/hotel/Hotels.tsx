@@ -3,10 +3,15 @@ import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import FilterCheckInHotel from "../../../component/FilterComponent/filterCheckInHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
-import { HeartFavorite } from "../../../component/UI";
+import { Button, HeartFavorite } from "../../../component/UI";
 import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import { Link } from "react-router";
 import { StarRatingStatic } from "../../../component";
+import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
+import SlideButton from "../../../component/SlideButton/SlideButton";
+import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDropDownOutLineItem";
+import DropDownContent from "../../../component/DropDownComponent/DropDownContent";
+import SortHotel from "../../../component/SortComponent/SortHotel";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -55,37 +60,37 @@ const filterData: FilterItem[] = [
 ];
 
 const Hotels = () => {
-    const {
-      maxPrice,
-      minPrice,
-      location,
-      selectedAmenities,
-      selectedRating,
-      hotelClasses,
-      style,
-      selectedStars,
-      resetFilters,
-      setLocation,
-      setMaxPrice,
-      setMinPrice,
-      toggleAmenity,
-      toggleStar,
-      toggleHotelClasses,
-      toggleHotelStyle,
-    } = useHotelFilter();
+  const {
+    maxPrice,
+    minPrice,
+    location,
+    selectedAmenities,
+    selectedRating,
+    hotelClasses,
+    style,
+    selectedStars,
+    resetFilters,
+    setLocation,
+    setMaxPrice,
+    setMinPrice,
+    toggleAmenity,
+    toggleStar,
+    toggleHotelClasses,
+    toggleHotelStyle,
+  } = useHotelFilter();
   useEffect(() => {
-    setMaxPrice(100)
-    setMinPrice(0)
-  }, [])
+    setMaxPrice(100);
+    setMinPrice(0);
+  }, []);
 
   return (
-    <div className="w-8/10 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 p-3 mb-40">
+    <div className="w-8/10 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
-      <FilterCheckInHotel/>
+      <FilterCheckInHotel />
 
       <div className="sideFilter max-lg:hidden w-full flex flex-col justify-start items-center *:font-bold *:border-t *:border-gray-300 *:w-full gap-5 *:py-1 ">
         <div className="OptionPrice">
@@ -126,7 +131,6 @@ const Hotels = () => {
               checkBoxName="Amenities"
             >
               {(item: string) => <p>{item}</p>}
-
             </CheckBoxOption>
           </div>
 
@@ -172,59 +176,93 @@ const Hotels = () => {
         </div>
       </div>
 
-      <div className="w-full py-3 gap-1 flex flex-col max-lg:w-full max-lg:col-span-2 p-3 ">
-        <div className="*:hover:shadow-md flex flex-col max-lg:w-full max-lg:col-span-2 p-3 gap-3">
-          <div
-            className="flex gap-3 justify-between rounded-xl border border-gray-200 
-        max-sm:flex-col"
-          >
-            <div className="w-3/12 h-full max-sm:w-full relative">
-              <img
-                src="https://ik.imagekit.io/tvlk/apr-asset/TzEv3ZUmG4-4Dz22hvmO9NUDzw1DGCIdWl4oPtKumOg=/lodging/69000000/68120000/68113000/68112922/50b4deb1_z.jpg?_src=imagekit&tr=dpr-2,c-at_max,f-jpg,fo-auto,h-332,pr-true,q-80,w-480"
-                alt=""
-                srcSet=""
-                className="w-full min-sm:rounded-l-xl max-sm:rounded-t-xl min-sm:aspect-square"
-              />
-              <HeartFavorite />
+      <div className="w-full py-3 gap-1 flex flex-col max-lg:w-full max-lg:col-span-2">
+        <div className="flex flex-col max-lg:w-full max-lg:col-span-2 p-3 gap-3">
+          <div className="flex justify-between">
+            <div className="hotel-numbers">
+              <p className="font-bold text-2xl mb-4">
+                Tp. Hồ Chí Minh: Đã tìm thấy 900 kết quả
+              </p>
+              <div className="w-fit">
+                <SortHotel />
+              </div>
             </div>
 
-            <div className="flex w-9/12 justify-between items-start h-full p-1.5 max-sm:flex-col max-sm:w-full max-sm:*:w-full">
-              <div className="w-9/12 *:text-[13px] text-gray-600">
-                <p className="font-bold w-full text-black text-[16px]">
-                  1. Marriott New York JFK Airport
-                </p>
-                <div className="starRating *:mr-1.5">
-                  <span>4.5</span>
-                  <StarRatingStatic starNumber={5} />
-                  <span>(503 Reviews)</span>
-                </div>
-                <p className="">
-                  <i className="fa-solid fa-location-dot"></i> Thailand
-                </p>
-                <div className="amenties overflow-hidden">
-                  <p>
-                    <i className="fa-solid fa-check"></i> Free wifi
-                  </p>
-                  <p>
-                    <i className="fa-solid fa-check"></i> Breakfast & lunch
-                  </p>
-                </div>
-                <div className="mention overflow-hidden">
-                  <p>
-                    <i className="fa-solid fa-check"></i> Mention: Budget
-                  </p>
-                </div>
+            <SlideButton
+              options={["Col", "Grid"]}
+              onChange={(e: string) => {
+                console.log(e);
+              }}
+            />
+          </div>
+          <div className="flex gap-3 justify-between rounded-xl border border-gray-200 p-2 shadow-md w-full">
+            <div className="flex w-full justify-between items-start h-full p-1.5 gap-2">
+              <div className="max-w-[200px] relative">
+                <img
+                  src="https://ik.imagekit.io/tvlk/apr-asset/TzEv3ZUmG4-4Dz22hvmO9NUDzw1DGCIdWl4oPtKumOg=/lodging/69000000/68120000/68113000/68112922/50b4deb1_z.jpg?_src=imagekit&tr=dpr-2,c-at_max,f-jpg,fo-auto,h-332,pr-true,q-80,w-480"
+                  alt=""
+                  srcSet=""
+                  className="w-full aspect-square rounded-xl"
+                />
+                <HeartFavorite />
               </div>
+              <div className="w-full">
+                <div className="mb-2 flex flex-col gap-1">
+                  <p className="font-bold text-2xl line-clamp-2">
+                    Tank top Hotel
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <i className="fa-solid fa-location-dot"></i>
+                    <p>TP. Hồ Chí Minh</p>
+                  </div>
+                </div>
 
-              <div className=" w-3/12 flex flex-col items-end justify-between h-full text-center">
-                <p className="font-bold text-2xl p-3">300$</p>
-                <Link
-                  to="/hotels/123"
-                  className="p-2 w-8/10 bg-black rounded-xl text-white font-bold text-[10px] max-sm:w-full"
-                >
-                  View Hotel
-                </Link>
+                <div className="info-service">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2 items-center">
+                      <p className="text-sm text-white bg-black p-2 font-bold rounded-sm">
+                        3.0 - Good
+                      </p>
+                      <div className="flex-col flex justify-center">
+                        <StarRatingStatic starNumber={5} />
+                        <p className="text-sm italic text-gray-500">
+                          (500 reviews)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 border-l border-gray-200 pl-2">
+                      <p className="text-md font-bold">Queen room</p>
+                      <p className="text-sm">2 giường lớn</p>
+
+                      <div className="flex gap-2 flex-wrap">
+                        <p className="w-fit p-1 border border-gray-200 rounded-md shadow">
+                          Wifi free
+                        </p>
+                        <p className="w-fit p-1 border border-gray-200 rounded-md shadow">
+                          Breakfast
+                        </p>
+                        <p className="w-fit p-1 border border-gray-200 rounded-md shadow">
+                          Lunch
+                        </p>
+                        <p className="w-fit p-1 border border-gray-200 rounded-md shadow">
+                          elevator
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div className="self-center max-w-[200px] w-full">
+              <div className="flex flex-col">
+                <p className="text-sm text-center">1 đêm, 2 người lớn</p>
+                <p className="text-3xl font-bold text-center">200.000 VNĐ</p>
+                <p className="text-sm text-center">Đã bao gồm thuế và phí</p>
+              </div>
+              <Button onClick={() => {}} className="w-full rounded-md mt-5">
+                view more
+              </Button>
             </div>
           </div>
         </div>

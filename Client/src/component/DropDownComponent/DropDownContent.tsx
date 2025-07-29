@@ -9,7 +9,7 @@ interface DropDownContent{
 const DropDownContent = ({isOpen,children,className}:DropDownContent) => {
   return (
             <div
-          className={`${className} ${isOpen ? "" : "hidden"}`}
+          className={`bg-white absolute w-[700px] mt-5 border border-gray-300 left-0 rounded z-20 max-md:w-full ${className} ${isOpen ? "" : "hidden"}`}
           onClick={(e) => {
             e.stopPropagation();
           }}

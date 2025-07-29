@@ -14,11 +14,11 @@ const Button: React.FC<ButtonProp> = ({
   style,
 }) => {
   const combinedClassName = `
+      ${className}
     text-white font-bold bg-black cursor-pointer rounded-full p-3
     hover:bg-gray-800 hover:scale-95
     active:scale-90 active:bg-gray-900
     transition-all duration-300 ease-in-out
-    ${className}
   `;
 
   return (

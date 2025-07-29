@@ -33,6 +33,7 @@ const Calendar_Hotel = ({ CalendarHotelStyle }: CalendarHotelProp) => {
         handleShow={() => {
           setIsShow(!isShow);
         }}
+        className="w-full"
       >
         <i className="fa-solid fa-calendar"></i>
         <div className="DCI text-center">

@@ -3,11 +3,13 @@ interface WrapDropDownOutLineItemProp {
   children: React.ReactNode;
   handleClickOutSide: () => void;
   handleShow:()=>void;
+  className?:string
 }
 const WrapDropDownOutLineItem = ({
   children,
   handleShow,
   handleClickOutSide,
+  className
 }: WrapDropDownOutLineItemProp) => {
   const ref = useRef<HTMLDivElement>(null);
 useEffect(() => {
@@ -25,8 +27,8 @@ useEffect(() => {
 
   return (
     <div
-      className="relative w-full p-1.5 flex items-center justify-center gap-3 rounded-full  border border-gray-400 cursor-pointer
-        min-xl:min-w-48"
+      className={` ${className} relative p-1.5 flex items-center justify-center gap-3 rounded-full  border border-gray-400 cursor-pointer
+        min-xl:min-w-48`}
       onClick={handleShow}
       ref={ref}
     >

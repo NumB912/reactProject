@@ -27,6 +27,7 @@ return (    <>
       <WrapDropDownOutLineItem
         handleClickOutSide={()=>{setIsShow(false)}}
         handleShow={()=>{setIsShow(!isShow)}}
+        className="w-full"
       >
           <i className="fa-solid fa-calendar"></i>
           <div className="DCI text-center">
