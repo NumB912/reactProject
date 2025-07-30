@@ -23,7 +23,7 @@ const TourDetail = () => {
 
   return (
     <div className="w-full py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
-      <div className="info w-8/10">
+      <div className="info w-full">
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
             <p className="text-4xl font-bold">

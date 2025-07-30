@@ -3,13 +3,13 @@ import { Button,ButtonIcon } from "../../../component/UI";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router"
 import { FaHeart } from "react-icons/fa6";
-import FilterCheckInHotel from "../../../component/FilterComponent/filterCheckInHotel";
+import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import Comment from "../../Comment";
 import { StarRatingStatic } from "../../../component";
 const HotelDetail = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-full py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
+    <div className="w-7xl max-w-full py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
       <div className="info w-8/10">
        <div>
         <FilterCheckInHotel style={"mb-10"}/>

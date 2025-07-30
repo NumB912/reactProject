@@ -1,6 +1,6 @@
 export {default as Footer} from "./Footer";
 export {default as DropDown} from "./DropDownComponent/DropDownSelect"
-export {default as Filter} from "./FilterComponent/filterCheckInHotel"
+export {default as Filter} from "./FilterComponent/SearchFilterHotel"
 export {default as NavBar} from "./NavBarComponent/NavBar"
 export {default as NavBarSide} from "./NavBarComponent/SideNavBar"
 export {default as SearchBar} from "./SearchComponent/SearchBar"

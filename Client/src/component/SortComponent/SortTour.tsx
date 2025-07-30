@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import DropDownContent from "../DropDownComponent/DropDownContent";
 
-const SortHotel = () => {
+const SortTour = () => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [item, setItem] = useState("Recommand");
 
@@ -13,15 +13,15 @@ const SortHotel = () => {
       <WrapDropDownOutLineItem
         handleClickOutSide={() => setIsOpenSort(false)}
         handleShow={() => setIsOpenSort(!isOpenSort)}
-        className="w-fit px-4"
+        className="w-full px-4"
       >
         <div className="w-full font-semibold flex items-center justify-evenly gap-3">
           <i className="fa-solid fa-sort"></i>
-          <p>Sort with: {item}</p>
+          <p>Sort by: {item}</p>
         </div>
 
         <DropDownContent
-          className="top-7 bg-white absolute z-20 shadow-md max-w-[250px] transition-all duration-200"
+          className="top-5 bg-white absolute z-20 shadow-md max-w-[250px] w-full transition-all duration-200"
           isOpen={isOpenSort}
         >
           {options.map((opt) => (
@@ -42,4 +42,4 @@ const SortHotel = () => {
   );
 };
 
-export default SortHotel;
+export default SortTour;

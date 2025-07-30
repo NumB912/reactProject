@@ -8,6 +8,8 @@ import Calendar_Tour from "../../../component/calendar/CalendarTour";
 import { Button, HeartFavorite, Modal } from "../../../component/UI";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
 import ReusableSlider from "../../../component/SliderComponent/SliderComponent";
+import SortTour from "../../../component/SortComponent/SortTour";
+import SearchFilterTour from "../../../component/FilterComponent/SearchFilterTour";
 const Tours = () => {
   const [price, setPrice] = useState(0);
   const [isShowsome, setShowsome] = useState(false);
@@ -58,43 +60,19 @@ const Tours = () => {
   };
 
   return (
-    <div className="w-8/10 max-md:w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
+    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
-      <div className="w-full max-w-[1000px] gap-2 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5 max-xl:flex-wrap">
-        <div className="flex flex-col w-full min-xl:pr-3 min-xl:border-gray-200 min-xl:border-r">
-          <p className="text-[15px] font-bold">Location:</p>
 
-          <div className="relative flex items-center border-2 border-gray-200 mt-2">
-            <input
-              type="text"
-              className="bg-white p-3 w-full "
-              placeholder="Find hotels...."
-            />
-            <button
-              type="button"
-              className="absolute right-3 p-1 w-[30px] rounded-[10px] bg-black text-white"
-            >
-              <i className="fa-solid fa-x"></i>
-            </button>
-          </div>
-        </div>
-
-        <div className="w-fit flex items-center justify-center gap-2 max-sm:flex-wrap max-xl:w-full">
-          <Calendar_Tour />
-          <Button className="w-fit max-xl:w-full" onClick={() => {}}>
-            Search
-          </Button>
-        </div>
-      </div>
+    <SearchFilterTour/>
 
       <div
         className="SideFilter w-full flex flex-col justify-start items-center 
-      bg-gray-50 p-5
-      *:font-bold  *:border-gray-300 *:w-full gap-5 *:py-1 
+      bg-gray-50/50 border-gray-300 p-5
+      *:font-bold  *:w-full gap-5 *:py-1 
       max-xl:hidden"
       >
         <div className="OptionPrice">
@@ -186,11 +164,11 @@ const Tours = () => {
         styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
         parentContainerStyle="min-xl:hidden"
       >
-        <div className="flex flex-col justify-between items-center w-full">
+        <div className="flex flex-col justify-between items-center w-full ">
           <div className="ContentName font-bold text-3xl">Filter</div>
           <div
             className="SideFilter w-full flex flex-col justify-start items-center  p-5
-      *:font-bold  *:border-gray-300 *:w-full gap-5 *:py-1 
+      *:font-bold  *:border-gray-300 *:w-full gap-5 *:py-1  
 "
           >
             <div className="OptionPrice">
@@ -345,25 +323,10 @@ const Tours = () => {
             Found <span className="font-bold">35</span> results
           </div>
           <div
-            className="SortBy flex gap-2 items-center 
+            className="SortBy
         max-xl:hidden"
           >
-            <p className="sort-by font-bold w-full">Sort by:</p>
-            <DropDownSelect
-              icon={<FaSort />}
-              onClick={() => {}}
-              containerStyle="w-full"
-              defaultOption="Recommended"
-              options={[
-                "Recommended",
-                "Price: Low to High",
-                "Price: High to Low",
-                "Rating: High to Low",
-                "Rating: Low to High",
-              ]}
-              styleOption="text-[clamp(1rem, 2.5vw, 2rem);] hover:bg-gray-200 hover:cursor-pointer"
-              styleIcon="text-[clamp(1rem, 2.5vw, 2rem);]"
-            />
+              <SortTour/>
           </div>
         </div>
 
@@ -388,7 +351,7 @@ const Tours = () => {
             </div>
 
             <div
-              className="flex w-7/12 justify-between items-start h-full
+              className="flex justify-between items-start h-full
              max-lg:flex-col max-lg:w-full p-5"
             >
               <div className="flex flex-col h-full w-full">
@@ -450,42 +413,6 @@ const Tours = () => {
                         Date departure:
                       </span>
                     </p>
-                  </div>
-                  <div className="relative">
-                    <ReusableSlider
-                      items={items}
-                      renderItem={renderItemDateDeparture}
-                      containerClassName="w-full"
-                      itemWrapperClassName="px-1 py-1 w-full"
-                      sliderSettings={{
-                        slidesToShow: 5,
-                        dots: false,
-                        autoplay: false,
-                        infinite: false,
-                        responsive: [
-                          {
-                            breakpoint: 1500,
-                            settings: { slidesToShow: 5, slidesToScroll: 1 },
-                          },
-                          {
-                            breakpoint: 1300,
-                            settings: { slidesToShow: 4, slidesToScroll: 2 },
-                          },
-                          {
-                            breakpoint: 1000,
-                            settings: { slidesToShow: 3, slidesToScroll: 2 },
-                          },
-                          {
-                            breakpoint: 768,
-                            settings: { slidesToShow: 3, slidesToScroll: 1 },
-                          },
-                          {
-                            breakpoint: 576,
-                            settings: { slidesToShow: 2, slidesToScroll: 1 },
-                          },
-                        ],
-                      }}
-                    />
                   </div>
                 </div>
 

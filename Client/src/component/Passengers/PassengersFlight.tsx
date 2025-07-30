@@ -37,7 +37,7 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
             : `${total} travelers`}
         </p>
       </div>
-      <DropDownContent className="bg-white w-[400px] absolute left-0 top-15 border border-gray-300 z-10 rounded-sm p-5" isOpen={isShow}>
+      <DropDownContent className="bg-white w-[400px] absolute left-0 border border-gray-300 z-10 rounded-sm p-5" isOpen={isShow}>
         <div className="passenger-flight">
           <div className="flex gap-6 flex-col border-b pb-4 border-gray-300">
             <div className="flex justify-between items-center gap-3">

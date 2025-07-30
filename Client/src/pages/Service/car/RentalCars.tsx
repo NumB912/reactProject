@@ -7,6 +7,7 @@ import Passengers from "../../../component/Passengers/PassengersRentalCar";
 import { Button } from "../../../component/UI";
 import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
+import SearchFilterRentalCar from "../../../component/FilterComponent/SearchFilterRentalCar";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -82,48 +83,15 @@ const RentalCars = () => {
   }, []);
 
   return (
-    <div className="w-3/4 max-xl:w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white p-3 mb-40">
+    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-2 bg-white p-3 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
-      <div className=" w-full gap-1 flex col-span-2 items-end rounded-xl shadow-lg border border-gray-200 p-5 m-5">
-        <div className=" w-full gap-1 flex col-span-2 justify-center items-center max-lg:flex-wrap">
-          <div className="flex flex-col w-full border-r border-gray-200 p-2">
-            <p className="text-[15px] font-bold px-2">Location:</p>
 
-            <div className="relative flex items-center">
-              <input
-                type="text"
-                className="bg-white p-2 w-full"
-                placeholder="Find hotels...."
-              />
-              <button
-                type="button"
-                className="absolute right-1 p-1 w-[30px] rounded-[10px] bg-black text-white"
-              >
-                <i className="fa-solid fa-x"></i>
-              </button>
-            </div>
-          </div>
-
-          <div className="w-full gap-2 relative flex justify-start items-center self-end max-2xl:flex-wrap max-lg:justify-center max-lg:w-full">
-            <CalendarRentalCar />
-            <Passengers />
-
-            <div className="search w-full">
-              <Button
-                onClick={() => {
-                  console.log("hello");
-                }}
-                className="w-full"
-              >
-                Search
-              </Button>
-            </div>
-          </div>
-        </div>
+      <div className="col-span-2">
+             <SearchFilterRentalCar/>
       </div>
 
       <div className="w-full hidden max-lg:flex justify-center items-center col-span-2 gap-3 max-sm:flex-wrap">

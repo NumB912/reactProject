@@ -14,6 +14,7 @@ import CalendarParent from "../DropDownComponent/WrapDropDownOutLineItem";
 import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import DropDownContent from "../DropDownComponent/DropDownContent";
+
 const CalendarRentalCar = () => {
   const { setIsSelectedPassenger } = usePassengerCar();
   const {
@@ -62,7 +63,7 @@ const CalendarRentalCar = () => {
   const [isDropOff,setIsDropOff] = useState<boolean>(false);
 
   return (
-    <div className="w-full flex gap-2 max-sm:flex-wrap">
+    <div className={`w-full flex gap-2 max-sm:flex-wrap`}>
       <WrapDropDownOutLineItem
         handleClickOutSide={() => {
           setIsPickUp(false)
@@ -71,6 +72,7 @@ const CalendarRentalCar = () => {
           setIsPickUp(!isPickUp)
           setDatesPickUpFromDate(dateSelectedPickUp);
         }}
+        className="w-full"
       >
         <i className="fa-solid fa-calendar"></i>
         <div className="DCI">
@@ -84,7 +86,7 @@ const CalendarRentalCar = () => {
               timePickUpSelected}
           </p>
         </div>
-        <DropDownContent isOpen={!!isPickUp} className="bg-white absolute w-[400px] top-15 left-0 p-5 border border-gray-300 rounded-2xl z-10">
+        <DropDownContent isOpen={!!isPickUp} className="bg-white min-w-2xs w-[400px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
 
           <Calendar_OneMonth_Timer
             dateSelected={dateSelectedPickUp}
@@ -112,6 +114,7 @@ const CalendarRentalCar = () => {
           setIsDropOff(!isDropOff)!
           setDatesDropOffFromDate(dateSelectedDropOff);
         }}
+        className="w-full"
       >
         <i className="fa-solid fa-calendar"></i>
         <div className="DCI">
@@ -126,7 +129,7 @@ const CalendarRentalCar = () => {
           </p>
         </div>
 
-        <DropDownContent isOpen={!!isDropOff} className="bg-white absolute w-[400px] top-15 left-0 p-5 border border-gray-300 rounded-2xl z-10">
+        <DropDownContent isOpen={!!isDropOff} className="bg-white min-w-2xs w-[400px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
           <Calendar_OneMonth_Timer
             titleTypeSeletedDate="Drop Off"
             type="rentalCar"

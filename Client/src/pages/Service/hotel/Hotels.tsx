@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
-import FilterCheckInHotel from "../../../component/FilterComponent/filterCheckInHotel";
+import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { Button, HeartFavorite } from "../../../component/UI";
 import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
@@ -12,6 +12,7 @@ import SlideButton from "../../../component/SlideButton/SlideButton";
 import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDropDownOutLineItem";
 import DropDownContent from "../../../component/DropDownComponent/DropDownContent";
 import SortHotel from "../../../component/SortComponent/SortHotel";
+import Star from "../../../component/UI/Star";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -84,35 +85,23 @@ const Hotels = () => {
   }, []);
 
   return (
-    <div className="w-8/10 max-md:w-11/12 grid grid-cols-[200px_1fr] justify-items-center gap-2 mb-40">
+    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
-      <FilterCheckInHotel />
+      <div className="col-span-2">
+            <FilterCheckInHotel />
+      </div>
 
-      <div className="sideFilter max-lg:hidden w-full flex flex-col justify-start items-center *:font-bold *:border-t *:border-gray-300 *:w-full gap-5 *:py-1 ">
+      <div className="sideFilter max-lg:hidden w-full flex flex-col justify-start items-center bg-gray-50/50 border border-gray-200 shadow-md p-5 *:font-bold *:w-full gap-5 *:py-1 ">
         <div className="OptionPrice">
           <p>Prices</p>
           <DualSlider />
         </div>
         <div className="flex w-full flex-col">
           <p className="text-md">Rating</p>
-          {/* <RadioOption
-            handleChange={(valueStar: string | number) => {
-              toggleStar(Number(valueStar));
-            }}
-            options={[
-              { id: "RadioRatingStar1", value: 5 },
-              { id: "RadioRatingStar2", value: 4 },
-              { id: "RadioRatingStar3", value: 3 },
-              { id: "RadioRatingStar4", value: 2 },
-            ]}
-            nameRadio="RatingStar"
-          >
-            {(item: number | string) => <RatingStar stars={Number(item)} />}
-          </RadioOption> */}
         </div>
 
         <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
@@ -176,35 +165,38 @@ const Hotels = () => {
         </div>
       </div>
 
-      <div className="w-full py-3 gap-1 flex flex-col max-lg:w-full max-lg:col-span-2">
-        <div className="flex flex-col max-lg:w-full max-lg:col-span-2 p-3 gap-3">
+      <div className="w-full gap-1 flex flex-col max-lg:col-span-2">
+        <div className="flex flex-col gap-3 max-lg:col-span-2">
           <div className="flex justify-between">
             <div className="hotel-numbers">
-              <p className="font-bold text-2xl mb-4">
+              <p className="font-bold text-2xl">
                 Tp. Hồ Chí Minh: Đã tìm thấy 900 kết quả
               </p>
-              <div className="w-fit">
-                <SortHotel />
-              </div>
+
             </div>
 
-            <SlideButton
-              options={["Col", "Grid"]}
-              onChange={(e: string) => {
-                console.log(e);
-              }}
-            />
+           <div className="w-fit">
+                <SortHotel />
+              </div>
           </div>
-          <div className="flex gap-3 justify-between rounded-xl border border-gray-200 p-2 shadow-md w-full">
-            <div className="flex w-full justify-between items-start h-full p-1.5 gap-2">
-              <div className="max-w-[200px] relative">
+          <div className="flex gap-3 justify-between rounded-xl border border-gray-200 p-2 shadow-md w-full max-lg:flex-wrap">
+            <div className="flex w-full justify-between items-start p-1.5 max-sm:flex-col gap-2">
+              <div className="min-sm:max-w-[250px] relative">
                 <img
                   src="https://ik.imagekit.io/tvlk/apr-asset/TzEv3ZUmG4-4Dz22hvmO9NUDzw1DGCIdWl4oPtKumOg=/lodging/69000000/68120000/68113000/68112922/50b4deb1_z.jpg?_src=imagekit&tr=dpr-2,c-at_max,f-jpg,fo-auto,h-332,pr-true,q-80,w-480"
                   alt=""
                   srcSet=""
-                  className="w-full aspect-square rounded-xl"
+                  className="w-full aspect-square rounded-xl object-cover"
                 />
                 <HeartFavorite />
+
+                <div className="items-center absolute bottom-0 right-0 bg-black/90 rounded-md p-2 m-2 min-sm:hidden">
+                  <div className="flex text-[clamp(15px,200rem,1vw)] items-center justify-center gap-2 text-white font-bold">
+                    <span> 3.0</span> 
+                    <span><Star/></span>
+                  </div>
+                  <p className="text-md text-white font-bold">Excellent</p>
+                </div>
               </div>
               <div className="w-full">
                 <div className="mb-2 flex flex-col gap-1">
@@ -219,7 +211,7 @@ const Hotels = () => {
 
                 <div className="info-service">
                   <div className="flex flex-col gap-2">
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center max-sm:hidden">
                       <p className="text-sm text-white bg-black p-2 font-bold rounded-sm">
                         3.0 - Good
                       </p>
@@ -254,11 +246,11 @@ const Hotels = () => {
               </div>
             </div>
 
-            <div className="self-center max-w-[200px] w-full">
-              <div className="flex flex-col">
-                <p className="text-sm text-center">1 đêm, 2 người lớn</p>
-                <p className="text-3xl font-bold text-center">200.000 VNĐ</p>
-                <p className="text-sm text-center">Đã bao gồm thuế và phí</p>
+            <div className="self-center p-2 w-full items-center max-lg:flex min-lg:max-w-[200px] max-sm:flex-wrap">
+              <div className="flex flex-col max-lg:w-full min-lg:*:text-start">
+                <p className="text-sm">1 đêm, 2 người lớn</p>
+                <p className="text-2xl font-bold">100.000 VNĐ</p>
+                <p className="text-sm">Đã bao gồm thuế và phí</p>
               </div>
               <Button onClick={() => {}} className="w-full rounded-md mt-5">
                 view more

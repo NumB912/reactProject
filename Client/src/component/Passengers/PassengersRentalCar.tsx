@@ -21,6 +21,7 @@ const Passengers = () => {
      }}
 
      handleShow={()=>{setIsPassengerOpen(!isPassengerOpen)}}
+     className="w-full"
       >
         <i className="fa-solid fa-users"></i>
       <div className="RAG flex flex-col justify-center">

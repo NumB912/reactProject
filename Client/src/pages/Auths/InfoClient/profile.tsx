@@ -7,8 +7,8 @@ import useUploadPhoto from "../../../hook/useUploadPhoto";
 import UploadPhoto, {
   UploadPhotosHandle,
 } from "../../../component/UploadPhoto";
-import { ImageUrlProp } from "../../../interface/ImagePhotoUrl";
 import UploadPhotoWallpaper from "../../../component/UploadPhotoWallpaper";
+import { Image } from "../../../interface/ImagePhotoUrl";
 const InfoClient = () => {
   const { id } = useParams();
   const [isShowEdit, setShowEdit] = useState<boolean>(false);
@@ -29,8 +29,8 @@ const InfoClient = () => {
   const inputRefWallpaper = React.useRef<UploadPhotosHandle>(null);
   const inputRefAvatar = React.useRef<UploadPhotosHandle>(null);
   const [photoImageWallpaper, setPhotoImageWallpaper] =
-    useState<ImageUrlProp>();
-  const [photoImageAvatar, setPhotoImageAvatar] = useState<ImageUrlProp>();
+    useState<Image>();
+  const [photoImageAvatar, setPhotoImageAvatar] = useState<Image>();
   const [isOpenModalUploadImageWallpaper, setIsOpenModalUploadImageWallpaper] =
     useState(false);
   const [isOpenModalUploadImageAvatar, setIsOpenModalUploadImageAvatar] =

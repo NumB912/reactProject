@@ -24,8 +24,9 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
   } = useTourCalendar();
 
   return (
-    <WrapDropDownOutLineItem handleClickOutSide={()=>{setIsShow(false)}} handleShow={()=>{setIsShow(!isShow)}}>
-        <i className="fa-solid fa-calendar"></i>
+    <WrapDropDownOutLineItem handleClickOutSide={()=>{setIsShow(false)}} handleShow={()=>{setIsShow(!isShow)}} className="w-full">
+          <div className="flex w-full justify-evenly items-center">
+                    <i className="fa-solid fa-calendar"></i>
         <div
           className="DCI text-center 
             "
@@ -34,9 +35,11 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
           <p className="text-[13px] font-bold">
             {formatDateWeek(dateSelectedBook)}
           </p>
+          
         </div>
-
-          <DropDownContent isOpen={isShow} className="bg-white absolute w-[400px] top-15 left-0 p-5 border border-gray-300 rounded-2xl z-20 max-sm:w-full min-w-[400px]">
+        <i className="fa-solid fa-caret-down"></i>
+          </div>
+          <DropDownContent isOpen={isShow} className="bg-white absolute w-[400px] p-5 border border-gray-300 rounded-2xl z-20 max-sm:w-full min-w-[400px]">
             <Calendar_OneMonth
               dateSelected={dateSelectedBook}
               dates={datesBook}
@@ -47,9 +50,6 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
               type="Tour"
             />
           </DropDownContent>
-
-
-        <i className="fa-solid fa-caret-down"></i>
     </WrapDropDownOutLineItem>
   );
 };

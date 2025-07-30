@@ -25,7 +25,7 @@ const UploadPhoto = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
     useImperativeHandle(ref, () => ({
       openFileDialog: () => {
         inputRef.current?.click();
-      },b
+      }
     }));
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
