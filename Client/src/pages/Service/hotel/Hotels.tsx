@@ -86,7 +86,7 @@ const Hotels = () => {
   }, []);
 
   return (
-    <div className="w-6xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
+    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go

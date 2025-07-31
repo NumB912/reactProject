@@ -8,19 +8,23 @@ import InputLabelToggle from "../InputComponent/Input-label-button";
 const SearchFilterRentalCar = () => {
   return (
     <SearchFilter className="max-xl:flex-wrap ">
- <InputLabelToggle handleOnChange={()=>{}} label="Location" placeholder="Find hotel...."/>
+      <InputLabelToggle
+        handleOnChange={() => {}}
+        label="Location"
+        placeholder="Find hotel...."
+      />
       <div className="gap-2 relative flex justify-start items-center self-end max-lg:flex-wrap max-xl:w-full">
-        <CalendarRentalCar/>
+        <CalendarRentalCar />
         <Passengers />
 
-          <Button
-            onClick={() => {
-              console.log("hello");
-            }}
-            className="max-xl:w-full"
-          >
-            Search
-          </Button>
+        <Button
+          onClick={() => {
+            console.log("hello");
+          }}
+          className="max-xl:w-full"
+        >
+          Search
+        </Button>
       </div>
     </SearchFilter>
   );
