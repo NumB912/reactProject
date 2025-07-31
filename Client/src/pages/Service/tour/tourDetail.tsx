@@ -5,7 +5,7 @@ import { FaHeart } from "react-icons/fa";
 import { useTourCalendar, useTravelerTour } from "../../../store";
 import { Button, ButtonIcon } from "../../../component/UI";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
-import PassengersTour from "../../../component/Passengers/PassengersTour";
+import PassengersTour from "../../../component/PassengerComponent/PassengersTour";
 import { StarRatingStatic } from "../../../component";
 const TourDetail = () => {
   const navigate = useNavigate();

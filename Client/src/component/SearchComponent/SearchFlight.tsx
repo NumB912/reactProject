@@ -3,7 +3,7 @@ import { Button, InputBar } from "../UI";
 import { useCalendarFlight } from "../../store/CalendarStore/CalendarFlightStore";
 import { data } from "react-router";
 import { useTravelerFlight } from "../../store";
-import { PassengerFlight } from "../Passengers/PassengersFlight";
+import { PassengerFlight } from "../PassengerComponent/PassengersFlight";
 import { Input } from "@mui/material";
 import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import CalendarFlight from "../calendar/CalendarFlight";

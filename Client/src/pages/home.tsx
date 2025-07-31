@@ -7,9 +7,9 @@ import Banner from "../component/UI/Banner";
 import ReusableSlider from "../component/SliderComponent/SliderComponent";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { renderTravelItem } from "../component/ServiceRender/TravelRender";
+import { renderTravelItem } from "../component/ServiceRenderComponent/TravelRender";
 import { Travel } from "../interface/Service/TravelInterface";
-import { RenderRecommend } from "../component/ServiceRender/RenderRecommend";
+import { RenderRecommend } from "../component/ServiceRenderComponent/RenderRecommend";
 
 const Home = () => {
   const [tour, SetTour] = useState([]);

@@ -13,6 +13,7 @@ import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDr
 import DropDownContent from "../../../component/DropDownComponent/DropDownContent";
 import SortHotel from "../../../component/SortComponent/SortHotel";
 import Star from "../../../component/UI/Star";
+import SideHotelComponent from "../../../component/SideComponent/SideHotelComponent";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -85,7 +86,7 @@ const Hotels = () => {
   }, []);
 
   return (
-    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
+    <div className="w-6xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
@@ -95,75 +96,10 @@ const Hotels = () => {
             <FilterCheckInHotel />
       </div>
 
-      <div className="sideFilter max-lg:hidden w-full flex flex-col justify-start items-center bg-gray-50/50 border border-gray-200 shadow-md p-5 *:font-bold *:w-full gap-5 *:py-1 ">
-        <div className="OptionPrice">
-          <p>Prices</p>
-          <DualSlider />
-        </div>
-        <div className="flex w-full flex-col">
-          <p className="text-md">Rating</p>
-        </div>
-
-        <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
-          <div className="flex w-full flex-col">
-            <p className="text-md">Amenities</p>
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                toggleAmenity(String(valueAmenity));
-              }}
-              arr={[
-                { id: "CheckBoxAmenties1", value: "Wifi" },
-                { id: "CheckBoxAmenties2", value: "Breakfast" },
-                { id: "CheckBoxAmenties3", value: "Parking" },
-                { id: "CheckBoxAmenties4", value: "Pool" },
-              ]}
-              checkBoxName="Amenities"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div>
-
-          <div className="flex w-full flex-col">
-            <p className="text-md">Hotel Class</p>
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                toggleHotelClasses(String(valueAmenity));
-              }}
-              arr={[
-                { id: "CheckBoxHotelClass5", value: "5 Star" },
-                { id: "CheckBoxHotelClass4", value: "4 Star" },
-                { id: "CheckBoxHotelClass3", value: "3 Star" },
-                { id: "CheckBoxHotelClass2", value: "2 Star" },
-                { id: "CheckBoxHotelClass1", value: "1 Star" },
-              ]}
-              checkBoxName="HotelClass"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div>
-
-          <div className="flex w-full flex-col">
-            <p className="text-md">Hotel Style</p>
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                toggleHotelStyle(String(valueAmenity));
-              }}
-              arr={[
-                { id: "checkBoxHotelStyle1", value: "Budget" },
-                { id: "CheckBoxHotelStyle2", value: "Mid-range" },
-                { id: "checkBoxHotelStyle3", value: "Luxury" },
-                { id: "CheckBoxHotelStyle4", value: "Family-friendly" },
-                { id: "checkBoxHotelStyle5", value: "Business" },
-                { id: "CheckBoxHotelStyle6", value: "Romantic" },
-                { id: "checkBoxHotelStyle7", value: "Modern" },
-              ]}
-              checkBoxName="HotelStyle"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div>
-        </div>
+      <div>
+        <SideHotelComponent/>
       </div>
+
 
       <div className="w-full gap-1 flex flex-col max-lg:col-span-2">
         <div className="flex flex-col gap-3 max-lg:col-span-2">

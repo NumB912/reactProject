@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import { CalendarRentalCar } from "../../../component";
-import Passengers from "../../../component/Passengers/PassengersRentalCar";
+import Passengers from "../../../component/PassengerComponent/PassengersRentalCar";
 import { Button } from "../../../component/UI";
 import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
@@ -83,7 +83,7 @@ const RentalCars = () => {
   }, []);
 
   return (
-    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-2 bg-white p-3 mb-40">
+    <div className="w-6xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-2 bg-white p-3 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go

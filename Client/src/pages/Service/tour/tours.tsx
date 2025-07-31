@@ -60,7 +60,7 @@ const Tours = () => {
   };
 
   return (
-    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white mb-40">
+    <div className="w-6xl max-w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go

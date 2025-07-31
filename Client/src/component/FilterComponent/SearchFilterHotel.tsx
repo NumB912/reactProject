@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useCalendarHotel } from "../../store/CalendarStore/CalendarHotelStore";
 import { formatDate } from "../../utils/TimeHandle";
 import Calendar_Hotel from "../calendar/CalendarHotel";
-import Traveler_Hotel from "../Passengers/PassengersHotel";
+import Traveler_Hotel from "../PassengerComponent/PassengersHotel";
 import useTravelerHotel from "../../store/PassengerStore/CustomerHotelStore";
-import PassengersHotel from "../Passengers/PassengersHotel";
+import PassengersHotel from "../PassengerComponent/PassengersHotel";
 import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import { Button } from "../UI";
 import SearchFilter from "./SearchFilter";
@@ -16,7 +16,7 @@ interface Props {
 
 const SearchFilterHotel = ({ style = "" }: Props) => {
   return (
-    <SearchFilter>
+    <SearchFilter className="max-lg:flex-wrap">
         <InputLabelToggle handleOnChange={()=>{}} label="Location" placeholder="Find hotel...."/>
       <div className="w-full flex items-center justify-center gap-2 mt-2 max-lg:flex-wrap">
         <div className="flex w-full gap-2 max-sm:flex-wrap">
