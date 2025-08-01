@@ -1,69 +1,121 @@
-import React from "react";
+import React, { useState } from "react";
 import SideContentComponent from "./SideContentComponent";
-import CheckBoxOption from "../SideFilterComponent/OptionType/CheckBoxOption";
 import SideComponent from "./SideComponent";
+import { RadioOption } from "../UI";
+import CheckboxOption from "../UI/Option/CheckboxOption";
+import DualSlider from "../SliderRangeComponent/DualSlider";
+import SliderDual from "../UI/Slider/SliderDual";
+import StarRatingComponent from "../StarRatingComponent";
+import StarRatingStatic from "../UI/StarRatingStatic";
 
 const SideHotelComponent = () => {
   function toggleAmenity(arg0: string) {
-    throw new Error("Function not implemented.");
+    console.log(arg0);
   }
 
+  const [selectedAmenity, setselectedAmenity] = useState("");
+  const [selectStyles, setSelectStyles] = useState<string[]>([]);
   return (
     <SideComponent>
+      <SideContentComponent label="Price">
+        <SliderDual />
+      </SideContentComponent>
+
       <SideContentComponent label="Amenities">
-        <CheckBoxOption
-          handleChange={(valueAmenity: string | number) => {
-            toggleAmenity(String(valueAmenity));
-          }}
-          arr={[
-            { id: "CheckBoxAmenties1", value: "Wifi" },
-            { id: "CheckBoxAmenties2", value: "Breakfast" },
-            { id: "CheckBoxAmenties3", value: "Parking" },
-            { id: "CheckBoxAmenties4", value: "Pool" },
+        <RadioOption
+          id="amenities-radio"
+          name="amenities"
+          value={selectedAmenity}
+          options={[
+            { label: "Wifi", value: "Wifi" },
+            { label: "Breakfast", value: "Breakfast" },
+            { label: "Parking", value: "Parking" },
+            { label: "Pool", value: "Pool" },
           ]}
-          checkBoxName="Amenities"
-        >
-          {(item: string) => <p>{item}</p>}
-        </CheckBoxOption>
+          onChange={function (
+            event: React.ChangeEvent<HTMLInputElement>
+          ): void {
+            setselectedAmenity(event.target.value);
+          }}
+        />
+      </SideContentComponent>
+
+      <SideContentComponent label="Rating">
+        <RadioOption
+          id="amenities-radio"
+          name="amenities"
+          value={selectedAmenity}
+          options={[
+            { label: <StarRatingStatic starNumber={1} />, value: "1" },
+            { label: <StarRatingStatic starNumber={2} />, value: "2" },
+            { label: <StarRatingStatic starNumber={3} />, value: "3" },
+            { label: <StarRatingStatic starNumber={4} />, value: "4" },
+            { label: <StarRatingStatic starNumber={5} />, value: "5" },
+          ]}
+          onChange={function (
+            event: React.ChangeEvent<HTMLInputElement>
+          ): void {
+            setselectedAmenity(event.target.value);
+          }}
+        />
       </SideContentComponent>
 
       <SideContentComponent label="Style">
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                
-              }}
-              arr={[
-                { id: "checkBoxHotelStyle1", value: "Budget" },
-                { id: "CheckBoxHotelStyle2", value: "Mid-range" },
-                { id: "checkBoxHotelStyle3", value: "Luxury" },
-                { id: "CheckBoxHotelStyle4", value: "Family-friendly" },
-                { id: "checkBoxHotelStyle5", value: "Business" },
-                { id: "CheckBoxHotelStyle6", value: "Romantic" },
-                { id: "checkBoxHotelStyle7", value: "Modern" },
-              ]}
-              checkBoxName="HotelStyle"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
+        <CheckboxOption
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const value = event.target.value;
+            setSelectStyles((prev) =>
+              prev.includes(value)
+                ? prev.filter((v) => v !== value)
+                : [...prev, value]
+            );
+          }}
+          checkedValues={selectStyles}
+          name={"styles"}
+          options={[
+            { label: "Budget", value: "Budget" },
+            { label: "Mid-range", value: "Mid-range" },
+            { label: "Luxury", value: "Luxury" },
+            { label: "Family-friendly", value: "Family-friendly" },
+            { label: "Business", value: "Business" },
+            {
+              label: "Romantic",
+              value: "Romantic",
+            },
+            {
+              label: "Modern",
+              value: "Modern",
+            },
+          ]}
+          id={"styles-checkbox"}
+        ></CheckboxOption>
       </SideContentComponent>
 
-
-        <SideContentComponent label="Hotel class">
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                
-              }}
-              arr={[
-                { id: "hotelClass1", value: "5 Star" },
-                { id: "hotelClass2", value: "4 Star" },
-                { id: "hotelClass3", value: "3 Star" },
-                { id: "hotelClass4", value: "2 Star" },
-                { id: "hotelClass5", value: "1 Star" },
-              ]}
-              checkBoxName="HotelStyle"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
+      <SideContentComponent label="Class">
+        <CheckboxOption
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const value = event.target.value;
+            setSelectStyles((prev) =>
+              prev.includes(value)
+                ? prev.filter((v) => v !== value)
+                : [...prev, value]
+            );
+          }}
+          checkedValues={selectStyles}
+          name={"Hotel class"}
+          options={[
+            { label: "5 Star", value: "5" },
+            { label: "4 Star", value: "4" },
+            { label: "3 Star", value: "3" },
+            { label: "2 Star", value: "2" },
+            { label: "1.5 Star", value: "1.5" },
+            {
+              label: "1 Star",
+              value: "1",
+            },
+          ]}
+          id={"styles-checkbox"}
+        ></CheckboxOption>
       </SideContentComponent>
     </SideComponent>
   );

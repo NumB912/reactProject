@@ -4,11 +4,9 @@ import { useHotelFilter } from "../../../store";
 import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { Button, HeartFavorite } from "../../../component/UI";
-import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import { Link } from "react-router";
 import { StarRatingStatic } from "../../../component";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
-import SlideButton from "../../../component/SlideButton/SlideButton";
 import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDropDownOutLineItem";
 import DropDownContent from "../../../component/DropDownComponent/DropDownContent";
 import SortHotel from "../../../component/SortComponent/SortHotel";
@@ -96,7 +94,7 @@ const Hotels = () => {
             <FilterCheckInHotel />
       </div>
 
-      <div>
+      <div className="side-hotel">
         <SideHotelComponent/>
       </div>
 

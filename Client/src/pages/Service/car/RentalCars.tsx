@@ -5,7 +5,7 @@ import { useHotelFilter } from "../../../store";
 import { CalendarRentalCar } from "../../../component";
 import Passengers from "../../../component/PassengerComponent/PassengersRentalCar";
 import { Button } from "../../../component/UI";
-import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
+
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import SearchFilterRentalCar from "../../../component/FilterComponent/SearchFilterRentalCar";
 const filterData: FilterItem[] = [
@@ -146,7 +146,7 @@ const RentalCars = () => {
             </div>
           </div>
 
-          <div className="flex w-full flex-col">
+          {/* <div className="flex w-full flex-col">
             <p className="text-md">Car Type</p>
             <CheckBoxOption
               handleChange={(valueAmenity: string | number) => {
@@ -203,7 +203,7 @@ const RentalCars = () => {
             >
               {(item: number | string) => <p>{item}</p>}
             </CheckBoxOption>
-          </div>
+          </div> */}
         </div>
       </div>
 

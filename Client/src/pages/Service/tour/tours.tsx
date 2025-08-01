@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaSort } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import CheckBoxOption from "../../../component/SideFilterComponent/OptionType/CheckBoxOption";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { useTourFilter } from "../../../store";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
@@ -90,7 +89,7 @@ const Tours = () => {
         <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
           <div className="flex w-full flex-col">
             <p className="text-md">Duration</p>
-            <CheckBoxOption
+            {/* <CheckBoxOption
               handleChange={(value: string | number) => {
                 setDuration(String(value));
               }}
@@ -102,12 +101,12 @@ const Tours = () => {
               checkBoxName="HotelClass"
             >
               {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
+            </CheckBoxOption> */}
           </div>
 
           <div className="flex w-full flex-col">
             <p className="text-md">Product categories</p>
-            <CheckBoxOption
+            {/* <CheckBoxOption
               handleChange={(value: string | number) => {
                 setCategories(String(value));
               }}
@@ -141,7 +140,7 @@ const Tours = () => {
               checkBoxName="HotelStyle"
             >
               {(item: string) => <p>{item}</p>}
-            </CheckBoxOption>
+            </CheckBoxOption> */}
           </div>
         </div>
       </div>
@@ -172,7 +171,7 @@ const Tours = () => {
             <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
               <div className="flex w-full flex-col">
                 <p className="text-md">Duration</p>
-                <CheckBoxOption
+                {/* <CheckBoxOption
                   handleChange={(value: string | number) => {
                     setDuration(String(value));
                   }}
@@ -184,12 +183,12 @@ const Tours = () => {
                   checkBoxName="HotelClass"
                 >
                   {(item: string) => <p>{item}</p>}
-                </CheckBoxOption>
+                </CheckBoxOption> */}
               </div>
 
               <div className="flex w-full flex-col">
                 <p className="text-md">Product categories</p>
-                <CheckBoxOption
+                {/* <CheckBoxOption
                   handleChange={(value: string | number) => {
                     setCategories(String(value));
                   }}
@@ -241,7 +240,7 @@ const Tours = () => {
                   checkBoxName="HotelStyle"
                 >
                   {(item: string) => <p>{item}</p>}
-                </CheckBoxOption>
+                </CheckBoxOption> */}
               </div>
             </div>
           </div>

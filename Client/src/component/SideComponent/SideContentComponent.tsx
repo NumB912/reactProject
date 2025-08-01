@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useState } from 'react'
 
 interface SideContentComponentProp{
     children:React.ReactNode;
@@ -12,12 +12,15 @@ interface SideContentComponentProp{
 }
 
 const SideContentComponent = ({children,label,containerStyle,labelStyle,contentStyle,classNameContainer,classNameContent,classNameLabel}:SideContentComponentProp) => {
+  const [isExtend,setIsExtend] = useState<boolean>(true)
+
   return (
     <div className={`w-full ${classNameContainer}`} style={containerStyle}>
-        <div className={`side-label-content ${classNameLabel}`} >
+        <div className={`side-label-content flex items-center justify-between gap-5 ${classNameLabel}`} onClick={()=>{setIsExtend(!isExtend)}} >
             <p className='font-bold text-2xl' style={labelStyle}>{label}</p>
+            <i className={`fa-solid fa-angle-down transition-transform ${!isExtend?"rotate-180":"rotate-0"}`}></i>
         </div>
-        <div className={`content ${classNameContent}`} style={contentStyle}>
+        <div className={`content font-bold text-2xl ${classNameContent} ${!isExtend?"":"hidden"}`} style={contentStyle}>
             {children}
         </div>
     </div>

@@ -1,6 +1,6 @@
 
 import { Link } from "react-router";
-import RatingStar from "../component/SideFilterComponent/OptionType/OptionMaterial/StarRatingRadioOption";
+import { StarRatingStatic } from "../component";
 import hotel1 from "../assets/42769_14072300320020409156.webp";
 import React from "react";
 const Comment = () => {
@@ -22,7 +22,7 @@ const Comment = () => {
               <p className="text-5xl font-bold">4.8</p>
               <p className="text-xl font-semibold">Excellent</p>
               <div className="flex items-center">
-                <RatingStar stars={5} />
+                <StarRatingStatic starNumber={5} />
                 <p>(1,306)</p>
               </div>
             </div>
@@ -170,7 +170,7 @@ const Comment = () => {
               <div className="comment w-3/4">
                 <div className="flex justify-between">
                   <div>
-                    <RatingStar stars={5} />
+                    <StarRatingStatic starNumber={5} />
                     <p className="font-bold text-xl">
                       Best hotel i've ever stay
                     </p>
@@ -311,7 +311,7 @@ const Comment = () => {
               <div className="comment w-3/4">
                 <div className="flex justify-between">
                   <div>
-                    <RatingStar stars={5} />
+                    <StarRatingStatic starNumber={5} />
                     <p className="font-bold text-xl">
                       Best hotel i've ever stay
                     </p>
@@ -452,7 +452,7 @@ const Comment = () => {
               <div className="comment w-3/4">
                 <div className="flex justify-between">
                   <div>
-                    <RatingStar stars={5} />
+                    <StarRatingStatic starNumber={5} />
                     <p className="font-bold text-xl">
                       Best hotel i've ever stay
                     </p>
