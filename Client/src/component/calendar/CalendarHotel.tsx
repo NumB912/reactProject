@@ -5,10 +5,10 @@ import Calendar_TwoMonth from "./CalendarBase/Calendar_TwoMonth";
 import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 
 interface CalendarHotelProp {
-  CalendarHotelStyle?: string;
+  CalendarHotelClass?: string;
 }
 
-const Calendar_Hotel = ({ CalendarHotelStyle }: CalendarHotelProp) => {
+const Calendar_Hotel = ({ CalendarHotelClass }: CalendarHotelProp) => {
   const {
     datesBook,
     datesNextMonth,
@@ -43,9 +43,10 @@ const Calendar_Hotel = ({ CalendarHotelStyle }: CalendarHotelProp) => {
           </p>
 
           <div
-            className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 left-0 rounded z-20 max-md:w-full ${
+            className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 rounded z-20 ${CalendarHotelClass}
+               ${
               isShow ? "" : "hidden"
-            } ${CalendarHotelStyle}`}
+            }`}
             onClick={(e) => {
               e.stopPropagation();
             }}

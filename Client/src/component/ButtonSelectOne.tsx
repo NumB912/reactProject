@@ -2,23 +2,24 @@ import React, { useState } from 'react'
 import ButtonBorderSelect from './UI/Button/ButtonBorderSelect';
 
 interface ButtonSelectOneProp{
-    setValue:(value:buttonSelectProp)=>void;
-    value:buttonSelectProp|undefined
+    onChange:(option:ButtonSelectProp)=>void;
+    selected:ButtonSelectProp|undefined;
+    options:ButtonSelectProp[];
 }
-export interface buttonSelectProp{
+export interface ButtonSelectProp{
     id:string,
-    value:string
+    value:React.ReactNode,
 }
 
-const ButtonSelectOne = ({setValue,value}:ButtonSelectOneProp) => {
+const ButtonSelectOne = ({selected,onChange,options}:ButtonSelectOneProp) => {
 
-    const buttonArr:buttonSelectProp[] = [{id:"1",value:"Family"},{id:"2",value:"Friends"},{id:"3",value:"Only one"},{id:"4",value:"Couple"},{id:"5",value:"Business"}]
+
 
     return (    
-        <div className='flex gap-3'>
-            {buttonArr.map((item,index)=>{
+        <div className='flex gap-3 flex-wrap'>
+            {options.map((option)=>{
                 return (
-                    <ButtonBorderSelect key={index} value={item} onClick={setValue} active={value?.id==item.id}>{item.value} </ButtonBorderSelect>
+                    <ButtonBorderSelect value={option} onClick={()=>{onChange(option)}} active={selected?.id==option.id}>{option.value} </ButtonBorderSelect>
                 )
             })}
         </div>

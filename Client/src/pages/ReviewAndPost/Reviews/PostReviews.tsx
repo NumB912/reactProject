@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  ButtonCircle,
-  ButtonIcon,
-} from "../../../component/UI";
+import { Button, ButtonCircle, ButtonIcon } from "../../../component/UI";
 import { DropDown } from "../../../component";
 import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
 import ButtonSelectOne, {
-  buttonSelectProp,
+  ButtonSelectProp,
 } from "../../../component/ButtonSelectOne";
 import UploadPhotosReview from "../../../component/UploadPhotosReview";
-import { Checkbox } from "@mui/material";
+import { Checkbox, ToggleButtonGroup } from "@mui/material";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 
-
 const PostReviews = () => {
-  const [value, setvalue] = useState<buttonSelectProp>();
+  const [value, setvalue] = useState<ButtonSelectProp>();
 
   return (
     <div className="post-review grid gap-3 w-8/10 justify-center items-center p-5">
@@ -80,7 +75,7 @@ const PostReviews = () => {
             <p className="post-review-content__rating__title font-bold text-2xl">
               How would you rate your experience?
             </p>
-            <StarRatingComponent/>
+            <StarRatingComponent />
           </div>
 
           <div className="post-review-content__title">
@@ -106,7 +101,17 @@ const PostReviews = () => {
 
           <div className="post-review-content">
             <p className="post font-bold text-2xl">Who did you go with?</p>
-            <ButtonSelectOne value={value} setValue={setvalue} />
+            <ButtonSelectOne
+              selected={value}
+              onChange={setvalue}
+              options={[
+                { id: "1", value: "Family" },
+                { id: "2", value: "friends" },
+                { id: "3", value: "Only" },
+                { id: "4", value: "Couple" },
+                { id: "5", value: "Business" },
+              ]}
+            />
           </div>
         </div>
         <UploadPhotosReview />
@@ -124,12 +129,7 @@ const PostReviews = () => {
         <div className="w-full flex flex-col gap-3">
           <div className="check-box *:cursor-pointer flex items-start gap-3">
             <span>
-              <input
-                type="checkbox"
-                name="ti"
-                id="td"
-                className=" w-5 h-5"
-              />
+              <input type="checkbox" name="ti" id="td" className=" w-5 h-5" />
             </span>
             <span className="text-gray-900 text-sm">
               <label htmlFor="td" className="cursor-pointer">

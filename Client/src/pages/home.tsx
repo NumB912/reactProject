@@ -10,7 +10,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { renderTravelItem } from "../component/ServiceRenderComponent/TravelRender";
 import { Travel } from "../interface/Service/TravelInterface";
 import { RenderRecommend } from "../component/ServiceRenderComponent/RenderRecommend";
-import Radiod from "../component/UI/Radio";
 
 const Home = () => {
   const [tour, SetTour] = useState([]);

@@ -3,7 +3,7 @@ import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
-import { Button, HeartFavorite } from "../../../component/UI";
+import { Button, HeartFavorite, Modal } from "../../../component/UI";
 import { Link } from "react-router";
 import { StarRatingStatic } from "../../../component";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
@@ -12,6 +12,8 @@ import DropDownContent from "../../../component/DropDownComponent/DropDownConten
 import SortHotel from "../../../component/SortComponent/SortHotel";
 import Star from "../../../component/UI/Star";
 import SideHotelComponent from "../../../component/SideComponent/SideHotelComponent";
+import SideHotelModalComponent from "../../../component/SideComponent/SideModalComponent/SideHotelModalComponent";
+import SortModalComponent from "../../../component/SortComponent/SortModalComponent/SortModalComponent";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -83,21 +85,43 @@ const Hotels = () => {
     setMinPrice(0);
   }, []);
 
+  const [isShowSort, setIsShowSort] = useState<boolean>(false);
+  const [isShowFilter, setisShowFilter] = useState<boolean>(false);
   return (
-    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
+    <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
       <div className="col-span-2">
-            <FilterCheckInHotel />
+        <FilterCheckInHotel />
       </div>
 
       <div className="side-hotel">
         <SideHotelComponent/>
+        <SideHotelModalComponent isShow={isShowFilter} setIsShow={setisShowFilter}/>
       </div>
 
+      <div
+        className="SideResponsive hidden w-full justify-center items-center col-span-2 border border-gray-200 gap-2
+        *:cursor-pointer
+      max-lg:flex
+      "
+      >
+        <div
+          className=" w-full p-3 border-r border-gray-200 font-bold text-center"
+          onClick={() => setisShowFilter(true)}
+        >
+          <i className="fa-solid fa-filter"></i> filter
+        </div>
+        <div
+          className=" w-full p-3 font-bold text-center"
+          onClick={() => setIsShowSort(true)}
+        >
+          <i className="fa-solid fa-sort"></i> Sort
+        </div>
+      </div>
 
       <div className="w-full gap-1 flex flex-col max-lg:col-span-2">
         <div className="flex flex-col gap-3 max-lg:col-span-2">
@@ -106,12 +130,14 @@ const Hotels = () => {
               <p className="font-bold text-2xl">
                 Tp. Hồ Chí Minh: Đã tìm thấy 900 kết quả
               </p>
-
             </div>
 
-           <div className="w-fit">
-                <SortHotel />
-              </div>
+            <div className="w-fit max-lg:hidden">
+              <SortHotel />
+              <SortModalComponent isShowSort={isShowSort} setIsShowSort={setIsShowSort}/>
+            </div>
+
+
           </div>
           <div className="flex gap-3 justify-between rounded-xl border border-gray-200 p-2 shadow-md w-full max-lg:flex-wrap">
             <div className="flex w-full justify-between items-start p-1.5 max-sm:flex-col gap-2">
@@ -126,8 +152,10 @@ const Hotels = () => {
 
                 <div className="items-center absolute bottom-0 right-0 bg-black/90 rounded-md p-2 m-2 min-sm:hidden">
                   <div className="flex text-[clamp(15px,200rem,1vw)] items-center justify-center gap-2 text-white font-bold">
-                    <span> 3.0</span> 
-                    <span><Star/></span>
+                    <span> 3.0</span>
+                    <span>
+                      <Star />
+                    </span>
                   </div>
                   <p className="text-md text-white font-bold">Excellent</p>
                 </div>

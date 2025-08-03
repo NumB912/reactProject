@@ -86,7 +86,7 @@ const CalendarRentalCar = () => {
               timePickUpSelected}
           </p>
         </div>
-        <DropDownContent isOpen={!!isPickUp} className="bg-white min-w-2xs w-[400px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
+        <DropDownContent isOpen={!!isPickUp} className="bg-white min-lg:min-w-xs max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:w-screen w-full max-w-[500px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
 
           <Calendar_OneMonth_Timer
             dateSelected={dateSelectedPickUp}
@@ -129,7 +129,7 @@ const CalendarRentalCar = () => {
           </p>
         </div>
 
-        <DropDownContent isOpen={!!isDropOff} className="bg-white min-w-2xs w-[400px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
+        <DropDownContent isOpen={!!isDropOff} className="bg-white min-lg:min-w-xs max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:w-screen w-full max-w-[500px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
           <Calendar_OneMonth_Timer
             titleTypeSeletedDate="Drop Off"
             type="rentalCar"

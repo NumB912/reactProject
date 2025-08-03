@@ -8,10 +8,10 @@ import DropDownContent from "../DropDownComponent/DropDownContent";
 
 interface CalendarTourProp{
   containerStyle?:String;
-  CalendarStyleTour?:String;
+  CalendarTourClassName?:String;
 }
 
-const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
+const Calendar_Tour = ({containerStyle,CalendarTourClassName}:CalendarTourProp) => {
     const [isShow,setIsShow] = useState(false)
   const {
     dateSelectedBook,
@@ -39,7 +39,7 @@ const Calendar_Tour = ({containerStyle,CalendarStyleTour}:CalendarTourProp) => {
         </div>
         <i className="fa-solid fa-caret-down"></i>
           </div>
-          <DropDownContent isOpen={isShow} className="bg-white absolute w-[400px] p-5 border border-gray-300 rounded-2xl z-20 max-sm:w-full min-w-[400px]">
+          <DropDownContent isOpen={isShow} className={`bg-white absolute top-10 left-0 w-[400px] p-5 border border-gray-300 rounded-2xl z-20 ${CalendarTourClassName}`}>
             <Calendar_OneMonth
               dateSelected={dateSelectedBook}
               dates={datesBook}

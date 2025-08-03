@@ -7,7 +7,8 @@ interface ModalProps {
   children: React.ReactNode;
   styleContainer?: string;
   parentContainerStyle?: string;
-  zIndex?: number; // thêm zIndex
+  title?:string;
+  zIndex?: number;
 }
 
 const Modal = ({
@@ -16,18 +17,23 @@ const Modal = ({
   children,
   styleContainer,
   parentContainerStyle,
-  zIndex = 999, // mặc định nếu không truyền
+  zIndex = 999,
+  title,
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add("overflow-y-hidden");
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh"; 
     } else {
-      document.body.classList.remove("overflow-y-hidden");
+      document.body.style.overflow = "";
+      document.body.style.height = "";
     }
+
     return () => {
-      document.body.classList.remove("overflow-y-hidden");
+      document.body.style.overflow = "";
+      document.body.style.height = "";
     };
   }, [isOpen]);
 
@@ -35,15 +41,21 @@ const Modal = ({
 
   return createPortal(
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-black/30 transition-all duration-200 w-full ${parentContainerStyle ?? ""}`}
-      style={{ zIndex:zIndex }}
+      className={`fixed inset-0 flex items-center justify-center bg-black/30 w-full h-full ${
+        parentContainerStyle ?? ""
+      }`}
+      style={{ zIndex }}
       onClick={onClose}
     >
       <div
         ref={ref}
-        className={`relative bg-white rounded-md shadow-xl max-h-[90vh] max-sm:w-full ${styleContainer ?? ""}`}
+        className={`relative bg-white rounded-md shadow-xl overflow-y-auto max-md:h-full max-h-screen max-sm:w-full max-md:rounded-none p-3 ${
+          styleContainer ?? ""
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
+        <div className="w-full flex justify-between items-center">
+          <p className="font-bold text-3xl p-2">{title}</p><i className="fa-solid fa-x cursor-pointer p-2 hover:bg-gray-200" onClick={onClose}></i></div>
         {children}
       </div>
     </div>,

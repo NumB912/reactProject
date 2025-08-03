@@ -115,7 +115,7 @@ const SliderDual = ({
         />
       </div>
 
-      <div className="flex justify-between gap-4">
+      <div className="flex justify-between gap-4 flex-wrap">
         <div className="flex flex-col">
           <label className="text-[10px]">Min cost</label>
           <input

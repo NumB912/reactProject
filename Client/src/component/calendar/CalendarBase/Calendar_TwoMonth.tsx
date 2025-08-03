@@ -48,7 +48,7 @@ const Calendar_TwoMonth = ({
       return (
         <div
           key={index}
-          className={`day cursor-pointer
+          className={`day cursor-pointer min-w-[23px]
               ${!date ? "opacity-0 cursor-default pointer-events-none" : ""}
               ${isToday(date) ? "bg-pink-400 text-white" : ""}
               ${isStartDate ? "bg-black text-white" : ""}
@@ -73,7 +73,7 @@ const Calendar_TwoMonth = ({
 
   let renderItemTwoMonth = (
     <CalendarWrap>
-      <div className="p-4 pt-0 border-b-2 border-gray-300 mb-5">
+      <div className=" pt-0 border-b-2 border-gray-300 mb-5">
         <i className="fa-solid fa-calendar"></i> Select your dates to find best
         prices for your trip
       </div>

@@ -7,18 +7,20 @@ import {
   RadioGroup,
 } from "@mui/material";
 
-interface RadioProp {
+export interface RadioProp {
   value: string;
   label: React.ReactNode;
+  disabled?: boolean;
 }
 
-interface RadioOptionProps {
+export interface RadioOptionProps {
   name: string;
   id: string;
   label?: string;
   value: string;
   options: RadioProp[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  row?: boolean; 
 }
 
 const RadioOption: React.FC<RadioOptionProps> = ({
@@ -28,15 +30,17 @@ const RadioOption: React.FC<RadioOptionProps> = ({
   value,
   options,
   onChange,
+  row = false,
 }) => {
   return (
     <FormControl>
-      <FormLabel id={id}>{label}</FormLabel>
+      {label && <FormLabel id={id}>{label}</FormLabel>}
       <RadioGroup
         aria-labelledby={id}
         name={name}
         value={value}
         onChange={onChange}
+        row={row}
       >
         {options.map((opt) => (
           <FormControlLabel
@@ -44,6 +48,7 @@ const RadioOption: React.FC<RadioOptionProps> = ({
             value={opt.value}
             control={<Radio />}
             label={opt.label}
+            disabled={opt.disabled}
           />
         ))}
       </RadioGroup>
