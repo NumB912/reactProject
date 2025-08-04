@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import { Button, Modal } from "../../../component/UI";
@@ -72,6 +72,10 @@ const InfoClient = () => {
     setIsOpenModalUploadImageWallpaper(false);
   };
 
+  const closeEditProfileModal = ()=>{
+    setIsOpenModalUploadImageAvatar(false)
+  }
+
   const handleCancelImageWallpaper = () => {
     if (!photoImageWallpaper) {
       clearWallpaperPhoto();
@@ -86,6 +90,19 @@ const InfoClient = () => {
 
     closeWallpaperModal();
   };
+
+  const handleSaveInfoProfile = ()=>{
+      if(avatarPhoto){
+        setPhotoImageAvatar(avatarPhoto)
+        closeEditProfileModal()
+      }
+  }
+
+  const handleOpenProfileAvatarModal = ()=>{
+    setIsOpenModalUploadImageAvatar(true)
+    clearAvatarPhoto()
+  }
+
 
   return (
     <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
@@ -174,10 +191,10 @@ const InfoClient = () => {
           <div className="border border-gray-200 shadow">
             <div className="image-avatar w-full flex justify-center items-center p-3">
               <img
-                src="https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"
+                src={photoImageAvatar?photoImageAvatar.url:"https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"}
                 className="w-[200px] aspect-square object-cover rounded-full border border-gray-300 cursor-pointer bg-center"
                 onClick={() => {
-                  setIsOpenModalUploadImageAvatar(true);
+                  handleOpenProfileAvatarModal();
                 }}
               ></img>
             </div>
@@ -275,11 +292,12 @@ const InfoClient = () => {
             setShowEdit(false);
           }}
           zIndex={100}
+          styleContainer="h-9/10 max-md:w-full"
         >
-          <div className="grid w-screen grid-cols-[100px_1fr] max-w-[700px] p-5 gap-10">
-            <div className="profile-edit-img w-full">
+          <div className="grid w-full p-5 gap-10 grid-cols-[100px_1fr] min-md:min-w-[800px] max-md:grid-cols-1 max-md:w-full max-md:gap-5">
+            <div className="profile-edit-img w-full relative">
               <div
-                className="relative w-full aspect-square rounded-full overflow-hidden cursor-pointer"
+                className="relative w-full aspect-square rounded-full overflow-hidden cursor-pointer max-md:max-w-[200px] max-md:left-1/2 max-md:top-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsOpenModalUploadImageAvatar(
@@ -288,7 +306,7 @@ const InfoClient = () => {
                 }}
               >
                 <img
-                  src="https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"
+                  src={avatarPhoto ? avatarPhoto.url : `https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg`}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -377,23 +395,23 @@ const InfoClient = () => {
                 </span>
               </div>
 
-              <div className="button-submit flex justify-end gap-2">
+              <div className="button-submit flex justify-end gap-2 max-sm:flex-wrap">
                 <Button
-                  className="w-30"
+                  className="w-30 max-sm:w-full"
                   style={{
                     backgroundColor: "white",
                     color: "black",
                     border: "1px solid black",
-                    padding: "5px",
+                    padding: "10px",
                   }}
                   onClick={() => {}}
                 >
                   Cancel
                 </Button>
                 <Button
-                  className="w-30"
-                  style={{ padding: "5px" }}
-                  onClick={() => {}}
+                  className="w-30 max-sm:w-full"
+                  style={{ padding: "10px" }}
+                  onClick={() => {handleSaveInfoProfile()}}
                 >
                   Save
                 </Button>
@@ -408,11 +426,17 @@ const InfoClient = () => {
           }}
           isOpen={isOpenModalUploadImageAvatar}
           zIndex={1000}
+          styleContainer="max-md:w-full min-sm:min-w-[500px]"
         > 
+          <div className="w-full my-2 flex justify-center">
+
+          {avatarPhoto && <img src={avatarPhoto.url} className="min-w-[100px] max-w-[200px] aspect-square object-cover rounded-full border-2 border-dashed p-1"/>}
+
+          </div>
           <UploadPhoto
             ref={inputRefAvatar}
-            photo={photoImageAvatar}
-            style={{ display: !avatarPhoto ? "block" : "none" }}
+            photo={avatarPhoto}
+            handleDrop={addAvatarPhoto}
           ></UploadPhoto>
         </Modal>
         <div className="content-profile p-3 bg-white border border-gray-200">

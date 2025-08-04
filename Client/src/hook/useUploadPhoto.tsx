@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ImageUrlProp } from "../interface/ImagePhotoUrl";
+import { Image } from "../interface/ImagePhotoUrl";
 import { v4 as uuidv4 } from "uuid";
 
 const useSingleUploadPhoto = () => {
-  const [photo, setPhoto] = useState<ImageUrlProp | undefined>();
+  const [photo, setPhoto] = useState<Image | undefined>();
 
   const addphoto = (file: File) => {
     const url = URL.createObjectURL(file);

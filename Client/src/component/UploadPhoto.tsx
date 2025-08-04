@@ -31,7 +31,6 @@ const UploadPhoto = forwardRef<UploadPhotosHandle, uploadPhotoProp>(
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     
      if (e.target.files && e.target.files[0]) {
-        console.log(e.target.files[0])
         handleDrop?.(e.target.files[0]);  
      }
     };
