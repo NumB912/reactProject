@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import { Button, Modal } from "../../../component/UI";
@@ -12,10 +12,16 @@ import AvatarSection from "./AvatarSection";
 import EditProfileModal from "./EditProfileModal";
 import { ProfileUser } from "../../../interface/Profile";
 import useUploadPhoto from "../../../hook/useUploadPhoto";
+import { EditPhotoAvatarModal } from "./EditPhotoAvatarModal";
+
+
 const InfoClient = () => {
   const { id } = useParams();
   const [isOpenEditProfileModal,setIsOpenEditProfileModal] = useState<boolean>(false)
-   const [userProfile,setProfileUser] = useState<ProfileUser>();
+  const [userProfile,setProfileUser] = useState<ProfileUser>();
+
+
+
   const nav: Tab[] = [
     {
       navigationID: "1",
@@ -48,11 +54,7 @@ const InfoClient = () => {
       urlNavigation: `/profile/${id}/bookings`,
     },
   ];
-    const {
-      photo: avatarPhoto,
-      addphoto: addAvatarPhoto,
-      deletePhoto: clearAvatarPhoto,
-    } = useUploadPhoto();
+
 
 
   useEffect(()=>{
@@ -88,29 +90,8 @@ const InfoClient = () => {
 
       <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
         <AvatarSection userProfile={userProfile} setIsOpenEditProfileModal={setIsOpenEditProfileModal} isOpenEditProfileModal={isOpenEditProfileModal}/>
-
         <EditProfileModal userProfile={userProfile} setIsOpenEditProfileModal={setIsOpenEditProfileModal} isOpenEditProfileModal={isOpenEditProfileModal}/>
-        {/* 
-
-        <Modal
-          onClose={() => {
-            setIsOpenModalUploadImageAvatar(false);
-          }}
-          isOpen={isOpenModalUploadImageAvatar}
-          zIndex={1000}
-          styleContainer="max-md:w-full min-sm:min-w-[500px]"
-        > 
-          <div className="w-full my-2 flex justify-center">
-
-          {avatarPhoto && <img src={avatarPhoto.url} className="min-w-[100px] max-w-[200px] aspect-square object-cover rounded-full border-2 border-dashed p-1"/>}
-
-          </div>
-          <UploadPhoto
-            ref={inputRefAvatar}
-            photo={avatarPhoto}
-            handleDrop={addAvatarPhoto}
-          ></UploadPhoto>
-        </Modal> */}
+      
         <div className="content-profile p-3 bg-white border border-gray-200">
           <Tabs
             activeStyle="border-b-3 font-bold transition-all ease-in"
