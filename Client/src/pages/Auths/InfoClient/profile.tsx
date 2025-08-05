@@ -3,38 +3,19 @@ import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import { Button, Modal } from "../../../component/UI";
 import PhotoGallery from "../../../component/PhotoGallery";
-import useUploadPhoto from "../../../hook/useUploadPhoto";
 import UploadPhoto, {
   UploadPhotosHandle,
 } from "../../../component/UploadPhoto";
-import UploadPhotoWallpaper from "../../../component/UploadPhotoWallpaper";
 import { Image } from "../../../interface/ImagePhotoUrl";
+import WallpaperSection from "./WallpaperSection";
+import AvatarSection from "./AvatarSection";
+import EditProfileModal from "./EditProfileModal";
+import { ProfileUser } from "../../../interface/Profile";
+import useUploadPhoto from "../../../hook/useUploadPhoto";
 const InfoClient = () => {
   const { id } = useParams();
-  const [isShowEdit, setShowEdit] = useState<boolean>(false);
-
-  const {
-    photo: avatarPhoto,
-    addphoto: addAvatarPhoto,
-    deletePhoto: clearAvatarPhoto,
-  } = useUploadPhoto();
-
-  const {
-    photo: wallpaperPhoto,
-    addphoto: addWallpaperPhoto,
-    editPhoto: editWallpaperPhoto,
-    deletePhoto: clearWallpaperPhoto,
-  } = useUploadPhoto();
-
-  const inputRefWallpaper = React.useRef<UploadPhotosHandle>(null);
-  const inputRefAvatar = React.useRef<UploadPhotosHandle>(null);
-  const [photoImageWallpaper, setPhotoImageWallpaper] =
-    useState<Image>();
-  const [photoImageAvatar, setPhotoImageAvatar] = useState<Image>();
-  const [isOpenModalUploadImageWallpaper, setIsOpenModalUploadImageWallpaper] =
-    useState(false);
-  const [isOpenModalUploadImageAvatar, setIsOpenModalUploadImageAvatar] =
-    useState(false);
+  const [isOpenEditProfileModal,setIsOpenEditProfileModal] = useState<boolean>(false)
+   const [userProfile,setProfileUser] = useState<ProfileUser>();
   const nav: Tab[] = [
     {
       navigationID: "1",
@@ -67,358 +48,49 @@ const InfoClient = () => {
       urlNavigation: `/profile/${id}/bookings`,
     },
   ];
+    const {
+      photo: avatarPhoto,
+      addphoto: addAvatarPhoto,
+      deletePhoto: clearAvatarPhoto,
+    } = useUploadPhoto();
 
-  const closeWallpaperModal = () => {
-    setIsOpenModalUploadImageWallpaper(false);
-  };
 
-  const closeEditProfileModal = ()=>{
-    setIsOpenModalUploadImageAvatar(false)
-  }
-
-  const handleCancelImageWallpaper = () => {
-    if (!photoImageWallpaper) {
-      clearWallpaperPhoto();
-    }
-    closeWallpaperModal();
-  };
-
-  const handleSaveImageWallpaper = () => {
-    if (wallpaperPhoto) {
-      setPhotoImageWallpaper(wallpaperPhoto);
-    }
-
-    closeWallpaperModal();
-  };
-
-  const handleSaveInfoProfile = ()=>{
-      if(avatarPhoto){
-        setPhotoImageAvatar(avatarPhoto)
-        closeEditProfileModal()
-      }
-  }
-
-  const handleOpenProfileAvatarModal = ()=>{
-    setIsOpenModalUploadImageAvatar(true)
-    clearAvatarPhoto()
-  }
-
+  useEffect(()=>{
+    setProfileUser({
+      name:"sups",
+      follower:0,
+      following:10,
+      introduce:{
+        email:"example@gmail.com",
+        introduceID:"1",
+        introduceSelf:"",
+        location:"VietNam",
+        phoneNumber:"0123456789"
+      },
+      profileID:"",
+      userName:"sups112",
+      wallpaperPhoto:{
+        description:"",
+        id:"",
+        url:"",
+      },
+      photoShares:{
+        photos:[],
+        photoShareID:"1"
+      },
+      reviews:5
+    })
+  },[])
 
   return (
     <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
-      <div className="bg-gray-300 w-full h-[400px] flex justify-center items-center">
-        {photoImageWallpaper ? (
-          <div className="w-screen">
-            <div
-              className="upload-image w-full "
-            >
-              <img
-                src={photoImageWallpaper.url}
-                className="w-full object-cover h-[400px]"
-              />
-            </div>
-          </div>
-        ) : (
-          <div className=" w-full h-full flex justify-center items-center">
-            <div
-              className="upload-image cursor-pointer flex gap-3 justify-center items-center"
-              onClick={() => setIsOpenModalUploadImageWallpaper(true)}
-            >
-              <i className="fa-solid fa-image"></i>
-              <p>Upload image</p>
-            </div>
-          </div>
-        )}
-        <Modal
-          isOpen={isOpenModalUploadImageWallpaper}
-          onClose={() => {
-            setIsOpenModalUploadImageWallpaper(false);
-          }}
-        >
-          <div
-            className={`w-screen ${
-              !wallpaperPhoto ? "max-w-[700px]" : ""
-            } p-5 gap-10`}
-          >
-            {wallpaperPhoto ? (
-              <div className="w-full">
-                <div
-                  className="upload-image w-full relative"
-                  onClick={() => {
-                    inputRefWallpaper.current?.openFileDialog();
-                  }}
-                >
-                  <i className="text-2xl text-gray-300 fa-solid fa-camera absolute top-1/2 left-1/2 -translate-1/2 z-[9002]"></i>
-                  <img
-                    src={wallpaperPhoto.url}
-                    className=" object-cover w-full h-[400px]"
-                  />
-                </div>
-                <div className="option-image flex justify-end *:ml-2 *:mt-5">
-                  <Button
-                    onClick={handleCancelImageWallpaper}
-                    className="w-[200px]"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={handleSaveImageWallpaper}
-                    className="w-[200px]"
-                  >
-                    Done
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
+      <WallpaperSection />
 
-            <UploadPhoto
-              ref={inputRefWallpaper}
-              photo={wallpaperPhoto}
-              handleDrop={addWallpaperPhoto}
-              style={{ display: !wallpaperPhoto ? "block" : "none" }}
-            >
-              <div className="upload-wallpaper text-gray-500">
-                <p>Upload your wallpaper</p>
-              </div>
-            </UploadPhoto>
-          </div>
-        </Modal>
-      </div>
       <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
-        <div className="profile flex-col flex *:p-5 gap-3 *:bg-white">
-          <div className="border border-gray-200 shadow">
-            <div className="image-avatar w-full flex justify-center items-center p-3">
-              <img
-                src={photoImageAvatar?photoImageAvatar.url:"https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"}
-                className="w-[200px] aspect-square object-cover rounded-full border border-gray-300 cursor-pointer bg-center"
-                onClick={() => {
-                  handleOpenProfileAvatarModal();
-                }}
-              ></img>
-            </div>
-            <div className="flex justify-between items-center border-b-gray-200">
-              <div className="profile-name">
-                <p className="font-bold text-2xl">Sups</p>
-                <p className="text-gray-400 text-[12px] font-semibold">
-                  @sups1234
-                </p>
-              </div>
-              <div className="profile-edit">
-                <div className="content flex justify-center items-center *:p-2 *:hover:bg-gray-200 *:text-[12px] border border-gray-200 *:cursor-pointer">
-                  <button
-                    className="border-r border-gray-200 font-semibold"
-                    onClick={() => {
-                      setShowEdit(true);
-                    }}
-                  >
-                    Edit profile
-                  </button>
-                  <button>
-                    <i className="fa-solid fa-gear"></i>{" "}
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="flex grow justify-center gap-10 items-center mt-5 *:text-center">
-              <div className="item *:w-full">
-                <p className="font-bold">Following</p>
-                <p className="text-gray-600 font-semibold">0</p>
-              </div>
+        <AvatarSection userProfile={userProfile} setIsOpenEditProfileModal={setIsOpenEditProfileModal} isOpenEditProfileModal={isOpenEditProfileModal}/>
 
-              <div className="item *:w-full">
-                <p className="font-bold">Follower</p>
-                <p className="text-gray-600 font-semibold">0</p>
-              </div>
-
-              <div className="item *:w-full">
-                <p className="font-bold">Reviews</p>
-                <p className="text-gray-600 font-semibold">0</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-gray-200 shadow">
-            <div className="intro">
-              <p className="font-bold text-sm">Intro</p>
-            </div>
-
-            <div className="intro-content flex flex-col">
-              <div className="intro-content_location flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-                <i className="fa-solid fa-location-dot"></i>
-                <p>VietNam</p>
-              </div>
-
-              <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-                <i className="fa-solid fa-phone"></i>
-                <p>0123456789</p>
-              </div>
-
-              <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-                <i className="fa-solid fa-envelope"></i>
-                <p>Example@gmail.com</p>
-              </div>
-
-              <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer ">
-                <i className="fa-solid fa-plus"></i>
-                <p>Write something to introduce yourself</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-gray-200 shadow">
-            <div className="intro">
-              <p className="font-bold text-sm">Share your travel advice</p>
-            </div>
-
-            <div className="intro-content flex flex-col">
-              <div className="intro-content_location flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-                <i className="fa-solid fa-camera"></i>
-                <p>Share your photos</p>
-              </div>
-
-              <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-                <i className="fa-solid fa-pen"></i>
-                <p>Share your reviews</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <Modal
-          isOpen={isShowEdit}
-          onClose={() => {
-            setShowEdit(false);
-          }}
-          zIndex={100}
-          styleContainer="h-9/10 max-md:w-full"
-        >
-          <div className="grid w-full p-5 gap-10 grid-cols-[100px_1fr] min-md:min-w-[800px] max-md:grid-cols-1 max-md:w-full max-md:gap-5">
-            <div className="profile-edit-img w-full relative">
-              <div
-                className="relative w-full aspect-square rounded-full overflow-hidden cursor-pointer max-md:max-w-[200px] max-md:left-1/2 max-md:top-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsOpenModalUploadImageAvatar(
-                    !isOpenModalUploadImageAvatar
-                  );
-                }}
-              >
-                <img
-                  src={avatarPhoto ? avatarPhoto.url : `https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg`}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center">
-                  <i className="fa-solid fa-camera mb-1"></i>
-                  <p>Change Photo</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="info-edit w-full *:mt-8">
-              <div className="info-edit_name w-full">
-                <p className="font-semibold text-[10px] mb-1">Name</p>
-                <input
-                  className="border border-gray-300 p-1.5 w-full text-sm"
-                  type="text"
-                  placeholder="Name"
-                  value={"Sups"}
-                />
-              </div>
-
-              <div className="info-edit_name w-full">
-                <p className="font-semibold text-[10px] mb-1">Username</p>
-                <span className="relative">
-                  <input
-                    className="border border-gray-300 p-1.5 w-full pl-8 text-sm"
-                    type="text"
-                    placeholder="Name"
-                    value={"Sups"}
-                  />
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
-                    @
-                  </span>
-                </span>
-              </div>
-
-              <div className="info-edit_name w-full">
-                <p className="font-semibold text-[10px] mb-1">Location</p>
-                <span className="relative">
-                  <input
-                    className="border border-gray-300 p-1.5 w-full pl-8 text-sm"
-                    type="text"
-                    placeholder="Location"
-                  />
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
-                    <i className="fa-solid fa-location-dot"></i>
-                  </span>
-                </span>
-              </div>
-
-              <div className="info-edit_name w-full">
-                <p className="font-semibold text-[10px] mb-1">Email</p>
-                <span className="relative">
-                  <input
-                    className="border border-gray-300 p-1.5 w-full pl-8 text-sm"
-                    type="text"
-                    placeholder="Email"
-                  />
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
-                    <i className="fa-solid fa-envelope"></i>
-                  </span>
-                </span>
-              </div>
-
-              <div className="info-edit_name w-full">
-                <p className="font-semibold text-[10px] mb-1">Phone number</p>
-                <span className="relative">
-                  <input
-                    className="border border-gray-300 p-1.5 w-full pl-8 text-sm"
-                    type="text"
-                    placeholder="Phone number"
-                  />
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 text-gray-400">
-                    <i className="fa-solid fa-phone"></i>
-                  </span>
-                </span>
-              </div>
-
-              <div className="info-edit_name w-full">
-                <p className="font-semibold text-[10px] mb-1">About me</p>
-                <span className="relative">
-                  <textarea
-                    className="border border-gray-300 p-1.5 w-full text-sm h-25"
-                    placeholder="introduce about yourself"
-                  />
-                </span>
-              </div>
-
-              <div className="button-submit flex justify-end gap-2 max-sm:flex-wrap">
-                <Button
-                  className="w-30 max-sm:w-full"
-                  style={{
-                    backgroundColor: "white",
-                    color: "black",
-                    border: "1px solid black",
-                    padding: "10px",
-                  }}
-                  onClick={() => {}}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="w-30 max-sm:w-full"
-                  style={{ padding: "10px" }}
-                  onClick={() => {handleSaveInfoProfile()}}
-                >
-                  Save
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Modal>
+        <EditProfileModal userProfile={userProfile} setIsOpenEditProfileModal={setIsOpenEditProfileModal} isOpenEditProfileModal={isOpenEditProfileModal}/>
+        {/* 
 
         <Modal
           onClose={() => {
@@ -438,7 +110,7 @@ const InfoClient = () => {
             photo={avatarPhoto}
             handleDrop={addAvatarPhoto}
           ></UploadPhoto>
-        </Modal>
+        </Modal> */}
         <div className="content-profile p-3 bg-white border border-gray-200">
           <Tabs
             activeStyle="border-b-3 font-bold transition-all ease-in"
