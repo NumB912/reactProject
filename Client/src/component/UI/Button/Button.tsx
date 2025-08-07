@@ -11,24 +11,17 @@ export interface ButtonProp {
 const Button: React.FC<ButtonProp> = ({
   children,
   onClick,
-  className = "",
+  className ="text-white font-bold bg-black hover:bg-gray-800 hover:scale-95 active:scale-90 active:bg-gray-900",
   style,
   type="button"
 }) => {
-  const combinedClassName = `
-      ${className}
-    text-white font-bold bg-black cursor-pointer rounded-full p-3
-    hover:bg-gray-800 hover:scale-95
-    active:scale-90 active:bg-gray-900
-    transition-all duration-300 ease-in-out
-  `;
 
   return (
     <button
       type={type}
       onClick={onClick}
-      className={combinedClassName.trim()}
-      style={style} // ✅ áp dụng style truyền vào
+      className={`cursor-pointer rounded-full hover:scale-95 active:scale-90 transition-all duration-400 ease-in-out p-2 ${className}`}
+      style={style}
     >
       {children}
     </button>

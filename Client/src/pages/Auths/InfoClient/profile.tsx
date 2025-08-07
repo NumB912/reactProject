@@ -16,7 +16,7 @@ import { EditPhotoAvatarModal } from "./EditPhotoAvatarModal";
 
 const InfoClient = () => {
   const { id } = useParams();
-  const [isOpenEditProfileModal, setIsOpenEditProfileModal] =
+  const [isOpenEditProfileModal, setIsOpenEditProfileModal] = 
     useState<boolean>(false);
   const [userProfile, setProfileUser] = useState<ProfileUser>({
     name: "sups",

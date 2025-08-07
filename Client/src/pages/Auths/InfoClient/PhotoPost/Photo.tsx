@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { ButtonBorder } from "../../../../component/UI";
 import ViewDetailPhoto from "./ViewDetailPhoto";
 import EditPhoto from "./EditPhoto";
+import DeletePhoto from "./DeletePhoto";
 
 const Photo = () => {
   const [isOpenSetting, setIsOpenSetting] = useState<boolean>(false);
@@ -12,6 +13,7 @@ const Photo = () => {
     useState<boolean>(false);
   const [isOpenEditPhotoModal, setisOpenEditPhotoModal] =
     useState<boolean>(false);
+  const [isOpenDeletePhotoModal,setIsOpenDeletePhotoModal] = useState<boolean>(false)
   return (
     <div className="photo w-full border border-gray-200 shadow-md rounded-md">
       <div className="profile-post flex justify-between gap-2 p-3">
@@ -46,7 +48,7 @@ const Photo = () => {
             <button      onClick={() => {
                 setisOpenEditPhotoModal(!isOpenEditPhotoModal);
               }} className="w-full">Edit</button>
-            <button className="w-full">Delete</button>
+            <button onClick={()=>setIsOpenDeletePhotoModal(!isOpenDeletePhotoModal)} className="w-full">Delete</button>
           </DropDownContent>
 
           <ButtonBorder
@@ -73,8 +75,9 @@ const Photo = () => {
         </button>
       </div>
 
-      <ViewDetailPhoto isOpen={isOpenViewDetailPhotoModal} setIsOpen={()=>{setIsOpenViewDetailPhotoModal(false)}}/>
-        <EditPhoto isOpen={isOpenEditPhotoModal} setIsOpen={()=>{setisOpenEditPhotoModal(false)}}/>
+      {isOpenViewDetailPhotoModal ? <ViewDetailPhoto isOpen={isOpenViewDetailPhotoModal} setIsOpen={()=>{setIsOpenViewDetailPhotoModal(false)}}/>:""}
+      {isOpenEditPhotoModal? <EditPhoto isOpen={isOpenEditPhotoModal} setIsOpen={()=>{setisOpenEditPhotoModal(false)}}/>:""}
+      {isOpenDeletePhotoModal?<DeletePhoto isOpen={isOpenDeletePhotoModal} setIsOpen={()=>{setIsOpenDeletePhotoModal(false)}}/>:""}
     </div>
   );
 };

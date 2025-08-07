@@ -7,7 +7,7 @@ interface EditPhotoProp {
 }
 const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
 
-    const foundServices: Service[] = Array.from({ length: 6 }, (_, i) => ({
+    const foundServices = Array.from({ length: 6 }, (_, i) => ({
       id: (i + 1).toString(),
       img: {
         url: `https://static.lag.vn/upload/news/22/11/11/anime-bocchi-the-rock-duoc-yeu-thich-toan-cau-2_WLIW.jpg?w=800&encoder=wic&subsampling=444`,
@@ -22,13 +22,13 @@ const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
         onClose={setIsOpen}
         styleContainer="max-w-[1000px]"
       >
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex gap-2 col-span-2">
+        <div className="grid grid-cols-2 gap-3 max-sm:grid-cols-1">
+          <div className="flex gap-2 w-full min-sm:col-span-2">
             <img
               src="https://www.animeherald.com/wp-content/uploads/2024/05/Bocchi-the-Rock-003-20240323.jpg"
               className="rounded-full aspect-square object-cover w-[45px]"
             />
-            <div className="">
+            <div className="w-full">
               <p className="font-bold text-md">Sups</p>
               <p className="text-[12px] text-gray-400">23/5/2025</p>
             </div>
@@ -54,29 +54,29 @@ const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
               </div>
             </div>
 
-            <div className="service flex flex-col gap-2 overflow-y-scroll">
+            <div className="service flex flex-col gap-2">
               <p className="font-bold text-2xl">See location</p>
-              <InputBar onChange={()=>{}} classNameInput="w-full p-2 border border-gray-200 pl-13" classNameContent="top-12" foundServices={foundServices}/>
+              <InputBar onChange={()=>{}} classNameInput="w-full p-2 border border-gray-200 pl-13" classNameContent="top-12" classNameItemFound="flex p-2 gap-2" foundServices={foundServices}/>
               <div>
-                <p className="text-lg font-bold hover:underline cursor-pointer">
+                <p className="text-md font-bold hover:underline cursor-pointer">
                   Tokyo bocchi of the rock
                 </p>
                 <p className="location text-sm text-gray-500">Tokyo, kaisen</p>
               </div>
               <img
                 src="https://i0.wp.com/wrongeverytime.com/wp-content/uploads/2022/12/December16143612.jpg?resize=1920%2C1080&ssl=1"
-                className="w-50 aspect-square object-cover"
+                className="w-30 aspect-square object-cover"
               />
               <div className="flex gap-2">
                 <p className="text-md text-gray-700">3.5</p>
                 <StarRatingStatic starNumber={3} />
-                <p className="text-md text-gray-700">(1000 reviews)</p>
+                <p className="text-md text-gray-700">1k reviews</p>
               </div>
             </div>
           </div>
 
-          <div className="flex col-span-2 justify-end">
-            <Button className="max-w-40">Save</Button>
+          <div className="flex justify-end w-full min-sm:col-span-2 mt-5">
+            <Button className="w-full min-sm:max-w-[70px] min-sm:min-w-[50px] bg-black text-white">Save</Button>
           </div>
         </div>
       </Modal>

@@ -9,6 +9,7 @@ interface ModalProps {
   parentContainerStyle?: string;
   title?:string;
   zIndex?: number;
+  tickExit?:boolean
 }
 
 const Modal = ({
@@ -19,6 +20,7 @@ const Modal = ({
   parentContainerStyle,
   zIndex = 999,
   title,
+  tickExit=false
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -36,6 +38,10 @@ const Modal = ({
       document.body.style.height = "";
     };
   }, [isOpen]);
+
+  useEffect(()=>{
+    console.log("hello")
+  },[])
 
   if (!isOpen) return null;
 
@@ -55,7 +61,8 @@ const Modal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-between items-center">
-          <p className="font-bold text-3xl p-2">{title}</p><i className="fa-solid fa-x cursor-pointer p-2 hover:bg-gray-200" onClick={onClose}></i></div>
+          {tickExit&&<><p className="font-bold text-3xl p-2">{title}</p><i className="fa-solid fa-x cursor-pointer p-2 hover:bg-gray-200" onClick={onClose}></i></>}
+          </div>
         {children}
       </div>
     </div>,
