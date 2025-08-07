@@ -10,6 +10,7 @@ export interface ProfileUser{
     photoShares:PhotoShare;
     wallpaperPhoto:Image;
     reviews:number
+    avatarPhoto:Image;
 }
 
 export interface Introduce{
@@ -17,7 +18,7 @@ export interface Introduce{
     location:string;
     phoneNumber:string;
     email:string;
-    introduceSelf:string;
+    about:string;
 }
 
 export interface PhotoShare{

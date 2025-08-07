@@ -14,13 +14,39 @@ import { ProfileUser } from "../../../interface/Profile";
 import useUploadPhoto from "../../../hook/useUploadPhoto";
 import { EditPhotoAvatarModal } from "./EditPhotoAvatarModal";
 
-
 const InfoClient = () => {
   const { id } = useParams();
-  const [isOpenEditProfileModal,setIsOpenEditProfileModal] = useState<boolean>(false)
-  const [userProfile,setProfileUser] = useState<ProfileUser>();
-
-
+  const [isOpenEditProfileModal, setIsOpenEditProfileModal] =
+    useState<boolean>(false);
+  const [userProfile, setProfileUser] = useState<ProfileUser>({
+    name: "sups",
+    follower: 0,
+    following: 10,
+    avatarPhoto: {
+      description: "",
+      id: "",
+      url: "https://comicbook.com/wp-content/uploads/sites/4/2025/02/Bocchi-The-Rock-Season-2.jpg?resize=2000,1122",
+    },
+    introduce: {
+      email: "example@gmail.com",
+      introduceID: "1",
+      about: "",
+      location: "VietNam",
+      phoneNumber: "0123456789",
+    },
+    profileID: "",
+    userName: "sups112",
+    wallpaperPhoto: {
+      description: "",
+      id: "",
+      url: "",
+    },
+    photoShares: {
+      photos: [],
+      photoShareID: "1",
+    },
+    reviews: 5,
+  });
 
   const nav: Tab[] = [
     {
@@ -55,43 +81,56 @@ const InfoClient = () => {
     },
   ];
 
-
-
-  useEffect(()=>{
+  useEffect(() => {
     setProfileUser({
-      name:"sups",
-      follower:0,
-      following:10,
-      introduce:{
-        email:"example@gmail.com",
-        introduceID:"1",
-        introduceSelf:"",
-        location:"VietNam",
-        phoneNumber:"0123456789"
+      name: "sups",
+      follower: 0,
+      following: 10,
+      avatarPhoto: {
+        description: "",
+        id: "2",
+        url: "https://comicbook.com/wp-content/uploads/sites/4/2025/02/Bocchi-The-Rock-Season-2.jpg?resize=2000,1122",
       },
-      profileID:"",
-      userName:"sups112",
-      wallpaperPhoto:{
-        description:"",
-        id:"",
-        url:"",
+      introduce: {
+        email: "example@gmail.com",
+        introduceID: "1",
+        about: "",
+        location: "VietNam",
+        phoneNumber: "0123456789",
       },
-      photoShares:{
-        photos:[],
-        photoShareID:"1"
+      profileID: "",
+      userName: "sups112",
+      wallpaperPhoto: {
+        description: "",
+        id: "",
+        url: "",
       },
-      reviews:5
-    })
-  },[])
+      photoShares: {
+        photos: [],
+        photoShareID: "1",
+      },
+      reviews: 5,
+    });
+  }, []);
 
   return (
     <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
       <WallpaperSection />
 
       <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
-        <AvatarSection userProfile={userProfile} setIsOpenEditProfileModal={setIsOpenEditProfileModal} isOpenEditProfileModal={isOpenEditProfileModal}/>
-        <EditProfileModal userProfile={userProfile} setIsOpenEditProfileModal={setIsOpenEditProfileModal} isOpenEditProfileModal={isOpenEditProfileModal}/>
-      
+        <AvatarSection
+          userProfile={userProfile}
+          setIsOpenEditProfileModal={setIsOpenEditProfileModal}
+          isOpenEditProfileModal={isOpenEditProfileModal}
+        />
+        {isOpenEditProfileModal && (
+          <EditProfileModal
+            userProfile={userProfile}
+            setIsOpenEditProfileModal={setIsOpenEditProfileModal}
+            isOpenEditProfileModal={isOpenEditProfileModal}
+          />
+        )}
+
         <div className="content-profile p-3 bg-white border border-gray-200">
           <Tabs
             activeStyle="border-b-3 font-bold transition-all ease-in"

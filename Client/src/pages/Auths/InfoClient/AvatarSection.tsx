@@ -1,6 +1,7 @@
 import React, { ProfilerProps, useState } from "react";
 import { Image } from "../../../interface/ImagePhotoUrl";
 import { ProfileUser } from "../../../interface/Profile";
+import { useNavigate } from "react-router";
 
 interface AvatarSectionProp{
     isOpenEditProfileModal:boolean;
@@ -9,15 +10,15 @@ interface AvatarSectionProp{
 }
 
 const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userProfile}:AvatarSectionProp) => {
-  const [photoImageAvatar, setPhotoImageAvatar] = useState<Image>();
+  const navigate = useNavigate()
   return (
     <div className="profile flex-col flex *:p-5 gap-3 *:bg-white">
       <div className="border border-gray-200 shadow">
         <div className="image-avatar w-full flex justify-center items-center p-3">
           <img
             src={
-              photoImageAvatar
-                ? photoImageAvatar.url
+              userProfile?.avatarPhoto
+                ? userProfile.avatarPhoto.url
                 : "https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"
             }
             className="w-[200px] aspect-square object-cover rounded-full border border-gray-300 cursor-pointer bg-center"
@@ -86,7 +87,7 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
 
           <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer ">
             <i className="fa-solid fa-plus"></i>
-            <p>{userProfile?.introduce.introduceSelf?userProfile.introduce.introduceSelf:"Write something to introduce yourself"}</p>
+            <p>{userProfile?.introduce.about?userProfile.introduce.about:"Write something to introduce yourself"}</p>
           </div>
         </div>
       </div>
@@ -97,12 +98,14 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
         </div>
 
         <div className="intro-content flex flex-col">
-          <div className="intro-content_location flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
+          <div className="intro-content_location flex gap-2 items-center mt-3 text-[13px] cursor-pointer" 
+          onClick={()=>{navigate("/PostPhotos")}}>
             <i className="fa-solid fa-camera"></i>
             <p>Share your photos</p>
           </div>
 
-          <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
+          <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer"
+          onClick={()=>{navigate("/WriteReview")}}>
             <i className="fa-solid fa-pen"></i>
             <p>Share your reviews</p>
           </div>

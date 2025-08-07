@@ -4,8 +4,10 @@ import StarRatingStatic from "./UI/StarRatingStatic";
 import DropDownOutLineItem from "./DropDownComponent/WrapDropDownOutLineItem";
 import DropDownSelect from "./DropDownComponent/DropDownSelect";
 import PostReviewPhoto from "./postReviewPhoto";
-import Photos from "../pages/Auths/InfoClient/Photos";
+import Photos from "../pages/Auths/InfoClient/PhotoPost/Photos";
 import { Image } from "../interface/ImagePhotoUrl";
+import Dropdown from "./DropDownComponent/Dropdown";
+import DropDownContent from "./DropDownComponent/DropDownContent";
 interface YourReviewedItemProps {
   image: string;
   titleService: string;
@@ -28,22 +30,6 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
   const [openOption, setOpenOption] = useState<boolean>(false);
   const optionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        optionRef.current &&
-        !optionRef.current.contains(event.target as Node)
-      ) {
-        setOpenOption(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
     <div className="w-full border border-gray-300 p-4 rounded-md shadow-md bg-white">
       <div className="w-full relative flex gap-3">
@@ -57,17 +43,10 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
           <p className="font-bold text-md line-clamp-2">{titleService}</p>
           <p className="text-sm text-gray-600 line-clamp-2">{address}</p>
         </div>
-
-        <div className="top-2 right-2 absolute flex gap-3" ref={optionRef}>
-          <div
-            className={`bg-white *:hover:bg-gray-200 *:p-3 border border-gray-200 cursor-pointer *:text-sm rounded-md ${
-              openOption ? "" : "hidden"
-            }`}
-          >
-            <p>Delete your review</p>
-            <p>Share your review</p>
-            <p>See detail</p>
-          </div>
+        <Dropdown
+          className="absolute right-0 flex"
+          handleClose={() => setOpenOption(false)}
+        >
           <ButtonBorder
             className=""
             onClick={() => {
@@ -76,7 +55,18 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
           >
             <i className="fa-solid fa-ellipsis"></i>
           </ButtonBorder>
-        </div>
+          <DropDownContent isOpen={openOption} className="w-[200px] left-[-220px]">
+            <div
+              className={`bg-white *:hover:bg-gray-200 *:p-3 border border-gray-200 cursor-pointer *:text-sm rounded-md ${
+                openOption ? "" : "hidden"
+              }`}
+            >
+              <p>Delete your review</p>
+              <p>Share your review</p>
+              <p>See detail</p>
+            </div>
+          </DropDownContent>
+        </Dropdown>
       </div>
 
       <div className="flex flex-col gap-2 mt-1">
@@ -85,9 +75,7 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
         <p className="text-sm text-gray-800">{contentReview}</p>
       </div>
 
-      <PostReviewPhoto
-        photos={postReviewPhotos || []}
-      />
+      <PostReviewPhoto photos={postReviewPhotos || []} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useCalendarFlight } from "../../store/CalendarStore/CalendarFlightStore
 import { isToday, isSameDay, getDateHandle, formatDate } from "../../utils/TimeHandle";
 import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import Calendar_TwoMonth from "./CalendarBase/Calendar_TwoMonth";
+import DropDownContent from "../DropDownComponent/DropDownContent";
 const CalendarFlight = () => {
   const {
     datesBook,
@@ -37,14 +38,8 @@ return (    <>
               {formatDate(dateSelectedReturn)}
             </p>
 
-            <div
-              className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 left-0 rounded z-20 max-md:w-full ${
-                isShow ? "" : "hidden"
-              }`}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
+
+       <DropDownContent isOpen={isShow} className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 rounded z-20`}>
               <Calendar_TwoMonth
                 dateSelected={dateSelectedBook}
                 dateEndSelected={dateSelectedReturn}
@@ -56,7 +51,7 @@ return (    <>
                 onEndSelected={setDateSelectedReturn}
                 type="hotel"
               />
-            </div>
+          </DropDownContent>
           </div>
       </WrapDropDownOutLineItem>
     </>)

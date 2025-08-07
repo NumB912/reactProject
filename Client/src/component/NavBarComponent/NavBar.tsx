@@ -11,6 +11,7 @@ import InputShow from "../UI/Input/InputShow";
 import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
 import Dropdown from "../DropDownComponent/Dropdown";
 import ListItem from "../UI/ListItem";
+import DropDownContent from "../DropDownComponent/DropDownContent";
 
 const NavBar = () => {
   const [error, setError] = useState<string | null>(null);
@@ -102,14 +103,14 @@ const NavBar = () => {
               }`}
               ref={profileInfo}
             >
-
-              <div className="img border-l border-gray-200 pl-2 pr-3 flex items-center"
+              <Dropdown className=" w-[200px] right-0"  handleClose={() => setIsOpenProfileTab(false)}>
+                       <div className="img border-l border-gray-200 pl-2 pr-3 flex items-center"
               onClick={() => setIsOpenProfileTab(!isOpenProfileTab)}>
                 <img src={logo} className="max-w-25" />
               </div>
 
-              <Dropdown className="my-5 w-[200px] right-0" IsOpen={isOpenProfileTab} handleIsOpen={() => setIsOpenProfileTab(false)}>
-                    <ListItem>
+                  <DropDownContent isOpen={isOpenProfileTab} className="">
+                      <ListItem>
                         <Link to={`./Profile/123`} className="w-full">My profile</Link>
                         <Link to={`./Profile/123/reviews`} className="w-full">My reviews</Link>
                         <Link to={`./Profile/123/trips`} className="w-full">My trips</Link>
@@ -118,6 +119,7 @@ const NavBar = () => {
                         <Link to={`./Profile/123/notifications`} className="w-full">My notifications</Link>
                         <div className="w-full" onClick={handleLogout}>sign out</div>
                     </ListItem>
+                  </DropDownContent>
               </Dropdown>
 
 

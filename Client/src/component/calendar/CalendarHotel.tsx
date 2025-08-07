@@ -3,6 +3,7 @@ import { formatDate } from "../../utils/TimeHandle";
 import { useCalendarHotel } from "../../store/CalendarStore/CalendarHotelStore";
 import Calendar_TwoMonth from "./CalendarBase/Calendar_TwoMonth";
 import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import DropDownContent from "../DropDownComponent/DropDownContent";
 
 interface CalendarHotelProp {
   CalendarHotelClass?: string;
@@ -42,15 +43,7 @@ const Calendar_Hotel = ({ CalendarHotelClass }: CalendarHotelProp) => {
             {formatDate(dateSelectedBook)} - {formatDate(dateSelectedCheckOut)}
           </p>
 
-          <div
-            className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 rounded z-20 ${CalendarHotelClass}
-               ${
-              isShow ? "" : "hidden"
-            }`}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
+           <DropDownContent isOpen={isShow} className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 rounded z-20 ${CalendarHotelClass}`}>
             <Calendar_TwoMonth
               dateSelected={dateSelectedBook}
               dateEndSelected={dateSelectedCheckOut}
@@ -65,7 +58,7 @@ const Calendar_Hotel = ({ CalendarHotelClass }: CalendarHotelProp) => {
               onSetToday={SetToday}
               type="hotel"
             />
-          </div>
+          </DropDownContent>
         </div>
         <i className="fa-solid fa-caret-down"></i>
       </WrapDropDownOutLineItem>

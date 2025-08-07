@@ -45,7 +45,7 @@ const SearchServicePostPhoto = () => {
       <div className="search-post-photo w-full flex flex-col gap-10">
         <div className="">
           <p className="text-md font-semibold mb-2">Search for a service</p>
-           <InputBar placeholder="Search for a location" foundServices={[]} onSearch={(value) => {}} />
+           <InputBar placeholder="Search for a location" foundServices={[]} onChange={(value) => {}} />
         </div>
 
         <UploadPostPhoto/>

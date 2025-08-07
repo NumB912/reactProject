@@ -1,10 +1,11 @@
 import React from "react";
 
 export interface ButtonProp {
-  onClick: () => void;
-  children: React.ReactNode;
+  onClick?: () => void;
+  children?: React.ReactNode;
   className?: string;
-  style?: React.CSSProperties; // ✅ thêm prop style
+  style?: React.CSSProperties; 
+  type?:"button"|"submit"|"reset"|undefined
 }
 
 const Button: React.FC<ButtonProp> = ({
@@ -12,6 +13,7 @@ const Button: React.FC<ButtonProp> = ({
   onClick,
   className = "",
   style,
+  type="button"
 }) => {
   const combinedClassName = `
       ${className}
@@ -23,7 +25,7 @@ const Button: React.FC<ButtonProp> = ({
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       className={combinedClassName.trim()}
       style={style} // ✅ áp dụng style truyền vào

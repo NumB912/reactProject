@@ -7,16 +7,16 @@ import { Image } from '../../../interface/ImagePhotoUrl';
 interface EditPhotoAvatarModalProp{
     setIsOpenModalUploadImageAvatar:(isOpenModalUploadImageAvatar:boolean)=>void;
     isOpenModalUploadImageAvatar:boolean;
-    setPhotoImageAvatarTemp:(value:Image)=>void;
+    setPhoto:(value:Image)=>void;
 }
 
-export const EditPhotoAvatarModal = ({isOpenModalUploadImageAvatar,setIsOpenModalUploadImageAvatar,setPhotoImageAvatarTemp}:EditPhotoAvatarModalProp) => {
+export const EditPhotoAvatarModal = ({isOpenModalUploadImageAvatar,setIsOpenModalUploadImageAvatar,setPhoto}:EditPhotoAvatarModalProp) => {
     const {photo:avatarPhoto,addphoto:addAvatarPhoto,deletePhoto,editPhoto} = useSingleUploadPhoto()
     const inputRefAvatar = useRef<UploadPhotosHandle>(null)
 
     useEffect(()=>{
       if(!avatarPhoto){return}
-      setPhotoImageAvatarTemp(avatarPhoto)
+      setPhoto(avatarPhoto)
 
     },[avatarPhoto])
 

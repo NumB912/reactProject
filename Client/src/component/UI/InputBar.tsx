@@ -6,6 +6,9 @@ interface InputBarProps {
   foundServices?: Service[];
   recommendService?: Service[];
   onChange: (value: string) => void;
+  classNameInput?:string;
+  classNameIcon?:string;
+  classNameContent?:string
 }
 
 export interface Service {
@@ -18,6 +21,9 @@ const InputBar: React.FC<InputBarProps> = ({
   placeholder,
   onChange,
   foundServices,
+  classNameContent=" top-15 rounded-2xl mt-3 p-3",
+  classNameIcon="p-5 left-0",
+  classNameInput="m-auto border bg-white border-gray-300 shadow-md rounded-full w-full p-4 max-sm:border-b max-sm:shadow-none max-sm:rounded-none max-sm:p-2 max-sm:pl-13 pl-13 max-sm:focus:border-blue-500 max-sm:focus:outline-0"
 }) => {
   const [isClose, setIsClose] = useState(false);
   const searchInput = useRef<HTMLDivElement | null>(null);
@@ -39,13 +45,11 @@ const InputBar: React.FC<InputBarProps> = ({
   return (
     <div className="relative w-full" ref={searchInput}>
       <div className=" w-full flex justify-center items-center">
-        <i className="fa-solid fa-magnifying-glass absolute left-6"></i>
+        <i className={`fa-solid fa-magnifying-glass absolute ${classNameIcon}`}></i>
         <input
           type="text"
           placeholder={placeholder || "Search for a service..."}
-          className="m-auto border bg-white border-gray-300 shadow-md rounded-full w-full p-4
-              max-sm:border-b max-sm:shadow-none max-sm:rounded-none max-sm:p-2
-              max-sm:pl-13 pl-13 max-sm:focus:border-blue-500 max-sm:focus:outline-0"
+          className={classNameInput}
           onFocus={() => {
             setIsClose(true);
           }}
@@ -56,13 +60,13 @@ const InputBar: React.FC<InputBarProps> = ({
       </div>
 
       <div
-        className={`left-1/2 border z-[4] border-gray-300 top-15 rounded-2xl mt-3 -translate-x-1/2  w-full p-3 bg-white absolute flex flex-col ${
+        className={`bg-white absolute flex flex-col  w-full border-gray-300 border z-[4] -translate-x-1/2 left-1/2 ${classNameContent} ${
           isClose ? "" : "hidden"
         }`}
       >
         {foundServices ? (
           foundServices.map((service, index) => (
-            <div key={service.id} className="hover:bg-gray-200 w-full p-5 flex gap-3 items-center" onClick={()=>{setIsClose(false)}}>
+            <div key={service.id} className="hover:bg-gray-200 w-full  p-5 flex gap-3 items-center" onClick={()=>{setIsClose(false)}}>
               <div className="w-15">
                 <img
                   src={
