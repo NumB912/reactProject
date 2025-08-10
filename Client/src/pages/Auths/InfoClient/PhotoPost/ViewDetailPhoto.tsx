@@ -13,8 +13,8 @@ const ViewDetailPhoto = ({ isOpen, setIsOpen }: ViewDetailPhotoProp) => {
         onClose={setIsOpen}
         styleContainer="max-w-[1000px]"
       >
-        <div className="grid grid-cols-2 gap-3 max-sm:grid-cols-1">
-          <div className="flex gap-2 w-full min-sm:col-span-2">
+        <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+          <div className="flex gap-2 w-full min-md:col-span-2">
             <img
               src="https://www.animeherald.com/wp-content/uploads/2024/05/Bocchi-the-Rock-003-20240323.jpg"
               className="rounded-full aspect-square object-cover w-[45px]"
@@ -64,7 +64,7 @@ const ViewDetailPhoto = ({ isOpen, setIsOpen }: ViewDetailPhotoProp) => {
             </div>
           </div>
 
-          <div className="flex p-2 gap-2 *:cursor-pointer min-sm:col-span-2">
+          <div className="flex p-2 gap-2 *:cursor-pointer min-md:col-span-2">
             <button className="flex gap-2 items-center">
               <i className="fa-solid fa-thumbs-up"></i> Like
             </button>

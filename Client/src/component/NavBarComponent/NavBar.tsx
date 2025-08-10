@@ -146,7 +146,7 @@ const NavBar = () => {
               </Button>
 
               <Modal
-                parentContainerStyle="w-[1000px] "
+                parentContainerStyle=""
                 isOpen={isShow}
                 onClose={() => {
                   setShow(false);

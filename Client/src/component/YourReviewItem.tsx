@@ -31,7 +31,7 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
   const optionRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full border border-gray-300 p-4 rounded-md shadow-md bg-white">
+    <div className="w-full border border-gray-100 p-4 rounded-md shadow bg-white">
       <div className="w-full relative flex gap-3">
         <img
           src={image}
@@ -71,7 +71,8 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
 
       <div className="flex flex-col gap-2 mt-1">
         <StarRatingStatic starNumber={rating} />
-        <p className="text-md font-bold">{titleReview}</p>
+        <div>        <p className="text-md font-bold">{titleReview}</p>
+        <p className="text-gray-500 text-sm">10/23/2024</p></div>
         <p className="text-sm text-gray-800">{contentReview}</p>
       </div>
 

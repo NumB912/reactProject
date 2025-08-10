@@ -7,9 +7,9 @@ interface ModalProps {
   children: React.ReactNode;
   styleContainer?: string;
   parentContainerStyle?: string;
-  title?:string;
+  title?: string;
   zIndex?: number;
-  tickExit?:boolean
+  tickExit?: boolean;
 }
 
 const Modal = ({
@@ -20,14 +20,13 @@ const Modal = ({
   parentContainerStyle,
   zIndex = 999,
   title,
-  tickExit=false
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      document.body.style.height = "100vh"; 
+      document.body.style.height = "100vh";
     } else {
       document.body.style.overflow = "";
       document.body.style.height = "";
@@ -39,9 +38,9 @@ const Modal = ({
     };
   }, [isOpen]);
 
-  useEffect(()=>{
-    console.log("hello")
-  },[])
+  useEffect(() => {
+    console.log("hello");
+  }, []);
 
   if (!isOpen) return null;
 
@@ -55,14 +54,18 @@ const Modal = ({
     >
       <div
         ref={ref}
-        className={`relative bg-white rounded-md shadow-xl overflow-y-auto max-md:h-full max-h-screen max-sm:w-full max-md:rounded-none p-3 ${
+        className={`relative bg-white rounded-md shadow-xl overflow-y-auto max-sm:h-full max-h-screen max-sm:w-full max-md:rounded-none px-8 pb-8 pt-5 ${
           styleContainer ?? ""
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-between items-center">
-          {tickExit&&<><p className="font-bold text-3xl p-2">{title}</p><i className="fa-solid fa-x cursor-pointer p-2 hover:bg-gray-200" onClick={onClose}></i></>}
-          </div>
+        <p className="font-bold text-3xl p-2">{title}</p>
+        <div className="cursor-pointer p-2 hover:bg-gray-200"            
+         onClick={onClose}>     <i
+            className="fa-solid fa-x"
+          ></i></div>
+        </div>
         {children}
       </div>
     </div>,

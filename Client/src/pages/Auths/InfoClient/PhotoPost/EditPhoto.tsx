@@ -20,10 +20,10 @@ const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
       <Modal
         isOpen={isOpen}
         onClose={setIsOpen}
-        styleContainer="max-w-[1000px]"
+        styleContainer="max-w-[1000px] "
       >
-        <div className="grid grid-cols-2 gap-3 max-sm:grid-cols-1">
-          <div className="flex gap-2 w-full min-sm:col-span-2">
+        <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+          <div className="flex gap-2 w-full min-md:col-span-2">
             <img
               src="https://www.animeherald.com/wp-content/uploads/2024/05/Bocchi-the-Rock-003-20240323.jpg"
               className="rounded-full aspect-square object-cover w-[45px]"
@@ -75,7 +75,7 @@ const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
             </div>
           </div>
 
-          <div className="flex justify-end w-full min-sm:col-span-2 mt-5">
+          <div className="flex justify-end w-full min-md:col-span-2 mt-5">
             <Button className="w-full min-sm:max-w-[70px] min-sm:min-w-[50px] bg-black text-white">Save</Button>
           </div>
         </div>

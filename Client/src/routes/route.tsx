@@ -24,7 +24,7 @@ import BookTour from "../pages/Service/tour/TourBook";
 import Payment_Tour from "../pages/Service/tour/TourPayment";
 
 import InfoClient from "../pages/Auths/InfoClient/profile";
-import Reviews from "../pages/Auths/InfoClient/Reviews";
+import Reviews from "../pages/Auths/InfoClient/ReviewPost/Reviews";
 import Photos from "../pages/Auths/InfoClient/PhotoPost/Photos";
 import Trips from "../pages/Auths/InfoClient/Trips";
 import Favorites from "../pages/Auths/InfoClient/Favorites";

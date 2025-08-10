@@ -144,8 +144,8 @@ const EditProfileModal = ({
               </div>
             </div>
 
-            <div className="info-edit w-full grid grid-cols-2 gap-10">
-              <div className="info-edit_name w-full">
+            <div className="info-edit w-full grid min-md:grid-cols-2 max-md:grid-cols-1 gap-8">
+              <div className="w-full">
                 <p className="font-semibold text-[10px] mb-1">Name</p>
                 <input
                   className={`border border-gray-300 p-1.5 w-full text-sm ${
@@ -164,7 +164,7 @@ const EditProfileModal = ({
                 )}
               </div>
 
-              <div className={`info-edit_name w-full`}>
+              <div className="w-full">
                 <p className="font-semibold text-[10px] mb-1">Username</p>
                 <span className="relative">
                   <input
@@ -184,7 +184,7 @@ const EditProfileModal = ({
                 {errorEdit.userNameErr && <span>{errorEdit.userNameErr}</span>}
               </div>
 
-              <div className="info-edit_name w-full">
+              <div className="w-full">
                 <p className="font-semibold text-[10px] mb-1">Location</p>
                 <span className="relative">
                   <input
@@ -208,7 +208,7 @@ const EditProfileModal = ({
                 )}
               </div>
 
-              <div className="info-edit_name w-full">
+              <div className="w-full">
                 <p className="font-semibold text-[10px] mb-1">Phone number</p>
                 <span className="relative">
                   <input
@@ -232,7 +232,7 @@ const EditProfileModal = ({
                 )}
               </div>
 
-              <div className="info-edit_name w-full col-span-2">
+              <div className="w-full min-md:col-span-2">
                 <p className="font-semibold text-[10px] mb-1">About me</p>
                 <span className="relative">
                   <textarea
@@ -245,7 +245,7 @@ const EditProfileModal = ({
                 </span>
               </div>
 
-              <div className="button-submit flex justify-end gap-2 max-sm:flex-wrap col-span-2">
+              <div className="button-submit flex justify-end gap-2 max-sm:flex-wrap min-md:col-span-2">
                 <Button
                   className="w-30 max-sm:w-full"
                   style={{
@@ -258,7 +258,7 @@ const EditProfileModal = ({
                   Cancel
                 </Button>
                 <Button
-                  className="w-30 max-sm:w-full"
+                  className="w-30 max-sm:w-full bg-black text-white"
                   style={{ padding: "10px" }}
                   type="submit"
                 >

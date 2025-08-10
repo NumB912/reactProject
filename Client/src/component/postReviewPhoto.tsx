@@ -27,7 +27,6 @@ const PostReviewPhoto = ({ photos = [] }: PostReviewPhotoProps) => {
       ))}
 
       <Modal isOpen={isOpen} onClose={() => { setOpen(false) }}>
-        <div className="p-6">
           <h2 className="text-2xl font-bold mb-4">Review Photos</h2>
           <div className="grid grid-cols-3 gap-4">
             {photos.map((photo, index) => (
@@ -39,7 +38,6 @@ const PostReviewPhoto = ({ photos = [] }: PostReviewPhotoProps) => {
               />
             ))}
           </div>
-        </div>
       </Modal>
     </div>
   );
