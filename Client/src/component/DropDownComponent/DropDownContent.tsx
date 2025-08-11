@@ -9,7 +9,7 @@ interface DropDownContent{
 const DropDownContent = ({isOpen,children,className}:DropDownContent) => {
   return (
             <div
-          className={`absolute ${className} ${isOpen ? "" : "hidden"}`}
+          className={`absolute cursor-pointer ${className} ${isOpen ? "" : "hidden"}`}
           onClick={(e) => {
             e.stopPropagation();
           }}

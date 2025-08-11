@@ -28,7 +28,11 @@ const NavBar = () => {
     setIsSuccess(false);
   };
 
-  const handleSignIn = async (refreshToken: string, expireDate: string, accessToken: string) => {
+  const handleSignIn = async (
+    refreshToken: string,
+    expireDate: string,
+    accessToken: string
+  ) => {
     try {
       await login(refreshToken, expireDate, accessToken);
       setIsSuccess(true);
@@ -66,11 +70,12 @@ const NavBar = () => {
     },
   ];
 
-  useEffect(()=>{
-
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      
-      if (profileInfo.current && !profileInfo.current.contains(event.target as Node)) {
+      if (
+        profileInfo.current &&
+        !profileInfo.current.contains(event.target as Node)
+      ) {
         setIsOpenProfileTab(false);
       }
     };
@@ -79,8 +84,7 @@ const NavBar = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-
-  },[isOpenProfileTab]);
+  }, [isOpenProfileTab]);
 
   return (
     <>
@@ -103,26 +107,37 @@ const NavBar = () => {
               }`}
               ref={profileInfo}
             >
-              <Dropdown className=" w-[200px] right-0"  handleClose={() => setIsOpenProfileTab(false)}>
-                       <div className="img border-l border-gray-200 pl-2 pr-3 flex items-center"
-              onClick={() => setIsOpenProfileTab(!isOpenProfileTab)}>
-                <img src={logo} className="max-w-25" />
-              </div>
+              <Dropdown
+                className=" w-[200px] right-0"
+                handleClose={() => setIsOpenProfileTab(false)}
+              >
+                <div
+                  className="img border-l border-gray-200 pl-2 pr-3 flex items-center"
+                  onClick={() => setIsOpenProfileTab(!isOpenProfileTab)}
+                >
+                  <img src={logo} className="max-w-25" />
+                </div>
 
-                  <DropDownContent isOpen={isOpenProfileTab} className="">
-                      <ListItem>
-                        <Link to={`./Profile/123`} className="w-full">My profile</Link>
-                        <Link to={`./Profile/123/reviews`} className="w-full">My reviews</Link>
-                        <Link to={`./Profile/123/trips`} className="w-full">My trips</Link>
-                        <Link to={`./Profile/123/bookings`} className="w-full">My bookings</Link>
-                        <Link to={`./Profile/123/wishlist`} className="w-full">My wishlist</Link>
-                        <Link to={`./Profile/123/notifications`} className="w-full">My notifications</Link>
-                        <div className="w-full" onClick={handleLogout}>sign out</div>
-                    </ListItem>
-                  </DropDownContent>
+                <DropDownContent isOpen={isOpenProfileTab} className="top-17">
+                  <ListItem>
+                    <Link to={`./Profile/123`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                      My profile
+                    </Link>
+                    <Link to={`./Profile/123/reviews`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                      Write reviews
+                    </Link>
+                    <Link to={`./Profile/123/trips`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                      My trips
+                    </Link>
+                    <Link to={`./Profile/123/bookings`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                      Post photo
+                    </Link>
+                    <div className="w-full" onClick={handleLogout}>
+                      sign out
+                    </div>
+                  </ListItem>
+                </DropDownContent>
               </Dropdown>
-
-
             </div>
             <div
               className={`${
@@ -177,7 +192,13 @@ const NavBar = () => {
                       <Button
                         className="w-full bg-white border border-gray-400 hover:bg-white active:bg-gray-300"
                         style={{ color: "black", padding: "10px" }}
-                        onClick={() => {handleSignIn("refreshToken", "expireDate", "accessToken")}}
+                        onClick={() => {
+                          handleSignIn(
+                            "refreshToken",
+                            "expireDate",
+                            "accessToken"
+                          );
+                        }}
                       >
                         <div className="w-full flex justify-start items-center *:ml-5">
                           <i className="fa-brands fa-google"></i>
@@ -248,7 +269,13 @@ const NavBar = () => {
                           Forgot your password?
                         </button>
                         <Button
-                          onClick={() => {handleSignIn("refreshToken", "expireDate", "accessToken")}}
+                          onClick={() => {
+                            handleSignIn(
+                              "refreshToken",
+                              "expireDate",
+                              "accessToken"
+                            );
+                          }}
                           className="p-[10px] text-[13px] w-1/3"
                         >
                           Login

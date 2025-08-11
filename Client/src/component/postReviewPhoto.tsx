@@ -34,7 +34,7 @@ const PostReviewPhoto = ({ photos = [] }: PostReviewPhotoProps) => {
                 key={index}
                 src={photo.url}
                 alt={`Review Photo ${index + 1}`}
-                className="object-cover aspect-square w-80"
+                className="object-cover aspect-square w-50"
               />
             ))}
           </div>

@@ -26,7 +26,6 @@ const Modal = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      document.body.style.height = "100vh";
     } else {
       document.body.style.overflow = "";
       document.body.style.height = "";
@@ -38,9 +37,6 @@ const Modal = ({
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    console.log("hello");
-  }, []);
 
   if (!isOpen) return null;
 
@@ -54,12 +50,12 @@ const Modal = ({
     >
       <div
         ref={ref}
-        className={`relative bg-white rounded-md shadow-xl overflow-y-auto max-sm:h-full max-h-screen max-sm:w-full max-md:rounded-none px-8 pb-8 pt-5 ${
+        className={`relative bg-white rounded-md shadow-xl overflow-y-auto max-sm:h-full min-sm:max-h-[90vh] max-sm:w-full max-sm:rounded-none p-5 ${
           styleContainer ?? ""
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center min-sm:hidden">
         <p className="font-bold text-3xl p-2">{title}</p>
         <div className="cursor-pointer p-2 hover:bg-gray-200"            
          onClick={onClose}>     <i
