@@ -9,7 +9,7 @@ const BookTour = () => {
     const {childrenQuantity,adultQuantity,seniorQuantity} = useTravelerTour()
     const {dateSelectedBook} = useTourCalendar()
   return (
-    <div className="w-3/4">
+    <div className="w-7xl">
       <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-4 items-center">
         <div className="flex flex-col justify-center items-start p-4">
           <p className="font-bold">John F Kennedy International Airport</p>

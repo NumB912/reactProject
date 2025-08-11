@@ -1,1 +1,9 @@
+@import "tailwindcss";
 
+@layer{
+    .content{
+        @apply w-7xl max-w-full
+    }
+
+    
+}
