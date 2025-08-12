@@ -8,7 +8,7 @@ const Payment_Tour = () => {
     const {dateSelectedBook} = useTourCalendar()
     const {childrenQuantity,adultQuantity} = useTravelerTour()
   return (
-    <div className="w-3/4">
+    <div className="w-7xl max-w-full">
       <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-2 items-center">
         <div className="flex flex-col justify-center items-start p-4">
           <p className="font-bold">John F Kennedy International Airport</p>

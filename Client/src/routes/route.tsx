@@ -46,25 +46,22 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
 
-      // Hotel Routes
       { path: "hotels", element: <Hotels /> },
       { path: "hotels/:hotelID", element: <HotelDetail /> },
       { path: "hotels/:hotelID/booking/:roomID", element: <Book_Hotel /> },
       { path: "hotels/:hotelID/booking/:roomID/payment", element: <Payment_Hotel /> },
 
-      // Car Routes
       { path: "rentalcar", element: <RentalCars /> },
       { path: "rentalCar/:rentalCarID", element: <RentalCarsDetail /> },
       { path: "rentalCar/:rentalCarID/Booking", element: <BookCar /> },
       { path: "rentalCar/:rentalCarID/Booking/payment", element: <PaymentCar /> },
 
-      // Tour Routes
       { path: "Tours", element: <Tours /> },
       { path: "Tours/:tourID", element: <TourDetail /> },
       { path: "Tours/:tourID/Booking", element: <BookTour /> },
       { path: "Tours/:tourID/Booking/payment", element: <Payment_Tour /> },
 
-      // User Profile (nested route)
+
       {
         path: "Profile/:id",
         element: <InfoClient />,
@@ -78,7 +75,6 @@ const router = createBrowserRouter([
         ],
       },
 
-      // Review and Photo Post
       { path: "WriteReview", element: <FoundServiceReviews /> },
       { path: "WriteReview/:id", element: <PostReviews /> },
       { path: "PostPhotos", element: <SearchServicePostPhoto /> },
