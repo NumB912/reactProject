@@ -28,7 +28,7 @@ useEffect(() => {
   return (
     <div
       className={` ${className} relative p-1.5 flex items-center justify-center gap-3 rounded-full  border border-gray-400 cursor-pointer
-        min-xl:min-w-48`}
+        min-xl:min-w-48 min-h-12`}
       onClick={handleShow}
       ref={ref}
     >

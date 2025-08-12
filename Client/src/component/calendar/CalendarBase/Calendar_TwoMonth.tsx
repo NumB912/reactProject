@@ -114,9 +114,9 @@ const Calendar_TwoMonth = ({
         </div>
         <div className="right w-full">
           <div className="nameMonth w-full text-center p-2">
-            {dates[0].toLocaleString("en-US", { month: "short" }) +
+            {nextMonthDates[0].toLocaleString("en-US", { month: "short" }) +
               " " +
-              dates[0].getFullYear()}
+              nextMonthDates[0].getFullYear()}
           </div>
           <div
             className="DayOfWeek flex justify-center items-center gap-2 my-3 border-b-2 pb-4 border-gray-300

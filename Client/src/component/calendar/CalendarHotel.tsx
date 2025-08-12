@@ -42,25 +42,27 @@ const Calendar_Hotel = ({ CalendarHotelClass }: CalendarHotelProp) => {
           <p className="text-[13px] font-bold">
             {formatDate(dateSelectedBook)} - {formatDate(dateSelectedCheckOut)}
           </p>
-
-           <DropDownContent isOpen={isShow} className={`bg-white absolute w-[700px] mt-5 p-5 border border-gray-300 rounded z-20 ${CalendarHotelClass}`}>
-            <Calendar_TwoMonth
-              dateSelected={dateSelectedBook}
-              dateEndSelected={dateSelectedCheckOut}
-              dates={datesBook}
-              nextMonth={nextMonth}
-              prevMonth={prevMonth}
-              nextMonthDates={datesNextMonth}
-              onSelected={setDateSelectedBook}
-              onEndSelected={setDateSelectedCheckOut}
-              onSetNextWeek={SetNextWeek}
-              onSetThisWeek={SetThisWeek}
-              onSetToday={SetToday}
-              type="hotel"
-            />
-          </DropDownContent>
-        </div>
+        </div>{" "}
         <i className="fa-solid fa-caret-down"></i>
+        <DropDownContent
+          isOpen={isShow}
+          className={`bg-white absolute w-[550px] p-5 border border-gray-300 rounded z-20 mt-15 ${CalendarHotelClass}`}
+        >
+          <Calendar_TwoMonth
+            dateSelected={dateSelectedBook}
+            dateEndSelected={dateSelectedCheckOut}
+            dates={datesBook}
+            nextMonth={nextMonth}
+            prevMonth={prevMonth}
+            nextMonthDates={datesNextMonth}
+            onSelected={setDateSelectedBook}
+            onEndSelected={setDateSelectedCheckOut}
+            onSetNextWeek={SetNextWeek}
+            onSetThisWeek={SetThisWeek}
+            onSetToday={SetToday}
+            type="hotel"
+          />
+        </DropDownContent>
       </WrapDropDownOutLineItem>
     </>
   );

@@ -20,24 +20,31 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
     setMinusChildrenQuantity,
     setMinusSeniorQuantity,
     setReset,
-    total
+    total,
   } = useTravelerFlight();
-  const [isShow,setIsShow] = useState<boolean>(false)
+  const [isShow, setIsShow] = useState<boolean>(false);
   return (
     <WrapDropDownOutLineItem
-      handleClickOutSide={() => {setIsShow(false)}}
-      handleShow={() => {setIsShow(!isShow)}}
-    >        <i className="fa-solid fa-users"></i>
+      handleClickOutSide={() => {
+        setIsShow(false);
+      }}
+      handleShow={() => {
+        setIsShow(!isShow);
+      }}
+    >
+      {" "}
+      <i className="fa-solid fa-users"></i>
       <div className="flex flex-col justify-center items-center">
         <p className="text-[10px] font-semibold">Passenger</p>
         <p className="text-[13px] font-bold">
           {" "}
-          {total == 1
-            ? `${total} traveler`
-            : `${total} travelers`}
+          {total == 1 ? `${total} traveler` : `${total} travelers`}
         </p>
       </div>
-      <DropDownContent className="bg-white w-[400px] absolute left-0 border border-gray-300 z-10 rounded-sm p-5" isOpen={isShow}>
+      <DropDownContent
+        className="bg-white w-[400px] border border-gray-300 z-10 rounded-sm p-5 left-1/2 -translate-x-1/2 top-0 mt-15"
+        isOpen={isShow}
+      >
         <div className="passenger-flight">
           <div className="flex gap-6 flex-col border-b pb-4 border-gray-300">
             <div className="flex justify-between items-center gap-3">

@@ -59,17 +59,17 @@ const CalendarRentalCar = () => {
     );
   }, []);
 
-  const [isPickUp,setIsPickUp] = useState<boolean>(false);
-  const [isDropOff,setIsDropOff] = useState<boolean>(false);
+  const [isPickUp, setIsPickUp] = useState<boolean>(false);
+  const [isDropOff, setIsDropOff] = useState<boolean>(false);
 
   return (
     <div className={`w-full flex gap-2 max-sm:flex-wrap`}>
       <WrapDropDownOutLineItem
         handleClickOutSide={() => {
-          setIsPickUp(false)
+          setIsPickUp(false);
         }}
-        handleShow={()=>{
-          setIsPickUp(!isPickUp)
+        handleShow={() => {
+          setIsPickUp(!isPickUp);
           setDatesPickUpFromDate(dateSelectedPickUp);
         }}
         className="w-full"
@@ -86,8 +86,10 @@ const CalendarRentalCar = () => {
               timePickUpSelected}
           </p>
         </div>
-        <DropDownContent isOpen={!!isPickUp} className="bg-white min-lg:min-w-xs max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:w-screen w-full max-w-[500px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
-
+        <DropDownContent
+          isOpen={!!isPickUp}
+          className="bg-white min-lg:min-w-xs max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:w-screen w-full max-w-[500px] absolute left-0 p-5 mt-15 border border-gray-300 rounded-2xl z-10"
+        >
           <Calendar_OneMonth_Timer
             dateSelected={dateSelectedPickUp}
             dateStartSelected={dateSelectedPickUp}
@@ -102,16 +104,15 @@ const CalendarRentalCar = () => {
             setSelectTime={setTimePickUpTimeSelected}
             onSetToday={SetToday}
           />
-
         </DropDownContent>
       </WrapDropDownOutLineItem>
 
       <WrapDropDownOutLineItem
         handleClickOutSide={() => {
-          setIsDropOff(false)
+          setIsDropOff(false);
         }}
-        handleShow={()=>{
-          setIsDropOff(!isDropOff)!
+        handleShow={() => {
+          setIsDropOff(!isDropOff)!;
           setDatesDropOffFromDate(dateSelectedDropOff);
         }}
         className="w-full"
@@ -129,7 +130,10 @@ const CalendarRentalCar = () => {
           </p>
         </div>
 
-        <DropDownContent isOpen={!!isDropOff} className="bg-white min-lg:min-w-xs max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:w-screen w-full max-w-[500px] absolute top-10 left-0 p-5 border border-gray-300 rounded-2xl z-10">
+        <DropDownContent
+          isOpen={!!isDropOff}
+          className="bg-white min-lg:min-w-xs max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:w-screen w-full max-w-[500px] top-0 mt-15 left-0 p-5 border border-gray-300 rounded-2xl z-10"
+        >
           <Calendar_OneMonth_Timer
             titleTypeSeletedDate="Drop Off"
             type="rentalCar"

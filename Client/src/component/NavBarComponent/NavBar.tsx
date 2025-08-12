@@ -59,11 +59,6 @@ const NavBar = () => {
       urlNavigation: "/About",
     },
     {
-      navigationID: "3",
-      contentNavigation: "Services",
-      urlNavigation: "/Service",
-    },
-    {
       navigationID: "4",
       contentNavigation: "Contact",
       urlNavigation: "/Contact",
@@ -118,7 +113,7 @@ const NavBar = () => {
                   <img src={logo} className="max-w-25" />
                 </div>
 
-                <DropDownContent isOpen={isOpenProfileTab} className="top-17">
+                <DropDownContent isOpen={isOpenProfileTab} className="mt-15">
                   <ListItem>
                     <Link to={`./Profile/123`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
                       My profile

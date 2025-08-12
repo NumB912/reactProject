@@ -31,7 +31,7 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
             <p className="text-gray-400 text-[12px] font-semibold">@{userProfile?.userName}</p>
           </div>
           <div className="profile-edit">
-            <div className="content flex justify-center items-center *:p-2 *:hover:bg-gray-200 *:text-[12px] border border-gray-200 *:cursor-pointer">
+            <div className="flex justify-center items-center *:p-2 *:hover:bg-gray-200 *:text-[12px] border border-gray-200 *:cursor-pointer">
               <button
                 className="border-r border-gray-200 font-semibold"
                 onClick={() => {

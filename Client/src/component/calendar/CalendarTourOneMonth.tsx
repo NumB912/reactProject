@@ -9,6 +9,8 @@ import {
 } from "../../utils/TimeHandle";
 import { useTourCalendar } from "../../store/CalendarStore/CalendarTourStore";
 import Calendar_OneMonth from "./CalendarBase/Calendar_OneMonth";
+import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import DropDownContent from "../DropDownComponent/DropDownContent";
 const Calendar_Tour_OneMonth = () => {
   const {
     dateSelectedBook,
@@ -19,37 +21,43 @@ const Calendar_Tour_OneMonth = () => {
   } = useTourCalendar();
   const [showCheckIn, setShowCheckIn] = useState(false);
   return (
-      <div
-        className="CheckInBlock relative w-full"
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowCheckIn(!showCheckIn);
-        }}
-      >
-        <i className="fa-solid fa-calendar"></i>
-        <div className="DCI text-center max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50 p-2">
-          <p className="text-[13px] font-bold">
-            {formatDate(dateSelectedBook)}
-          </p>
+    <WrapDropDownOutLineItem
+      handleClickOutSide={() => {
+        setShowCheckIn(false);
+      }}
+      handleShow={() => {
+        setShowCheckIn(!showCheckIn);
+      }}
+      className="w-full"
+    >
+      <i className="fa-solid fa-calendar"></i>
+      <div className="DCI text-center max-md:min-w-60 min-md:min-w-52 max-sm:min-w-50 p-2">
+        <p className="text-[13px] font-bold">{formatDate(dateSelectedBook)}</p>
 
-          <div
-            className={`bg-white absolute w-[400px] top-[50px] left-1/2 -translate-x-1/2 p-5 border border-gray-300 rounded-2xl z-10
+        {/* <div
+            className={`bg-white absolute w-[400px] top-15 left-1/2 -translate-x-1/2 p-5 border border-gray-300 rounded-2xl
       max-lg:left-full max-2xl:left-0 ${showCheckIn ? "" : "hidden"}`}
             onClick={(e) => {
               e.stopPropagation();
             }}
-          >
-            <Calendar_OneMonth
+          > */}
+        <DropDownContent
+          isOpen={showCheckIn}
+          className="bg-white absolute w-[400px] top-0 left-1/2 -translate-x-1/2 p-5 border border-gray-300 rounded-2xl
+      max-lg:left-full max-2xl:left-0"
+        >
+          <Calendar_OneMonth
             dateSelected={dateSelectedBook}
             dates={datesBook}
             nextMonth={nextMonth}
             prevMonth={prevMonth}
             onSelected={setDateSelectedBook}
             type="Tour"
-            />
-          </div>
-        </div>
+          />
+        </DropDownContent>
+        {/* </div> */}
       </div>
+    </WrapDropDownOutLineItem>
   );
 };
 

@@ -34,7 +34,7 @@ const Photo = () => {
           className="relative"
         >
           <DropDownContent
-            className="top-10 w-[130px] flex flex-col bg-white *:p-2 *:hover:bg-gray-200 border-gray-200 border right-0"
+            className="w-[130px] flex flex-col bg-white *:p-2 *:hover:bg-gray-200 border-gray-200 border right-0"
             isOpen={isOpenSetting}
           >
             <button

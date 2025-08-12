@@ -8,6 +8,7 @@ import { Button } from "../../../component/UI";
 
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import SearchFilterRentalCar from "../../../component/FilterComponent/SearchFilterRentalCar";
+import SideRentalCarComponent from "../../../component/SideComponent/SideRentalCarComponent";
 const filterData: FilterItem[] = [
   {
     type: "Radio",
@@ -83,7 +84,7 @@ const RentalCars = () => {
   }, []);
 
   return (
-    <div className="w-6xl max-w-full grid grid-cols-[250px_1fr] justify-center gap-2 bg-white p-3 mb-40">
+    <div className="content grid grid-cols-[250px_1fr] justify-center gap-2 bg-white p-3 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
@@ -91,8 +92,10 @@ const RentalCars = () => {
       </div>
 
       <div className="col-span-2">
-             <SearchFilterRentalCar/>
+        <SearchFilterRentalCar />
       </div>
+
+      <SideRentalCarComponent/>
 
       <div className="w-full hidden max-lg:flex justify-center items-center col-span-2 gap-3 max-sm:flex-wrap">
         <div className="filter border border-gray-300 rounded-2xl p-2 w-full max-w-3xl flex justify-between items-center">
@@ -104,106 +107,6 @@ const RentalCars = () => {
           <div className="text-center w-full">
             <i className="fa-solid fa-sort"></i> sort
           </div>
-        </div>
-      </div>
-      <div className="sideFilter max-lg:hidden flex flex-col justify-start items-center font-bold w-full gap-5 py-1 ">
-        <div className="OptionPrice w-full">
-          <p>Prices</p>
-          <DualSlider />
-        </div>
-
-        <div className="w-full flex-1 flex flex-col gap-3 *:border-t *:border-gray-300 *:pt-3">
-          <div className="traverSelected relative flex gap-3 flex-col">
-            <div className="py-1">Capacity</div>
-            <div className="flex justify-between items-center gap-3">
-              <div>
-                <p className="text-sm font-semibold">passengers</p>
-              </div>
-              <div className="flex w-full gap-1 items-center justify-end">
-                <div className="minus p-1 bg-black text-white cursor-pointer">
-                  <i className="fa-solid fa-minus"></i>
-                </div>
-                <div className="content p-2 ">4</div>
-                <div className="add p-1 bg-black text-white cursor-pointer">
-                  <i className="fa-solid fa-plus"></i>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center gap-3">
-              <div>
-                <p className="text-sm font-semibold">Bags</p>
-              </div>
-              <div className="flex w-full gap-1 items-center justify-end">
-                <div className="minus p-1 bg-black text-white cursor-pointer">
-                  <i className="fa-solid fa-minus"></i>
-                </div>
-                <div className="content p-2 ">4</div>
-                <div className="add p-1 bg-black text-white cursor-pointer">
-                  <i className="fa-solid fa-plus"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="flex w-full flex-col">
-            <p className="text-md">Car Type</p>
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                toggleAmenity(String(valueAmenity));
-              }}
-              arr={[
-                { id: "CheckBoxCarType1", value: "Small" },
-                { id: "CheckBoxCarType2", value: "Medium" },
-                { id: "CheckBoxCarType3", value: "Large" },
-                { id: "CheckBoxCarType4", value: "SUV" },
-                { id: "CheckBoxCarType5", value: "Wild Card" },
-                { id: "CheckBoxCarType6", value: "Luxury" },
-                { id: "CheckBoxCarType7", value: "Regular" },
-                { id: "CheckBoxCarType8", value: "Electric" },
-              ]}
-              checkBoxName="CarType"
-            >
-              {(item: number | string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div>
-
-          <div className="flex w-full flex-col">
-            <p className="text-md">Car Specifications</p>
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                toggleHotelClasses(String(valueAmenity));
-              }}
-              arr={[
-                {
-                  id: "checkBoxCarSpecification1",
-                  value: "With air conditioning",
-                },
-                {
-                  id: "checkBoxCarSpecification4",
-                  value: "Automatic transmission",
-                },
-                { id: "checkBoxCarSpecification3", value: "2 doors" },
-                { id: "checkBoxCarSpecification2", value: "4 doors" },
-              ]}
-              checkBoxName="CarSpecification"
-            >
-              {(item: number | string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div>
-
-          <div className="flex w-full flex-col">
-            <p className="text-md">Mileage</p>
-            <CheckBoxOption
-              handleChange={(valueAmenity: string | number) => {
-                toggleHotelStyle(String(valueAmenity));
-              }}
-              arr={[{ id: "checkboxMileage1", value: "Unlimited" }]}
-              checkBoxName="Mileage"
-            >
-              {(item: number | string) => <p>{item}</p>}
-            </CheckBoxOption>
-          </div> */}
         </div>
       </div>
 

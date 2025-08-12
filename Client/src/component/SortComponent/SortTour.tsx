@@ -13,15 +13,14 @@ const SortTour = () => {
       <WrapDropDownOutLineItem
         handleClickOutSide={() => setIsOpenSort(false)}
         handleShow={() => setIsOpenSort(!isOpenSort)}
-        className="w-full px-4"
+        className="w-fit px-4"
       >
-        <div className="w-full font-semibold flex items-center justify-evenly gap-3">
-          <i className="fa-solid fa-sort"></i>
+        <div className="w-full font-semibold flex items-center justify-evenly">
           <p>Sort by: {item}</p>
         </div>
 
         <DropDownContent
-          className="top-5 bg-white absolute z-20 shadow-md max-w-[250px] w-full transition-all duration-200"
+          className="bg-white z-20 shadow-md max-w-[250px] w-full transition-all duration-200 border border-gray-200 mt-15"
           isOpen={isOpenSort}
         >
           {options.map((opt) => (

@@ -71,11 +71,6 @@ const InfoClient = () => {
     },
     {
       navigationID: "5",
-      contentNavigation: "Coupon",
-      urlNavigation: `/profile/${id}/Coupons`,
-    },
-    {
-      navigationID: "6",
       contentNavigation: "Booking",
       urlNavigation: `/profile/${id}/bookings`,
     },
@@ -114,10 +109,10 @@ const InfoClient = () => {
   }, []);
 
   return (
-    <div className="info relative w-full flex flex-col justify-center items-center bg-gray-200 ">
+    <div className="w-full info relative flex flex-col justify-center items-center bg-gray-200 ">
       <WallpaperSection />
 
-      <div className="-mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
+      <div className="content -mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
         <AvatarSection
           userProfile={userProfile}
           setIsOpenEditProfileModal={setIsOpenEditProfileModal}

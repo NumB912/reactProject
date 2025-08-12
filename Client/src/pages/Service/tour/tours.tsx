@@ -9,6 +9,7 @@ import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect"
 import ReusableSlider from "../../../component/SliderComponent/SliderComponent";
 import SortTour from "../../../component/SortComponent/SortTour";
 import SearchFilterTour from "../../../component/FilterComponent/SearchFilterTour";
+import SideTourComponent from "../../../component/SideComponent/SideTourComponent";
 const Tours = () => {
   const [price, setPrice] = useState(0);
   const [isShowsome, setShowsome] = useState(false);
@@ -47,103 +48,17 @@ const Tours = () => {
     { id: 6, value: "10/3" },
   ];
 
-
   return (
-    <div className="w-7xl max-w-full grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white mb-40">
+    <div className="content grid grid-cols-[250px_1fr] justify-items-center gap-2 bg-white mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
         </p>
       </div>
 
-    <SearchFilterTour/>
+      <SearchFilterTour />
 
-      <div
-        className="SideFilter w-full flex flex-col justify-start items-center 
-      bg-gray-50/50 border-gray-300 p-5
-      *:font-bold  *:w-full gap-5 *:py-1 
-      max-xl:hidden"
-      >
-        <div className="OptionPrice">
-          <p>Prices</p>
-          <DualSlider />
-        </div>
-        <div className="flex w-full flex-col">
-          <p className="text-md">Rating</p>
-          {/* <RadioOption
-            handleChange={(valueStar: string | number) => {
-              toggleStar(Number(valueStar));
-            }}
-            Radios={[
-              { id: "RadioRatingStar1", value: "5"  },
-              { id: "RadioRatingStar2", value:"5" },
-              { id: "RadioRatingStar3", value: "3" },
-              { id: "RadioRatingStar4", value: "1" },
-            ]}
-            nameRadio="RatingStar"
-          >
-            {(item: number | string) => <RatingStar stars={Number(item)} />}
-          </RadioOption> */}
-        </div>
-
-        <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
-          <div className="flex w-full flex-col">
-            <p className="text-md">Duration</p>
-            {/* <CheckBoxOption
-              handleChange={(value: string | number) => {
-                setDuration(String(value));
-              }}
-              arr={[
-                { id: "CheckBoxDuration1", value: "Up to 1 hour" },
-                { id: "CheckBoxDuration2", value: "1 to 4 hours" },
-                { id: "CheckBoxDuration3", value: "4 hours to day" },
-              ]}
-              checkBoxName="HotelClass"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption> */}
-          </div>
-
-          <div className="flex w-full flex-col">
-            <p className="text-md">Product categories</p>
-            {/* <CheckBoxOption
-              handleChange={(value: string | number) => {
-                setCategories(String(value));
-              }}
-              arr={[
-                {
-                  id: "checkBoxProductCategories1",
-                  value: "Sightseeing Tours",
-                },
-                { id: "heckBoxProductCategories2", value: "City Tours" },
-                {
-                  id: "heckBoxProductCategories3",
-                  value: "Historical * Heritage Tours",
-                },
-                { id: "heckBoxProductCategories4", value: "Bus Tours" },
-                { id: "heckBoxProductCategories5", value: "Walking Tours" },
-                { id: "heckBoxProductCategories6", value: "Helicopter Tours" },
-                { id: "heckBoxProductCategories7", value: "Hop-On Hop-Off" },
-                { id: "heckBoxProductCategories8", value: "Night Tours" },
-                { id: "heckBoxProductCategories9", value: "Private Tours" },
-                {
-                  id: "heckBoxProductCategories10",
-                  value: "Skips-the-line Tours",
-                },
-                {
-                  id: "heckBoxProductCategories11",
-                  value: "Literary, Art & Music Tours",
-                },
-                { id: "heckBoxProductCategories12", value: "Multi-day Tours" },
-                { id: "heckBoxProductCategories13", value: "Movie-TVs Tours" },
-              ]}
-              checkBoxName="HotelStyle"
-            >
-              {(item: string) => <p>{item}</p>}
-            </CheckBoxOption> */}
-          </div>
-        </div>
-      </div>
+      <SideTourComponent />
 
       <Modal
         isOpen={isShowsome}
@@ -315,7 +230,7 @@ const Tours = () => {
             className="SortBy
         max-xl:hidden"
           >
-              <SortTour/>
+            <SortTour />
           </div>
         </div>
 

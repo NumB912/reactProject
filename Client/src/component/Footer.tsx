@@ -2,80 +2,138 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900 w-full  bottom-0">
+    <footer className="bg-gray-50 dark:bg-gray-900 w-full bottom-0 mt-20">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="FlowBite Logo"
-              />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Flowbite
-              </span>
-            </a>
-          </div>
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Resources
-              </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                <li className="mb-4">
-                  <a href="https://flowbite.com/" className="hover:underline">
-                    Flowbite
-                  </a>
-                </li>
-                <li>
-                  <a href="https://tailwindcss.com/" className="hover:underline">
-                    Tailwind CSS
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Follow us
-              </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                <li className="mb-4">
-                  <a
-                    href="https://github.com/themesberg/flowbite"
-                    className="hover:underline "
-                  >
-                    Github
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://discord.gg/4eeurUVvTy"
-                    className="hover:underline"
-                  >
-                    Discord
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Legal
-              </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                <li className="mb-4">
-                  <a href="#" className="hover:underline">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Terms &amp; Conditions
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+   <div className="grid grid-cols-5 gap-8 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+  {/* Company Info */}
+  <div>
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+      Company
+    </h2>
+    <p className="text-gray-500 dark:text-gray-400 font-medium mb-4">
+      We are a leading provider of web solutions, offering high-quality
+      design, development, and support for businesses worldwide.
+    </p>
+    <a
+      href="/about"
+      className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+    >
+      Learn more →
+    </a>
+  </div>
+
+  {/* Resources */}
+  <div>
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+      Resources
+    </h2>
+    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+      <li className="mb-4">
+        <a href="https://flowbite.com/" className="hover:underline">
+          Flowbite
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://tailwindcss.com/"
+          className="hover:underline"
+        >
+          Tailwind CSS
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  {/* Follow Us */}
+  <div>
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+      Follow us
+    </h2>
+    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+      <li className="mb-4">
+        <a
+          href="https://github.com/themesberg/flowbite"
+          className="hover:underline "
+        >
+          Github
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://discord.gg/4eeurUVvTy"
+          className="hover:underline"
+        >
+          Discord
+        </a>
+      </li>
+      <li className="mb-4">
+        <a
+          href="https://twitter.com/"
+          className="hover:underline"
+        >
+          Twitter
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://linkedin.com/"
+          className="hover:underline"
+        >
+          LinkedIn
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  {/* Legal */}
+  <div>
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+      Legal
+    </h2>
+    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+      <li className="mb-4">
+        <a href="#" className="hover:underline">
+          Privacy Policy
+        </a>
+      </li>
+      <li>
+        <a href="#" className="hover:underline">
+          Terms &amp; Conditions
+        </a>
+      </li>
+      <li>
+        <a href="#" className="hover:underline">
+          Cookie Policy
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  {/* Contact Us */}
+  <div>
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+      Contact Us
+    </h2>
+    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+      <li className="mb-4">
+        <a href="mailto:info@company.com" className="hover:underline">
+          info@company.com
+        </a>
+      </li>
+      <li className="mb-4">
+        <span>+1 (555) 123-4567</span>
+      </li>
+      <li className="mb-4">
+        <span>123 Business Street, New York, USA</span>
+      </li>
+      <li>
+        <span>Mon - Fri, 9AM - 6PM</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">

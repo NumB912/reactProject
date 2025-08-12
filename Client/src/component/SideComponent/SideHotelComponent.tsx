@@ -9,13 +9,9 @@ import StarRatingComponent from "../StarRatingComponent";
 import StarRatingStatic from "../UI/StarRatingStatic";
 
 const SideHotelComponent = () => {
-  function toggleAmenity(arg0: string) {
-    console.log(arg0);
-  }
-
   const [selectedAmenity, setselectedAmenity] = useState<string[]>([]);
   const [selectStyles, setSelectStyles] = useState<string[]>([]);
-  const [star,setStar] = useState<string>("")
+  const [star, setStar] = useState<string>("");
 
   return (
     <>

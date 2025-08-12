@@ -1,20 +1,28 @@
-import React, { Children } from 'react'
+import React, { Children } from "react";
 
-interface DropDownContent{
-  isOpen:boolean;
-  children:React.ReactNode;
-  className:string;
+interface DropDownContent {
+  isOpen: boolean;
+  children: React.ReactNode;
+  className?: string;
 }
 
-const DropDownContent = ({isOpen,children,className}:DropDownContent) => {
+
+
+
+
+const DropDownContent = ({ isOpen, children, className=""}: DropDownContent) => {
   return (
-            <div
-          className={`absolute cursor-pointer ${className} ${isOpen ? "" : "hidden"}`}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >{children}</div>
-  )
-}
+    <div
+      className={`absolute cursor-pointer top-0 ${className} ${
+        isOpen ? "" : "hidden"
+      }`}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
-export default DropDownContent
+export default DropDownContent;

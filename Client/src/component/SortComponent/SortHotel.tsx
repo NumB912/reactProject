@@ -21,7 +21,7 @@ const SortHotel = () => {
         </div>
 
         <DropDownContent
-          className="top-7 bg-white absolute z-20 shadow-md w-full max-w-[250px] transition-all duration-200"
+          className="bg-white absolute z-20 shadow-md w-full max-w-[250px] transition-all duration-200 mt-15"
           isOpen={isOpenSort}
         >
           {options.map((opt) => (
