@@ -34,10 +34,12 @@ function SearchFlight() {
       </div>
 
       <Button
-        className="p-4 max-xl:w-full"
+        className="max-xl:w-full font-bold"
         onClick={() => {
           console.log("press");
         }}
+        variant="primary"
+        rounded="full"
       >
         Search
       </Button>

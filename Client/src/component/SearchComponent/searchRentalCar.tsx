@@ -13,10 +13,12 @@ const SearchRental=()=>{
         <div className="w-fit max-xl:w-full"><CalendarRentalCar /></div>
         <div className="w-fit max-xl:w-full"><Passengers /></div>
       <Button
-        className="w-fit max-xl:w-full"
+        className="w-fit max-xl:w-full font-bold"
         onClick={() => {
           navigate("/rentalcar");
         }}
+        rounded="full"
+        variant="primary"
       >
         Search
       </Button>

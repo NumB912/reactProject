@@ -19,8 +19,8 @@ const Prompt = ({isOpen,contentHandle="Submit",contentCancel="Cancel",title,cont
 
             <div className='flex justify-between mt-5'>
 
-                <Button className='bg-white border max-w-[100px] w-full' onClick={onCancel}>{contentCancel}</Button>
-                <Button className='bg-black text-white border max-w-[100px] w-full' onClick={onHandle}>{contentHandle}</Button>    
+                <Button className='bg-white max-w-[100px] w-full' variant='outline'  onClick={onCancel}>{contentCancel}</Button>
+                <Button className='bg-black text-white max-w-[100px] w-full' onClick={onHandle}>{contentHandle}</Button>    
             </div>
         </div>
     </Modal>

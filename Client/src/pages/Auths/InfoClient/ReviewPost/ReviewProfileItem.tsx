@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
-import Dropdown from "./DropDownComponent/Dropdown";
-import { ButtonBorder, Modal } from "./UI";
-import DropDownContent from "./DropDownComponent/DropDownContent";
-import StarRatingStatic from "./UI/StarRatingStatic";
-import PostReviewPhoto from "./postReviewPhoto";
-import { Image } from "../interface/ImagePhotoUrl";
-import Prompt from "./Prompt";
+import Dropdown from "../../../../component/DropDownComponent/Dropdown";
+import { ButtonBorder, Modal } from "../../../../component/UI";
+import DropDownContent from "../../../../component/DropDownComponent/DropDownContent";
+import StarRatingStatic from "../../../../component/UI/StarRatingStatic";
+import PostReviewPhoto from "../../../../component/postReviewPhoto";
+import { Image } from "../../../../interface/ImagePhotoUrl";
+import Prompt from "../../../../component/Prompt";
+import DeleteReviews from "./DeleteReviews";
 interface YourReviewedItemProps {
   image: string;
   titleService: string;
@@ -70,14 +71,7 @@ const ReviewProfileItem = ({
         </Dropdown>
       </div>
 
-      <Prompt
-        isOpen={isOpenDeleteReview}
-        onClose={()=>setIsOpenDeleteReview(false)}
-        content="Are you sure you want to delete this review?"
-        title="Delete review"
-        onCancel={() => {}}
-        onHandle={() => {}}
-      />
+      <DeleteReviews isOpen={isOpenDeleteReview} setIsOpen={()=>{setIsOpenDeleteReview(false)}} />
 
       <div className="flex flex-col gap-2 mt-1">
         <div>

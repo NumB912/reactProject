@@ -76,7 +76,7 @@ const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
           </div>
 
           <div className="flex justify-end w-full min-md:col-span-2 mt-5">
-            <Button className="w-full min-sm:max-w-[70px] min-sm:min-w-[50px] bg-black text-white">Save</Button>
+            <Button className="w-full min-sm:max-w-[70px] min-sm:min-w-[50px] text-white" variant="primary" size="md">Save</Button>
           </div>
         </div>
       </Modal>
