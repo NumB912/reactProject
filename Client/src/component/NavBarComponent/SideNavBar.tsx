@@ -28,11 +28,6 @@ const SideNavBar = () => {
         urlNavigation: "/About"
     },
     {
-        navigationID: "3",
-        contentNavigation: "Services",
-        urlNavigation: "/Service"
-    },
-    {
         navigationID: "4",
         contentNavigation: "Contact",
         urlNavigation: "/Contact"
@@ -42,7 +37,7 @@ const SideNavBar = () => {
     return (
         <>
             <button
-                className="w-2/12 hover:bg-gray-200 text-center h-full cursor-pointer"
+                className="p-5 aspect-square hover:bg-gray-200 text-center h-full cursor-pointer"
                 onClick={() => {
                     setShowsome(!isShowsome);
                     document.body.style.overflow = "hidden"
@@ -75,9 +70,9 @@ const SideNavBar = () => {
                 <img src={logo} alt="Logo" className="w-35" />
             </div>
 
-            <Link className="w-2/12 h-[80px] justify-center items-center bg-white sticky top-0 *:text-sm max-sm:flex hidden *:px-2 hover:bg-gray-200" to={""}>
+            <button className="p-5 aspect-square hover:bg-gray-200 text-center h-full cursor-pointer" to={""}>
                 <i className="fa-solid fa-user"></i>
-            </Link>
+            </button>
         </>
     )
 }

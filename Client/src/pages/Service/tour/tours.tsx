@@ -4,17 +4,18 @@ import { useNavigate } from "react-router";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { useTourFilter } from "../../../store";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
-import { Button, HeartFavorite, Modal } from "../../../component/UI";
+import { Button, ButtonIcon, Modal } from "../../../component/UI";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
 import ReusableSlider from "../../../component/SliderComponent/SliderComponent";
 import SortTour from "../../../component/SortComponent/SortTour";
 import SearchFilterTour from "../../../component/FilterComponent/SearchFilterTour";
 import SideTourComponent from "../../../component/SideComponent/SideTourComponent";
+import IconButton from "../../../component/UI/Button/IconButton";
 const Tours = () => {
   const [price, setPrice] = useState(0);
   const [isShowsome, setShowsome] = useState(false);
   const [isShowSort, setShowSort] = useState(false);
-
+  const [active, setActive] = useState<boolean>(false);
   const {
     maxPrice,
     minPrice,
@@ -251,7 +252,18 @@ const Tours = () => {
                 className="min-md:rounded-l-xl max-sm:rounded-t-xl h-full w-full object-cover"
               />
 
-              <HeartFavorite style="" />
+              <IconButton
+                iconColorActive="text-red-500"
+                className="absolute top-2 right-2 p-3 w-10 border border-gray-200"
+                buttonStyle="filled"
+                active={active}
+                onClick={() => {
+                  setActive(!active);
+                }}
+                icon={"heart"}
+                rounded="full"
+                iconSize={15}
+              />
             </div>
 
             <div

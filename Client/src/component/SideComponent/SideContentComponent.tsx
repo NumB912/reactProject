@@ -17,7 +17,7 @@ const SideContentComponent = ({children,label,containerStyle,labelStyle,contentS
   return (
     <div className={`w-full ${classNameContainer}`} style={containerStyle}>
         <div className={`side-label-content flex items-center justify-between gap-5 ${classNameLabel}`} onClick={()=>{setIsExtend(!isExtend)}} >
-            <p className='font-semibold text-md' style={labelStyle}>{label}</p>
+            <p className='font-bold text-md' style={labelStyle}>{label}</p>
             <i className={`fa-solid fa-angle-down transition-transform cursor-pointer ${!isExtend?"rotate-180":"rotate-0"}`}></i>
         </div>
         <div className={`content font-bold text-2xl ${classNameContent} ${!isExtend?"":"hidden"}`} style={contentStyle}>

@@ -3,8 +3,8 @@ import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
-import { Button, HeartFavorite, Modal } from "../../../component/UI";
-import { Link } from "react-router";
+import { Button, Modal } from "../../../component/UI";
+import { Link, useNavigate } from "react-router";
 import { StarRatingStatic } from "../../../component";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
 import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDropDownOutLineItem";
@@ -14,52 +14,7 @@ import Star from "../../../component/UI/Star";
 import SideHotelComponent from "../../../component/SideComponent/SideHotelComponent";
 import SideHotelModalComponent from "../../../component/SideComponent/SideModalComponent/SideHotelModalComponent";
 import SortModalComponent from "../../../component/SortComponent/SortModalComponent/SortModalComponent";
-const filterData: FilterItem[] = [
-  {
-    type: "Radio",
-    title: "Rating",
-    inputType: "StarRadio",
-    name: "StarRating",
-    options: [
-      { id: "RadioOption1", value: 5 },
-      { id: "RadioOption2", value: 4 },
-      { id: "RadioOption3", value: 3 },
-      { id: "RadioOption4", value: 2 },
-    ],
-  },
-  {
-    type: "Radio",
-    title: "Room Type",
-    inputType: "ValueRadio",
-    name: "roomType",
-    options: [
-      { id: "RadioTextOption1", value: "Luxury" },
-      { id: "RadioTextOption2", value: "Regular" },
-    ],
-  },
-  {
-    type: "CheckBox",
-    title: "Property Type",
-    inputType: "CheckBox",
-    name: "CheckBoxHotelsType",
-    options: [
-      { id: "CheckBoxHotelsType1", value: "Luxury" },
-      { id: "CheckBoxHotelsType2", value: "Regular" },
-    ],
-  },
-  {
-    type: "CheckBox",
-    title: "Amenities",
-    inputType: "CheckBox",
-    name: "CheckBoxAmenties",
-    options: [
-      { id: "CheckBoxAmenties1", value: "Wifi" },
-      { id: "CheckBoxAmenties2", value: "Breakfast" },
-      { id: "CheckBoxAmenties3", value: "Parking" },
-      { id: "CheckBoxAmenties4", value: "Pool" },
-    ],
-  },
-];
+import IconButton from "../../../component/UI/Button/IconButton";
 
 const Hotels = () => {
   const {
@@ -85,6 +40,8 @@ const Hotels = () => {
     setMinPrice(0);
   }, []);
 
+  const navigator = useNavigate();
+
   const [isShowSort, setIsShowSort] = useState<boolean>(false);
   const [isShowFilter, setisShowFilter] = useState<boolean>(false);
   return (
@@ -99,8 +56,11 @@ const Hotels = () => {
       </div>
 
       <div className="side-hotel">
-        <SideHotelComponent/>
-        <SideHotelModalComponent isShow={isShowFilter} setIsShow={setisShowFilter}/>
+        <SideHotelComponent />
+        <SideHotelModalComponent
+          isShow={isShowFilter}
+          setIsShow={setisShowFilter}
+        />
       </div>
 
       <div
@@ -134,10 +94,11 @@ const Hotels = () => {
 
             <div className="w-fit max-lg:hidden">
               <SortHotel />
-              <SortModalComponent isShowSort={isShowSort} setIsShowSort={setIsShowSort}/>
+              <SortModalComponent
+                isShowSort={isShowSort}
+                setIsShowSort={setIsShowSort}
+              />
             </div>
-
-
           </div>
           <div className="flex gap-3 justify-between rounded-xl border border-gray-200 p-2 shadow-md w-full max-lg:flex-wrap">
             <div className="flex w-full justify-between items-start p-1.5 max-sm:flex-col gap-2">
@@ -148,7 +109,14 @@ const Hotels = () => {
                   srcSet=""
                   className="w-full aspect-square rounded-xl object-cover"
                 />
-                <HeartFavorite />
+                <IconButton
+                  iconColorActive="text-red-500"
+                  className="absolute top-2 right-2 p-3 w-10 border border-gray-200"
+                  buttonStyle="filled"
+                  icon={"heart"}
+                  rounded="full"
+                  iconSize={15}
+                />
 
                 <div className="items-center absolute bottom-0 right-0 bg-black/90 rounded-md p-2 m-2 min-sm:hidden">
                   <div className="flex text-[clamp(15px,200rem,1vw)] items-center justify-center gap-2 text-white font-bold">
@@ -214,7 +182,12 @@ const Hotels = () => {
                 <p className="text-2xl font-bold">100.000 VNĐ</p>
                 <p className="text-sm">Đã bao gồm thuế và phí</p>
               </div>
-              <Button onClick={() => {}} className="w-full rounded-md mt-5">
+              <Button
+                onClick={() => {
+                  navigator("/hotels/1");
+                }}
+                className="w-full rounded-md mt-5"
+              >
                 view more
               </Button>
             </div>

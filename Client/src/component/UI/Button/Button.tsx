@@ -4,15 +4,17 @@ type variant = "contained" | "danger" | "primary" | "secondary" | "outline";
 type type = "button" | "submit" | "reset" | undefined;
 type rounded = "none" | "sm" | "md" | "lg" | "full";
 type size = "sm" | "md" | "lg";
+type typeButton = "border" | "filled" | "text" | "custom";
+
 export interface ButtonProp {
   onClick?: () => void;
   children?: React.ReactNode;
   className?: string;
-  style?: React.CSSProperties;
   type?: type;
   variant?: variant;
   rounded?: rounded;
   size?: size;
+  typeButton?: typeButton;
 }
 
 const variantClasses: Record<variant, string> = {
@@ -37,22 +39,28 @@ const sizeClasses: Record<size, string> = {
   lg: "px-4 py-3 text-lg",
 };
 
+const buttonClasses: Record<typeButton, string> = {
+  border: "border border-gray-500 hover:bg-gray-100",
+  filled: "text-white font-bold hover:bg-gray-800 active:bg-gray-900 bg-black",
+  text: "text-gray-800 hover:bg-gray-100",
+  custom: "",
+};
+
 const Button: React.FC<ButtonProp> = ({
   children,
   onClick,
-  className = "text-white font-bold hover:bg-gray-800 hover:scale-95 active:scale-90 active:bg-gray-900 bg-black",
-  style,
+  className = "",
   variant = "primary",
   type = "button",
-  rounded = "md",
+  rounded = "full",
   size = "md",
+  typeButton = "filled",
 }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`cursor-pointer rounded-full hover:scale-95 active:scale-90 transition-all duration-400 ease-in-out ${sizeClasses[size]} ${roundedClasses[rounded]} ${variantClasses[variant]} ${className}`}
-      style={style}
+      className={`cursor-pointer hover:scale-95 active:scale-90 transition-all duration-400 ease-in-out  ${buttonClasses[typeButton]} ${sizeClasses[size]} ${roundedClasses[rounded]} ${variantClasses[variant]} ${className}`}
     >
       {children}
     </button>

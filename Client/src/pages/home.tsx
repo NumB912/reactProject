@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { HeartFavorite } from "../component/UI";
 import { Link, Outlet, useNavigate } from "react-router";
 import "./styles/home.css";
 import { SearchBar, StarRatingStatic } from "../component";

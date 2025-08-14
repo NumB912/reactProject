@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { Button } from "../../../component/UI";
-const Payment_Hotel = () => {
+const HotelPayment = () => {
   return (
     <div className="w-7xl max-w-full">
       <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-2 items-center">
@@ -311,4 +311,4 @@ const Payment_Hotel = () => {
   );
 };
 
-export default Payment_Hotel;
+export default HotelPayment;

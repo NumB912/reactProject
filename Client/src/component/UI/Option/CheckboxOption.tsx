@@ -22,6 +22,7 @@ const CheckboxOption = ({ options, label, id, name, onChange, checkedValues = []
       <FormGroup>
         {options.map((opt) => (
           <FormControlLabel
+          
             key={opt.value}
             control={
               <Checkbox

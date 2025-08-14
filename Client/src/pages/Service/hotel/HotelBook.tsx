@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../../../component/UI";
 import { Link } from "react-router";
 
-const Book_Hotel = () => {
+const HotelBook = () => {
   return (
     <div className="w-7xl max-w-full">
       <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-4 items-center">
@@ -286,4 +286,4 @@ const Book_Hotel = () => {
   );
 };
 
-export default Book_Hotel;
+export default HotelBook;

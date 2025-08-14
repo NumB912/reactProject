@@ -37,7 +37,6 @@ const Modal = ({
     };
   }, [isOpen]);
 
-
   if (!isOpen) return null;
 
   return createPortal(
@@ -55,12 +54,14 @@ const Modal = ({
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-full flex justify-between items-center min-sm:hidden">
-        <p className="font-bold text-3xl p-2">{title}</p>
-        <div className="cursor-pointer p-2 hover:bg-gray-200"            
-         onClick={onClose}>     <i
-            className="fa-solid fa-x"
-          ></i></div>
+        <div className="w-full flex justify-between items-center">
+          <p className="font-bold text-3xl p-2">{title}</p>
+          <div
+            className="cursor-pointer p-2 hover:bg-gray-200"
+            onClick={onClose}
+          >
+            <i className="fa-solid fa-x min-sm:hidden"></i>
+          </div>
         </div>
         {children}
       </div>

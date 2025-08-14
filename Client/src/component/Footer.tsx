@@ -2,16 +2,16 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 dark:bg-gray-900 w-full bottom-0 mt-20">
+    <footer className="bg-gray-50 w-full bottom-0 mt-20">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
    <div className="grid grid-cols-5 gap-8 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
   {/* Company Info */}
   <div>
-    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
       Company
     </h2>
-    <p className="text-gray-500 dark:text-gray-400 font-medium mb-4">
+    <p className="text-gray-500 font-medium mb-4">
       We are a leading provider of web solutions, offering high-quality
       design, development, and support for businesses worldwide.
     </p>
@@ -25,10 +25,10 @@ const Footer = () => {
 
   {/* Resources */}
   <div>
-    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
       Resources
     </h2>
-    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+    <ul className="text-gray-500  font-medium">
       <li className="mb-4">
         <a href="https://flowbite.com/" className="hover:underline">
           Flowbite
@@ -47,10 +47,10 @@ const Footer = () => {
 
   {/* Follow Us */}
   <div>
-    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
       Follow us
     </h2>
-    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+    <ul className="text-gray-500  font-medium">
       <li className="mb-4">
         <a
           href="https://github.com/themesberg/flowbite"
@@ -88,10 +88,10 @@ const Footer = () => {
 
   {/* Legal */}
   <div>
-    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">
       Legal
     </h2>
-    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+    <ul className="text-gray-500  font-medium">
       <li className="mb-4">
         <a href="#" className="hover:underline">
           Privacy Policy
@@ -112,10 +112,10 @@ const Footer = () => {
 
   {/* Contact Us */}
   <div>
-    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">
       Contact Us
     </h2>
-    <ul className="text-gray-500 dark:text-gray-400 font-medium">
+    <ul className="text-gray-500  font-medium">
       <li className="mb-4">
         <a href="mailto:info@company.com" className="hover:underline">
           info@company.com
@@ -137,7 +137,7 @@ const Footer = () => {
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+          <span className="text-sm text-gray-500 sm:text-center ">
             © 2023{" "}
             <a href="https://flowbite.com/" className="hover:underline">
               Flowbite™

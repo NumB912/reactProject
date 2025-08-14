@@ -9,52 +9,6 @@ import { Button } from "../../../component/UI";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import SearchFilterRentalCar from "../../../component/FilterComponent/SearchFilterRentalCar";
 import SideRentalCarComponent from "../../../component/SideComponent/SideRentalCarComponent";
-const filterData: FilterItem[] = [
-  {
-    type: "Radio",
-    title: "Rating",
-    inputType: "StarRadio",
-    name: "StarRating",
-    options: [
-      { id: "RadioOption1", value: 5 },
-      { id: "RadioOption2", value: 4 },
-      { id: "RadioOption3", value: 3 },
-      { id: "RadioOption4", value: 2 },
-    ],
-  },
-  {
-    type: "Radio",
-    title: "Room Type",
-    inputType: "ValueRadio",
-    name: "roomType",
-    options: [
-      { id: "RadioTextOption1", value: "Luxury" },
-      { id: "RadioTextOption2", value: "Regular" },
-    ],
-  },
-  {
-    type: "CheckBox",
-    title: "Property Type",
-    inputType: "CheckBox",
-    name: "CheckBoxHotelsType",
-    options: [
-      { id: "CheckBoxHotelsType1", value: "Luxury" },
-      { id: "CheckBoxHotelsType2", value: "Regular" },
-    ],
-  },
-  {
-    type: "CheckBox",
-    title: "Amenities",
-    inputType: "CheckBox",
-    name: "CheckBoxAmenties",
-    options: [
-      { id: "CheckBoxAmenties1", value: "Wifi" },
-      { id: "CheckBoxAmenties2", value: "Breakfast" },
-      { id: "CheckBoxAmenties3", value: "Parking" },
-      { id: "CheckBoxAmenties4", value: "Pool" },
-    ],
-  },
-];
 
 const RentalCars = () => {
   const {

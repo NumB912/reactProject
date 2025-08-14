@@ -83,8 +83,8 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="w-full flex justify-center items-center bg-white sticky top-0 border-gray-200 border-b shadow *:text-sm max-sm:hidden p-2 z-50">
-        <div className=" max-sm:hidden">
+      <div className="w-full flex justify-center items-center bg-white sticky top-0 border-gray-200 border-b shadow *:text-sm max-md:hidden p-2 z-50">
+        <div className=" max-sm:hidden w-[256px]">
           <img src={logo} alt="Logo" className="w-20 m-auto" />
         </div>
         <Tabs
@@ -103,28 +103,45 @@ const NavBar = () => {
               ref={profileInfo}
             >
               <Dropdown
-                className=" w-[200px] right-0"
+                className=" w-[256px] right-0"
                 handleClose={() => setIsOpenProfileTab(false)}
               >
                 <div
-                  className="img border-l border-gray-200 pl-2 pr-3 flex items-center"
+                  className="img flex items-center "
                   onClick={() => setIsOpenProfileTab(!isOpenProfileTab)}
                 >
+                  <p className="font-bold">Hi,<p>Welcome !!</p></p>
                   <img src={logo} className="max-w-25" />
                 </div>
 
-                <DropDownContent isOpen={isOpenProfileTab} className="mt-15">
+                <DropDownContent isOpen={isOpenProfileTab} className="mt-17 left-1/2 -translate-x-1/2">
                   <ListItem>
-                    <Link to={`./Profile/123`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                    <Link
+                      to={`./Profile/123`}
+                      onClick={() => setIsOpenProfileTab(false)}
+                      className="w-full"
+                    >
                       My profile
                     </Link>
-                    <Link to={`./Profile/123/reviews`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                    <Link
+                      to={`./Profile/123/reviews`}
+                      onClick={() => setIsOpenProfileTab(false)}
+                      className="w-full"
+                    >
                       Write reviews
                     </Link>
-                    <Link to={`./Profile/123/trips`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                    <Link
+                      to={`./Profile/123/trips`}
+                      onClick={() => setIsOpenProfileTab(false)}
+                      className="w-full"
+                    >
                       My trips
                     </Link>
-                    <Link to={`./Profile/123/bookings`} onClick={() => setIsOpenProfileTab(false)} className="w-full">
+                    <Link
+                      to={`./Profile/123/bookings`}
+                      onClick={() => setIsOpenProfileTab(false)}
+                      className="w-full"
+                    >
                       Post photo
                     </Link>
                     <div className="w-full" onClick={handleLogout}>
@@ -325,7 +342,7 @@ const NavBar = () => {
         </div>
       </div>
 
-      <div className="w-full h-[80px] justify-center items-center bg-white shadow-md sticky top-0 *:text-sm max-sm:flex hidden z-30">
+      <div className="w-full h-[80px] justify-center items-center bg-white shadow-md sticky top-0 *:text-sm max-md:flex hidden z-30">
         <SideNavBar />
       </div>
     </>

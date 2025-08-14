@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
 import StarRatingStatic from "../UI/StarRatingStatic";
-import { HeartFavorite } from "../UI";
 
 
 

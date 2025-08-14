@@ -20,16 +20,18 @@ const SideRentalCarComponent = () => {
           <SliderDual />
         </SideContentComponent>
 
-        <SideContentComponent label="Amenities">
+        <SideContentComponent label="Vehicle Type">
           <CheckboxOption
-            id="amenities-radio"
-            name="amenities"
+            id="vehicle-type-checkbox"
+            name="vehicleType"
             checkedValues={selectedAmenity}
             options={[
-              { label: "Wifi", value: "Wifi" },
-              { label: "Breakfast", value: "Breakfast" },
-              { label: "Parking", value: "Parking" },
-              { label: "Pool", value: "Pool" },
+              { label: "Small car", value: "Small car" },
+              { label: "Medium car", value: "Medium car" },
+              { label: "Large car", value: "Large car" },
+              { label: "SUV", value: "SUV" },
+              { label: "Minivan", value: "Minivan" },
+              { label: "Mid-size Car", value: "Mid-size Car" },
             ]}
             onChange={function (
               event: React.ChangeEvent<HTMLInputElement>
@@ -44,15 +46,13 @@ const SideRentalCarComponent = () => {
           />
         </SideContentComponent>
 
-        <SideContentComponent label="Rating">
+        <SideContentComponent label="Rating point">
           <RadioOption
             id="ratingStar-radio"
             name="ratingStar"
             value={star}
             options={[
-              { label: <StarRatingStatic starNumber={1} />, value: "1" },
-              { label: <StarRatingStatic starNumber={2} />, value: "2" },
-              { label: <StarRatingStatic starNumber={3} />, value: "3" },
+           { label: <StarRatingStatic starNumber={3} />, value: "3" },
               { label: <StarRatingStatic starNumber={4} />, value: "4" },
               { label: <StarRatingStatic starNumber={5} />, value: "5" },
             ]}
@@ -64,7 +64,7 @@ const SideRentalCarComponent = () => {
           />
         </SideContentComponent>
 
-        <SideContentComponent label="Style">
+        <SideContentComponent label="Number of Seats">
           <CheckboxOption
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const value = event.target.value;
@@ -75,27 +75,17 @@ const SideRentalCarComponent = () => {
               );
             }}
             checkedValues={selectStyles}
-            name={"styles"}
+            name={"numberOfSeats"}
+            id={"numberOfSeats-checkbox"}
             options={[
-              { label: "Budget", value: "Budget" },
-              { label: "Mid-range", value: "Mid-range" },
-              { label: "Luxury", value: "Luxury" },
-              { label: "Family-friendly", value: "Family-friendly" },
-              { label: "Business", value: "Business" },
-              {
-                label: "Romantic",
-                value: "Romantic",
-              },
-              {
-                label: "Modern",
-                value: "Modern",
-              },
+              { label: "4 seats", value: "4Seats" },
+              { label: "5 seats", value: "5Seats" },
+              { label: "6+ seats", value: "6PlusSeats" },
             ]}
-            id={"styles-checkbox"}
           ></CheckboxOption>
         </SideContentComponent>
 
-        <SideContentComponent label="Class">
+        <SideContentComponent label="Vehicle information">
           <CheckboxOption
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const value = event.target.value;
@@ -106,19 +96,34 @@ const SideRentalCarComponent = () => {
               );
             }}
             checkedValues={selectStyles}
-            name={"Hotel class"}
+            name={"Vehicle information"}
             options={[
-              { label: "5 Star", value: "5" },
-              { label: "4 Star", value: "4" },
-              { label: "3 Star", value: "3" },
-              { label: "2 Star", value: "2" },
-              { label: "1.5 Star", value: "1.5" },
-              {
-                label: "1 Star",
-                value: "1",
-              },
+              { label: "4+ doors", value: "4PlusDoors" },
+              { label: "Air conditioning", value: "AirConditioning" },
             ]}
-            id={"styles-checkbox"}
+            id={"vehicle-information-checkbox"}
+          ></CheckboxOption>
+        </SideContentComponent>
+
+
+                <SideContentComponent label="Electric Vehicle">
+          <CheckboxOption
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const value = event.target.value;
+              setSelectStyles((prev) =>
+                prev.includes(value)
+                  ? prev.filter((v) => v !== value)
+                  : [...prev, value]
+              );
+            }}
+            checkedValues={selectStyles}
+            name={"Electric Vehicle"}
+            options={[
+              { label: "Pure electric vehicle", value: "PureElectricVehicle" },
+              { label: "Hybrid vehicle", value: "HybridVehicle" },
+              { label: "Plug-in hybrid vehicle", value: "PlugInHybridVehicle" },
+            ]}
+            id={"electric-vehicle-checkbox"}
           ></CheckboxOption>
         </SideContentComponent>
       </SideComponent>

@@ -7,9 +7,9 @@ import Contact from "../pages/contact";
 
 
 import Hotels from "../pages/Service/hotel/Hotels";
-import HotelDetail from "../pages/Service/hotel/hotel_detail";
-import Book_Hotel from "../pages/Service/hotel/book_hotel";
-import Payment_Hotel from "../pages/Service/hotel/Payment_Hotel";
+import HotelDetail from "../pages/Service/hotel/HotelDetail";
+import Book_Hotel from "../pages/Service/hotel/HotelBook";
+import Payment_Hotel from "../pages/Service/hotel/HotelPayment";
 
 
 import RentalCars from "../pages/Service/car/RentalCars";
@@ -18,8 +18,8 @@ import BookCar from "../pages/Service/car/BookCar";
 import PaymentCar from "../pages/Service/car/PaymentCar";
 
 
-import Tours from "../pages/Service/tour/tours";
-import TourDetail from "../pages/Service/tour/tourDetail";
+import Tours from "../pages/Service/tour/Tours";
+import TourDetail from "../pages/Service/tour/TourDetail";
 import BookTour from "../pages/Service/tour/TourBook";
 import Payment_Tour from "../pages/Service/tour/TourPayment";
 
