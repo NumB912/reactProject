@@ -4,7 +4,7 @@ type variant = "contained" | "danger" | "primary" | "secondary" | "outline";
 type type = "button" | "submit" | "reset" | undefined;
 type rounded = "none" | "sm" | "md" | "lg" | "full";
 type size = "sm" | "md" | "lg";
-type typeButton = "border" | "filled" | "text" | "custom";
+type typeButton =  "filled" | "text" | "custom";
 
 export interface ButtonProp {
   onClick?: () => void;
@@ -40,7 +40,6 @@ const sizeClasses: Record<size, string> = {
 };
 
 const buttonClasses: Record<typeButton, string> = {
-  border: "border border-gray-500 hover:bg-gray-100",
   filled: "text-white font-bold hover:bg-gray-800 active:bg-gray-900 bg-black",
   text: "text-gray-800 hover:bg-gray-100",
   custom: "",

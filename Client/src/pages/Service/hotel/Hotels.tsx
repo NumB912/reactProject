@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { Button, Modal } from "../../../component/UI";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { StarRatingStatic } from "../../../component";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
 import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDropDownOutLineItem";
@@ -39,11 +38,11 @@ const Hotels = () => {
     setMaxPrice(100);
     setMinPrice(0);
   }, []);
-
-  const navigator = useNavigate();
-
   const [isShowSort, setIsShowSort] = useState<boolean>(false);
   const [isShowFilter, setisShowFilter] = useState<boolean>(false);
+  const navigator = useNavigate();
+
+
   return (
     <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
       <div className="NameLocation col-span-2 mt-6 w-full">
@@ -112,7 +111,7 @@ const Hotels = () => {
                 <IconButton
                   iconColorActive="text-red-500"
                   className="absolute top-2 right-2 p-3 w-10 border border-gray-200"
-                  buttonStyle="filled"
+                  typeButton="filled"
                   icon={"heart"}
                   rounded="full"
                   iconSize={15}
@@ -184,7 +183,7 @@ const Hotels = () => {
               </div>
               <Button
                 onClick={() => {
-                  navigator("/hotels/1");
+                  navigator("/hotels/service-1");
                 }}
                 className="w-full rounded-md mt-5"
               >

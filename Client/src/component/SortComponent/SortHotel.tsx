@@ -17,7 +17,7 @@ const SortHotel = () => {
       >
         <div className="w-full font-semibold flex items-center justify-evenly gap-3">
           <i className="fa-solid fa-sort"></i>
-          <p>Sort with: {item}</p>
+          <p>Sort by: {item}</p>
         </div>
 
         <DropDownContent

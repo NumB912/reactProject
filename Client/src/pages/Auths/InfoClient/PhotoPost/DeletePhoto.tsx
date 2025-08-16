@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "../../../../component/UI";
-import Prompt from "../../../../component/Prompt";
+import Prompt from "../../../../component/UI/Prompt";
 interface DeletePhotoProp {
   isOpen: boolean;
   setIsOpen: () => void;

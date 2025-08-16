@@ -1,5 +1,5 @@
 import React from 'react'
-import Prompt from '../../../../component/Prompt'
+import Prompt from '../../../../component/UI/Prompt'
 interface DeleteReviewsProp {
   isOpen: boolean;
   setIsOpen: () => void;
