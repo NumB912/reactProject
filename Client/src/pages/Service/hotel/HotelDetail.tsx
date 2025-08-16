@@ -10,47 +10,55 @@ import CardContent from "../../../component/CardContent";
 import IconLabel from "../../../component/UI/IconLabel";
 import RoomCard from "./RoomCard";
 import { Room } from "./modal/Room";
+import IconButton from "../../../component/UI/Button/IconButton";
 const HotelDetail = () => {
   const navigate = useNavigate();
   const rooms: Room[] = [
-  {
-    id: "room-101",
-    name: "Deluxe Sea View Room",
-    price: 1500000, 
-    area: 35,
-    beds: [{ id: "bed-1", name: "1 King Bed" }],
-    FacilitesGroup: [
-      {
-        id: "group-1",
-        name: "Accessibility",
-        facilities: [
-          { id: "g1-i1", name: "TV with subtitles", facilityIcon: "fa-solid fa-closed-captioning" }
-        ]
-      }
-    ]
-  },
-  {
-    id: "room-102",
-    name: "Standard City View",
-    price: 1000000,
-    area: 28,
-    beds: [{ id: "bed-2", name: "2 Single Beds" }],
-    FacilitesGroup: [
-      {
-        id: "group-2",
-        name: "Bathroom & Toiletries",
-        facilities: [
-          { id: "g2-i1", name: "Shower", facilityIcon: "fa-solid fa-shower" },
-          { id: "g2-i2", name: "Hair dryer", facilityIcon: "fa-solid fa-wind" }
-        ]
-      }
-    ]
-  }
-];
-
+    {
+      id: "room-101",
+      name: "Deluxe Sea View Room",
+      price: 1500000,
+      area: 35,
+      beds: [{ id: "bed-1", name: "1 King Bed" }],
+      FacilitesGroup: [
+        {
+          id: "group-1",
+          name: "Accessibility",
+          facilities: [
+            {
+              id: "g1-i1",
+              name: "TV with subtitles",
+              facilityIcon: "fa-solid fa-closed-captioning",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "room-102",
+      name: "Standard City View",
+      price: 1000000,
+      area: 28,
+      beds: [{ id: "bed-2", name: "2 Single Beds" }],
+      FacilitesGroup: [
+        {
+          id: "group-2",
+          name: "Bathroom & Toiletries",
+          facilities: [
+            { id: "g2-i1", name: "Shower", facilityIcon: "fa-solid fa-shower" },
+            {
+              id: "g2-i2",
+              name: "Hair dryer",
+              facilityIcon: "fa-solid fa-wind",
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
   return (
-    <div className="w-7xl max-w-full py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
+    <div className="content py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
       <div className="info w-8/10">
         <div>
           <FilterCheckInHotel className={"mb-10"} />
@@ -84,21 +92,21 @@ const HotelDetail = () => {
 
           <div className="flex flex-col justify-between">
             <div className="flex gap-2 justify-start items-center">
-              <p className="copyURL">
-                <i className="fa-solid fa-copy"></i>
-              </p>
-              <ButtonIcon
-                iconName="heart"
+              <IconButton icon="copy" buttonStyle="text"></IconButton>
+              <IconButton
+                icon="heart"
                 iconColorActive="text-red-500"
-                className=""
+                className="p-2 "
                 iconSize={18}
               >
                 Save
-              </ButtonIcon>
+              </IconButton>
             </div>
             <div className="flex items-center gap-2">
               <p className="price text-3xl font-bold">$335</p>
-              <Button typeButton="border" variant="outline" onClick={()=>{}}>View Deal</Button>
+              <Button variant="outline" typeButton="text" onClick={() => {}}>
+                View Deal
+              </Button>
             </div>
           </div>
         </div>
@@ -253,9 +261,28 @@ const HotelDetail = () => {
         <div className="">
           <p className="text-2xl font-bold">Select room</p>
           <div className="flex gap-2 *:p-1.5 *:border *:rounded-3xl *:text-[10px] *:font-bold *:border-gray-400 *:max-sm:hidden *:w-[60px] *:text-center py-3">
-            <Button rounded="full" size="sm" variant="outline" typeButton="filled" >All</Button>
-            <Button rounded="full" size="sm" variant="outline" typeButton="border">1 Bed</Button>
-            <Button rounded="full" size="sm" variant="outline" typeButton="border">2 Beds</Button>
+            <Button
+              rounded="full"
+              size="sm"
+              variant="outline"
+              typeButton="filled"
+            >
+              All
+            </Button>
+            <Button
+              rounded="full"
+              size="sm"
+              variant="outline"
+            >
+              1 Bed
+            </Button>
+            <Button
+              rounded="full"
+              size="sm"
+              variant="outline"
+            >
+              2 Beds
+            </Button>
           </div>
           <div className="grid grid-cols-3 gap-5">
             {rooms?.map((room) => {
