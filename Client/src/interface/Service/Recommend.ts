@@ -1,7 +1,7 @@
-import { ImageUrlProp } from "../ImagePhotoUrl";
+import { Image } from "../ImagePhotoUrl";
 
 export interface Recommend{
     id:string;
     url:string;
-    img:ImageUrlProp
+    img:Image
 }

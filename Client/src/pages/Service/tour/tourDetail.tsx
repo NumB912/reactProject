@@ -7,6 +7,7 @@ import { Button, ButtonIcon } from "../../../component/UI";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
 import PassengersTour from "../../../component/PassengerComponent/PassengersTour";
 import { StarRatingStatic } from "../../../component";
+import IconButton from "../../../component/UI/Button/IconButton";
 const TourDetail = () => {
   const navigate = useNavigate();
 
@@ -58,15 +59,15 @@ const TourDetail = () => {
               <p className="copyURL">
                 <i className="fa-solid fa-copy"></i>
               </p>
-          <ButtonIcon icon={<FaHeart/>} iconColor="*:text-green-500" containStyle="" onClick={()=>{}}>
+          <IconButton icon="heart" color="*:text-green-500" onClick={()=>{}}>
             Save
-            </ButtonIcon>
+            </IconButton>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 min-w-[200px]">
               <p className="price text-3xl font-bold">$335</p>
-              <ButtonIcon>
+              <Button rounded="full" variant="outline" typeButton="text" >
                 View Deal
-              </ButtonIcon>
+              </Button>
             </div>
           </div>
         </div>
@@ -281,7 +282,7 @@ const TourDetail = () => {
                 <div
                   className="w-full gap-2 relative flex flex-wrap justify-start items-center self-end max-sm:flex-wrap max-lg:justify-center max-lg:w-full"
                 >
-                  <Calendar_Tour containerStyle={""} CalendarStyleTour={""}/>
+                  <Calendar_Tour/>
 
                   <PassengersTour/>
                 </div>

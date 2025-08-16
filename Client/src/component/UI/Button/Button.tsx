@@ -4,7 +4,7 @@ type variant = "contained" | "danger" | "primary" | "secondary" | "outline";
 type type = "button" | "submit" | "reset" | undefined;
 type rounded = "none" | "sm" | "md" | "lg" | "full";
 type size = "sm" | "md" | "lg";
-type typeButton = "filled" | "text" | "custom";
+type typeButton =  "filled" | "text" | "custom";
 
 export interface ButtonProp {
   onClick?: () => void;

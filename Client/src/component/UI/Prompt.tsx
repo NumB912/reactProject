@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal } from './UI'
+import { Button, Modal } from '.'
 interface PromptProp{
     isOpen:boolean;
     onClose:()=>void;

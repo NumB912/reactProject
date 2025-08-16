@@ -3,7 +3,6 @@ import { Travel } from "../../interface/Service/TravelInterface";
 import { Link } from "react-router";
 import StarRatingStatic from "../UI/StarRatingStatic";
 import IconButton from "../UI/Button/IconButton";
-import { FaHeart } from "react-icons/fa";
 
 export const renderTravelItem = (item: Travel) => {
   const [active, setActive] = useState<boolean>(false);

@@ -110,11 +110,16 @@ const NavBar = () => {
                   className="img flex items-center "
                   onClick={() => setIsOpenProfileTab(!isOpenProfileTab)}
                 >
-                  <p className="font-bold">Hi,<p>Welcome !!</p></p>
+                  <p className="font-bold">
+                    Hi,<p>Welcome !!</p>
+                  </p>
                   <img src={logo} className="max-w-25" />
                 </div>
 
-                <DropDownContent isOpen={isOpenProfileTab} className="mt-17 left-1/2 -translate-x-1/2">
+                <DropDownContent
+                  isOpen={isOpenProfileTab}
+                  className="mt-17 left-1/2 -translate-x-1/2"
+                >
                   <ListItem>
                     <Link
                       to={`./Profile/123`}
@@ -154,7 +159,7 @@ const NavBar = () => {
             <div
               className={`${
                 isSuccess ? "hidden" : ""
-              } signIn w-full flex justify-center items-center`}
+              } signIn  w-[256px] flex justify-center items-center `}
             >
               <Button
                 className="bg-black text-center w-full max-w-30
@@ -202,8 +207,9 @@ const NavBar = () => {
 
                     <div className="flex flex-col w-full gap-3">
                       <Button
-                        className="w-full bg-white border border-gray-400 hover:bg-white active:bg-gray-300"
-                        style={{ color: "black", padding: "10px" }}
+                        rounded="full"
+                        variant="outline"
+                        typeButton="text"
                         onClick={() => {
                           handleSignIn(
                             "refreshToken",
@@ -222,7 +228,9 @@ const NavBar = () => {
 
                       <Button
                         className="w-full bg-white border-gray-400 border hover:bg-white active:bg-gray-300"
-                        style={{ color: "black", padding: "10px" }}
+                        rounded="full"
+                        variant="outline"
+                        typeButton="text"
                         onClick={() => setModalStep("loginEmail")}
                       >
                         <div className="w-full flex justify-start items-center *:ml-5">

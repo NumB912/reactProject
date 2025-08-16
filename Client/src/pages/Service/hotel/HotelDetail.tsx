@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonIcon } from "../../../component/UI";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { FaHeart } from "react-icons/fa6";
 import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
 import Comment from "../../Comment";
@@ -10,6 +10,240 @@ import CardContent from "../../../component/CardContent";
 import IconLabel from "../../../component/UI/IconLabel";
 import RoomCard from "./RoomCard";
 import { Room } from "./modal/Room";
+import InfoService from "../../../component/infoService";
+import ImageSlide from "../../../component/ImageSlide";
+import { hotel } from "../../../model/hotel/hotel";
+import Service from "../../Service";
+import { u } from "react-router/dist/development/route-data-B9_30zbP";
+
+const hotels: hotel[] = [
+  {
+    service: {
+      serviceID: "service-1",
+      name: "Hotel Service",
+      address: "123 Main St, City, Country",
+      Images: [
+        {
+          url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
+          imageID: "",
+          description: "",
+          altText: "",
+        },
+        {
+          url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
+          imageID: "",
+          description: "",
+          altText: "",
+        },
+        {
+          url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
+          imageID: "",
+          description: "",
+          altText: "",
+        },
+      ],
+      rating: 4.5,
+      ratingQuantity: 0,
+      contact: {
+        contactID: "contact-1",
+        phone: "123-456-7890",
+        email: "info@hotelservice.com",
+        website: "www.hotelservice.com",
+      },
+      reviewQuantity: 0,
+      review: "",
+    },
+    rooms: [
+      {
+        roomID: "room-101",
+        name: "Deluxe Sea View Room",
+        price: 1500000,
+        area: 35,
+    beds: [
+      { id: "bed-1", name: "1 King Bed" }
+    ],
+    facilities: [
+      {
+        facilityID: "f1",
+        name: "Accessibility",
+        amenities: [
+          { amenityID: "a1", name: "TV with subtitles", icon: "tv" },
+          { amenityID: "a2", name: "Wheelchair accessible", icon: "wheelchair" }
+        ]
+      },
+      {
+        facilityID: "f2",
+        name: "Internet",
+        amenities: [
+          { amenityID: "a3", name: "Free WiFi", icon: "wifi" },
+          { amenityID: "a4", name: "High-speed Ethernet", icon: "ethernet" }
+        ]
+      }
+    ],
+    quantity: 10,
+  },
+
+  {
+    roomID: "room-102",
+    name: "Superior Garden View Room",
+    price: 1200000,
+    area: 30,
+    beds: [
+      { id: "bed-2", name: "2 Twin Beds" }
+    ],
+    facilities: [
+      {
+        facilityID: "f3",
+        name: "Bathroom",
+        amenities: [
+          { amenityID: "a5", name: "Hot shower", icon: "shower" },
+          { amenityID: "a6", name: "Bathtub", icon: "bath" }
+        ]
+      },
+      {
+        facilityID: "f4",
+        name: "Entertainment",
+        amenities: [
+          { amenityID: "a7", name: "Smart TV", icon: "tv" },
+          { amenityID: "a8", name: "Bluetooth speaker", icon: "speaker" }
+        ]
+      }
+    ],
+    quantity: 8,
+  },
+
+  {
+    roomID: "room-103",
+    name: "Family Suite",
+    price: 2500000,
+    area: 55,
+    beds: [
+      { id: "bed-3", name: "2 Queen Beds" },
+      { id: "bed-4", name: "1 Sofa Bed" }
+    ],
+    facilities: [
+      {
+        facilityID: "f5",
+        name: "Kitchen",
+        amenities: [
+          { amenityID: "a9", name: "Microwave", icon: "microwave" },
+          { amenityID: "a10", name: "Mini-fridge", icon: "refrigerator" }
+        ]
+      },
+      {
+        facilityID: "f6",
+        name: "Bathroom",
+        amenities: [
+          { amenityID: "a11", name: "Jacuzzi", icon: "hot-tub" },
+          { amenityID: "a12", name: "Hair dryer", icon: "dryer" }
+        ]
+      }
+    ],
+    quantity: 5,
+  },
+
+  {
+    roomID: "room-104",
+    name: "Presidential Suite",
+    price: 5000000,
+    area: 120,
+    beds: [
+      { id: "bed-5", name: "1 Super King Bed" },
+      { id: "bed-6", name: "2 Twin Beds" }
+    ],
+    facilities: [
+      {
+        facilityID: "f7",
+        name: "Luxury",
+        amenities: [
+          { amenityID: "a13", name: "Private pool", icon: "pool-8-ball" },
+          { amenityID: "a14", name: "Personal butler", icon: "user" }
+        ]
+      },
+      {
+        facilityID: "f8",
+        name: "Entertainment",
+        amenities: [
+          { amenityID: "a15", name: "Home theater", icon: "tv" },
+          { amenityID: "a16", name: "Gaming console", icon: "gamepad" }
+        ]
+      }
+    ],
+    quantity: 2,
+  },
+
+  {
+    roomID: "room-105",
+    name: "Standard City View",
+    price: 900000,
+    area: 25,
+    beds: [
+      { id: "bed-7", name: "1 Queen Bed" }
+    ],
+    facilities: [
+      {
+        facilityID: "f9",
+        name: "Basic",
+        amenities: [
+          { amenityID: "a17", name: "Air conditioning", icon: "wind" },
+          { amenityID: "a18", name: "Desk", icon: "briefcase" }
+        ]
+      },
+      {
+        facilityID: "f10",
+        name: "Bathroom",
+        amenities: [
+          { amenityID: "a19", name: "Rain shower", icon: "cloud-rain" },
+          { amenityID: "a20", name: "Free toiletries", icon: "gift" }
+        ]
+      }
+    ],
+    quantity: 15,
+  },
+
+  {
+    roomID: "room-106",
+    name: "Honeymoon Suite",
+    price: 3000000,
+    area: 60,
+    beds: [
+      { id: "bed-8", name: "1 King Bed" },
+      { id: "bed-9", name: "1 Sofa Bed" }
+    ],
+    facilities: [
+      {
+        facilityID: "f11",
+        name: "Romantic",
+        amenities: [
+          { amenityID: "a21", name: "Private balcony", icon: "home" },
+          { amenityID: "a22", name: "Ocean view", icon: "sun" }
+        ]
+      },
+      {
+        facilityID: "f12",
+        name: "Bathroom",
+        amenities: [
+          { amenityID: "a23", name: "Jacuzzi", icon: "hot-tub" },
+          { amenityID: "a24", name: "Candles & flowers", icon: "flower" }
+        ]
+      }
+    ],
+    quantity: 4,
+  }]
+
+  },
+];
+
+const HotelDetail = () => {
+  const { hotelID } = useParams();
+  const [hotel, setHotel] = useState<hotel | null>(null);
+
+  useEffect(() => {
+    const foundHotel = hotels.find((h) => h.service.serviceID === hotelID);
+    if (foundHotel) {
+      setHotel(foundHotel);
+    }
+  }, [hotelID]);
 import IconButton from "../../../component/UI/Button/IconButton";
 const HotelDetail = () => {
   const navigate = useNavigate();
@@ -58,11 +292,17 @@ const HotelDetail = () => {
   ];
 
   return (
+    <div className="container justify-center flex flex-col items-center">
+      <div className="info content p-4">
+        <div className="search-filter">
     <div className="content py-10 border-t border-gray-300 m-10 justify-center flex flex-col items-center">
       <div className="info w-8/10">
         <div>
           <FilterCheckInHotel className={"mb-10"} />
         </div>
+
+        <div className="info-contact">
+          {hotel && <InfoService service={hotel.service} />}
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
             <p className="text-4xl font-bold">The Evelyn Hot</p>
@@ -111,41 +351,8 @@ const HotelDetail = () => {
           </div>
         </div>
 
-        <div className="img flex my-4 gap-1 w-full justify-center">
-          <div className="photoMain w-9/12 h-[600px] overflow-hidden">
-            <img
-              src={
-                "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg"
-              }
-              className="w-full h-full object-cover rounded-lg"
-            />
-          </div>
-          <div className="flex flex-col w-2/12 gap-1 h-[600px]">
-            <div className="traveler h-1/3 overflow-hidden">
-              <img
-                src={
-                  "https://www.kayak.com/rimg/himg/b0/2c/df/leonardo-878836-186563354-395441.jpg?width=1366&height=768&crop=true"
-                }
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </div>
-            <div className="RoomSuite h-1/3 overflow-hidden">
-              <img
-                src={
-                  "https://content.r9cdn.net/rimg/himg/b7/96/b8/leonardo-878836-186563362-407114.jpg?width=500&height=350&xhint=1620&yhint=1000&crop=true"
-                }
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </div>
-            <div className="video h-1/3 overflow-hidden">
-              <img
-                src={
-                  "https://images.trvl-media.com/lodging/9000000/8090000/8082700/8082639/33e6873e.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"
-                }
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </div>
-          </div>
+        <div className="image-slide my-5">
+          <ImageSlide images={hotel?.service.Images || []} />
         </div>
 
         <div className="grid grid-cols-7 grid-rows-2">
@@ -241,9 +448,12 @@ const HotelDetail = () => {
           <div className="locationAndReview col-span-2 row-span-2 *:mb-3 flex flex-col px-4">
             <div className="Review rounded shadow p-4">
               <div className="review">
-                <p className="text-xl font-bold">8,4 Great</p>
+                <p className="text-xl font-bold">
+                  {hotel?.service.rating} great
+                </p>
                 <p className="text-gray-500 text-sm">
-                  <i className="fa-solid fa-check-double"></i> 1,289 reviews
+                  <i className="fa-solid fa-check-double"></i>
+                  {hotel?.service.reviewQuantity} reviews
                 </p>
               </div>
               <div className="flex flex-wrap *:text-sm gap-2 py-3 *:bg-green-300 *:p-1 *:rounded">
@@ -273,6 +483,30 @@ const HotelDetail = () => {
               rounded="full"
               size="sm"
               variant="outline"
+              typeButton="text"
+            >
+              1 Bed
+            </Button>
+            <Button
+              rounded="full"
+              size="sm"
+              variant="outline"
+              typeButton="text"
+            >
+              2 Beds
+            </Button>
+            <Button
+              rounded="full"
+              size="sm"
+              variant="outline"
+              typeButton="filled"
+            >
+              All
+            </Button>
+            <Button
+              rounded="full"
+              size="sm"
+              variant="outline"
             >
               1 Bed
             </Button>
@@ -284,9 +518,9 @@ const HotelDetail = () => {
               2 Beds
             </Button>
           </div>
-          <div className="grid grid-cols-3 gap-5">
-            {rooms?.map((room) => {
-              return <RoomCard key={room.id} room={room} />;
+          <div className="grid grid-cols-4 gap-5">
+            {hotel?.rooms?.map((room) => {
+              return <RoomCard key={room.roomID} room={room} />;
             })}
           </div>
         </div>

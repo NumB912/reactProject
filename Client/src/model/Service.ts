@@ -1,10 +1,15 @@
-interface ServiceDetail {
-  ServiceID: string;
-  ServiceName: string;
-  Discription: string;
-  AreaName: string;
-  NameProvince: string;
-  ServiceTypeID: string;
-  CompanyName: string;
-  ImageURLs: string[];
+import { Contact } from "./contact";
+import { Image } from "./image";
+
+export interface Service{
+    serviceID: string;
+    name:string;
+    rating: number;
+    ratingQuantity: number;
+    reviewQuantity:number;
+    address:string;
+    contact: Contact;
+    review: string;
+    Images: Image[];
 }
+

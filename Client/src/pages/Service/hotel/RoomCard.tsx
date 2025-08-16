@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "../../../component/UI";
 import { Link, useNavigate } from "react-router";
-import { Facility, Room } from "./modal/Room";
-
+import { Room } from "../../../model/hotel/hotel";
+import { Facility } from "../../../model/facility";
+import { am } from "react-router/dist/development/route-data-B9_30zbP";
+import Icon from "../../../component/UI/Icon";
 interface RoomCardProp {
   room?: Room;
 }
@@ -39,14 +41,16 @@ const RoomCard = ({ room }: RoomCardProp) => {
                 </div>
               </div>
 
-              {room?.FacilitesGroup?.flatMap((group) =>
-                group.facilities?.map((facility: Facility) => (
-                  <div key={facility.id}>
-                    <i className={`min-w-8 ${facility.facilityIcon}`}></i>
-                    <span className="text-[12px]">{facility.name}</span>
-                  </div>
-                ))
-              ).slice(0, 3) || []}
+              {
+                room?.facilities.map((facility: Facility) =>
+                  facility.amenities.map((amenity) => (
+                    <div key={amenity.amenityID}>
+                     <Icon name={amenity.icon} size={16} className="mr-1" />
+                      <span className="text-[12px]">{amenity.name}</span>
+                    </div>
+                  ))
+                )
+              }
               <Link to="#" className="text-blue-400 text-sm">
                 More detail <i className="fa-solid fa-chevron-right"></i>
               </Link>

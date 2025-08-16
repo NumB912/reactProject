@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FaSort } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { useTourFilter } from "../../../store";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
-import { Button, ButtonIcon, Modal } from "../../../component/UI";
+import { Button, Modal } from "../../../component/UI";
 import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
 import ReusableSlider from "../../../component/SliderComponent/SliderComponent";
 import SortTour from "../../../component/SortComponent/SortTour";
