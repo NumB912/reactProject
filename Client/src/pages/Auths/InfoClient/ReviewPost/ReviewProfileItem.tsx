@@ -4,7 +4,7 @@ import { ButtonBorder, Modal } from "../../../../component/UI";
 import DropDownContent from "../../../../component/DropDownComponent/DropDownContent";
 import StarRatingStatic from "../../../../component/UI/StarRatingStatic";
 import PostReviewPhoto from "../../../../component/postReviewPhoto";
-import { Image } from "../../../../interface/ImagePhotoUrl";
+import { Image } from "../../../../model/image";
 import Prompt from "../../../../component/UI/Prompt";
 import DeleteReviews from "./DeleteReviews";
 interface YourReviewedItemProps {

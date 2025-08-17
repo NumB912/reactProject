@@ -32,7 +32,7 @@ const variantClasses: Record<variant, string> = {
   primary: "bg-black text-white hover:bg-black",
   secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
   danger: "bg-red-600 text-white hover:bg-red-700",
-  outline: "border border-gray-500 hover:bg-gray-100",
+  outline: "bg-white border border-gray-300 hover:bg-gray-100",
   contained: "bg-gray-800 text-white hover:bg-gray-900",
   custom: "",
 };
@@ -47,7 +47,7 @@ const roundedClasses: Record<rounded, string> = {
 
 const typeClasses: Record<typeButton, string> = {
   filled: "text-white font-bold hover:bg-gray-800 active:bg-gray-900 bg-black",
-  text: "text-gray-800 hover:bg-gray-100",
+  text: "hover:bg-gray-100 ",
   custom: "",
 };
 

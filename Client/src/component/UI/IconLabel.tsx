@@ -1,10 +1,12 @@
+import { IconName } from "@fortawesome/fontawesome-svg-core";
 import React from "react";
+import Icon from "./Icon"
 
 type DirectType = "row" | "column";
 type AlignType = "default" | "center" | "right";
-
 interface IconLabelProps {
-  Icon?: React.ReactNode;
+  name?: IconName;
+  sizeIcon?:number;
   Label: string;
   Direct?: DirectType;
   LabelLayout?: AlignType;
@@ -13,7 +15,7 @@ interface IconLabelProps {
 
 const DirectClasses: Record<DirectType, string> = {
   row: "flex-row items-center",
-  column: "flex-col"
+  column: "flex-col items-center"
 };
 
 const TextAlign: Record<AlignType, string> = {
@@ -22,24 +24,23 @@ const TextAlign: Record<AlignType, string> = {
   right: "text-right"
 };
 
-const IconLayoutClasses: Record<AlignType, string> = {
-  default: "justify-start items-center",
-  center: "justify-center items-center",
-  right: "justify-end items-center"
-};
+const IconAlign:Record<AlignType,string> = {
+  default:"text-left",
+  center:"text-center",
+  right:"text-right"
+}
 
 const IconAndLabel = ({
-  Icon,
+  name="check",
   Label,
   Direct = "row",
   LabelLayout = "default",
-  IconLayout = "default"
+  IconLayout="default",
+  sizeIcon=16
 }: IconLabelProps) => {
   return (
     <div className={`flex gap-2 ${DirectClasses[Direct]}`}>
-      <div className={`flex ${IconLayoutClasses[IconLayout]}`}>
-        {Icon}
-      </div>
+      <Icon name={name} size={sizeIcon} className={IconAlign[IconLayout]}/>
       <p className={`text-sm line-clamp-2 ${TextAlign[LabelLayout]}`}>{Label}</p>
     </div>
   );

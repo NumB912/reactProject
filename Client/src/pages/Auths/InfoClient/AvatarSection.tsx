@@ -1,5 +1,4 @@
 import React, { ProfilerProps, useState } from "react";
-import { Image } from "../../../interface/ImagePhotoUrl";
 import { ProfileUser } from "../../../interface/Profile";
 import { useNavigate } from "react-router";
 

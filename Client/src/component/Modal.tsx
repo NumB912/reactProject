@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import Icon from "./UI/Icon";
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ const Modal = ({
   parentContainerStyle,
   zIndex = 999,
   title,
+  tickExit=true
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -60,7 +62,7 @@ const Modal = ({
             className="cursor-pointer p-2 hover:bg-gray-200"
             onClick={onClose}
           >
-            <i className="fa-solid fa-x min-sm:hidden"></i>
+           {tickExit?<Icon name={"x"}/>:""}
           </div>
         </div>
         {children}

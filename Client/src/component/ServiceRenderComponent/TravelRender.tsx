@@ -12,7 +12,8 @@ export const renderTravelItem = (item: Travel) => {
       <IconButton
         iconColorActive="text-red-500"
         className="absolute top-2 right-2 p-3 w-10 border border-gray-200"
-        buttonStyle="filled"
+        variant="outline"
+        typeButton="text"
         active={active}
         onClick={() => {
           setActive(!active);

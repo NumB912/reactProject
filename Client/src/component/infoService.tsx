@@ -4,7 +4,8 @@ import { Link } from "react-router";
 import { Button, ButtonIcon } from "./UI";
 import Icon from "./UI/Icon";
 import IconButton from "./UI/Button/IconButton";
-import { Service } from "../model/service";
+import { Service } from "../model/Service";
+
 
 interface InfoContactServiceProp {
   service: Service;

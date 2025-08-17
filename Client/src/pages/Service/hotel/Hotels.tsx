@@ -110,10 +110,11 @@ const Hotels = () => {
                 />
                 <IconButton
                   iconColorActive="text-red-500"
-                  className="absolute top-2 right-2 p-3 w-10 border border-gray-200"
-                  typeButton="filled"
+                  className="absolute top-2 right-2 p-3 w-10"
+                  typeButton="text"
                   icon={"heart"}
                   rounded="full"
+                  variant="outline"
                   iconSize={15}
                 />
 

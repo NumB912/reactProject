@@ -1,22 +1,33 @@
-
 import { Link } from "react-router";
 import { StarRatingStatic } from "../component";
 import hotel1 from "../assets/42769_14072300320020409156.webp";
 import React from "react";
-const Comment = () => {
+import { Button } from "../component/UI";
+import { postPhoto, Review } from "../model/review";
+
+interface CommentProp {
+  reviewAndPost: (Review | postPhoto)[];
+}
+
+const Comment = ({ reviewAndPost }: CommentProp) => {
   return (
-    <div className="w-full bg-gray-100 m-10 flex justify-center items-center flex-col">
-      <div className="w-8/10 p-3">
+    <div
+      id="comment"
+      className="w-full bg-gray-100 mt-10 flex justify-center items-center flex-col"
+    >
+      <div className="w-full p-3">
         <div className="totalReview flex justify-between p-5">
           <p className="text-4xl font-bold">Reviews</p>
           <div className="review flex justify-between items-center gap-3">
-            <Link className="underline font-semibold" to={""}>All Reviews(1,326)</Link>
-            <button className="bg-black text-white p-4 rounded-full font-bold cursor-pointer">
-              Write reviews
-            </button>
+            <Link className="underline font-semibold" to={""}>
+              All Reviews(1,326)
+            </Link>
+            <Button variant="primary" typeButton="filled">
+              Write review
+            </Button>
           </div>
         </div>
-        <div className="flex">
+        <div className="flex p-5">
           <div className="flex justify-center items-center gap-10 w-6/12 border-r border-gray-300">
             <div className="flex flex-col items-center">
               <p className="text-5xl font-bold">4.8</p>
@@ -112,23 +123,22 @@ const Comment = () => {
       </div>
 
       <div className="bg-white w-full flex justify-center items-center">
-        <div className="w-8/10 p-5">
+        <div className="w-full p-5">
           <div>
             {" "}
             <p className="text-3xl font-bold">Traverler Photos (554)</p>
           </div>
           <div className="relative overflow-hidden w-full">
-            <div className="flex p-3 gap-3">
-              {Array(10)
-                .fill(hotel1)
-                .map((src, index) => (
+            <div className="grid grid-cols-6">
+              {reviewAndPost.map((item) =>
+                item.images.map((img) => (
                   <img
-                    key={index}
-                    src={src}
-                    alt={`Hotel ${index}`}
-                    className="aspect-square object-cover rounded w-[150px] shrink-0"
+                    src={img.url}
+                    alt={img.altText}
+                    className={`max-w-[300px] w-full aspect-square object-cover cursor-pointer`}
                   />
-                ))}
+                ))
+              )}
             </div>
 
             {/* Lớp overlay mờ dần sang trong suốt ở phía phải */}
@@ -288,7 +298,7 @@ const Comment = () => {
               </div>
             </div>
 
-              <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
+            <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
               <div className="infoAvatar w-1/4">
                 <img
                   src={hotel1}
@@ -429,7 +439,7 @@ const Comment = () => {
               </div>
             </div>
 
-              <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
+            <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
               <div className="infoAvatar w-1/4">
                 <img
                   src={hotel1}

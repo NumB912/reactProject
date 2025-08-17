@@ -27,14 +27,14 @@ const RoomCard = ({ room }: RoomCardProp) => {
             <div className="Amenity flex flex-col text-gray-800 min-h-30">
               <div className="">
                 <div>
-                  <i className="fa-solid fa-square min-w-8"></i>
+                  <Icon name="square" size={16} className="mr-1"/>
                   <span className="text-[12px]">
                     Room area: {room?.area}
                     m²
                   </span>
                 </div>
                 <div>
-                  <i className="fa-solid fa-bed min-w-8"></i>
+                  <Icon name="bed" size={16} className="mr-1"/>
                   <span className="text-[12px]">
                     Number of beds: {room?.beds.length}
                   </span>
@@ -52,14 +52,14 @@ const RoomCard = ({ room }: RoomCardProp) => {
                 )
               }
               <Link to="#" className="text-blue-400 text-sm">
-                More detail <i className="fa-solid fa-chevron-right"></i>
+                More detail <Icon name="chevron-circle-right"/>
               </Link>
             </div>
           </div>
         </div>
         <div className="w-full flex flex-col gap-3">
           <div className="price flex justify-start w-full">
-            <p className="font-bold text-xl">${room?.price} VND/nightly</p>
+            <p className="font-bold text-sm">${room?.price.toLocaleString('de-DE')} VND/nightly</p>
           </div>
           <div className="flex *:text-[13px] justify-between">
             <p className="text-red-400">We have 2 left</p>

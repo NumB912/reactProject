@@ -6,7 +6,6 @@ import PhotoGallery from "../../../component/PhotoGallery";
 import UploadPhoto, {
   UploadPhotosHandle,
 } from "../../../component/UploadPhoto";
-import { Image } from "../../../interface/ImagePhotoUrl";
 import WallpaperSection from "./WallpaperSection";
 import AvatarSection from "./AvatarSection";
 import EditProfileModal from "./EditProfileModal";

@@ -1,10 +1,14 @@
 
-import { Facility } from "../facility";
-import { Service } from "../service";
+import { Amenity, Facility } from "../facility";
+import { Service } from "../Service";
 
 export interface hotel{
-    service:Service;
+    service: Service;
     rooms: Room[];
+    highLight:Amenity[]
+    amenities:Amenity[]
+    introduce:string;
+    
 }
 
 export interface Room{
@@ -20,4 +24,5 @@ export interface Room{
 export interface Bed {
     id: string;
     name: string;
+    quanlity:number;
 }
