@@ -11,6 +11,7 @@ import { hotel } from "../../../model/hotel/hotel";
 import { useParams } from "react-router";
 import { Amenity } from "../../../model/facility";
 import Reviews from "../../Auths/InfoClient/ReviewPost/Reviews";
+import { Icon } from "@mui/material";
 
 const hotels: hotel[] = [
   {
@@ -21,71 +22,72 @@ const hotels: hotel[] = [
       totalImages: 5,
       totalReviews: 5,
       totalImageReviews: 16,
-      Images: [{
-        serviceID: "service-1",
-        id: "post-101",
-        images: [
-          {
-            imageID: "img-1",
-            url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
-            description: "Spacious lobby lounge with modern design",
-            altText: "Hotel lobby lounge",
+      Images: [
+        {
+          serviceID: "service-1",
+          id: "post-101",
+          images: [
+            {
+              imageID: "img-1",
+              url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
+              description: "Spacious lobby lounge with modern design",
+              altText: "Hotel lobby lounge",
+            },
+            {
+              imageID: "img-2",
+              url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/184305239.jpg?k=2d22fe63ae1f8960e057238c98fb436f7bd9f65854e3a5e918607c5cfa1d0a52&o=&hp=1",
+              description: "Luxury hotel room with comfortable bed",
+              altText: "Deluxe room interior",
+            },
+          ],
+          user: {
+            userID: "user-55",
+            name: "Nguyen Van A",
+            userName: "",
+            email: "",
           },
-          {
-            imageID: "img-2",
-            url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/184305239.jpg?k=2d22fe63ae1f8960e057238c98fb436f7bd9f65854e3a5e918607c5cfa1d0a52&o=&hp=1",
-            description: "Luxury hotel room with comfortable bed",
-            altText: "Deluxe room interior",
-          },
-        ],
-        user: {
-          userID: "user-55",
-          name: "Nguyen Van A",
-          userName: "",
-          email: "",
+          createAt: new Date("2025-08-17T09:00:00Z"),
         },
-        createAt: new Date("2025-08-17T09:00:00Z"),
-      },{
-        serviceID: "service-2",
-        id: "post-101",
-        images: [
-          {
-            imageID: "img-1",
-            url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
-            description: "Spacious lobby lounge with modern design",
-            altText: "Hotel lobby lounge",
+        {
+          serviceID: "service-2",
+          id: "post-101",
+          images: [
+            {
+              imageID: "img-1",
+              url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
+              description: "Spacious lobby lounge with modern design",
+              altText: "Hotel lobby lounge",
+            },
+            {
+              imageID: "img-2",
+              url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/184305239.jpg?k=2d22fe63ae1f8960e057238c98fb436f7bd9f65854e3a5e918607c5cfa1d0a52&o=&hp=1",
+              description: "Luxury hotel room with comfortable bed",
+              altText: "Deluxe room interior",
+            },
+          ],
+          user: {
+            userID: "user-55",
+            name: "Nguyen Van B",
+            userName: "",
+            email: "",
           },
-          {
-            imageID: "img-2",
-            url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/184305239.jpg?k=2d22fe63ae1f8960e057238c98fb436f7bd9f65854e3a5e918607c5cfa1d0a52&o=&hp=1",
-            description: "Luxury hotel room with comfortable bed",
-            altText: "Deluxe room interior",
-          },
-        ],
-        user: {
-          userID: "user-55",
-          name: "Nguyen Van B",
-          userName: "",
-          email: "",
+          createAt: new Date("2025-08-17T09:00:00Z"),
         },
-        createAt: new Date("2025-08-17T09:00:00Z"),
-      }],
-      rating: 4.5,
-      ratingQuantity: 0,
+      ],
+      ratingAvg:4.5,
       contact: {
         contactID: "contact-1",
         phone: "123-456-7890",
         email: "info@hotelservice.com",
         website: "www.hotelservice.com",
       },
-      reviewQuantity: 0,
+      reviewQuantity: 10,
       reviewsAndPostPhotos: [
         {
           rating: 5,
           title: "Title reviews",
           createAt: new Date(),
-          comment: `      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa inventore accusantium quas sed quos amet incidunt magni beatae distinctio alias, asperiores aut est consectetur eveniet quidem. Hic exercitationem quos ullam!
-`,
+          comment: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa inventore accusantium quas sed quos amet incidunt magni beatae distinctio alias, asperiores aut est consectetur eveniet quidem. Hic exercitationem quos ullam!`,
           id: "",
           serviceID: "",
           user: {
@@ -100,7 +102,6 @@ const hotels: hotel[] = [
               url: "https://preview.redd.it/i-finished-bocchi-the-rock-and-it-is-the-best-thing-i-have-v0-ho5ub4gfzmuc1.jpeg?width=640&crop=smart&auto=webp&s=996908c0ddb613bab3749aa7fce007e15f6ed5ea",
             },
           },
-
           images: [
             {
               url: "https://www.everlyhotelhollywood.com/images/1700-960/lobby-lounge-everly-hollywood-101cd4b4.jpg",
@@ -152,7 +153,8 @@ const hotels: hotel[] = [
           rating: 5,
           title: "Tuyệt vời!",
           createAt: new Date("2025-08-16T09:30:00Z"),
-          comment: "Khách sạn sạch sẽ, nhân viên thân thiện.",
+          comment:
+            "Khách sạn sạch sẽ, nhân viên thân thiện và luôn hỗ trợ nhiệt tình. Phòng được dọn gọn gàng mỗi ngày, bữa sáng đa dạng, mình cảm thấy rất hài lòng khi lưu trú tại đây.",
           user: {
             userID: "u1",
             userName: "traveler01",
@@ -165,7 +167,6 @@ const hotels: hotel[] = [
               description: "Ảnh đại diện",
             },
           },
-
           images: [
             {
               imageID: "revimg1",
@@ -181,7 +182,8 @@ const hotels: hotel[] = [
           rating: 4,
           title: "Khá tốt",
           createAt: new Date("2025-08-16T09:30:00Z"),
-          comment: "Phòng rộng rãi nhưng hơi ồn.",
+          comment:
+            "Phòng rộng rãi, giường thoải mái nhưng đôi lúc hơi ồn vì gần đường chính. Tuy nhiên bù lại thì vị trí thuận tiện, đi lại dễ dàng, nhân viên phục vụ tận tình và chu đáo.",
           user: {
             userID: "u2",
             userName: "sups",
@@ -213,7 +215,8 @@ const hotels: hotel[] = [
           rating: 4,
           title: "Khách sạn tuyệt vời",
           createAt: new Date(),
-          comment: "Phòng rộng rãi, nhân viên thân thiện.",
+          comment:
+            "Phòng rộng rãi, nhân viên thân thiện và luôn hỗ trợ khách. Khu vực sảnh sang trọng, nhiều dịch vụ tiện ích. Mình cảm thấy hài lòng và chắc chắn sẽ quay lại khi có dịp.",
           id: "",
           serviceID: "",
           user: {
@@ -228,7 +231,6 @@ const hotels: hotel[] = [
               url: "https://randomuser.me/api/portraits/men/75.jpg",
             },
           },
-
           images: [
             {
               url: "https://a25hotel.com/images/products/2025/03/15/large/TR6.jpg",
@@ -238,14 +240,13 @@ const hotels: hotel[] = [
             },
           ],
         },
-
         {
           id: "r1",
           rating: 5,
           title: "Amazing stay!",
           createAt: new Date("2025-08-10T12:30:00Z"),
           comment:
-            "The hotel exceeded my expectations. The staff were super friendly, the room was spotless, and the breakfast was delicious. I’ll definitely come back!",
+            "The hotel exceeded my expectations. The staff were super friendly, the room was spotless, and the breakfast was delicious. Everything was well organized, making my stay unforgettable.",
           serviceID: "s1",
           user: {
             userID: "u1",
@@ -259,7 +260,6 @@ const hotels: hotel[] = [
               url: "https://randomuser.me/api/portraits/men/32.jpg",
             },
           },
-
           images: [
             {
               url: "https://a25hotel.com/images/products/2025/03/15/large/TR6.jpg",
@@ -275,7 +275,7 @@ const hotels: hotel[] = [
           title: "Great value for money",
           createAt: new Date("2025-08-11T09:15:00Z"),
           comment:
-            "The location is perfect, just a few minutes from the city center. Rooms are a bit small but very cozy. Totally worth the price.",
+            "The location is perfect, just a few minutes from the city center. Rooms are small but cozy, breakfast was tasty, and the staff were extremely helpful throughout my stay.",
           serviceID: "s1",
           user: {
             userID: "u2",
@@ -289,7 +289,6 @@ const hotels: hotel[] = [
               url: "https://randomuser.me/api/portraits/women/44.jpg",
             },
           },
-
           images: [
             {
               url: "https://a25hotel.com/images/products/2025/03/15/large/TR6.jpg",
@@ -305,7 +304,7 @@ const hotels: hotel[] = [
           title: "Good but noisy",
           createAt: new Date("2025-08-12T15:45:00Z"),
           comment:
-            "The room was clean and the staff were polite, but the noise from the street made it hard to sleep. Might stay again if I get a room on a higher floor.",
+            "The room was clean and the staff were polite, but the noise from the street made it hard to sleep. Overall service was decent and facilities were fine, but I’d prefer a higher floor next time.",
           serviceID: "s1",
           user: {
             userID: "u3",
@@ -319,7 +318,6 @@ const hotels: hotel[] = [
               url: "https://randomuser.me/api/portraits/men/67.jpg",
             },
           },
-
           images: [
             {
               url: "https://www.vandahotel.vn/wp-content/uploads/sites/100/2016/12/deluxe-river-view-double-2.jpg",
@@ -335,7 +333,7 @@ const hotels: hotel[] = [
           title: "Unforgettable experience",
           createAt: new Date("2025-08-13T18:20:00Z"),
           comment:
-            "This was one of the best trips I’ve ever had. The hotel staff arranged everything perfectly, from airport pickup to daily tours. Worth every penny!",
+            "This was one of the best trips I’ve ever had. The hotel staff arranged everything perfectly, from airport pickup to daily tours. Every detail was cared for, making the trip unforgettable.",
           serviceID: "s1",
           user: {
             userID: "u4",
@@ -349,7 +347,6 @@ const hotels: hotel[] = [
               url: "https://randomuser.me/api/portraits/women/12.jpg",
             },
           },
-
           images: [
             {
               url: "https://www.vandahotel.vn/wp-content/uploads/sites/100/2016/12/deluxe-river-view-double-2.jpg",
@@ -365,7 +362,7 @@ const hotels: hotel[] = [
           title: "Not as expected",
           createAt: new Date("2025-08-14T08:00:00Z"),
           comment:
-            "Honestly, I was a bit disappointed. The photos online looked much better than reality. The room smelled damp and Wi-Fi was very slow.",
+            "Honestly, I was disappointed. The photos online looked much better. The room smelled damp, Wi-Fi was slow, and facilities seemed outdated. I hope the hotel will renovate in the future.",
           serviceID: "s1",
           user: {
             userID: "u5",
@@ -390,8 +387,54 @@ const hotels: hotel[] = [
         },
       ],
     },
-    amenities: [],
-    highLight: [{ amenityID: "a10", icon: "address-book", name: "s" }],
+    amenities: [
+      { amenityID: "1", icon: "wifi", name: "Free Wi-Fi" },
+      { amenityID: "2", icon: "car", name: "Free Parking" },
+      { amenityID: "3", icon: "swimming-pool", name: "Swimming Pool" },
+      { amenityID: "4", icon: "dumbbell", name: "Fitness Center" },
+      { amenityID: "5", icon: "spa", name: "Spa" },
+      { amenityID: "6", icon: "utensils", name: "Restaurant" },
+      { amenityID: "7", icon: "coffee", name: "Coffee Shop" },
+      { amenityID: "8", icon: "cocktail", name: "Bar" },
+      { amenityID: "9", icon: "concierge-bell", name: "Room Service" },
+      { amenityID: "10", icon: "snowflake", name: "Air Conditioning" },
+      { amenityID: "11", icon: "tv", name: "Flat-Screen TV" },
+      { amenityID: "12", icon: "bed", name: "King Size Bed" },
+      { amenityID: "13", icon: "bath", name: "Private Bathroom" },
+      { amenityID: "14", icon: "shower", name: "Hot Shower" },
+      { amenityID: "15", icon: "tshirt", name: "Laundry Service" },
+      { amenityID: "16", icon: "child", name: "Kids Club" },
+      { amenityID: "17", icon: "dog", name: "Pet Friendly" },
+      { amenityID: "18", icon: "couch", name: "Lounge Area" },
+      { amenityID: "19", icon: "leaf", name: "Garden" },
+    ],
+    highLight: [
+      {
+        amenityID: "1",
+        name: "Suitable for activities",
+        icon: "thumbs-up",
+      },
+      {
+        amenityID: "2",
+        name: "360 m from public transport",
+        icon: "bus-simple",
+      },
+      {
+        amenityID: "3",
+        name: "Check-in [24 hours]",
+        icon: "shield",
+      },
+      {
+        amenityID: "4",
+        name: "More hygiene",
+        icon: "building-columns",
+      },
+      {
+        amenityID: "5",
+        name: "870m The National 9/11 Memorial & Museum",
+        icon: "bus",
+      },
+    ],
     rooms: [
       {
         roomID: "room-101",
@@ -425,6 +468,18 @@ const hotels: hotel[] = [
             ],
           },
         ],
+        images:[{
+          imageID: "img-101-1",
+          url: "/images/rooms/deluxe1.jpg",
+          altText: "Deluxe Sea View Room",
+          description: ""
+        },
+        {
+          imageID: "img-101-2",
+          url: "/images/rooms/deluxe2.jpg",
+          altText: "Deluxe Sea View Bathroom",
+          description: ""
+        }],
         quantity: 10,
       },
 
@@ -452,6 +507,18 @@ const hotels: hotel[] = [
             ],
           },
         ],
+                images:[{
+          imageID: "img-101-1",
+          url: "/images/rooms/deluxe1.jpg",
+          altText: "Deluxe Sea View Room",
+          description: ""
+        },
+        {
+          imageID: "img-101-2",
+          url: "/images/rooms/deluxe2.jpg",
+          altText: "Deluxe Sea View Bathroom",
+          description: ""
+        }],
         quantity: 8,
       },
 
@@ -482,6 +549,18 @@ const hotels: hotel[] = [
             ],
           },
         ],
+                images:[{
+          imageID: "img-101-1",
+          url: "/images/rooms/deluxe1.jpg",
+          altText: "Deluxe Sea View Room",
+          description: ""
+        },
+        {
+          imageID: "img-101-2",
+          url: "/images/rooms/deluxe2.jpg",
+          altText: "Deluxe Sea View Bathroom",
+          description: ""
+        }],
         quantity: 5,
       },
 
@@ -512,6 +591,18 @@ const hotels: hotel[] = [
             ],
           },
         ],
+                images:[{
+          imageID: "img-101-1",
+          url: "/images/rooms/deluxe1.jpg",
+          altText: "Deluxe Sea View Room",
+          description: ""
+        },
+        {
+          imageID: "img-101-2",
+          url: "/images/rooms/deluxe2.jpg",
+          altText: "Deluxe Sea View Bathroom",
+          description: ""
+        }],
         quantity: 2,
       },
 
@@ -539,6 +630,18 @@ const hotels: hotel[] = [
             ],
           },
         ],
+                images:[{
+          imageID: "img-101-1",
+          url: "https://media.istockphoto.com/id/174767532/photo/hotel-room.jpg?s=612x612&w=0&k=20&c=2BCNeFcX5PGzCxfZKXewhI_y2C9R7Jw_tzVYCXmRRCE=",
+          altText: "Deluxe Sea View Room",
+          description: ""
+        },
+        {
+          imageID: "img-101-2",
+          url: "https://media.istockphoto.com/id/174767532/photo/hotel-room.jpg?s=612x612&w=0&k=20&c=2BCNeFcX5PGzCxfZKXewhI_y2C9R7Jw_tzVYCXmRRCE=",
+          altText: "Deluxe Sea View Bathroom",
+          description: ""
+        }],
         quantity: 15,
       },
 
@@ -569,6 +672,18 @@ const hotels: hotel[] = [
             ],
           },
         ],
+                images:[{
+          imageID: "img-101-1",
+          url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/438255871.jpg?k=9a99f7d08088d8f480bf9a0f6ed29accd55da853e0a216e57102111d10ae40d0&o=&hp=1",
+          altText: "Deluxe Sea View Room",
+          description: ""
+        },
+        {
+          imageID: "img-101-2",
+          url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/438255871.jpg?k=9a99f7d08088d8f480bf9a0f6ed29accd55da853e0a216e57102111d10ae40d0&o=&hp=1",
+          altText: "Deluxe Sea View Bathroom",
+          description: ""
+        }],
         quantity: 4,
       },
     ],
@@ -594,7 +709,7 @@ const HotelDetail = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container p-5">
       <div className="w-full">
         <FilterCheckInHotel className={"mb-10"} />
       </div>
@@ -605,9 +720,7 @@ const HotelDetail = () => {
             {hotel && <InfoService service={hotel.service} />}
             <div className="image-slide my-5">
               {hotel?.service.Images && (
-                <ImageSlide
-                  reviewsAndPhotoData={hotel.service.Images}
-                />
+                <ImageSlide postPhotos={hotel.service.Images} />
               )}
             </div>
           </div>
@@ -619,76 +732,39 @@ const HotelDetail = () => {
               </CardContent>
 
               <CardContent title="Highlight">
-                <div className="grid grid-cols-6 mt-5">
-                  <IconLabel
-                    name="thumbs-up"
-                    Label=" Suitable for activities"
-                    Direct="column"
-                    IconLayout="center"
-                    LabelLayout="center"
-                  />
-                  <IconLabel
-                    name="bus-simple"
-                    Label=" 360 m from public transport"
-                    Direct="column"
-                    LabelLayout="center"
-                    IconLayout="center"
-                  />
-                  <IconLabel
-                    name="shield"
-                    Label=" Check-in [24 hours]"
-                    Direct="column"
-                    IconLayout="center"
-                    LabelLayout="center"
-                  />
-                  <IconLabel
-                    name="building-columns"
-                    Label="More hygiene"
-                    Direct="column"
-                    IconLayout="center"
-                    LabelLayout="center"
-                  />
-                  <IconLabel
-                    name="bus"
-                    Label="870m The National 9/11 Memorial & Museum"
-                    Direct="column"
-                    IconLayout="center"
-                    LabelLayout="center"
-                  />
+                <div className="grid grid-cols-5 mt-5">
+                  {hotel?.highLight.map((item: Amenity) => {
+                    return (
+                      <IconLabel
+                        key={item.amenityID}
+                        name={item.icon}
+                        Label={item.name}
+                        Direct="column"
+                        IconLayout="center"
+                        LabelLayout="center"
+                      />
+                    );
+                  })}
                 </div>
               </CardContent>
               <CardContent title="Amenities">
-                <div className="grid grid-cols-6 max-md:grid-cols-2">
-                  <IconLabel Label={"Free Wi-Fi"} />
-                  <IconLabel Label={"Reception desk [24 hours]"} />
-                  <IconLabel Label={"Fitness center"} />
-                  <IconLabel Label={"Restaurant"} />
-                  <IconLabel Label={"Bar"} />
-                  <IconLabel Label={"Luggage storage"} />
-                  <IconLabel Label={"Pets allowed"} />
-                  <IconLabel Label={"Rooftop area"} />
+                <div className="grid grid-cols-6 max-md:grid-cols-2 gap-3">
+                  {hotel?.amenities.map((item: Amenity) => {
+                    return (
+                      <IconLabel
+                        key={item.amenityID}
+                        name={item.icon}
+                        Label={item.name}
+                        Direct="row"
+                        IconLayout="center"
+                        LabelLayout="center"
+                      />
+                    );
+                  })}
                 </div>
               </CardContent>
             </div>
             <div className="locationAndReview col-span-2 row-span-2 *:mb-3 flex flex-col px-4">
-              <div className="Review rounded shadow p-4">
-                <div className="review">
-                  <p className="text-xl font-bold">
-                    {hotel?.service.rating} great
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    <i className="fa-solid fa-check-double"></i>
-                    {hotel?.service.reviewQuantity} reviews
-                  </p>
-                </div>
-                <div className="flex flex-wrap *:text-sm gap-2 py-3 *:bg-green-300 *:p-1 *:rounded">
-                  <p>Cleanliness 8.7</p>
-                  <p>Position 8.6</p>
-                  <p>Service 8.3</p>
-                  <p>Facilities 7.8</p>
-                </div>
-              </div>
-
               <div className="location w-full h-full p-4 rounded border border-gray-200 shadow"></div>
             </div>
           </div>
@@ -719,7 +795,9 @@ const HotelDetail = () => {
           })}
         </div>
       </div>
-      {hotel?.service.reviewsAndPostPhotos && <Comment reviewAndPost={hotel?.service.reviewsAndPostPhotos}/>}
+      {hotel?.service.reviewsAndPostPhotos && (
+        <Comment reviewAndPost={hotel?.service.reviewsAndPostPhotos} />
+      )}
     </div>
   );
 };

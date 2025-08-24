@@ -2,26 +2,68 @@ import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Icon from "./UI/Icon";
 
+type Variant = "default" | "primary" | "secondary";
+type VariantBehind = "default" | "primary" | "secondary";
+type Rounded = "default" | "sm" | "md" | "lg" | "xl" | "full";
+type Padding = "none" | "sm" | "md" | "lg" | "xl"
+type Breakpoint = "sm"|"md"|"lg"|"xl"|"2xl"|"3xl"|"custom"
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  styleContainer?: string;
-  parentContainerStyle?: string;
+  className?: string;
   title?: string;
-  zIndex?: number;
   tickExit?: boolean;
+  variant?: Variant;
+  variantBackground?: VariantBehind;
+  rounded?: Rounded;
+  padding?:Padding;
+  zIndex: number;
 }
+
+const VariantClasses: Record<Variant, string> = {
+  default: "bg-white shadow-xl",
+  primary: "bg-black shadow-xl",
+  secondary: "bg-blue shadow-xl",
+};
+
+const VariantBehind: Record<Variant, string> = {
+  default: "bg-black/50",
+  primary: "bg-black/50",
+  secondary: "bg-blue/50",
+};
+
+const PaddingClasses:Record<Padding,string> = {
+  none:"p-0",
+  sm:"p-3",
+  md:"p-6",
+  lg:"p-10",
+  xl:"p-20"
+}
+
+const RoundedClasses: Record<Rounded, string> = {
+  default: "rounded-none",
+  sm: "rounded-sm",
+  md: "rounded-md",
+  lg: "rounded-lg",
+  xl: "rounded-xl",
+  full: "rounded-full",
+};
+
 
 const Modal = ({
   isOpen,
   onClose,
   children,
-  styleContainer,
-  parentContainerStyle,
+  className = "",
   zIndex = 999,
   title,
-  tickExit=true
+  tickExit = true,
+  variant = "default",
+  variantBackground = "default",
+  rounded="default",
+  padding="md",
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,17 +85,18 @@ const Modal = ({
 
   return createPortal(
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-black/30 w-full h-full ${
-        parentContainerStyle ?? ""
-      }`}
+      className={`fixed inset-0 flex items-center justify-center bg-black/30 w-full h-full ${VariantBehind[variantBackground]}`}
       style={{ zIndex }}
       onClick={onClose}
     >
       <div
         ref={ref}
-        className={`relative bg-white rounded-md shadow-xl overflow-y-auto max-sm:h-full min-sm:max-h-[90vh] max-sm:w-full max-sm:rounded-none p-5 ${
-          styleContainer ?? ""
-        }`}
+        className={`relative overflow-y-auto max-sm:h-full min-sm:max-h-[90vh] max-sm:w-full max-sm:rounded-none 
+          ${PaddingClasses[padding]}
+          ${VariantClasses[variant]}
+          ${RoundedClasses[rounded]}
+          ${className}
+        `}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-full flex justify-between items-center">
@@ -62,7 +105,7 @@ const Modal = ({
             className="cursor-pointer p-2 hover:bg-gray-200"
             onClick={onClose}
           >
-           {tickExit?<Icon name={"x"}/>:""}
+            {tickExit ? <Icon name={"x"} /> : ""}
           </div>
         </div>
         {children}

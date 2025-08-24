@@ -5,8 +5,7 @@ import { postPhoto, Review } from "./review";
 export interface Service{
     serviceID: string;
     name:string;
-    rating: number;
-    ratingQuantity: number;
+    ratingAvg: number;
     reviewQuantity:number;
     address:string;
     contact: Contact;

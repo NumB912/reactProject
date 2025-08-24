@@ -143,7 +143,7 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
                 ))
               )}
             </div>
-              <ModelMoreInfoImage isOpen={openImage} onClose={()=>{setOpenImage(false)}} reviewsAndPostPhoto={reviewAndPost}/>
+                
             
 
             {/* Lớp overlay mờ dần sang trong suốt ở phía phải */}
