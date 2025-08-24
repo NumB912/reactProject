@@ -19,8 +19,8 @@ const InfoContactService = ({
       <div className="flex flex-col gap-2">
         <p className="text-4xl font-bold">{service.name}</p>
         <div className="flex justify-start gap-2">
-          <p className="score-star-rating">{service.rating}</p>
-          <StarRatingStatic starNumber={service.rating} />
+          <p className="score-star-rating">{service.ratingAvg}</p>
+          <StarRatingStatic starNumber={service.ratingAvg} />
           <p>({service.reviewQuantity} Reviews)</p>
         </div>
 

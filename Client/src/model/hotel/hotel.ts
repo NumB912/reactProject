@@ -1,5 +1,6 @@
 
 import { Amenity, Facility } from "../facility";
+import { Image } from "../image";
 import { Service } from "../Service";
 
 export interface hotel{
@@ -12,6 +13,7 @@ export interface hotel{
 }
 
 export interface Room{
+
     roomID:string;
     name:string;
     quantity:number;
@@ -19,6 +21,7 @@ export interface Room{
     area:number;
     beds: Bed[];
     facilities: Facility[];
+    images: Image[];
 }
 
 export interface Bed {

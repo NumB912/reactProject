@@ -4,54 +4,37 @@ import IconButton from "./UI/Button/IconButton";
 import ReusableSlider from "./SliderComponent/SliderComponent";
 import Slider from "react-slick";
 import Modal from "./Modal";
-import ModelMoreInfoImage from "./modalSlideImage";
+import ModelMoreInfoImage from "./Modal.Slide.Image";
 import { postPhoto, Review } from "../model/review";
 
 interface ImageSlideProps {
-  reviewsAndPhotoData:(Review|postPhoto)[];
+  postPhotos: postPhoto[];
 }
 
-const ImageReviewSlide = ({ reviewsAndPhotoData }: ImageSlideProps) => {
-  const [reviewsAndPhoto,setReviews] = useState<(Review|postPhoto)[]>([])
-  const [images,setImages] = useState<Image[]>([])
-  const [indexMainImage, setIndexMainImage] = useState<number>(0);
+const ImageSlide = ({ postPhotos }: ImageSlideProps) => {
+  const [postPhoto,setPostPhoto] = useState<postPhoto[]>([])
   const [openImage,setOpenImage] = useState<boolean>(false)
-  const [mainImg,setMainImg] = useState<Image>()
-  
-useEffect(() => {
-  if (!reviewsAndPhotoData) return;
+  const [indexMainImage,setIndexMainImage] = useState<number>(0)
+  const [images,setImages] = useState<Image[]>([])
+  useEffect(() => {
 
-  setReviews(reviewsAndPhotoData);
+    if(!postPhotos) return;
 
-  const allImages: Image[] = [];
-  for (let it of reviewsAndPhotoData) {
-    if (it.images && it.images.length > 0) {
-      allImages.push(...it.images); 
+    setPostPhoto(postPhotos);
+    setImages(postPhotos.map((item) => item.images).flat());
+  },[])
+
+  function handleNextItem() {
+    if (indexMainImage < images.length - 1) {
+      setIndexMainImage(indexMainImage + 1);
     }
   }
-  setImages(allImages);
-}, [reviewsAndPhotoData]); 
 
-useEffect(() => {
-  if (images.length > 0) {
-    setMainImg(images[indexMainImage]);
-  }
-}, [images, indexMainImage]);
-
-
-  function handleNextImage() {
-    if (images.length === 0) {
-      return;
+  function handlePrevItem() {
+    if (indexMainImage > 0) {
+      setIndexMainImage(indexMainImage - 1);
     }
-    setIndexMainImage((prev) => (prev + 1) % images.length);
   }
-
-  function handlePrevImage() {
-    if (images.length === 0) return;
-
-    setIndexMainImage((prev) => (prev - 1 < 0 ? images.length - 1 : prev - 1));
-  }
-
 
   return (
     <div className="img-slide">
@@ -59,7 +42,7 @@ useEffect(() => {
         <div className="photoMain w-full relative">
           <img
             src={
-              mainImg?.url ||
+              images[indexMainImage]?.url ||
               "https://www.kayak.com/rimg/himg/b0/2c/df/leonardo-878836-186563354-395441.jpg?width=1366&height=768&crop=true"
             }
             className="w-full max-h-[700px] min-h-[600px] h-full object-cover rounded-lg"
@@ -78,7 +61,7 @@ useEffect(() => {
             variant="outline"
             typeButton="text"
             className="p-4 aspect-square absolute m-3 top-1/2 -translate-y-1/2"
-            onClick={handlePrevImage}
+            onClick={handlePrevItem}
           />
           <IconButton
             icon="arrow-right"
@@ -86,10 +69,10 @@ useEffect(() => {
             variant="outline"
             typeButton="text"
             className="p-4 aspect-square absolute m-3 top-1/2 -translate-y-1/2 right-0"
-            onClick={handleNextImage}
+            onClick={handleNextItem}
           />
 
-       <ModelMoreInfoImage isOpen={openImage} onClose={()=>{setOpenImage(false)}} reviewsAndPostPhoto={reviewsAndPhoto}/>
+        <ModelMoreInfoImage isOpen={openImage} onClose={() => { setOpenImage(false) }} reviewsOrPostPhoto={postPhoto} />
         </div>
       )}
       <div className="grid grid-cols-6 max-lg:grid-cols-3 max-sm:hidden gap-2 mt-2">
@@ -120,4 +103,4 @@ useEffect(() => {
   );
 };
 
-export default ImageReviewSlide;
+export default ImageSlide;

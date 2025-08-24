@@ -353,7 +353,7 @@ const TourDetail = () => {
           </div>
         </div>
       </div>
-      <Comment />
+      <Comment reviewAndPost={[]}/>
     </div>
   );
 };

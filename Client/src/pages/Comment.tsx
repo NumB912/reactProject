@@ -1,15 +1,26 @@
 import { Link } from "react-router";
 import { StarRatingStatic } from "../component";
-import hotel1 from "../assets/42769_14072300320020409156.webp";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../component/UI";
 import { postPhoto, Review } from "../model/review";
+import ModelMoreInfoImage from "../component/Modal.Slide.Image";
+import Icon from "../component/UI/Icon";
 
 interface CommentProp {
   reviewAndPost: (Review | postPhoto)[];
 }
 
 const Comment = ({ reviewAndPost }: CommentProp) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const reviewPostMerge = reviewAndPost.flatMap((merge) => {
+    return merge.images.map((img) => {
+      return {
+        parent: merge,
+        child: img,
+      };
+    });
+  });
+
   return (
     <div
       id="comment"
@@ -124,54 +135,58 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
 
       <div className="bg-white w-full flex justify-center items-center">
         <div className="w-full p-5">
-          <div>
-            {" "}
-            <p className="text-3xl font-bold">Traverler Photos (554)</p>
-          </div>
-          <div className="relative overflow-hidden w-full">
-            <div className="grid grid-cols-6">
-              {reviewAndPost.map((item) =>
-                item.images.map((img) => (
+          {reviewPostMerge.length > 0 && <div>
+    
+              <p className="text-3xl font-bold mb-5">
+                Traverler Photos ({reviewPostMerge.length})
+              </p>
+            <div className="relative overflow-hidden w-full">
+              <div className="grid grid-cols-6 gap-2 max-lg:grid-cols-3">
+                {reviewPostMerge.slice(0, 6).map((item, index) => (
                   <img
-                    src={img.url}
-                    alt={img.altText}
-                    className={`max-w-[300px] w-full aspect-square object-cover cursor-pointer`}
+                    src={item.child.url}
+                    alt={item.child.altText}
+                    onClick={() => {
+                      setIsOpen(!isOpen);
+                    }}
+                    className={`rounded-md max-w-[300px] w-full aspect-square object-cover cursor-pointer`}
                   />
-                ))
-              )}
+                ))}
+
+                <ModelMoreInfoImage
+                  isOpen={isOpen}
+                  onClose={() => setIsOpen(false)}
+                  reviewsOrPostPhoto={reviewAndPost}
+                />
+              </div>
             </div>
-
-            {/* Lớp overlay mờ dần sang trong suốt ở phía phải */}
-            <div className="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent"></div>
-          </div>
-
-          <div className="AllReviews">
-            <p className="text-3xl font-bold">All Reviews</p>
+          </div>}
+          <div className="AllReviews my-5">
+            <p className="text-3xl font-bold">All Reviews ({reviewAndPost.length})</p>
             <div className="flex py-5">
               <div className="tag border-2 border-black p-2 w-20 text-center rounded-full">
-                <p>
-                  <i className="fa-solid fa-filter"></i> filter
-                </p>
+                <Icon name="triangle-circle-square" size={18}/>
               </div>
             </div>
           </div>
 
-          <div className="commen flex flex-col gap-9">
-            <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
+          <div className="comment flex flex-col gap-4">
+            {
+              reviewAndPost.map((item)=>{
+                return (  <div className=" border border-gray-300 p-10 w-3/4 rounded-2xl shadow flex">
               <div className="infoAvatar w-1/4">
                 <img
-                  src={hotel1}
+                  src={item.user.avatar?.url || "https://via.placeholder.com/50"}
                   className=" w-[50px] aspect-square rounded-full"
                 />
                 <div className="info">
-                  <p className="font-bold">Cheerry</p>
+                  <p className="font-bold">{item.user.name}</p>
                   <p>Wrote a review</p>
-                  <p>Location</p>
-                  <p>9 contributions</p>
+                  <p>{item.user.address}</p>
 
                   <div className="date">
                     <p>
-                      Date visited: <span className="font-bold">May 2025</span>
+                      Date visited: <span className="font-bold">{item.createAt.toLocaleDateString()}</span>
                     </p>
                   </div>
                 </div>
@@ -182,9 +197,9 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
                   <div>
                     <StarRatingStatic starNumber={5} />
                     <p className="font-bold text-xl">
-                      Best hotel i've ever stay
+                     {item?.title}
                     </p>
-                    <p className="text-gray-400 text-sm">5 days ago</p>
+                    <p className="text-gray-400 text-sm">{item.createAt.toLocaleDateString()}</p>
                   </div>
 
                   <div className="edit-report w-[50px]">
@@ -194,18 +209,18 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
 
                 <div className="content">
                   <p>
-                    {" "}
-                    This is a really lovely hotel in an excellent location. The
-                    mezzanine is an inviting place to work, read, have breakfast
-                    or a chat. The lobby lounge is gorgeous and if the Tusk bar
-                    is too full, you can have a quiet drink out there. I was
-                    travelling on my own for work, and found the room to be
-                    perfectly sized with a very dreamy bed and furnishings. I
-                    loved the turn of the century décor, the marble staircase
-                    and the service was friendly and warm.
+                    {item.comment}
                   </p>
 
-                  <div className="w-full *:w-1/3 *:min-w-[130px] *:max-w-[150px]  flex pl-5 gap-4 items-center justify-center flex-wrap p-4">
+                  <div className="grid-cols-6 grid gap-2">
+
+                    {item.images.map((image)=>{
+                      return (<img src={image.url} className="w-full aspect-square object-cover rounded-sm"/>)
+                    })}
+
+                  </div>
+
+                  {/* <div className="w-full *:w-1/3 *:min-w-[130px] *:max-w-[150px]  flex pl-5 gap-4 items-center justify-center flex-wrap p-4">
                     <div className="flex flex-col">
                       <p className="font-semibold text-md">Rooms</p>
                       <div className="flex gap-2 items-center">
@@ -253,332 +268,15 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
                         <p className="font-semibold text-[13px]">5.0</p>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="w-full flex justify-end">
-                    <button className=" rounded-full p-3 hover:bg-gray-200">
-                      <i className="fa-solid fa-thumbs-up"></i> Helpful votes
-                    </button>
-                  </div>
-                  <div className="border-l border-gray-40  pl-5 ">
-                    <div className="supplier-reply flex justify-between items-center w-full">
-                      <div className="img reply flex gap-3 items-center">
-                        <img
-                          src={hotel1}
-                          className="w-[50px] h-[50px] aspect-square rounded-full shrink-0"
-                        />
-                        <div className="info flex flex-col">
-                          <p className="font-bold">Amal Bouabid</p>
-                          <p className="">
-                            Guest Services / Front Office at The Evelyn Hotel
-                          </p>
-                          <p className="text-gray-400 text-sm">5 days ago</p>
-                        </div>
-                      </div>
-                      <div className="edit-report">
-                        <button className="rounded-full  w-[50px] h-[50px] p-3 aspect-square hover:bg-gray-200">
-                          <i className="fa-solid fa-ellipsis"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <p>
-                      {" "}
-                      This is a really lovely hotel in an excellent location.
-                      The mezzanine is an inviting place to work, read, have
-                      breakfast or a chat. The lobby lounge is gorgeous and if
-                      the Tusk bar is too full, you can have a quiet drink out
-                      there. I was travelling on my own for work, and found the
-                      room to be perfectly sized with a very dreamy bed and
-                      furnishings. I loved the turn of the century décor, the
-                      marble staircase and the service was friendly and warm.
-                    </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
-
-            <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
-              <div className="infoAvatar w-1/4">
-                <img
-                  src={hotel1}
-                  className=" w-[50px] aspect-square rounded-full"
-                />
-                <div className="info">
-                  <p className="font-bold">Cheerry</p>
-                  <p>Wrote a review</p>
-                  <p>Location</p>
-                  <p>9 contributions</p>
-
-                  <div className="date">
-                    <p>
-                      Date visited: <span className="font-bold">May 2025</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="comment w-3/4">
-                <div className="flex justify-between">
-                  <div>
-                    <StarRatingStatic starNumber={5} />
-                    <p className="font-bold text-xl">
-                      Best hotel i've ever stay
-                    </p>
-                    <p className="text-gray-400 text-sm">5 days ago</p>
-                  </div>
-
-                  <div className="edit-report w-[50px]">
-                    <i className="fa-solid fa-ellipsis rounded-full p-5 aspect-square hover:bg-gray-200"></i>
-                  </div>
-                </div>
-
-                <div className="content">
-                  <p>
-                    {" "}
-                    This is a really lovely hotel in an excellent location. The
-                    mezzanine is an inviting place to work, read, have breakfast
-                    or a chat. The lobby lounge is gorgeous and if the Tusk bar
-                    is too full, you can have a quiet drink out there. I was
-                    travelling on my own for work, and found the room to be
-                    perfectly sized with a very dreamy bed and furnishings. I
-                    loved the turn of the century décor, the marble staircase
-                    and the service was friendly and warm.
-                  </p>
-
-                  <div className="w-full *:w-1/3 *:min-w-[130px] *:max-w-[150px]  flex pl-5 gap-4 items-center justify-center flex-wrap p-4">
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Rooms</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Services</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Value</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Cleanliness</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Location</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Sleep Quatity</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full flex justify-end">
-                    <button className=" rounded-full p-3 hover:bg-gray-200">
-                      <i className="fa-solid fa-thumbs-up"></i> Helpful votes
-                    </button>
-                  </div>
-                  <div className="border-l border-gray-40  pl-5 ">
-                    <div className="supplier-reply flex justify-between items-center w-full">
-                      <div className="img reply flex gap-3 items-center">
-                        <img
-                          src={hotel1}
-                          className="w-[50px] h-[50px] aspect-square rounded-full shrink-0"
-                        />
-                        <div className="info flex flex-col">
-                          <p className="font-bold">Amal Bouabid</p>
-                          <p className="">
-                            Guest Services / Front Office at The Evelyn Hotel
-                          </p>
-                          <p className="text-gray-400 text-sm">5 days ago</p>
-                        </div>
-                      </div>
-                      <div className="edit-report">
-                        <button className="rounded-full  w-[50px] h-[50px] p-3 aspect-square hover:bg-gray-200">
-                          <i className="fa-solid fa-ellipsis"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <p>
-                      {" "}
-                      This is a really lovely hotel in an excellent location.
-                      The mezzanine is an inviting place to work, read, have
-                      breakfast or a chat. The lobby lounge is gorgeous and if
-                      the Tusk bar is too full, you can have a quiet drink out
-                      there. I was travelling on my own for work, and found the
-                      room to be perfectly sized with a very dreamy bed and
-                      furnishings. I loved the turn of the century décor, the
-                      marble staircase and the service was friendly and warm.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className=" border border-gray-400 p-10 w-3/4 rounded-2xl shadow flex">
-              <div className="infoAvatar w-1/4">
-                <img
-                  src={hotel1}
-                  className=" w-[50px] aspect-square rounded-full"
-                />
-                <div className="info">
-                  <p className="font-bold">Cheerry</p>
-                  <p>Wrote a review</p>
-                  <p>Location</p>
-                  <p>9 contributions</p>
-
-                  <div className="date">
-                    <p>
-                      Date visited: <span className="font-bold">May 2025</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="comment w-3/4">
-                <div className="flex justify-between">
-                  <div>
-                    <StarRatingStatic starNumber={5} />
-                    <p className="font-bold text-xl">
-                      Best hotel i've ever stay
-                    </p>
-                    <p className="text-gray-400 text-sm">5 days ago</p>
-                  </div>
-
-                  <div className="edit-report w-[50px]">
-                    <i className="fa-solid fa-ellipsis rounded-full p-5 aspect-square hover:bg-gray-200"></i>
-                  </div>
-                </div>
-
-                <div className="content">
-                  <p>
-                    {" "}
-                    This is a really lovely hotel in an excellent location. The
-                    mezzanine is an inviting place to work, read, have breakfast
-                    or a chat. The lobby lounge is gorgeous and if the Tusk bar
-                    is too full, you can have a quiet drink out there. I was
-                    travelling on my own for work, and found the room to be
-                    perfectly sized with a very dreamy bed and furnishings. I
-                    loved the turn of the century décor, the marble staircase
-                    and the service was friendly and warm.
-                  </p>
-
-                  <div className="w-full *:w-1/3 *:min-w-[130px] *:max-w-[150px]  flex pl-5 gap-4 items-center justify-center flex-wrap p-4">
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Rooms</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Services</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Value</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Cleanliness</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Location</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-semibold text-md">Sleep Quatity</p>
-                      <div className="flex gap-2 items-center">
-                        <div className="bg-black w-full h-2.5 rounded-2xl"></div>
-                        <p className="font-semibold text-[13px]">5.0</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full flex justify-end">
-                    <button className=" rounded-full p-3 hover:bg-gray-200">
-                      <i className="fa-solid fa-thumbs-up"></i> Helpful votes
-                    </button>
-                  </div>
-                  <div className="border-l border-gray-40  pl-5 ">
-                    <div className="supplier-reply flex justify-between items-center w-full">
-                      <div className="img reply flex gap-3 items-center">
-                        <img
-                          src={hotel1}
-                          className="w-[50px] h-[50px] aspect-square rounded-full shrink-0"
-                        />
-                        <div className="info flex flex-col">
-                          <p className="font-bold">Amal Bouabid</p>
-                          <p className="">
-                            Guest Services / Front Office at The Evelyn Hotel
-                          </p>
-                          <p className="text-gray-400 text-sm">5 days ago</p>
-                        </div>
-                      </div>
-                      <div className="edit-report">
-                        <button className="rounded-full  w-[50px] h-[50px] p-3 aspect-square hover:bg-gray-200">
-                          <i className="fa-solid fa-ellipsis"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <p>
-                      {" "}
-                      This is a really lovely hotel in an excellent location.
-                      The mezzanine is an inviting place to work, read, have
-                      breakfast or a chat. The lobby lounge is gorgeous and if
-                      the Tusk bar is too full, you can have a quiet drink out
-                      there. I was travelling on my own for work, and found the
-                      room to be perfectly sized with a very dreamy bed and
-                      furnishings. I loved the turn of the century décor, the
-                      marble staircase and the service was friendly and warm.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+)
+              })
+            }
+          
+              
           </div>
         </div>
       </div>
