@@ -1,15 +1,18 @@
 import { Link } from "react-router";
 import { StarRatingStatic } from "../component";
 import hotel1 from "../assets/42769_14072300320020409156.webp";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../component/UI";
 import { postPhoto, Review } from "../model/review";
+import ModelMoreInfoImage from "../component/modalSlideImage";
 
 interface CommentProp {
   reviewAndPost: (Review | postPhoto)[];
 }
 
 const Comment = ({ reviewAndPost }: CommentProp) => {
+  const [openImage,setOpenImage] = useState<boolean>(false)
+
   return (
     <div
       id="comment"
@@ -129,7 +132,7 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
             <p className="text-3xl font-bold">Traverler Photos (554)</p>
           </div>
           <div className="relative overflow-hidden w-full">
-            <div className="grid grid-cols-6">
+            <div className="grid grid-cols-6" onClick={()=>{setOpenImage(!openImage)}}>
               {reviewAndPost.map((item) =>
                 item.images.map((img) => (
                   <img
@@ -140,6 +143,8 @@ const Comment = ({ reviewAndPost }: CommentProp) => {
                 ))
               )}
             </div>
+              <ModelMoreInfoImage isOpen={openImage} onClose={()=>{setOpenImage(false)}} reviewsAndPostPhoto={reviewAndPost}/>
+            
 
             {/* Lớp overlay mờ dần sang trong suốt ở phía phải */}
             <div className="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent"></div>
