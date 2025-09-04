@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
-import DropDownContent from "../DropDownComponent/DropDownContent";
+import WrapDropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
+import DropDownContent from "../dropdown-component/DropDownContent";
 
 const SortHotel = () => {
   const [isOpenSort, setIsOpenSort] = useState(false);

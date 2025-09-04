@@ -1,0 +1,139 @@
+[
+  {
+    "service": {
+      "serviceID": "S001",
+      "name": "Ha Long Bay Cruise",
+      "ratingAvg": 4.7,
+      "reviewQuantity": 128,
+      "address": "Ha Long, Quang Ninh, Vietnam",
+      "contact": {
+        "contactID":"ds",
+        "phone": "+84 912 345 678",
+        "email": "info@halongcruise.com",
+        "website": "https://halongcruise.com"
+      },
+      "reviewsAndPostPhotos": [
+        {
+          "serviceID": "S001",
+          "id": "P001",
+          "images": [
+            {
+              "id": "IMG001",
+              "url": "https://example.com/photos/halong1.jpg",
+              "description": "Beautiful sunset at Ha Long Bay"
+            }
+          ],
+          "user": {
+            "userID": "U001",
+            "name": "Nguyen Van A",
+            "avatar": "https://example.com/avatars/user1.png"
+          },
+          "createAt": "2025-01-10T00:00:00Z",
+          "title": "Amazing trip!",
+          "rating": 5,
+          "comment": "The cruise was wonderful, staff very friendly.",
+          "goWith": "Family"
+        },
+        {
+          "serviceID": "S001",
+          "id": "P002",
+          "images": [
+            {
+              "id": "IMG002",
+              "url": "https://example.com/photos/halong2.jpg",
+              "description": "Luxury cruise ship"
+            }
+          ],
+          "user": {
+            "userID": "U002",
+            "name": "Tran Thi B",
+            "avatar": "https://example.com/avatars/user2.png"
+          },
+          "createAt": "2025-01-15T00:00:00Z"
+        }
+      ],
+      "Images": [
+        {
+          "serviceID": "S001",
+          "id": "P001",
+          "images": [
+            {
+              "id": "IMG001",
+              "url": "https://images.alphacoders.com/699/699007.jpg",
+              "description": "Beautiful sunset at Ha Long Bay"
+            }
+          ],
+          "user": {
+            "userID": "U001",
+            "name": "Nguyen Van A",
+            "avatar": "https://example.com/avatars/user1.png"
+          },
+          "createAt": "2025-01-10T00:00:00Z"
+        }
+      ],
+      "totalImages": 1,
+      "totalReviews": 1,
+      "totalImageReviews": 1
+    }
+  },
+  {
+    "service": {
+      "serviceID": "S002",
+      "name": "Sapa Trekking Tour",
+      "ratingAvg": 4.5,
+      "reviewQuantity": 95,
+      "address": "Sapa, Lao Cai, Vietnam",
+      "contact": {
+        "contactID":"ds",
+        "phone": "+84 933 222 444",
+        "email": "info@sapatour.com",
+        "website": "https://sapatour.com"
+      },
+      "reviewsAndPostPhotos": [
+        {
+          "serviceID": "S002",
+          "id": "P003",
+          "images": [
+            {
+              "id": "IMG003",
+              "url": "https://example.com/photos/sapa1.jpg",
+              "description": "Rice terraces in Sapa"
+            }
+          ],
+          "user": {
+            "userID": "U003",
+            "name": "Le Van C",
+            "avatar": "https://example.com/avatars/user3.png"
+          },
+          "createAt": "2025-02-15T00:00:00Z",
+          "title": "Great trekking",
+          "rating": 4,
+          "comment": "Nice weather and friendly guide. Would recommend!",
+          "goWith": "Friends"
+        }
+      ],
+      "Images": [
+        {
+          "serviceID": "S002",
+          "id": "P003",
+          "images": [
+            {
+              "id": "IMG003",
+              "url": "https://example.com/photos/sapa1.jpg",
+              "description": "Rice terraces in Sapa"
+            }
+          ],
+          "user": {
+            "userID": "U003",
+            "name": "Le Van C",
+            "avatar": "https://example.com/avatars/user3.png"
+          },
+          "createAt": "2025-02-15T00:00:00Z"
+        }
+      ],
+      "totalImages": 1,
+      "totalReviews": 1,
+      "totalImageReviews": 1
+    }
+  }
+]

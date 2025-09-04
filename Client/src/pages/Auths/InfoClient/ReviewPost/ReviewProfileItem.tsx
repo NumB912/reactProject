@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import Dropdown from "../../../../component/DropDownComponent/Dropdown";
+import Dropdown from "../../../../component/dropdown-component/Dropdown";
 import { ButtonBorder, Modal } from "../../../../component/UI";
-import DropDownContent from "../../../../component/DropDownComponent/DropDownContent";
+import DropDownContent from "../../../../component/dropdown-component/DropDownContent";
 import StarRatingStatic from "../../../../component/UI/StarRatingStatic";
 import PostReviewPhoto from "../../../../component/postReviewPhoto";
 import { Image } from "../../../../model/image";

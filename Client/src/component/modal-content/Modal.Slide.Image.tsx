@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Modal from "./Modal";
-import { postPhoto, Review } from "../model/review";
-import IconButton from "./UI/Button/IconButton";
-import StarRatingStatic from "./UI/StarRatingStatic";
+import { postPhoto, Review } from "../../model/review";
+import IconButton from "../UI/Button/IconButton";
+import StarRatingStatic from "../UI/StarRatingStatic";
 
 interface ModalSlideImageProps {
   onClose: () => void;
@@ -47,7 +47,7 @@ const ModelMoreInfoImage = ({
                   {reviewPostMerge[index]?.parent.user?.name}
                 </p>
                 <p className="text-[12px] text-gray-400">
-                  {reviewPostMerge[index]?.parent.createAt.toDateString()}
+                  {/* {reviewPostMerge[index]?.parent.createAt.toDateString()} */}
                 </p>
               </div>
             </div>
@@ -69,7 +69,7 @@ const ModelMoreInfoImage = ({
               </p>
               <span className="font-semibold">Date Posted</span>
               <p className="text-sm text-gray-300">
-                {reviewPostMerge[index]?.parent.createAt.toDateString()}
+                {new Date(reviewPostMerge[index]?.parent.createAt).toDateString()}
               </p>
             </div>
           </div>

@@ -1,8 +1,8 @@
 export {default as Footer} from "./Footer";
-export {default as DropDown} from "./DropDownComponent/DropDownSelect"
-export {default as Filter} from "./FilterComponent/SearchFilterHotel"
-export {default as NavBar} from "./NavBarComponent/NavBar"
-export {default as NavBarSide} from "./NavBarComponent/SideNavBar"
+export {default as DropDown} from "./dropdown-component/DropDownSelect"
+export {default as Filter} from "./filter-component/SearchFilterHotel"
+export {default as NavBar} from "./navigation-bar/NavBar"
+export {default as NavBarSide} from "./navigation-bar/SideNavBar"
 export {default as SearchBar} from "./SearchComponent/SearchBar"
 export {default as SearchFlight} from "./SearchComponent/SearchFlight"
 export {default as SearchRentalCar} from "./SearchComponent/searchRentalCar"
@@ -15,4 +15,4 @@ export {default as CalendarHotel} from "./calendar/CalendarHotel"
 export {default as CalendarTour} from "./calendar/CalendarTour"
 
 export {default as StarRatingStatic} from "./UI/StarRatingStatic"
-export {default as InputSquare} from "./InputComponent/inputSquare" 
+export {default as InputSquare} from "./input-component/inputSquare" 

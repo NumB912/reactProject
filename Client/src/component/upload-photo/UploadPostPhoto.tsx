@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { Button, ButtonCircle } from "./UI";
-import { useUploadPhotoStore } from "../store/useUploadPhoto";
 import UploadPhotos, { UploadPhotosHandle } from "./UploadPhotos";
-import useUploadPhotos from "../hook/useUploadPhotos";
+import useUploadPhotos from "../../hook/useUploadPhotos";
+import { Button, ButtonCircle } from "../UI";
 
 
 
@@ -22,7 +21,7 @@ const UploadPostPhoto = () => {
           <div className="upload overflow-y-auto min-h-[400px] max-h-[800px] space-y-4 mb-4 pr-1">
             {photos.map((photo, index) => (
               <div
-                key={photo.id}
+                key={photo.imageID}
                 className="flex flex-col md:flex-row gap-4 items-start"
               >
                 <div className="relative w-full md:w-auto">

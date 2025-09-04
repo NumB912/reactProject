@@ -5,7 +5,7 @@ import StarRatingStatic from "../UI/StarRatingStatic";
 
 
 export const RenderRecommend= () => (
-  <Link to={`/our/`}
+  <Link to={`/tour/`}
     className={`flex flex-col w-full max-sm:min-w-55 max-lg:min-w-45 aspect-square rounded-2xl border border-gray-300 shadow relative`}
   >
     <div className="image w-full h-full relative">

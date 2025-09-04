@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 const HotelBook = () => {
   return (
-    <div className="w-7xl max-w-full">
+    <div className="container">
       <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-4 items-center">
         <div className="flex flex-col justify-center items-start p-4">
           <p className="font-bold">John F Kennedy International Airport</p>

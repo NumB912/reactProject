@@ -1,31 +1,32 @@
 import React from "react";
 
-type variant = "contained" | "danger" | "primary" | "secondary" | "outline";
-type type = "button" | "submit" | "reset" | undefined;
-type rounded = "none" | "sm" | "md" | "lg" | "full";
-type size = "sm" | "md" | "lg";
-type typeButton =  "filled" | "text" | "custom";
+type Variant = "contained" | "danger" | "primary" | "secondary" | "outline";
+type Rounded = "none" | "sm" | "md" | "lg" | "full";
+type Size = "sm" | "md" | "lg";
+type TypeButton = "filled" | "text" | "custom";
 
-export interface ButtonProp {
+export interface ButtonProps {
   onClick?: () => void;
   children?: React.ReactNode;
   className?: string;
-  type?: type;
-  variant?: variant;
-  rounded?: rounded;
-  size?: size;
-  typeButton?: typeButton;
+  type?: "button" | "submit" | "reset";
+  variant?: Variant;
+  rounded?: Rounded;
+  size?: Size;
+  typeButton?: TypeButton;
+  disabled?: boolean;
+  loading?: boolean;
 }
 
-const variantClasses: Record<variant, string> = {
-  primary: "bg-black text-white hover:bg-black",
+const variantClasses: Record<Variant, string> = {
+  primary: "bg-black text-white hover:bg-gray-900",
   secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
   danger: "bg-red-600 text-white hover:bg-red-700",
-  outline: "border border-gray-300 hover:bg-gray-100",
+  outline: "border border-gray-300 text-gray-700 hover:bg-gray-100",
   contained: "bg-gray-800 text-white hover:bg-gray-900",
 };
 
-const roundedClasses: Record<rounded, string> = {
+const roundedClasses: Record<Rounded, string> = {
   none: "rounded-none",
   sm: "rounded-sm",
   md: "rounded-md",
@@ -33,19 +34,19 @@ const roundedClasses: Record<rounded, string> = {
   full: "rounded-full",
 };
 
-const sizeClasses: Record<size, string> = {
+const sizeClasses: Record<Size, string> = {
   sm: "px-2 py-1 text-sm",
   md: "px-3 py-2 text-base",
   lg: "px-4 py-3 text-lg",
 };
 
-const buttonClasses: Record<typeButton, string> = {
-  filled: "text-white font-bold hover:bg-gray-800 active:bg-gray-900 bg-black",
-  text: "text-gray-800 hover:bg-gray-100",
+const styleClasses: Record<TypeButton, string> = {
+  filled: "font-bold",
+  text: "bg-transparent shadow-none hover:bg-gray-100",
   custom: "",
 };
 
-const Button: React.FC<ButtonProp> = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   className = "",
@@ -54,14 +55,28 @@ const Button: React.FC<ButtonProp> = ({
   rounded = "full",
   size = "md",
   typeButton = "filled",
+  disabled = false,
+  loading = false,
 }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`cursor-pointer hover:scale-95 active:scale-90 transition-all duration-400 ease-in-out  ${buttonClasses[typeButton]} ${sizeClasses[size]} ${roundedClasses[rounded]} ${variantClasses[variant]} ${className}`}
+      disabled={disabled || loading}
+      aria-disabled={disabled}
+      aria-busy={loading}
+      className={`
+        cursor-pointer transition-all duration-300 ease-in-out
+        hover:scale-95 active:scale-90
+        ${styleClasses[typeButton]}
+        ${sizeClasses[size]}
+        ${roundedClasses[rounded]}
+        ${variantClasses[variant]}
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+        ${className}
+      `}
     >
-      {children}
+      {loading ? "Loading..." : children}
     </button>
   );
 };

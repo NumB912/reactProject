@@ -13,7 +13,6 @@ export interface hotel{
 }
 
 export interface Room{
-
     roomID:string;
     name:string;
     quantity:number;

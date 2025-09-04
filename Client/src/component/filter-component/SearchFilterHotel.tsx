@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useCalendarHotel } from "../../store/CalendarStore/CalendarHotelStore";
 import { formatDate } from "../../utils/TimeHandle";
 import Calendar_Hotel from "../calendar/CalendarHotel";
-import Traveler_Hotel from "../PassengerComponent/PassengersHotel";
+import Traveler_Hotel from "../passenger-content/PassengersHotel";
 import useTravelerHotel from "../../store/PassengerStore/CustomerHotelStore";
-import PassengersHotel from "../PassengerComponent/PassengersHotel";
-import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import PassengersHotel from "../passenger-content/PassengersHotel";
+import WrapDropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
 import { Button } from "../UI";
 import SearchFilter from "./SearchFilter";
-import InputLabelToggle from "../InputComponent/Input-label-button";
+import InputLabelToggle from "../input-component/Input-label-button";
 
 interface Props {
   className?:string

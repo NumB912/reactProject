@@ -1,13 +1,12 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Button, ButtonCircle, Modal } from "./UI"; // nút xoá, giả sử bạn có icon X ở đây
-import Photos from "../pages/Auths/InfoClient/PhotoPost/Photos";
+import { Button, ButtonCircle, Modal } from "../UI"; 
+
 import UploadPhotos, { UploadPhotosHandle } from "./UploadPhotos";
-import { useUploadPhotoStore } from "../store/useUploadPhoto";
-import useUploadPhoto from "../hook/useUploadPhotos";
+import useUploadPhotos from "../../hook/useUploadPhotos";
 
 const UploadPhotosReview: React.FC = () => {
   const inputRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
-  const {photos,removePhoto,addPhotos,updateDescription} = useUploadPhoto()
+  const {photos,removePhoto,addPhotos,updateDescription} = useUploadPhotos()
   const [isOpen, setOpen] = useState<boolean>(false);
   const uploadRef = useRef<UploadPhotosHandle>(null)
 
@@ -72,7 +71,6 @@ const UploadPhotosReview: React.FC = () => {
       </div>
 
       <Modal
-        styleContainer="p-6 w-full max-w-3xl"
         isOpen={isOpen}
         onClose={() => setOpen(!isOpen)}
       >

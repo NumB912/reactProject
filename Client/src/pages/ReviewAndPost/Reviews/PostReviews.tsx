@@ -5,7 +5,7 @@ import ButtonBorder from "../../../component/UI/Button/ButtonBorderSelect";
 import ButtonSelectOne, {
   ButtonSelectProp,
 } from "../../../component/ButtonSelectOne";
-import UploadPhotosReview from "../../../component/UploadPhotosReview";
+import UploadPhotosReview from "../../../component/upload-photo/UploadPhotosReview";
 import { Checkbox, ToggleButtonGroup } from "@mui/material";
 import StarRatingComponent from "../../../component/StarRatingComponent";
 

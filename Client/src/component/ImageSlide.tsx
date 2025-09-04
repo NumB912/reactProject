@@ -3,8 +3,8 @@ import { Image } from "../model/image";
 import IconButton from "./UI/Button/IconButton";
 import ReusableSlider from "./SliderComponent/SliderComponent";
 import Slider from "react-slick";
-import Modal from "./Modal";
-import ModelMoreInfoImage from "./Modal.Slide.Image";
+import Modal from "./modal-content/Modal";
+import ModelMoreInfoImage from "./modal-content/Modal.Slide.Image";
 import { postPhoto, Review } from "../model/review";
 
 interface ImageSlideProps {
@@ -72,7 +72,7 @@ const ImageSlide = ({ postPhotos }: ImageSlideProps) => {
             onClick={handleNextItem}
           />
 
-        <ModelMoreInfoImage isOpen={openImage} onClose={() => { setOpenImage(false) }} reviewsOrPostPhoto={postPhoto} />
+              {postPhoto&&<ModelMoreInfoImage isOpen={openImage} onClose={() => { setOpenImage(false) }} reviewsOrPostPhoto={postPhoto} />}
         </div>
       )}
       <div className="grid grid-cols-6 max-lg:grid-cols-3 max-sm:hidden gap-2 mt-2">

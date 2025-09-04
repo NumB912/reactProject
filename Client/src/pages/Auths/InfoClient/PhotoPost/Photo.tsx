@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Dropdown from "../../../../component/DropDownComponent/Dropdown";
-import DropDownContent from "../../../../component/DropDownComponent/DropDownContent";
+import Dropdown from "../../../../component/dropdown-component/Dropdown";
+import DropDownContent from "../../../../component/dropdown-component/DropDownContent";
 import { Link } from "react-router";
 import { ButtonBorder } from "../../../../component/UI";
 import ViewDetailPhoto from "./ViewDetailPhoto";

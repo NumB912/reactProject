@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Button, Modal } from "../../../component/UI";
-import { UploadPhotosHandle } from "../../../component/UploadPhotos";
-import useUploadPhoto from "../../../hook/useUploadPhoto";
-import UploadPhoto from "../../../component/UploadPhoto";
-import { Image } from "../../../interface/ImagePhotoUrl";
+import useSingleUploadPhoto from "../../../hook/useUploadPhoto";
+import { UploadPhotosHandle } from "../../../component/upload-photo/UploadPhotos";
+import { Image } from "../../../model/image";
+import UploadPhoto from "../../../component/upload-photo/UploadPhoto";
 const WallpaperSection = () => {
   const {
     photo: wallpaperPhoto,
     addphoto: addWallpaperPhoto,
     editPhoto: editWallpaperPhoto,
     deletePhoto: clearWallpaperPhoto,
-  } = useUploadPhoto();
+  } = useSingleUploadPhoto();
   const inputRefWallpaper = React.useRef<UploadPhotosHandle>(null);
   const [isOpenModalUploadImageWallpaper, setIsOpenModalUploadImageWallpaper] =
     useState(false);
@@ -27,7 +27,7 @@ const WallpaperSection = () => {
     if (!photoImageWallpaper) {
       clearWallpaperPhoto();
     }
-    closeWallpaperModal();
+    closeWallpaperModal();9
   };
 
   const handleSaveImageWallpaper = () => {

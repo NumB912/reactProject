@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useHotelFilter } from "../../../store";
-import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
+import FilterCheckInHotel from "../../../component/filter-component/SearchFilterHotel";
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { Button, Modal } from "../../../component/UI";
 import { Link, useNavigate, useParams } from "react-router";
 import { StarRatingStatic } from "../../../component";
-import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
-import WrapDropDownOutLineItem from "../../../component/DropDownComponent/WrapDropDownOutLineItem";
-import DropDownContent from "../../../component/DropDownComponent/DropDownContent";
+import DropDownSelect from "../../../component/dropdown-component/DropDownSelect";
+import WrapDropDownOutLineItem from "../../../component/dropdown-component/WrapDropDownOutLineItem";
+import DropDownContent from "../../../component/dropdown-component/DropDownContent";
 import SortHotel from "../../../component/SortComponent/SortHotel";
 import Star from "../../../component/UI/Star";
 import SideHotelComponent from "../../../component/SideComponent/SideHotelComponent";
@@ -44,7 +44,7 @@ const Hotels = () => {
 
 
   return (
-    <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
+    <div className="container grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
           Your place you want to go
@@ -62,25 +62,6 @@ const Hotels = () => {
         />
       </div>
 
-      <div
-        className="SideResponsive hidden w-full justify-center items-center col-span-2 border border-gray-200 gap-2
-        *:cursor-pointer
-      max-lg:flex
-      "
-      >
-        <div
-          className=" w-full p-3 border-r border-gray-200 font-bold text-center"
-          onClick={() => setisShowFilter(true)}
-        >
-          <i className="fa-solid fa-filter"></i> filter
-        </div>
-        <div
-          className=" w-full p-3 font-bold text-center"
-          onClick={() => setIsShowSort(true)}
-        >
-          <i className="fa-solid fa-sort"></i> Sort
-        </div>
-      </div>
 
       <div className="w-full gap-1 flex flex-col max-lg:col-span-2">
         <div className="flex flex-col gap-3 max-lg:col-span-2">
@@ -122,7 +103,7 @@ const Hotels = () => {
                   <div className="flex text-[clamp(15px,200rem,1vw)] items-center justify-center gap-2 text-white font-bold">
                     <span> 3.0</span>
                     <span>
-                      <Star />
+                      <StarRatingStatic />
                     </span>
                   </div>
                   <p className="text-md text-white font-bold">Excellent</p>

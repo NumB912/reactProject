@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { useTourCalendar } from "../../store/CalendarStore/CalendarTourStore";
 import Calendar_OneMonth from "./CalendarBase/Calendar_OneMonth";
 import { formatDate, formatDateWeek } from "../../utils/TimeHandle";
-import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
-import DropDownContent from "../DropDownComponent/DropDownContent";
+import WrapDropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
+import DropDownContent from "../dropdown-component/DropDownContent";
 
 interface CalendarTourProp {
   containerStyle?: String;

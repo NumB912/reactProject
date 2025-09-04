@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "../UI";
 import { useTravelerFlight } from "../../store";
-import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
-import DropDownContent from "../DropDownComponent/DropDownContent";
+import WrapDropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
+import DropDownContent from "../dropdown-component/DropDownContent";
 
 interface PassengerFlightProp {
   onClose: () => void;

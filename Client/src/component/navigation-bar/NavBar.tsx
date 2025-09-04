@@ -8,10 +8,10 @@ import useStateLogin from "../../store/LoginStore/login_store";
 import SideNavBar from "./SideNavBar";
 import { Tab } from "../UI/Tabs";
 import InputShow from "../UI/Input/InputShow";
-import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
-import Dropdown from "../DropDownComponent/Dropdown";
+import DropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
+import Dropdown from "../dropdown-component/Dropdown";
 import ListItem from "../UI/ListItem";
-import DropDownContent from "../DropDownComponent/DropDownContent";
+import DropDownContent from "../dropdown-component/DropDownContent";
 
 const NavBar = () => {
   const [error, setError] = useState<string | null>(null);

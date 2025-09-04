@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Icon from "./UI/Icon";
+import Icon from "../UI/Icon";
 
 type Variant = "default" | "primary" | "secondary";
 type VariantBehind = "default" | "primary" | "secondary";
@@ -19,7 +19,6 @@ interface ModalProps {
   variantBackground?: VariantBehind;
   rounded?: Rounded;
   padding?:Padding;
-  zIndex: number;
 }
 
 const VariantClasses: Record<Variant, string> = {
@@ -57,7 +56,6 @@ const Modal = ({
   onClose,
   children,
   className = "",
-  zIndex = 999,
   title,
   tickExit = true,
   variant = "default",
@@ -86,7 +84,6 @@ const Modal = ({
   return createPortal(
     <div
       className={`fixed inset-0 flex items-center justify-center bg-black/30 w-full h-full ${VariantBehind[variantBackground]}`}
-      style={{ zIndex }}
       onClick={onClose}
     >
       <div

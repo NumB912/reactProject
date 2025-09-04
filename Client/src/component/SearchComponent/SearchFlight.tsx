@@ -3,12 +3,12 @@ import { Button, InputBar } from "../UI";
 import { useCalendarFlight } from "../../store/CalendarStore/CalendarFlightStore";
 import { data } from "react-router";
 import { useTravelerFlight } from "../../store";
-import { PassengerFlight } from "../PassengerComponent/PassengersFlight";
+import { PassengerFlight } from "../passenger-content/PassengersFlight";
 import { Input } from "@mui/material";
-import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import DropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
 import CalendarFlight from "../calendar/CalendarFlight";
-import DropDownContent from "../DropDownComponent/DropDownContent";
-import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import DropDownContent from "../dropdown-component/DropDownContent";
+import WrapDropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
 function SearchFlight() {
 
   // function handleDate(date?: Date) {

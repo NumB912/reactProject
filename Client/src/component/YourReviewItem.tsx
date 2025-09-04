@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonBorder } from "./UI";
 import StarRatingStatic from "./UI/StarRatingStatic";
-import DropDownOutLineItem from "./DropDownComponent/WrapDropDownOutLineItem";
-import DropDownSelect from "./DropDownComponent/DropDownSelect";
+import DropDownOutLineItem from "./dropdown-component/WrapDropDownOutLineItem";
+import DropDownSelect from "./dropdown-component/DropDownSelect";
 import PostReviewPhoto from "./postReviewPhoto";
 import Photos from "../pages/Auths/InfoClient/PhotoPost/Photos";
-import { Image } from "../interface/ImagePhotoUrl";
-import Dropdown from "./DropDownComponent/Dropdown";
-import DropDownContent from "./DropDownComponent/DropDownContent";
+import { Image } from "../model/image";
+import Dropdown from "./dropdown-component/Dropdown";
+import DropDownContent from "./dropdown-component/DropDownContent";
 interface YourReviewedItemProps {
   image: string;
   titleService: string;

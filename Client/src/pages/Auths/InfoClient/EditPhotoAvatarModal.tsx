@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { Modal } from '../../../component/UI';
 import useSingleUploadPhoto from '../../../hook/useUploadPhoto';
-import UploadPhoto, { UploadPhotosHandle } from '../../../component/UploadPhoto';
-import { Image } from '../../../interface/ImagePhotoUrl';
+import { Image } from '../../../model/image';
+import { UploadPhotosHandle } from '../../../component/upload-photo/UploadPhotos';
+import UploadPhoto from '../../../component/upload-photo/UploadPhoto';
 
 interface EditPhotoAvatarModalProp{
     setIsOpenModalUploadImageAvatar:(isOpenModalUploadImageAvatar:boolean)=>void;
@@ -26,8 +27,6 @@ export const EditPhotoAvatarModal = ({isOpenModalUploadImageAvatar,setIsOpenModa
             setIsOpenModalUploadImageAvatar(false);
           }}
           isOpen={isOpenModalUploadImageAvatar}
-          zIndex={1000}
-          styleContainer="max-md:w-full min-sm:min-w-[500px]"
         > 
           <div className="w-full my-2 flex justify-center">
 

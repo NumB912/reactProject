@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../UI";
 import useTravelerHotel from "../../store/PassengerStore/CustomerHotelStore";
-import WrapDropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import WrapDropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
 
 
 const PassengersHotel = () => {

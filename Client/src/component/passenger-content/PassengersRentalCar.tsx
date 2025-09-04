@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { usePassengerCar,useCalendarCarStore } from "../../store";
 import PassengerWrap from "./PassengersWrap";
 import { DropDown } from "..";
-import DropDownOutLineItem from "../DropDownComponent/WrapDropDownOutLineItem";
+import DropDownOutLineItem from "../dropdown-component/WrapDropDownOutLineItem";
 
 const Passengers = () => {
   const {

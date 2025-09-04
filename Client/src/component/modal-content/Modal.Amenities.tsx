@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Amenity, Facility } from "../model/facility";
+import { Amenity, Facility } from "../../model/facility";
 import Modal from "./Modal";
-import Icon from "./UI/Icon";
-import IconAndLabel from "./UI/IconLabel";
+import Icon from "../UI/Icon";
+import IconAndLabel from "../UI/IconLabel";
 
 interface ModalAmenitiesProp {
   facilities?: Facility[];
@@ -21,7 +21,6 @@ const ModalAmenities = ({
       isOpen={isOpen}
       title="Facilities"
       tickExit={true}
-      zIndex={999}
       rounded="lg"
       padding="sm"
     >

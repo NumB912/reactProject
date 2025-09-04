@@ -1,9 +1,9 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import { ImageUrlProp } from '../interface/ImagePhotoUrl';
+import { Image } from '../model/image';
 
 const useUploadPhotos = () => {
-  const [photos,setPhotos] = React.useState<ImageUrlProp[]>([]);
+  const [photos,setPhotos] = React.useState<Image[]>([]);
   const addPhotos = (files:File[]) =>{
     if(files.length === 0) return;
 

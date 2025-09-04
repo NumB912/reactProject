@@ -4,7 +4,8 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import { Image } from "../interface/ImagePhotoUrl";
+import { Image } from "../../model/image";
+
 
 
 export interface UploadPhotosHandle {

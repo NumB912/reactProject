@@ -5,7 +5,7 @@ import { Room } from "../../../model/hotel/hotel";
 import { Facility } from "../../../model/facility";
 import { am } from "react-router/dist/development/route-data-B9_30zbP";
 import Icon from "../../../component/UI/Icon";
-import ModalAmenities from "../../../component/Modal.Amenities";
+import ModalAmenities from "../../../component/modal-content/Modal.Amenities";
 interface RoomCardProp {
   room?: Room;
 }

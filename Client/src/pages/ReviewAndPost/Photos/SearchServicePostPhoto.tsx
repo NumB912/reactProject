@@ -1,8 +1,6 @@
 import React from "react";
 import { InputBar } from "../../../component/UI";
-import UploadPhoto from "../../../component/UploadPhotosReview";
-import UploadPhotos from "../../../component/UploadPhotos";
-import UploadPostPhoto from "../../../component/UploadPostPhoto";
+import UploadPostPhoto from "../../../component/upload-photo/UploadPostPhoto";
 
 const SearchServicePostPhoto = () => {
   return (

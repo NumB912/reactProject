@@ -90,7 +90,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="w-7xl max-w-full flex flex-col items-center justify-center bg-white">
+    <div className="container flex flex-col items-center justify-center bg-white">
       <SearchBar />
       <Banner />
 
@@ -143,7 +143,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="w-full flex-col flex items-center justify-center font-bold border-t border-gray-200">
+        {/* <div className="w-full flex-col flex items-center justify-center font-bold border-t border-gray-200">
           <div className="flex items-center gap-3 *:text-7xl p-3">
             <p>Favorite places </p>
             <i className="fa-solid fa-heart text-red-500"></i>
@@ -253,7 +253,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

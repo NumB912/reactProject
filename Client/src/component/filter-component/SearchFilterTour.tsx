@@ -1,7 +1,7 @@
 import React from "react";
 import Calendar_Tour from "../calendar/CalendarTour";
 import { Button } from "../UI";
-import InputLabelToggle from "../InputComponent/Input-label-button";
+import InputLabelToggle from "../input-component/Input-label-button";
 import SearchFilter from "./SearchFilter";
 
 const SearchFilterTour = () => {

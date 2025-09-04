@@ -1,9 +1,9 @@
 import React from "react";
 import CalendarRentalCar from "../calendar/CalendarRentalCar";
-import Passengers from "../PassengerComponent/PassengersRentalCar";
+import Passengers from "../passenger-content/PassengersRentalCar";
 import { Button } from "../UI";
 import SearchFilter from "./SearchFilter";
-import InputLabelToggle from "../InputComponent/Input-label-button";
+import InputLabelToggle from "../input-component/Input-label-button";
 
 const SearchFilterRentalCar = () => {
   return (

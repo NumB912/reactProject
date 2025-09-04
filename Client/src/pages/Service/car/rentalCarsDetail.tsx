@@ -5,7 +5,7 @@ import { Button } from "../../../component/UI";
 const RentalCarsDetail = () => {
   const nagative = useNavigate();
   return (
-    <div className="RentalCarsDetail">
+    <div className="RentalCarsDetail container">
       <div className="findTab w-full gap-1 flex flex-wrap justify-center items-center inset-shadow-2xs py-4 pb-7 ">
         <div className="flex flex-col w-full max-sm:w-3/4 my-2">
           <div className="relative flex items-center">

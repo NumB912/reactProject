@@ -1,7 +1,7 @@
 export {default as Button} from "./Button/Button"
 export {default as ButtonIcon} from "./Button/IconButton"
 export {default as Banner} from "./Banner"
-export {default as Modal} from "../Modal"
+export {default as Modal} from "../modal-content/Modal"
 export {default as RadioOption} from "./Option/RadioOption"
 export {default as Tabs} from "./Tabs"
 export {default as ButtonCircle} from "./Button/ButtonCircleDelete"

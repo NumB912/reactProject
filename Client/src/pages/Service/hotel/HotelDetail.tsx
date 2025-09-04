@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../../../component/UI";
-import FilterCheckInHotel from "../../../component/FilterComponent/SearchFilterHotel";
+import FilterCheckInHotel from "../../../component/filter-component/SearchFilterHotel";
 import Comment from "../../Comment";
-import CardContent from "../../../component/CardContent";
+import CardContent from "../../../component/service's-body/CardContent";
 import IconLabel from "../../../component/UI/IconLabel";
 import RoomCard from "./RoomCard";
 import InfoService from "../../../component/infoService";
@@ -12,6 +12,7 @@ import { useParams } from "react-router";
 import { Amenity } from "../../../model/facility";
 import Reviews from "../../Auths/InfoClient/ReviewPost/Reviews";
 import { Icon } from "@mui/material";
+import Rooms from "./Rooms";
 
 const hotels: hotel[] = [
   {
@@ -725,13 +726,13 @@ const HotelDetail = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-7 grid-rows-2">
-            <div className="infodetail col-span-5 row-span-2 *:mb-3">
-              <CardContent title="Introduce">
-                <p>{hotel?.introduce}</p>
+          <div className="grid grid-cols-10 grid-rows-2">
+            <div className="infodetail col-span-6 row-span-2 *:mb-3">
+              <CardContent title="Giới thiệu" variant="outline">
+                <p className="text-sm">{hotel?.introduce}</p>
               </CardContent>
 
-              <CardContent title="Highlight">
+              <CardContent title="Mục đặc biệt" variant="outline">
                 <div className="grid grid-cols-5 mt-5">
                   {hotel?.highLight.map((item: Amenity) => {
                     return (
@@ -747,8 +748,8 @@ const HotelDetail = () => {
                   })}
                 </div>
               </CardContent>
-              <CardContent title="Amenities">
-                <div className="grid grid-cols-6 max-md:grid-cols-2 gap-3">
+              <CardContent title="Tiện ích" variant="outline">
+                <div className="grid grid-cols-5 max-md:grid-cols-2 gap-3">
                   {hotel?.amenities.map((item: Amenity) => {
                     return (
                       <IconLabel
@@ -764,37 +765,16 @@ const HotelDetail = () => {
                 </div>
               </CardContent>
             </div>
-            <div className="locationAndReview col-span-2 row-span-2 *:mb-3 flex flex-col px-4">
+            <div className="locationAndReview col-span-4 row-span-2 *:mb-3 flex flex-col px-4">
               <div className="location w-full h-full p-4 rounded border border-gray-200 shadow"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="w-full">
-        <p className="text-2xl font-bold">Select room</p>
-        <div className="flex gap-2 *:p-1.5 *:border *:rounded-3xl *:text-[10px] *:font-bold *:border-gray-400 *:max-sm:hidden *:w-[60px] *:text-center py-3">
-          <Button
-            rounded="full"
-            size="sm"
-            variant="outline"
-            typeButton="filled"
-          >
-            All
-          </Button>
-          <Button rounded="full" size="sm" variant="outline" typeButton="text">
-            1 Bed
-          </Button>
-          <Button rounded="full" size="sm" variant="outline" typeButton="text">
-            2 Beds
-          </Button>
-        </div>
-        <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-5">
-          {hotel?.rooms?.map((room) => {
-            return <RoomCard key={room.roomID} room={room} />;
-          })}
-        </div>
-      </div>
+      <Rooms rooms={hotel?.rooms}/>
+
+
       {hotel?.service.reviewsAndPostPhotos && (
         <Comment reviewAndPost={hotel?.service.reviewsAndPostPhotos} />
       )}

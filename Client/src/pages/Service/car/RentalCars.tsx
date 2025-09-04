@@ -3,11 +3,11 @@ import { Link } from "react-router";
 import { FilterItem } from "../../../model/interface/interface_filter";
 import { useHotelFilter } from "../../../store";
 import { CalendarRentalCar } from "../../../component";
-import Passengers from "../../../component/PassengerComponent/PassengersRentalCar";
+import Passengers from "../../../component/passenger-content/PassengersRentalCar";
 import { Button } from "../../../component/UI";
 
 import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
-import SearchFilterRentalCar from "../../../component/FilterComponent/SearchFilterRentalCar";
+import SearchFilterRentalCar from "../../../component/filter-component/SearchFilterRentalCar";
 import SideRentalCarComponent from "../../../component/SideComponent/SideRentalCarComponent";
 
 const RentalCars = () => {

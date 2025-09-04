@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image } from "../interface/ImagePhotoUrl";
+import { Image } from "../model/image";
 import { v4 as uuidv4 } from "uuid";
 
 const useSingleUploadPhoto = () => {
@@ -15,7 +15,8 @@ const useSingleUploadPhoto = () => {
 
     setPhoto({
       description: "",
-      id: uuidv4(),
+      imageID: uuidv4(),
+      altText:"",
       url,
     });
   };
@@ -33,7 +34,8 @@ const useSingleUploadPhoto = () => {
     const url = URL.createObjectURL(file);
     setPhoto({
       description: "",
-      id: uuidv4(),
+      imageID: uuidv4(),
+      altText:"",
       url,
     });
 

@@ -4,17 +4,15 @@ import DualSlider from "../../../component/SliderRangeComponent/DualSlider";
 import { useTourFilter } from "../../../store";
 import Calendar_Tour from "../../../component/calendar/CalendarTour";
 import { Button, Modal } from "../../../component/UI";
-import DropDownSelect from "../../../component/DropDownComponent/DropDownSelect";
+import DropDownSelect from "../../../component/dropdown-component/DropDownSelect";
 import ReusableSlider from "../../../component/SliderComponent/SliderComponent";
 import SortTour from "../../../component/SortComponent/SortTour";
-import SearchFilterTour from "../../../component/FilterComponent/SearchFilterTour";
+import SearchFilterTour from "../../../component/filter-component/SearchFilterTour";
 import SideTourComponent from "../../../component/SideComponent/SideTourComponent";
 import IconButton from "../../../component/UI/Button/IconButton";
+import { StarRatingStatic } from "../../../component";
 const Tours = () => {
-  const [price, setPrice] = useState(0);
-  const [isShowsome, setShowsome] = useState(false);
-  const [isShowSort, setShowSort] = useState(false);
-  const [active, setActive] = useState<boolean>(false);
+
   const {
     maxPrice,
     minPrice,
@@ -30,9 +28,7 @@ const Tours = () => {
     toggleStar,
   } = useTourFilter();
 
-  const [showCheckIn, setShowCheckIn] = useState(false);
-  const [favorite, setFavorite] = useState(false);
-  const nagative = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMaxPrice(100);
@@ -57,147 +53,8 @@ const Tours = () => {
       </div>
 
       <SearchFilterTour />
-
       <SideTourComponent />
 
-      <Modal
-        isOpen={isShowsome}
-        onClose={() => {
-          setShowsome(false);
-        }}
-        styleContainer="w-full p-5 h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
-        parentContainerStyle="min-xl:hidden"
-      >
-        <div className="flex flex-col justify-between items-center w-full ">
-          <div className="ContentName font-bold text-3xl">Filter</div>
-          <div
-            className="SideFilter w-full flex flex-col justify-start items-center  p-5
-      *:font-bold  *:border-gray-300 *:w-full gap-5 *:py-1  
-"
-          >
-            <div className="OptionPrice">
-              <p>Prices</p>
-              <DualSlider />
-            </div>
-            <div className="flex w-full flex-col">
-              <p className="text-md">Rating</p>
-            </div>
-
-            <div className="w-full flex-1 flex flex-col gap-3 text-[20px]">
-              <div className="flex w-full flex-col">
-                <p className="text-md">Duration</p>
-                {/* <CheckBoxOption
-                  handleChange={(value: string | number) => {
-                    setDuration(String(value));
-                  }}
-                  arr={[
-                    { id: "CheckBoxDuration1", value: "Up to 1 hour" },
-                    { id: "CheckBoxDuration2", value: "1 to 4 hours" },
-                    { id: "CheckBoxDuration3", value: "4 hours to day" },
-                  ]}
-                  checkBoxName="HotelClass"
-                >
-                  {(item: string) => <p>{item}</p>}
-                </CheckBoxOption> */}
-              </div>
-
-              <div className="flex w-full flex-col">
-                <p className="text-md">Product categories</p>
-                {/* <CheckBoxOption
-                  handleChange={(value: string | number) => {
-                    setCategories(String(value));
-                  }}
-                  arr={[
-                    {
-                      id: "checkBoxProductCategories1",
-                      value: "Sightseeing Tours",
-                    },
-                    { id: "checkBoxProductCategories2", value: "City Tours" },
-                    {
-                      id: "checkBoxProductCategories3",
-                      value: "Historical * Heritage Tours",
-                    },
-                    { id: "checkBoxProductCategories4", value: "Bus Tours" },
-                    {
-                      id: "checkBoxProductCategories5",
-                      value: "Walking Tours",
-                    },
-                    {
-                      id: "checkBoxProductCategories6",
-                      value: "Helicopter Tours",
-                    },
-                    {
-                      id: "checkBoxProductCategories7",
-                      value: "Hop-On Hop-Off",
-                    },
-                    { id: "checkBoxProductCategories8", value: "Night Tours" },
-                    {
-                      id: "checkBoxProductCategories9",
-                      value: "Private Tours",
-                    },
-                    {
-                      id: "checkBoxProductCategories10",
-                      value: "Skips-the-line Tours",
-                    },
-                    {
-                      id: "checkBoxProductCategories11",
-                      value: "Literary, Art & Music Tours",
-                    },
-                    {
-                      id: "checkBoxProductCategories12",
-                      value: "Multi-day Tours",
-                    },
-                    {
-                      id: "checkBoxProductCategories13",
-                      value: "Movie-TVs Tours",
-                    },
-                  ]}
-                  checkBoxName="HotelStyle"
-                >
-                  {(item: string) => <p>{item}</p>}
-                </CheckBoxOption> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
-
-      <Modal
-        isOpen={isShowSort}
-        onClose={() => {
-          setShowSort(false);
-        }}
-        styleContainer={
-          " rounded-none p-5 w-full h-[calc(100vh-100px)] max-w-[700px] max-md:max-w-full max-md:h-[calc(100vh-100px)] max-md:h-full"
-        }
-      >
-        <div className="ContentName font-bold text-3xl">Sort</div>
-        <div className="flex flex-col justify-between items-start w-full">
-          <div className="sortOptions w-full flex flex-col gap-3">
-            {/* <RadioOption
-              options={[
-                { id: "sortOption1", value: "Price: Low to High" },
-                { id: "sortOption2", value: "Price: High to Low" },
-                { id: "sortOption3", value: "Rating: High to Low" },
-                { id: "sortOption4", value: "Rating: Low to High" },
-              ]} handleChange={(value) => { }} nameRadio="SortOptions"
-              children={(value) => { return (<div>{value}</div>) }} /> */}
-          </div>
-          <div className="absolute left-1/2 -translate-x-1/2 p-4 bottom-0 apply-reset self-end flex justify-between w-full *:w-[300px]">
-            <div className="reset">
-              <Button onClick={() => {}} className="w-full">
-                Reset
-              </Button>
-            </div>
-
-            <div className="apply">
-              <Button onClick={() => {}} className="w-full">
-                Apply
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Modal>
       <div
         className="SideResponsive hidden w-full justify-center items-center col-span-2 border border-gray-200 gap-2
         *:cursor-pointer
@@ -206,13 +63,12 @@ const Tours = () => {
       >
         <div
           className=" w-full p-3 border-r border-gray-200 font-bold text-center"
-          onClick={() => setShowsome(true)}
         >
           <i className="fa-solid fa-filter"></i> filter
         </div>
         <div
           className=" w-full p-3 font-bold text-center"
-          onClick={() => setShowSort(true)}
+
         >
           <i className="fa-solid fa-sort"></i> Sort
         </div>
@@ -222,7 +78,7 @@ const Tours = () => {
         className="w-full py-3 gap-1 flex flex-col items-center 
       max-lg:w-full max-xl:col-span-2 p-3 "
       >
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full py-3">
           <div className="TotalSearch max-xl:w-full">
             Found <span className="font-bold">35</span> results
           </div>
@@ -234,126 +90,89 @@ const Tours = () => {
           </div>
         </div>
 
-        <div
-          className=" flex flex-col max-lg:w-full max-xl:col-span-2 gap-3 
-        *:hover:shadow-md
-        "
-        >
-          <div
-            className="flex gap-3 justify-between rounded-xl border border-gray-200 
-        max-lg:flex-col"
-          >
-            <div className="w-5/12 h-full relative max-lg:w-full">
-              <img
-                src="https://media.travel.com.vn/Destination/tf_240325115147_056953_Hoi%20An%20Ve%20Dem%20(3).jpg"
-                alt=""
-                srcSet=""
-                className="min-md:rounded-l-xl max-sm:rounded-t-xl h-full w-full object-cover"
-              />
+          <div className="flex gap-3 justify-between rounded-xl border border-gray-200 p-2 shadow-md w-full max-lg:flex-wrap">
+            <div className="flex w-full justify-between items-start p-1.5 max-sm:flex-col gap-2">
+              <div className="min-sm:max-w-[250px] relative">
+                <img
+                  src="https://media-cdn.tripadvisor.com/media/attractions-splice-spp-720x480/10/5b/53/e9.jpg"
+                  alt=""
+                  srcSet=""
+                  className="w-full aspect-square rounded-xl object-cover"
+                />
+                <IconButton
+                  iconColorActive="text-red-500"
+                  className="absolute top-2 right-2 p-3 w-10"
+                  typeButton="text"
+                  icon={"heart"}
+                  rounded="full"
+                  variant="outline"
+                  iconSize={15}
+                />
 
-              <IconButton
-                iconColorActive="text-red-500"
-                className="absolute top-2 right-2 p-3 w-10 border border-gray-200"
-                buttonStyle="filled"
-                active={active}
-                onClick={() => {
-                  setActive(!active);
-                }}
-                icon={"heart"}
-                rounded="full"
-                iconSize={15}
-              />
-            </div>
-
-            <div
-              className="flex justify-between items-start h-full
-             max-lg:flex-col max-lg:w-full p-5"
-            >
-              <div className="flex flex-col h-full w-full">
-                <div className="NameTour pb-3">
-                  <p className="line-clamp-2 text-2xl font-bold w-full ">
-                    Đà Nẵng - Bà Nà - Cầu Vàng - Sơn Trà - Phố Cổ Hội An - La
-                    Vang - Động Thiên Dường Và Động Phong Nha - Huế
-                  </p>
-                </div>
-                <div
-                  className="tag flex justify flex-wrap  gap-5 
-                *:text-[clamp(1rem, 2.5vw, 2rem);]
-                 *:min-w-60 max-xl:min-w-20"
-                >
-                  <div className="TourID">
-                    <div className="flex gap-3 items-center">
-                      <i className="fa-solid fa-ticket"></i>
-                      <p>
-                        <span className="font-semibold">Tour ID:</span>{" "}
-                        NDKHASDK112
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="DeparturePoint">
-                    <div className="flex gap-3 items-center">
-                      <i className="fa-solid fa-location-dot"></i>
-                      <p>
-                        <span className="font-semibold">Departure point:</span>{" "}
-                        TP. Hồ Chí Minh
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="TypeTour">
-                    <div className="flex gap-3 items-center">
-                      <i className="fa-regular fa-clock"></i>
-                      <p>
-                        <span className="font-semibold">Type Tour:</span> 4N3Đ
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="Vehicle">
-                    <div className="flex gap-3 items-center">
-                      <i className="fa-regular fa-paper-plane"></i>
-                      <p>
-                        <span className="font-semibold">Vehicle:</span> Máy bay
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="DateDeparture py-4 w-full">
-                  <div className="flex gap-3 items-center">
-                    <i className="fa-solid fa-calendar"></i>
-                    <p>
-                      <span className="font-semibold text-xl">
-                        Date departure:
-                      </span>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="w-full flex max-xl:flex-col justify-between items-center">
-                  <div className="price text-2xl max-xl:w-full flex flex-col ">
-                    <span className="text-sm font-semibold italic">
-                      Price:{" "}
+                <div className="items-center absolute bottom-0 right-0 bg-black/90 rounded-md p-2 m-2 min-sm:hidden">
+                  <div className="flex text-[clamp(15px,200rem,1vw)] items-center justify-center gap-2 text-white font-bold">
+                    <span> 3.0</span>
+                    <span>
+                      <StarRatingStatic />
                     </span>
-                    <p className="font-bold text-black">9.000.000 VNĐ</p>
                   </div>
+                  <p className="text-md text-white font-bold">Excellent</p>
+                </div>
+              </div>
+              <div className="w-full">
+                <div className="mb-2 flex flex-col gap-1">
+                  <p className="font-bold text-2xl line-clamp-2">
+                  Tour du lịch nguyên ngày ở chợ nỗi đồng bằng sông cửu long.
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <i className="fa-solid fa-location-dot"></i>
+                    <p>Thị trấn Cái Bè, huyện Cái Bè, tỉnh Tiền Giang, Việt Nam</p>
+                  </div>
+                </div>
 
-                  <div className="viewMore max-xl:w-full">
-                    <Button
-                      className="rounded-md w-full"
-                      onClick={() => {
-                        nagative("/tours/123");
-                      }}
-                    >
-                      View More
-                    </Button>
+                <div className="info-service">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2 items-center max-sm:hidden">
+                      <p className="text-sm text-white bg-black p-2 font-bold rounded-sm">
+                        3.0 - Good
+                      </p>
+                      <div className="flex-col flex justify-center">
+                        <StarRatingStatic starNumber={5} />
+                        <p className="text-sm italic text-gray-500">
+                          (500 reviews)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 border-l border-gray-200 pl-2">
+
+                      <div className="flex gap-2 flex-wrap">
+                        <p className="w-fit p-1 border border-gray-200 rounded-md shadow">
+                         Free cancel
+                        </p>
+                      
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div className="self-center p-2 w-full items-center max-lg:flex min-lg:max-w-[200px] max-sm:flex-wrap">
+              <div className="flex flex-col max-lg:w-full min-lg:*:text-start">
+                <p className="text-sm">Cho 1 người</p>
+                <p className="text-2xl font-bold">100.000 VNĐ</p>
+                <p className="text-sm">Đã bao gồm thuế và phí</p>
+              </div>
+              <Button
+                onClick={() => {
+                  navigate("/tours/tour-1");
+                }}
+                className="w-full rounded-md mt-5"
+              >
+                view more
+              </Button>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );

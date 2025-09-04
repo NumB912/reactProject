@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputBar } from "../UI";
-import Passengers from "../PassengerComponent/PassengersRentalCar";
+import Passengers from "../passenger-content/PassengersRentalCar";
 import {CalendarRentalCar} from "../../component"
 import { useNavigate } from "react-router-dom";
 
