@@ -7,12 +7,13 @@ const useUploadPhotos = () => {
   const addPhotos = (files:File[]) =>{
     if(files.length === 0) return;
 
-    const newPhotos = files.map((files,index)=>{
+    const newPhotos = files.map((file, index) => {
       return {
-        id: uuidv4(),
-        url:URL.createObjectURL(files),
+        url: URL.createObjectURL(file),
         description: "",
-      }
+        imageID: uuidv4(), 
+        altText: "", 
+      } as Image;
     })
 
     return newPhotos.length > 0 && setPhotos((prev) => [...prev, ...newPhotos]);
@@ -28,7 +29,7 @@ const useUploadPhotos = () => {
     setPhotos((prev) => {
       const updatePhotos = prev[index];
       if(description === updatePhotos.description) return prev;
-      return prev.map((item)=>{return item.id === updatePhotos.id ? {...item, description} : item;})
+      return prev.map((item)=>{return item.imageID === updatePhotos.imageID ? {...item, description} : item;})
     })
   }
 

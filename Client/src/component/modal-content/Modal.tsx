@@ -83,7 +83,7 @@ const Modal = ({
 
   return createPortal(
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-black/30 w-full h-full ${VariantBehind[variantBackground]}`}
+      className={`fixed inset-0 flex items-center justify-center bg-black/30 w-full h-full z-50 ${VariantBehind[variantBackground]}`}
       onClick={onClose}
     >
       <div

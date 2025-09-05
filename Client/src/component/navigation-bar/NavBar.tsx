@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Tabs, Modal, Button, ButtonBorder } from "../UI";
+import { Tabs, Modal, Button } from "../UI";
 import { GoogleLogin } from "@react-oauth/google";
 import { Login } from "../../pages/Auths/login";
 import useStateLogin from "../../store/LoginStore/login_store";
@@ -50,17 +50,17 @@ const NavBar = () => {
   const navArrs: Tab[] = [
     {
       navigationID: "1",
-      contentNavigation: "Home",
+      contentNavigation: "Trang chủ",
       urlNavigation: "/Home",
     },
     {
       navigationID: "2",
-      contentNavigation: "About",
+      contentNavigation: "Giới thiệu",
       urlNavigation: "/About",
     },
     {
       navigationID: "4",
-      contentNavigation: "Contact",
+      contentNavigation: "Liên hệ",
       urlNavigation: "/Contact",
     },
   ];
@@ -174,11 +174,10 @@ const NavBar = () => {
                   setShow(true);
                 }}
               >
-                Log in
+                Đăng nhập
               </Button>
 
               <Modal
-                parentContainerStyle=""
                 isOpen={isShow}
                 onClose={() => {
                   setShow(false);
@@ -303,12 +302,12 @@ const NavBar = () => {
                       </div>
                     </div>
 
-                    <ButtonBorder
+                    <Button
                       className="absolute top-3 left-3"
                       onClick={() => setModalStep("loginOptions")}
                     >
                       <i className="fa-solid fa-arrow-left"></i>
-                    </ButtonBorder>
+                    </Button>
                   </div>
                 )}
 
@@ -336,12 +335,12 @@ const NavBar = () => {
                     <Button className="w-full" onClick={() => {}}>
                       Send Reset Link
                     </Button>
-                    <ButtonBorder
+                    <Button
                       className="absolute top-3 left-3"
                       onClick={() => setModalStep("loginEmail")}
                     >
                       <i className="fa-solid fa-arrow-left"></i>
-                    </ButtonBorder>
+                    </Button>
                   </div>
                 )}
               </Modal>

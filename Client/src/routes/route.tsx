@@ -17,9 +17,8 @@ import RentalCarsDetail from "../pages/Service/car/rentalCarsDetail";
 import BookCar from "../pages/Service/car/BookCar";
 import PaymentCar from "../pages/Service/car/PaymentCar";
 
-
-import Tours from "../pages/Service/tour/Tours";
-import TourDetail from "../pages/Service/tour/TourDetail";
+import Tours from "../pages/Service/tour/tours";
+import TourDetail from "../pages/Service/tour/tourDetail";
 import BookTour from "../pages/Service/tour/TourBook";
 import Payment_Tour from "../pages/Service/tour/TourPayment";
 
@@ -56,7 +55,7 @@ const router = createBrowserRouter([
       { path: "rentalCar/:rentalCarID/Booking", element: <BookCar /> },
       { path: "rentalCar/:rentalCarID/Booking/payment", element: <PaymentCar /> },
 
-      { path: "Tours", element: <Tours /> },
+      { path: "Tours", element: <Tours/>},
       { path: "Tours/:tourID", element: <TourDetail /> },
       { path: "Tours/:tourID/Booking", element: <BookTour /> },
       { path: "Tours/:tourID/Booking/payment", element: <Payment_Tour /> },

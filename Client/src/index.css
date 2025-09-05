@@ -4,6 +4,9 @@
     .content{
         @apply w-7xl max-w-full
     }
+}
 
-    
+@theme{
+    --color-primary: #111111;
+    --color-secondary: #2563eb;
 }

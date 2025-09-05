@@ -25,14 +25,14 @@ const Passengers = () => {
       >
         <i className="fa-solid fa-users"></i>
       <div className="RAG flex flex-col justify-center">
-        <p className="text-[10px] font-semibold">Passenger</p>
+        <p className="text-[10px] font-semibold">Khách hàng</p>
         <p className="text-[13px] font-bold min-w-23">
           {" "}
           {numberPassenger == "1"
-            ? `${numberPassenger} passenger`
+            ? `${numberPassenger} khách hàng`
             : numberPassenger == "Select"
             ? `Select`
-            : `${numberPassenger} passengers`}
+            : `${numberPassenger} khách hàng`}
         </p>
       </div>
       <div

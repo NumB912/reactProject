@@ -42,8 +42,8 @@ const IconAndLabel = ({
 }: IconLabelProps) => {
   return (
     <div className={`flex gap-2 ${DirectClasses[Direct]} ${className}`}>
-      <Icon name={name} size={sizeIcon} className={IconAlign[IconLayout]} />
-      <p className={`text-sm line-clamp-2 ${TextAlign[LabelLayout]}`}>
+      <Icon name={name} size={sizeIcon} className={`${IconAlign[IconLayout]}`} />
+      <p className={` w-full text-sm line-clamp-2 ${TextAlign[LabelLayout]}`}>
         {Label}
       </p>
     </div>

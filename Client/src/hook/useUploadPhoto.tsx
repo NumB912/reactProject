@@ -23,7 +23,7 @@ const useSingleUploadPhoto = () => {
 
   const deletePhoto = () => {
     if (photo) {
-      URL.revokeObjectURL(photo.url); // Xoá đúng lúc
+      URL.revokeObjectURL(photo.url);
       setPhoto(undefined);
     }
   };

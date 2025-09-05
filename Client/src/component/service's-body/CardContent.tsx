@@ -41,7 +41,7 @@ const CardContent: React.FC<CardContentProps> = ({
   children,
   variant = "primary",
   rounded = "md",
-  padding = "md",
+  padding = "none",
   className = "",
 }) => {
   return (
@@ -53,8 +53,8 @@ const CardContent: React.FC<CardContentProps> = ({
         ${className}
       `}
     >
-      {title && <header className="mb-2 font-medium text-lg">{title}</header>}
-      <div>{children}</div>
+      {title && <header className="p-2 font-medium text-lg">{title}</header>}
+      <div className="p-5">{children}</div>
     </section>
   );
 };

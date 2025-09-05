@@ -11,18 +11,15 @@ interface SearchProp {
 
 const Search = ({ onChange, onSearch, placeHolder }: SearchProp) => {
   return (
-    <div className="flex justify-center items-center w-full gap-3 relative max-sm:flex-wrap max-sm:border max-sm:border-gray-200 max-sm:shadow max-sm:p-5 max-sm:rounded-2xl">
-      <div className="relative w-full h-full flex justify-center items-center">
-        <i className="fa-solid fa-magnifying-glass absolute left-6"></i>
-        <InputBar placeholder={placeHolder} onChange={onChange} />
-      </div>
+    <div className="flex justify-center items-center w-full gap-3 relative max-sm:flex-wrap max-sm:border max-sm:border-gray-200 max-sm:shadow max-sm:p-5 max-sm:rounded-2xl max-w-7xl">
+        <InputBar placeholder={placeHolder} onChange={onChange} nameIcon="magnifying-glass"/>
       <Button
         onClick={onSearch}
-        className="w-35 font-bold right-2 max-sm:w-full min-sm:absolute"
+        className="min-xl:max-w-[200px] font-bold w-full absolute -right-2 h-full"
         rounded="full"
         variant="primary"
       >
-        Search
+        Tìm kiếm
       </Button>
     </div>
   );

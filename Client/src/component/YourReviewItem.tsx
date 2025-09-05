@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ButtonBorder } from "./UI";
+import { Button } from "./UI";
 import StarRatingStatic from "./UI/StarRatingStatic";
 import DropDownOutLineItem from "./dropdown-component/WrapDropDownOutLineItem";
 import DropDownSelect from "./dropdown-component/DropDownSelect";
@@ -47,14 +47,14 @@ const YourReviewedItem: React.FC<YourReviewedItemProps> = ({
           className="absolute right-0 flex"
           handleClose={() => setOpenOption(false)}
         >
-          <ButtonBorder
+          <Button
             className=""
             onClick={() => {
               setOpenOption(!openOption);
             }}
           >
             <i className="fa-solid fa-ellipsis"></i>
-          </ButtonBorder>
+          </Button>
           <DropDownContent isOpen={openOption} className="w-[200px] left-[-220px]">
             <div
               className={`bg-white *:hover:bg-gray-200 *:p-3 border border-gray-200 cursor-pointer *:text-sm rounded-md ${

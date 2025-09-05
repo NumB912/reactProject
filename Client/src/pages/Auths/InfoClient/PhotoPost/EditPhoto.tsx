@@ -20,7 +20,6 @@ const EditPhoto = ({ isOpen, setIsOpen }: EditPhotoProp) => {
       <Modal
         isOpen={isOpen}
         onClose={setIsOpen}
-        styleContainer="max-w-4xl w-8/10"
       >
         <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
           <div className="flex gap-2 w-full min-md:col-span-2">

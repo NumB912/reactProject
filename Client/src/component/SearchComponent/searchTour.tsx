@@ -7,7 +7,7 @@ const SearchTour = () => {
 
   return (
        <div className="w-full max-w-6xl">
-      <Search onChange={(value: string) => { } } onSearch={() => {navigate("/Tours") } } placeHolder={'Search tour'} value={''}/>
+      <Search onChange={(value: string) => { } } onSearch={() => {navigate("/Tours") } } placeHolder={'Tìm kiếm tour...'} value={''}/>
     </div>
   )
 }

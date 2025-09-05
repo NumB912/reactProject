@@ -76,7 +76,7 @@ const CalendarRentalCar = () => {
       >
         <i className="fa-solid fa-calendar"></i>
         <div className="DCI">
-          <p className="text-[10px] font-semibold">Pick up</p>
+          <p className="text-[10px] font-semibold">Ngày nhận xe</p>
           <p className="text-[13px] font-bold">
             {dateSelectedPickUp.toLocaleDateString("en-US", {
               month: "short",
@@ -119,7 +119,7 @@ const CalendarRentalCar = () => {
       >
         <i className="fa-solid fa-calendar"></i>
         <div className="DCI">
-          <p className="text-[10px] font-semibold">Drop off</p>
+          <p className="text-[10px] font-semibold">Ngày trả xe</p>
           <p className="text-[13px] font-bold">
             {dateSelectedDropOff.toLocaleDateString("en-US", {
               month: "short",

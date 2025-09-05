@@ -20,10 +20,10 @@ function SearchFlight() {
   // }
 
   return (
-    <div className="flex justify-center items-center gap-2 max-xl:flex-wrap">
+    <div className="flex justify-center items-center gap-2 max-xl:flex-wrap w-full max-w-7xl">
       <div className="flex gap-2 w-full max-sm:flex-wrap">
-        <InputBar onChange={()=>{}}/>
-        <InputBar onChange={()=>{}}/>
+        <InputBar onChange={()=>{}} placeholder="Nơi cất cánh" nameIcon="plane-departure"/>
+        <InputBar onChange={()=>{}} placeholder="Nơi hạ cánh" nameIcon="plane-up"/>
       </div>
 
       <div
@@ -34,14 +34,14 @@ function SearchFlight() {
       </div>
 
       <Button
-        className="max-xl:w-full font-bold"
+        className="min-xl:max-w-[200px] font-bold w-full h-full"
         onClick={() => {
           console.log("press");
         }}
         variant="primary"
         rounded="full"
       >
-        Search
+        Tìm kiếm
       </Button>
     </div>
   );

@@ -44,10 +44,10 @@ const Hotels = () => {
 
 
   return (
-    <div className="container grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40 p-5">
+    <div className="container grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40">
       <div className="NameLocation col-span-2 mt-6 w-full">
         <p className="text-[max(3vw,30px)] font-bold text-center">
-          Your place you want to go
+          Nơi mà bạn muốn đến, Hãy nói với chúng tôi
         </p>
       </div>
       <div className="col-span-2">

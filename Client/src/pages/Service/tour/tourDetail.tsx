@@ -32,7 +32,7 @@ const TourDetail = () => {
   console.log(data?.service.Images[0].createAt);
 
   return (
-    <div className="container py-10 m-10 justify-center flex flex-col items-center">
+    <div className="container py-10 m-10 justify-center flex flex-col items-center p-10">
       <div className="info w-full">
         {data && <InfoContactService service={data.service} />}
         {data?.service.Images && (
@@ -141,15 +141,90 @@ const TourDetail = () => {
               </div>
             </CardContent>
 
-            <CardContent title="Lịch trình" variant="outline">
-              <div className="p-3"></div>
-            </CardContent>
+            <CardContentDropDown title="Lịch trình" variant="outline">
+              <div className="p-3">
+                <div className="flex gap-4">
+                  <div className="literary flex flex-col items-center justify-center">
+                    <IconAndLabel
+                      Label={<p className="font-bold">2</p>}
+                      name="location-dot"
+                      className="rounded bg-primary text-white p-2 gap-0 flex-wrap justify-center"
+                      IconLayout="center"
+                      LabelLayout="center"
+                    />
+                    <div className="h-full bg-primary w-1"></div>
+                  </div>
+
+                  <div className="literary-detail mb-13">
+                    <p className="literary-title font-bold">Title literary</p>
+                    <p className="text-md">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Eius eligendi at esse, odit rem aut. Sint eos natus facere
+                      totam aut recusandae odit nam incidunt excepturi fugiat
+                      dolorem, exercitationem deserunt!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="literary flex flex-col items-center justify-center">
+                    <IconAndLabel
+                      Label={<p className="font-bold">3</p>}
+                      name="location-dot"
+                      className="rounded bg-primary text-white p-2 gap-0 flex-wrap justify-center"
+                      IconLayout="center"
+                      LabelLayout="center"
+                    />
+                    <div className="h-full bg-primary w-1"></div>
+                  </div>
+
+                  <div className="literary-detail mb-13">
+                    <p className="literary-title font-bold">Title literary</p>
+                    <p className="text-md">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Eius eligendi at esse, odit rem aut. Sint eos natus facere
+                      totam aut recusandae odit nam incidunt excepturi fugiat
+                      dolorem, exercitationem deserunt!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="literary flex flex-col items-center justify-center">
+                    <Icon
+                      size={16}
+                      name="flag"
+                      className="rounded bg-primary text-white p-2 gap-0 flex-wrap"
+                    />
+                    <div className="h-full w-1"></div>
+                  </div>
+
+                  <div className="literary-detail mb-13">
+                    <p className="literary-title font-bold">Title literary</p>
+                    <p className="text-md">
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Eius eligendi at esse, odit rem aut. Sint eos natus facere
+                      totam aut recusandae odit nam incidunt excepturi fugiat
+                      dolorem, exercitationem deserunt! Lorem ipsum dolor sit
+                      amet consectetur adipisicing elit. Quam doloribus
+                      molestias illo eum, animi ullam cum delectus esse tenetur
+                      eius possimus aperiam obcaecati, est officiis natus
+                      debitis, quis corrupti! Maiores. Lorem ipsum dolor sit
+                      amet consectetur adipisicing elit. Eveniet animi in
+                      nostrum corrupti, est ullam reprehenderit velit alias
+                      inventore voluptate iure fuga harum rem soluta unde
+                      incidunt dolores sed neque?
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContentDropDown>
           </div>
 
           <div className="col-span-4 border border-gray-200 h-full"></div>
         </div>
 
-        <div className="grid-cols-3 grid gap-5 mt-5">
+        <div className="grid-cols-3 grid gap-5 mt-5 bg-primary/3 p-5 rounded">
           <CardContentDropDown title="Câu hỏi thường gặp">
             <div className="p-3">
               <CardContentDropDown
@@ -233,28 +308,14 @@ const TourDetail = () => {
           </CardContentDropDown>
           <CardContentDropDown title="Thông tin thêm">
             <div className="flex flex-col justify-start gap-3 h-full p-3">
+              <IconAndLabel Label="Không khuyến nghị cho người có chấn thương về vùng xương sống" />
+              <IconAndLabel Label="Không khuyến nghị cho phụ nữ mang thai" />
               <IconAndLabel
                 Direct="row"
-                LabelLayout="center"
-                IconLayout="center"
-                Label="Không khuyến nghị cho người có chấn thương về vùng xương sống"
-              />
-              <IconAndLabel
-                Direct="row"
-                LabelLayout="center"
-                IconLayout="center"
-                Label="Không khuyến nghị cho phụ nữ mang thai"
-              />
-              <IconAndLabel
-                Direct="row"
-                LabelLayout="center"
-                IconLayout="center"
                 Label="Không khuyến nghị người có mang bệnh về hô hấp"
               />
               <IconAndLabel
                 Direct="row"
-                LabelLayout="center"
-                IconLayout="center"
                 Label="Phù hợp cho các khách hàng có sức khỏe tốt"
               />
             </div>

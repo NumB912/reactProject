@@ -21,7 +21,7 @@ const InfoContactService = ({ service }: InfoContactServiceProp) => {
           <div className="flex justify-start gap-2">
             <p className="score-star-rating">{service.ratingAvg}</p>
             <StarRatingStatic starNumber={service.ratingAvg} />
-            <p>({service.reviewQuantity} Reviews)</p>
+            <p>({service.reviewQuantity} Đánh giá)</p>
           </div>
 
           <div className="location-service">
@@ -40,7 +40,7 @@ const InfoContactService = ({ service }: InfoContactServiceProp) => {
             </button>}
             <button className="flex items-center hover:*:underline cursor-pointer">
               <Icon name="pen" size={18} className="mr-2" />
-              <span className=""> Write review</span>
+              <span className=""> Viết đánh giá</span>
             </button>
           </div>
         </div>
@@ -63,13 +63,13 @@ const InfoContactService = ({ service }: InfoContactServiceProp) => {
               className="p-2 w-full"
               iconSize={18}
             >
-              Save
+              Lưu
             </IconButton>
           </div>
           <div className="flex items-center gap-2">
             <p className="price text-3xl font-bold">$ 355</p>
             <Button typeButton="text" variant="outline" onClick={() => {}}>
-              View Deal
+              Xem thêm giá
             </Button>
           </div>
         </div>

@@ -42,7 +42,7 @@ const CalendarFlight = () => {
       >
         <i className="fa-solid fa-calendar"></i>
         <div className="DCI text-center">
-          <p className="text-[10px]">Departure - Return</p>
+          <p className="text-[10px]">Ngày đi - Ngày về</p>
           <p className="text-[13px] font-bold">
             {formatDate(dateSelectedBook)} - {formatDate(dateSelectedReturn)}
           </p>

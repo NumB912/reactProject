@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Dropdown from "../../../../component/dropdown-component/Dropdown";
 import DropDownContent from "../../../../component/dropdown-component/DropDownContent";
 import { Link } from "react-router";
-import { ButtonBorder } from "../../../../component/UI";
+import { Button } from "../../../../component/UI";
 import ViewDetailPhoto from "./ViewDetailPhoto";
 import EditPhoto from "./EditPhoto";
 import DeletePhoto from "./DeletePhoto";
@@ -51,14 +51,14 @@ const Photo = () => {
             <button onClick={()=>setIsOpenDeletePhotoModal(!isOpenDeletePhotoModal)} className="w-full">Delete</button>
           </DropDownContent>
 
-          <ButtonBorder
+          <Button
             className=""
             onClick={() => {
               setIsOpenSetting(!isOpenSetting);
             }}
           >
             <i className="fa-solid fa-ellipsis"></i>
-          </ButtonBorder>
+          </Button>
         </Dropdown>
       </div>
       <img

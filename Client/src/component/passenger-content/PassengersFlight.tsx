@@ -35,10 +35,10 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
       {" "}
       <i className="fa-solid fa-users"></i>
       <div className="flex flex-col justify-center items-center">
-        <p className="text-[10px] font-semibold">Passenger</p>
+        <p className="text-[10px] font-semibold">Khách hàng</p>
         <p className="text-[13px] font-bold">
           {" "}
-          {total == 1 ? `${total} traveler` : `${total} travelers`}
+          {total == 1 ? `${total} khách hàng` : `${total} khách hàng`}
         </p>
       </div>
       <DropDownContent
@@ -49,9 +49,9 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
           <div className="flex gap-6 flex-col border-b pb-4 border-gray-300">
             <div className="flex justify-between items-center gap-3">
               <div className="w-1/2">
-                <p className="font-bold">Adults</p>
+                <p className="font-bold">Người trưởng thành</p>
                 <p className="font-semibold text-gray-400 text-[10px]">
-                  Age 18-64
+                  18-64 Tuổi
                 </p>
               </div>
               <div className="select flex gap-2 items-center w-1/2 justify-end">
@@ -74,9 +74,9 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
             </div>
             <div className="flex justify-between items-center gap-3">
               <div className="w-1/2">
-                <p className="font-bold">Seniors</p>
+                <p className="font-bold">Người già</p>
                 <p className="font-semibold text-gray-400 text-[10px]">
-                  Age 65+
+                   65+ Tuổi
                 </p>
               </div>
               <div className="select flex gap-2 items-center w-1/2 justify-end">
@@ -100,9 +100,9 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
 
             <div className="flex justify-between items-center gap-3">
               <div className="w-1/2">
-                <p className="font-bold">Children</p>
+                <p className="font-bold">Trẻ em</p>
                 <p className="font-semibold text-gray-400 text-[10px]">
-                  Age 3-17
+                  3-17 Tuổi
                 </p>
               </div>
               <div className="select flex gap-2 items-center w-1/2 justify-end">
@@ -130,11 +130,11 @@ export const PassengerFlight = ({ onClose }: PassengerFlightProp) => {
               className="underline text-black font-semibold cursor-pointer"
               onClick={setReset}
             >
-              Reset
+              Đặt lại
             </div>
 
             <Button className="w-30" onClick={onClose}>
-              <p>Apply</p>
+              <p>Áp dụng</p>
             </Button>
           </div>
         </div>

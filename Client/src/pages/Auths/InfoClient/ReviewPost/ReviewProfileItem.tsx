@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Dropdown from "../../../../component/dropdown-component/Dropdown";
-import { ButtonBorder, Modal } from "../../../../component/UI";
+import { Button, Modal } from "../../../../component/UI";
 import DropDownContent from "../../../../component/dropdown-component/DropDownContent";
 import StarRatingStatic from "../../../../component/UI/StarRatingStatic";
 import PostReviewPhoto from "../../../../component/postReviewPhoto";
@@ -43,14 +43,15 @@ const ReviewProfileItem = ({
           className="absolute right-0 flex"
           handleClose={() => setOpenOption(false)}
         >
-          <ButtonBorder
-            className=""
+          <Button
+          variant="outline"
+            className="aspect-square"
             onClick={() => {
               setOpenOption(!openOption);
             }}
           >
-            <i className="fa-solid fa-ellipsis"></i>
-          </ButtonBorder>
+            <i className="fa-solid fa-ellipsis aspect-square w-4"></i>
+          </Button>
           <DropDownContent isOpen={openOption} className="w-fit left-[-150px]">
             <div
               className={`bg-white *:hover:bg-gray-200 *:p-3 border border-gray-200 cursor-pointer *:text-sm rounded-md ${

@@ -79,9 +79,9 @@ const CardContentDropDown = ({
         tabIndex={0}
         onClick={handleToggle}
         onKeyDown={(e) => e.key === "Enter" && handleToggle()}
-        className={`flex justify-between items-center hover:bg-gray-100 w-full p-2 cursor-pointer ${RoundedClasses[rounded]}`}
+        className={`flex justify-between items-center hover:bg-gray-100 w-full p-2 cursor-pointer ${internalOpen?"bg-gray-100":""} ${RoundedClasses[rounded]}`}
       >
-        {title && <div className={`text-md font-medium`}>{title}</div>}
+        {title && <div className={`text-lg font-medium`}>{title}</div>}
         <Icon
           name="caret-down"
           size={13}

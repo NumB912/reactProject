@@ -8,19 +8,20 @@ const SearchRental=()=>{
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center items-center gap-2 w-fit max-w-6xl max-xl:flex-wrap">
-        <InputBar onChange={()=>{}} placeholder={''}/>
+    <div className="flex justify-center items-center gap-2 max-xl:flex-wrap w-full max-w-7xl">
+        <InputBar onChange={()=>{}} placeholder={'Tìm kiếm nơi thuê xe'} variant="outline" rounded="full"/>
         <div className="w-fit max-xl:w-full"><CalendarRentalCar /></div>
         <div className="w-fit max-xl:w-full"><Passengers /></div>
       <Button
-        className="w-fit max-xl:w-full font-bold"
+        className="font-bold w-full min-xl:max-w-[200px] h-full"
         onClick={() => {
           navigate("/rentalcar");
         }}
         rounded="full"
         variant="primary"
+        type="button"
       >
-        Search
+        Tìm kiếm
       </Button>
     </div>
   );

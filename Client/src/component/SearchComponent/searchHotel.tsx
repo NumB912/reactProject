@@ -7,9 +7,17 @@ const SearchHotel = () => {
 
   return (
     <div className="w-full max-w-6xl">
-      <Search placeHolder={"Search hotel.."} value={""} onSearch={()=>{navigate("/Hotels/")} } onChange={function (value: string): void {
-        throw new Error("Function not implemented.");
-      } } />
+      <Search
+        placeHolder={"Tìm kiếm khách sạn..."}
+        value={""}
+        
+        onSearch={() => {
+          navigate("/Hotels/");
+        }}
+        onChange={()=>{
+
+        }}
+      />
     </div>
   );
 };
