@@ -1,0 +1,481 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id                      String                    @id @default(uuid()) @db.Uuid
+  name                    String?
+  email                   String                    @unique @db.VarChar(255)
+  password                String                    @db.VarChar(255)
+  location_id             String?                   @db.VarChar(100)
+  phone                   String?                   @db.VarChar(20)
+  image_id                String?                   @unique @db.Uuid
+  role_id                 String                    @db.VarChar(50)
+  create_at               DateTime?                 @default(now()) @db.Timestamptz(6)
+  update_at               DateTime?                 @updatedAt @db.Timestamptz(6)
+  google_id               String?                   @db.VarChar(255)
+  bio                     String?
+  image_wallpaper         String?                   @db.VarChar(255)
+  wallpaper_id            String?                   @unique @db.Uuid
+  Document_supplier       Document_supplier[]
+  favorites               Favorite[]
+  image                   Image?                    @relation("PersonAvatar", fields: [image_id], references: [id])
+  role                    Role                      @relation(fields: [role_id], references: [id])
+  wallpaper               Image?                    @relation("PersonWallpaper", fields: [wallpaper_id], references: [id])
+  refreshTokens           RefreshToken[]
+  refundEvidences         RefundEvidence[]
+  refundRequests          RefundRequest[]
+  Request_become_supplier Request_become_supplier[]
+  reviews                 Review[]
+  services                Service[]
+  bankAccounts            BankAccount[]             @relation("BankAccountOwner")
+}
+
+model RefreshToken {
+  id         BigInt    @id @default(autoincrement())
+  userId     String    @db.Uuid
+  tokenHash  String    @unique
+  family     String
+  parentId   BigInt?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  replacedBy BigInt?
+  ip         String?
+  ua         String?
+  createdAt  DateTime  @default(now())
+  person     Person    @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([family])
+}
+
+model Role {
+  id              String           @id @db.VarChar(50)
+  name            String           @unique
+  description     String?
+  permissionRoles PermissionRole[]
+  persons         Person[]
+}
+
+model Permission {
+  id              String           @id
+  permission      String
+  permissionRoles PermissionRole[]
+}
+
+model PermissionRole {
+  id            String     @id
+  role_id       String     @db.VarChar(50)
+  permission_id String
+  permission    Permission @relation(fields: [permission_id], references: [id])
+  role          Role       @relation(fields: [role_id], references: [id])
+}
+
+model Bank {
+  id           String        @id @db.Uuid
+  bank_name    String?
+  bankAccounts BankAccount[]
+}
+
+model BankAccount {
+  id             String  @id @default(uuid()) @db.Uuid
+  bank_account   String?
+  account_holder String?
+  bank_id        String? @db.Uuid
+  person_id      String? @db.Uuid
+  bank           Bank?   @relation(fields: [bank_id], references: [id])
+  person         Person? @relation("BankAccountOwner", fields: [person_id], references: [id])
+
+  @@map("bank_account")
+}
+
+model Service {
+  id              String    @id @default(uuid()) @db.Uuid
+  service_name    String?
+  supplier_id     String    @db.Uuid
+  rating          Decimal?  @db.Decimal
+  total_reviews   Int?
+  create_at       DateTime? @db.Timestamptz(6)
+  update_at       DateTime? @db.Timestamptz(6)
+  description     String?
+  location_id     String?   @db.Uuid
+  service_type_id String?
+  status_id       String?
+  price_from      Decimal
+  price_to        Decimal
+
+  bookings  Booking[]
+  favorites Favorite[]
+
+  quantity_room    Int?
+  type_hotel_id    Int?
+  amenities_hotels AmenitiesHotels[]
+
+  info String?
+
+  imageServices  ImageService[]
+  reviews        Review[]
+  location       Location?      @relation(fields: [location_id], references: [id])
+  supplier       Person?        @relation(fields: [supplier_id], references: [id])
+  type_service   TypeService?   @relation(fields: [service_type_id], references: [id])
+  status_service StatusService? @relation(fields: [status_id], references: [id])
+  serviceItems   ServiceItem[]
+  typeHotels     TypeHotel[]
+}
+
+model AmenitiesHotels {
+  id         String       @id @db.Uuid
+  amenity_id BigInt
+  service_id String       @db.Uuid
+  amenity    AmenityHotel @relation(fields: [amenity_id], references: [id])
+  service    Service      @relation(fields: [service_id], references: [id])
+}
+
+model AmenityHotel {
+  id              BigInt            @id @default(autoincrement())
+  amenity         String            @db.VarChar(150)
+  icon            String?           @db.VarChar(255)
+  createdAt       DateTime          @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime          @updatedAt
+  amenitiesHotels AmenitiesHotels[]
+}
+
+model StatusService {
+  id            String    @id
+  statusService String
+  Service       Service[]
+}
+
+model TypeService {
+  id      String    @id
+  type    String
+  service Service[]
+}
+
+model Location {
+  id          String    @id @default(uuid()) @db.Uuid
+  lat         Decimal?  @db.Decimal
+  lng         Decimal?  @db.Decimal
+  location    String?
+  district_id Int?
+  province_id Int?
+  services    Service[]
+  
+  bookings Booking[] @relation("BookingDropoff")
+
+  pickUpBookings Booking[] @relation("BookingPickup")
+}
+
+model ImageReview {
+  id        String @id @default(uuid()) @db.Uuid
+  image_id  String @db.Uuid
+  review_id String @db.Uuid
+  image     Image  @relation(fields: [image_id], references: [id])
+  review    Review @relation(fields: [review_id], references: [id])
+}
+
+model Image {
+  id              String         @id @default(uuid()) @db.Uuid
+  url             String?
+  alt             String?
+  description     String?
+  imageServices   ImageService[]
+  imagesRooms     ImagesRooms[]
+  personAvatar    Person?        @relation("PersonAvatar")
+  personWallpaper Person?        @relation("PersonWallpaper")
+
+  imageReviews ImageReview[]
+}
+
+model ImageService {
+  id         String  @id @default(uuid()) @db.Uuid
+  service_id String  @db.Uuid
+  image_id   String  @db.Uuid
+  image      Image   @relation(fields: [image_id], references: [id])
+  service    Service @relation(fields: [service_id], references: [id])
+}
+
+model ImagesRooms {
+  id              String      @id @default(uuid()) @db.Uuid
+  image_id        String      @db.Uuid
+  service_item_id String      @db.Uuid
+  image           Image       @relation(fields: [image_id], references: [id])
+  serviceItem     ServiceItem @relation(fields: [service_item_id], references: [id])
+}
+
+model Favorite {
+  id         String  @id @default(uuid()) @db.Uuid
+  service_id String  @db.Uuid
+  user_id    String  @db.Uuid
+  service    Service @relation(fields: [service_id], references: [id])
+  user       Person  @relation(fields: [user_id], references: [id])
+}
+
+model Review {
+  id         String    @id @default(uuid()) @db.Uuid
+  title      String?
+  content    String?
+  rating     BigInt?
+  create_at  DateTime?
+  update_at  DateTime?
+  person_id  String?   @db.Uuid
+  parent_id  String?   @db.Uuid
+  service_id String?   @db.Uuid
+  parent     Review?   @relation("ReviewToReview", fields: [parent_id], references: [id])
+  replies    Review[]  @relation("ReviewToReview")
+  person     Person?   @relation(fields: [person_id], references: [id])
+  service    Service?  @relation(fields: [service_id], references: [id])
+
+  imageReviews ImageReview[]
+}
+
+model ServiceItem {
+  id              String    @id @default(uuid()) @db.Uuid
+  price           Decimal?  @db.Decimal
+  name            String?
+  service_id      String?   @db.Uuid
+  availiable_from DateTime? @db.Date
+  availiable_to   DateTime? @db.Date
+  status_id       String?
+  type_id         String?   @unique
+
+  //room
+  room_type_id BigInt?
+  area         Decimal? @db.Decimal
+  max_people   BigInt?
+
+  //car
+  car_type_id     BigInt?
+  transmission_id BigInt?
+
+  //tour
+  location_id String?   @db.Uuid
+  duration    DateTime? @db.Timestamptz(6)
+
+  service              Service?                      @relation(fields: [service_id], references: [id])
+  status               StatusServiceItem?            @relation(fields: [status_id], references: [id])
+  tranmission          Transmission?                 @relation(fields: [transmission_id], references: [id])
+  type                 TypeServiceItem?              @relation(fields: [type_id], references: [id])
+  typeCar              TypeCar?                      @relation(fields: [car_type_id], references: [id])
+  serviceItemOffs      ServiceItemOff[]
+  serviceItemOccasions ServiceItemServiceOccassion[]
+
+  imagesRooms ImagesRooms[]
+
+  amenitiesRooms AmenitiesRooms[]
+
+  amenitiesCars AmenitiesCars[]
+}
+
+model TypeServiceItem {
+  id           String        @id @unique
+  type         String
+  serviceItems ServiceItem[]
+}
+
+model StatusServiceItem {
+  id     String @unique
+  status String
+
+  serviceItems ServiceItem[]
+}
+
+model ServiceItemOff {
+  id              String      @id @default(uuid()) @db.Uuid
+  date_off        DateTime    @db.Date
+  service_item_id String      @db.Uuid
+  serviceItem     ServiceItem @relation(fields: [service_item_id], references: [id])
+}
+
+model ServiceItemServiceOccassion {
+  id              String      @id @default(uuid()) @db.Uuid
+  price_occassion Decimal?    @db.Decimal
+  day             DateTime    @db.Date
+  note            String?
+  service_item_id String      @db.Uuid
+  serviceItem     ServiceItem @relation(fields: [service_item_id], references: [id])
+}
+
+model TypeHotel {
+  id      BigInt    @id
+  type    String?
+  service Service[]
+}
+
+model AmenityRoom {
+  id      BigInt  @id
+  amenity String?
+  icon    String?
+
+  amenitiesRooms AmenitiesRooms[]
+}
+
+model AmenitiesRooms {
+  id              String @id @default(uuid()) @db.Uuid
+  service_item_id String @db.Uuid
+  amenity_id      BigInt
+
+  serviceItems ServiceItem @relation(fields: [service_item_id], references: [id])
+  amenityRoom  AmenityRoom @relation(fields: [amenity_id], references: [id])
+}
+
+model TypeCar {
+  id   BigInt  @id
+  type String?
+
+  serviceItems ServiceItem[]
+}
+
+model Transmission {
+  id           BigInt  @id
+  transmission String?
+
+  serviceItems ServiceItem[]
+}
+
+model AmenityCar {
+  id            BigInt          @id
+  amenity       String?
+  icon          String?
+  amenitiesCars AmenitiesCars[]
+}
+
+model AmenitiesCars {
+  id              String      @id @default(uuid()) @db.Uuid
+  amenity_id      BigInt
+  service_item_id String      @db.Uuid
+  amenity         AmenityCar  @relation(fields: [amenity_id], references: [id])
+  service_item    ServiceItem @relation(fields: [service_item_id], references: [id])
+}
+
+model TypeBooking {
+  id           String    @id
+  type_booking String?
+  bookings     Booking[]
+}
+
+model Booking {
+  id              String    @id @default(uuid()) @db.Uuid
+  user_id         String?   @db.Uuid
+  name            String?
+  email           String?
+  phone           String?
+  booking_type_id String?
+  total_amount    Decimal?  @db.Decimal
+  check_in        DateTime? @db.Timestamptz(6)
+  check_out       DateTime? @db.Timestamptz(6)
+  service_id      String?   @db.Uuid
+  create_at       DateTime? @db.Timestamptz(6)
+
+  pick_up_id  String?  @db.Uuid
+  drop_off_id String?  @db.Uuid
+
+  adult    BigInt
+  children BigInt
+
+  service_item_id String @db.Uuid
+
+  typeBooking TypeBooking? @relation(fields: [booking_type_id], references: [id])
+  service     Service?     @relation(fields: [service_id], references: [id])
+  pickup          Location? @relation("BookingPickup", fields: [pick_up_id],references: [id])
+  dropOff         Location? @relation("BookingDropoff", fields: [drop_off_id],references: [id])
+  payments       Payment[]
+  refundRequests RefundRequest[]
+}
+
+model PaymentMethod {
+  id             BigInt    @id
+  payment_method String?
+  payments       Payment[]
+}
+
+model StatusPayment {
+  id       BigInt    @id
+  status   String?
+  payments Payment[]
+}
+
+model Payment {
+  id                String         @id @default(uuid()) @db.Uuid
+  booking_id        String?        @db.Uuid
+  amount            Decimal?       @db.Decimal
+  payment_method_id BigInt?
+  status_id         BigInt?
+  fee               Decimal?       @db.Decimal
+  is_refund         Boolean        @default(false)
+  raw_response      Json?
+  create_at         DateTime?      @db.Timestamptz(6)
+  booking           Booking?       @relation(fields: [booking_id], references: [id])
+  paymentMethod     PaymentMethod? @relation(fields: [payment_method_id], references: [id])
+  status            StatusPayment? @relation(fields: [status_id], references: [id])
+  refunds           Refund[]
+}
+
+model Refund {
+  id         String  @id @default(uuid()) @db.Uuid
+  payment_id String  @db.Uuid
+  payment    Payment @relation(fields: [payment_id], references: [id])
+}
+
+model StatusRefundRequest {
+  id             BigInt          @id
+  status         String?
+  refundRequests RefundRequest[]
+}
+
+model RefundRequest {
+  id          String               @id @default(uuid()) @db.Uuid
+  booking_id  String               @db.Uuid
+  customer_id String               @db.Uuid
+  reason      String?
+  status_id   BigInt?
+  evidences   RefundEvidence[]
+  booking     Booking              @relation(fields: [booking_id], references: [id])
+  customer    Person               @relation(fields: [customer_id], references: [id])
+  status      StatusRefundRequest? @relation(fields: [status_id], references: [id])
+}
+
+model RefundEvidence {
+  id                String        @id @default(uuid()) @db.Uuid
+  refund_request_id String        @db.Uuid
+  upload_by_id      String        @db.Uuid
+  file_url          String?
+  file_type         String?
+  upload_at         DateTime?     @db.Timestamptz(6)
+  refundRequest     RefundRequest @relation(fields: [refund_request_id], references: [id])
+  uploader          Person        @relation(fields: [upload_by_id], references: [id])
+}
+
+model Otp {
+  id        String    @id @default(uuid()) @db.Uuid
+  code      String?
+  expire_at DateTime? @db.Timestamptz(6)
+  create_at DateTime? @db.Timestamptz(6)
+  email     String?
+  is_used   Boolean?
+}
+
+model Request_become_supplier {
+  id                      String              @id @default(uuid()) @db.Uuid
+  user_id                 String?             @db.Uuid
+  status                  String?             @db.VarChar
+  name                    String?             @db.VarChar
+  other_Document_supplier Document_supplier[] @relation("Document_supplierToDocument_supplier")
+  Person                  Person?             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Document_supplier {
+  id                String                   @id @default(uuid()) @db.Uuid
+  upload_by_id      String?                  @db.Uuid
+  file_url          String?                  @db.VarChar
+  file_type         String?                  @db.VarChar
+  upload_at         DateTime?                @db.Timestamptz(6)
+  request_id        String?                  @db.Uuid
+  Document_supplier Request_become_supplier? @relation("Document_supplierToDocument_supplier", fields: [request_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Request_become_supplier_evidence_request_id_fkey")
+  Person            Person?                  @relation(fields: [upload_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Request_become_supplier_evidence_upload_by_id_fkey")
+}

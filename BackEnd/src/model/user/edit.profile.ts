@@ -1,0 +1,8 @@
+export interface EditProfileDTO {
+  id: string;
+  name?: string;
+  phone?: string;
+  bio?: string;
+  avatarFile?: Express.Multer.File;
+  wallpaperFile?: Express.Multer.File;
+}
