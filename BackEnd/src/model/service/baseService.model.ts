@@ -11,6 +11,13 @@ export interface GetListServicesParams {
   search?: string;
   sortBy?: 'service_name' | 'price_from' | 'rating' | 'create_at';
   sortOrder?: 'asc' | 'desc';
+  adult?:number,
+  children?:number,
+  Noroom?:number,
+  rating:string,
+
+  amenities_hotel?:string[]
+  amenities_room?:string[]
 }
 
 

@@ -1,6 +1,7 @@
 import { ServiceType } from "@/enum/service/type.service.enum";
 import { ImageService } from "@/service/image/image.service";
 import { ManagementService } from "@/service/management-service/management.service";
+import { ManagementAmenityHotel } from "@/service/service/amenitiesService/amenities.service";
 import { HotelService } from "@/service/service/hotel.service";
 import { RentalCarService } from "@/service/service/rentalCar.service";
 import { ThingToDoService } from "@/service/service/tour.service";
@@ -37,10 +38,10 @@ export class managementServiceController {
           break;
       }
 
-      return res.json(createService)
+      return res.json(createService);
     } catch (error) {
-      console.error("error", error)
-      return res.json(error)
+      console.error("error", error);
+      return res.json(error);
     }
   }
 
@@ -67,16 +68,18 @@ export class managementServiceController {
 
   static async updateImage(req: Request, res: Response) {
     try {
-      const { data } = req.body
-      
-      if(!data){
-        return
+      const { data } = req.body;
+      if (!data) {
+        return;
       }
 
-      const {service_id, delete_image} =JSON.parse(data)
+      const { service_id, delete_image } = JSON.parse(data);
 
-      const imageFiles = (req.files as any)?.imageFiles as Express.Multer.File[] | undefined;
+      const imageFiles = (req.files as any)?.imageFiles as
+        | Express.Multer.File[]
+        | undefined;
 
+        console.log(imageFiles)
       if (!service_id || String(service_id).trim() === "") {
         return res.status(400).json({
           success: false,
@@ -88,8 +91,13 @@ export class managementServiceController {
 
       if (delete_image) {
         if (Array.isArray(delete_image)) {
-          deleteImageIds = delete_image.map(String).filter(id => id.trim() !== "");
-        } else if (typeof delete_image === "string" && delete_image.trim() !== "") {
+          deleteImageIds = delete_image
+            .map(String)
+            .filter((id) => id.trim() !== "");
+        } else if (
+          typeof delete_image === "string" &&
+          delete_image.trim() !== ""
+        ) {
           deleteImageIds = [delete_image.trim()];
         }
       }
@@ -115,7 +123,6 @@ export class managementServiceController {
         message: "Cập nhật ảnh thành công",
         data: result,
       });
-
     } catch (error: any) {
       console.error("Lỗi trong updateImage controller:", error);
 
@@ -126,5 +133,21 @@ export class managementServiceController {
     }
   }
 
+  static async ChangeAmenity(req: Request, res: Response) {
+    const { service_id, change_amenity } = req.body;
 
+    if (!service_id || !Array.isArray(change_amenity)) {
+      return res.status(400).json({ message: "Invalid input" });
+    }
+
+    try {
+      await ManagementAmenityHotel.EditAmenityHotelService(service_id, change_amenity);
+      return res
+        .status(200)
+        .json({ message: "Amenities updated successfully" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Failed to update amenities" });
+    }
+  }
 }

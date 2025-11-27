@@ -29,15 +29,10 @@ export class RoomService extends ServiceItemService {
 
           select:{
             name:true,
-            amenitiesRooms:{
-              select:{
-                amenityRoom:true,
-              }
-            },
             availiable_from:true,
             availiable_to:true,
             area:true,
-            imagesRooms:{
+            imageServiceItems:{
               select:{
                 image:true
               }
@@ -45,7 +40,15 @@ export class RoomService extends ServiceItemService {
             price:true,
             max_people:true,
             status_id:true,
-
+            amenitiesRooms:{
+              select:{
+                amenityServiceItems:{
+                  select:{
+                    amenity:true
+                  }
+                },
+              }
+            },
             serviceItemOccasions:{
               select:{
                 price_occassion:true,
@@ -57,7 +60,7 @@ export class RoomService extends ServiceItemService {
               select:{date_off:true,}
             }
             
-          }
+          },
         })
 
       return {

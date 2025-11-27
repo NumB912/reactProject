@@ -14,8 +14,6 @@ import { ServiceType } from "@/enum/service/type.service.enum";
 import { HotelService } from "../service/hotel.service";
 import { RentalCarService } from "../service/rentalCar.service";
 import { ThingToDoService } from "../service/tour.service";
-import type { SuccessResponse } from "@/model/api.model";
-import fileService from "../file.service";
 import { ImageService } from "../image/image.service";
 
 export class ManagementService {
@@ -105,7 +103,7 @@ export class ManagementService {
       if (images && images.length > 0) {
         try {
           const uploadedImages = await ImageService.addImages(
-            `/upload/service/${service_id}`,
+            `/upload/service/${service_id}/image`,
             images
           );
           await tx.imageService.createMany({
@@ -153,6 +151,4 @@ export class ManagementService {
       throw new Error("Cập nhật ảnh thất bại: " + error.message);
     });
   }
-
-
 }

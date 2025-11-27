@@ -6,9 +6,10 @@ import type {
   HotelServiceModel,
   ServiceModel,
 } from "@/model/service/service.model";
-import { BaseService } from "./base.service";
 import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
+import type { GetListServicesParams } from "@/model/service/baseService.model";
+import { BaseService } from "./base.service";
 
 export class HotelService extends BaseService {
   private static instance: HotelService;
@@ -17,55 +18,96 @@ export class HotelService extends BaseService {
     super();
   }
 
-  async getListServices(): Promise<SuccessResponse<any> | ErrorResponse> {
+  async getListServices(params: GetListServicesParams): Promise<any> {
     try {
-      const list = await prisma.service.findMany({
-        select: {
-          amenities_hotels: {
-            select: {
-              amenity: true,
-            },
-          },
-          id:true,
-          service_name: true,
-          price_from: true,
-          price_to: true,
-          rating: true,
-          total_reviews: true,
-          type_hotel_id: true,
-          typeHotel: {
-            select: {
-              type: true,
-            },
-          },
-          imageServices: {
-            select: {
-              image: true,
-            },
-          },
-        },
+      const page = Number(params.page) || 1;
+      const limit = Math.min(Number(params.limit) || 10, 50);
+      const search = params.search?.trim() || "";
+      const sortBy = params.sortBy || "createdAt";
+      const sortOrder = params.sortOrder === "asc" ? "asc" : "desc";
+      const skip = (page - 1) * limit;
+      const amenities_hotel = params.amenities_hotel;
+      const room_amenities = params.amenities_room;
 
-        where: {
-          service_type_id: ServiceType.HOTEL,
-        },
-      });
+      const where: any = {
+        service_type_id: ServiceType.HOTEL,
+      };
+
+      if (amenities_hotel && amenities_hotel.length > 0) {
+        where.amenities_hotel = {
+          some: {
+            id: { in: amenities_hotel },
+          },
+        };
+      }
+
+      if(room_amenities && room_amenities.length > 0){
+           where.room_amenities = {
+          some: {
+            id: { in: room_amenities },
+          },
+        };
+      }
+
+      if (search) {
+        where.OR = [
+          { service_name: { contains: search, mode: "insensitive" } },
+        ];
+      }
+      const [list, total] = await Promise.all([
+        prisma.service.findMany({
+          where,
+          select: {
+            id: true,
+            service_name: true,
+            price_from: true,
+            price_to: true,
+            rating: true,
+            total_reviews: true,
+            imageServices: {
+              select: {
+                image: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+            },
+          },
+          orderBy: { [sortBy]: sortOrder },
+          skip,
+          take: limit,
+        }),
+
+        prisma.service.count({ where }),
+      ]);
 
       return {
-        data: list,
-        message: "Thành công",
-        status: 200,
         success: true,
+        status: 200,
+        message: "Thành công",
+        data: {
+          list,
+          pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+            hasNext: page <= total - 1,
+            hasPrev: page - 1 > 0,
+          },
+        },
       };
     } catch (error) {
-      console.error();
+      console.error(error);
       return {
-        status: 500,
-        message: "Lỗi",
         success: false,
+        status: 500,
+        message: "Lỗi server",
       };
     }
   }
-
+  
   public static getInstance(): HotelService {
     if (!HotelService.instance) {
       HotelService.instance = new HotelService();
@@ -81,71 +123,68 @@ export class HotelService extends BaseService {
         id: serviceId,
       },
 
-      select:{
-        amenities_hotels:{
-          select:{
-            amenity:true,
-          }
-        }
-        ,
-        description:true,
-        info:true,
-        imageServices:true,
-        price_from:true,
-        price_to:true,
-        rating:true,
-        location:true,
-        total_reviews:true,
-        reviews:{
-          select:{
-            content:true,
-            person:{
-              select:{
-                name:true,
-              }
+      select: {
+        amenities_hotels: {
+          select: {
+            amenity: true,
+          },
+        },
+        description: true,
+        info: true,
+        imageServices: true,
+        price_from: true,
+        price_to: true,
+        rating: true,
+        location: true,
+        total_reviews: true,
+        reviews: {
+          select: {
+            content: true,
+            person: {
+              select: {
+                name: true,
+              },
             },
-            create_at:true,
-            update_at:true,
-            rating:true,
-            parent:{
-              select:{
-                parent_id:true,
-              }
-            }
-          }
+            create_at: true,
+            update_at: true,
+            rating: true,
+            parent: {
+              select: {
+                parent_id: true,
+              },
+            },
+          },
         },
 
-        service_name:true,
-        serviceItems:{
-          select:{
-            name:true,
-            type_id:true,
-            amenitiesRooms:{
-              include:{
-                amenityRoom:true,
-              }
+        service_name: true,
+        serviceItems: {
+          select: {
+            name: true,
+            type_id: true,
+            amenitiesRooms: {
+              include: {
+                amenityServiceItems: true,
+              },
             },
-            imagesRooms:true,
-            availiable_from:true,
-            availiable_to:true,
-            area:true,
-            max_people:true,
-            serviceItemOccasions:{
-              select:{
-                day:true,
-                price_occassion:true,
-              }
+            imagesRooms: true,
+            availiable_from: true,
+            availiable_to: true,
+            area: true,
+            max_people: true,
+            serviceItemOccasions: {
+              select: {
+                day: true,
+                price_occassion: true,
+              },
             },
-            serviceItemOffs:{
-              select:{
-                date_off:true,
-              }
-            }
-          }
-        }
-
-      }
-      
+            serviceItemOffs: {
+              select: {
+                date_off: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!hotel) {
@@ -184,8 +223,6 @@ export class HotelService extends BaseService {
             price_from: service.price_from || Decimal(0),
             price_to: service.price_to || Decimal(0),
             total_reviews: 0,
-            create_at: service.create_at || new Date(),
-            update_at: service.update_at || new Date(),
           },
         });
 
@@ -210,10 +247,7 @@ export class HotelService extends BaseService {
 
   async updateService(
     service: HotelServiceModel
-  ): Promise<
-      | ErrorResponse
-    | SuccessResponse<Service>
-  > {
+  ): Promise<ErrorResponse | SuccessResponse<Service>> {
     try {
       const transaction = await prisma.$transaction(async (tx) => {
         const updateService = await tx.service.update({
@@ -228,7 +262,6 @@ export class HotelService extends BaseService {
             quantity_room: service.quantity_room,
             info: service.info,
             rating: service.rating,
-            update_at: Date.now().toString(),
             status_id: service.status_id,
           },
         });

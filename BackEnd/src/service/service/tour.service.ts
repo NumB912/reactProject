@@ -1,8 +1,10 @@
-
 import prisma from "@/db";
-import type { BaseServiceInterface, GetListServicesParams } from "../../model/service/baseService.model";
+import type {
+  BaseServiceInterface,
+  GetListServicesParams,
+} from "../../model/service/baseService.model";
 import { ServiceType } from "@/enum/service/type.service.enum";
-import type { Service  } from "@prisma/client";
+import type { Service } from "@prisma/client";
 import { BaseService } from "./base.service";
 import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
@@ -10,7 +12,6 @@ import type { ServiceDetail } from "@/model/type.service.detail.model";
 import type { ThingToDoServiceModel } from "@/model/service/service.model";
 
 export class ThingToDoService extends BaseService {
-   
   private static instance: ThingToDoService;
 
   constructor() {
@@ -24,78 +25,78 @@ export class ThingToDoService extends BaseService {
     return ThingToDoService.instance;
   }
 
-async getListServices(params: GetListServicesParams): Promise<any> {
-  try {
-    const page = Number(params.page) || 1;
-    const limit = Math.min(Number(params.limit) || 10, 50); // max 50 bản ghi
-    const search = params.search?.trim() || '';
-    const sortBy = params.sortBy || 'create_at';
-    const sortOrder = params.sortOrder === 'asc' ? 'asc' : 'desc';
+  async getListServices(params: GetListServicesParams): Promise<any> {
+    try {
+      const page = Number(params.page) || 1;
+      const limit = Math.min(Number(params.limit) || 10, 50);
+      const search = params.search?.trim() || "";
+      const sortBy = params.sortBy || "create_at";
+      const sortOrder = params.sortOrder === "asc" ? "asc" : "desc";
 
-    const skip = (page - 1) * limit;
-    const where: any = {
-      service_type_id: ServiceType.THING_TO_DO,
-    };
+      const skip = (page - 1) * limit;
+      const where: any = {
+        service_type_id: ServiceType.THING_TO_DO,
+      };
 
-    if (search) {
-      where.OR = [
-        { service_name: { contains: search, mode: 'insensitive' } },
-      ];
-    }
+      if (search) {
+        where.OR = [
+          { service_name: { contains: search, mode: "insensitive" } },
+        ];
+      }
 
-    const [list, total] = await Promise.all([
-      prisma.service.findMany({
-        where,
-        select: {
-          id: true,
-          service_name: true,
-          price_from: true,
-          price_to: true,
-          rating: true,
-          total_reviews: true,
-          imageServices: {
-            select:{
-              image:{
-                select:{
-                  url:true,
-                }
-              }
-            }
+      const [list, total] = await Promise.all([
+        prisma.service.findMany({
+          where,
+          select: {
+            id: true,
+            service_name: true,
+            price_from: true,
+            price_to: true,
+            rating: true,
+            total_reviews: true,
+            imageServices: {
+              select: {
+                image: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+            },
+          },
+          orderBy: { [sortBy]: sortOrder },
+          skip,
+          take: limit,
+        }),
+
+        prisma.service.count({ where }),
+      ]);
+
+      return {
+        success: true,
+        status: 200,
+        message: "Thành công",
+        data: {
+          list,
+          pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+            hasNext: page <= total - 1,
+            hasPrev: page - 1 > 0,
           },
         },
-        orderBy: { [sortBy]: sortOrder },
-        skip,
-        take: limit,
-      }),
-
-      prisma.service.count({ where }),
-    ]);
-
-    return {
-      success: true,
-      status: 200,
-      message: "Thành công",
-      data: {
-        list,
-        pagination: {
-          page,
-          limit,
-          total,
-          totalPages: Math.ceil(total / limit),
-          hasNext: page <= total-1,
-          hasPrev:page-1 > 0
-        },
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      status: 500,
-      message: "Lỗi server",
-    };
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        success: false,
+        status: 500,
+        message: "Lỗi server",
+      };
+    }
   }
-}
   async getDetailService(
     serviceId: string
   ): Promise<SuccessResponse<any> | ErrorResponse> {
@@ -103,34 +104,34 @@ async getListServices(params: GetListServicesParams): Promise<any> {
       where: {
         id: serviceId,
       },
-      select:{
-        service_name:true,
-        info:true,
-        location:true,
-        price_from:true,
-        rating:true,
-        reviews:true,
-        description:true,
-        total_reviews:true,
-        service_type_id:true,
-        serviceItems:{
-          select:{
-            duration:true,
-            price:true,
-            name:true,
-            availiable_from:true,
-            availiable_to:true,
-            serviceItemOccasions:true,
-            serviceItemOffs:true,
-          }
+      select: {
+        service_name: true,
+        info: true,
+        location: true,
+        price_from: true,
+        rating: true,
+        reviews: true,
+        description: true,
+        total_reviews: true,
+        service_type_id: true,
+        serviceItems: {
+          select: {
+            duration: true,
+            price: true,
+            name: true,
+            availiable_from: true,
+            availiable_to: true,
+            serviceItemOccasions: true,
+            serviceItemOffs: true,
+          },
         },
-        imageServices:true,
-        supplier:{
-          select:{
-            phone:true,
-           name:true, 
-          }
-        }
+        imageServices: true,
+        supplier: {
+          select: {
+            phone: true,
+            name: true,
+          },
+        },
       },
     });
 
@@ -152,10 +153,7 @@ async getListServices(params: GetListServicesParams): Promise<any> {
 
   async createService(
     service: ThingToDoServiceModel
-  ): Promise<
-    | SuccessResponse<Service>
-    | ErrorResponse
-  > {
+  ): Promise<SuccessResponse<Service> | ErrorResponse> {
     try {
       const transaction = await prisma.$transaction(async (tx) => {
         const createThingToDo = await tx.service.create({
@@ -170,9 +168,8 @@ async getListServices(params: GetListServicesParams): Promise<any> {
             supplier_id: service.supplier_id || "",
             price_from: service.price_from || Decimal(0),
             price_to: service.price_to || Decimal(0),
-            total_reviews:0,
-            create_at:service.create_at||new Date(),
-            update_at:service.update_at||new Date()
+            total_reviews: 0,
+            createdAt: service.create_at || new Date(),
           },
         });
 
@@ -213,7 +210,7 @@ async getListServices(params: GetListServicesParams): Promise<any> {
             service_name: service.service_name,
             info: service.info,
             rating: service.rating,
-            update_at: Date.now().toString(),
+            updatedAt: Date.now().toString(),
             status_id: service.status_id,
           },
         });

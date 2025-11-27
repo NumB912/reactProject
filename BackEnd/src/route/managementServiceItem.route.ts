@@ -1,7 +1,13 @@
 import { Router } from 'express'
-import { managementServiceController } from '@/controller/management_service.controller'
-import { ManagementServiceItemController } from '@/controller/management_service_item.controller'
+import { managementServiceController } from '@/controller/supplier/management_service.controller'
+import { ManagementServiceItemController } from '@/controller/supplier/management_service_item.controller'
+import multer from 'multer';
 
 const router = Router()
-router.post('/add',ManagementServiceItemController.addServiceItem)
+const upload = multer({ dest: 'uploads/' });
+
+router.post('/',ManagementServiceItemController.addServiceItem)
+router.put('/',upload.fields([{
+    name:'imageFiles'
+}]),ManagementServiceItemController.updateServiceItem)
 export default router

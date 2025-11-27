@@ -10,7 +10,7 @@ import { isValidUUID } from "@/utils/isvalidateUuid.utils.js";
 import { error } from "console";
 import { StatusType } from "@/enum/service/status.service.enum.js";
 import type { Service } from "@prisma/client";
-import type { SuccessResponse } from "@/model/api.model.js";
+import type { SuccessResponse, ErrorResponse } from "@/model/api.model.js";
 
 export class userService {
   static async getAllUsers() {
@@ -38,7 +38,9 @@ export class userService {
     });
   }
 
-  static async editProfile(profile: EditProfileDTO):Promise<{success:boolean,status:number,message:string}> {
+  static async editProfile(
+    profile: EditProfileDTO
+  ): Promise<{ success: boolean; status: number; message: string }> {
     try {
       const data: any = {
         name: profile.name,
@@ -49,12 +51,12 @@ export class userService {
       const avatarFile = profile.avatarFile;
       const wallpaperFile = profile.wallpaperFile;
 
-      if(!isValidUUID(profile.id)){
-         return {
-          success:false,
-          message:"Không tồn tại người dùng",
-          status:400,
-        }
+      if (!isValidUUID(profile.id)) {
+        return {
+          success: false,
+          message: "Không tồn tại người dùng",
+          status: 400,
+        };
       }
 
       const person = await prisma.person.findUnique({
@@ -68,12 +70,12 @@ export class userService {
         },
       });
 
-      if(!person){
+      if (!person) {
         return {
-          success:false,
-          message:"Không tồn tại người dùng",
-          status:400,
-        }
+          success: false,
+          message: "Không tồn tại người dùng",
+          status: 400,
+        };
       }
 
       const prismaTransaction = await prisma.$transaction(async (tx) => {
@@ -142,9 +144,9 @@ export class userService {
       });
 
       return {
-        success:true,
-        message:"Cập nhật thông tin người dùng thành công",
-        status:200,
+        success: true,
+        message: "Cập nhật thông tin người dùng thành công",
+        status: 200,
       };
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -152,9 +154,11 @@ export class userService {
     }
   }
 
-  static async becomeSupplier(becomeSupplier: BecomeSupplierDTO):Promise<{success:boolean,message:string,status:number}> {
+  static async becomeSupplier(
+    becomeSupplier: BecomeSupplierDTO
+  ): Promise<{ success: boolean; message: string; status: number }> {
     try {
-      let checkIsDone = {} as SuccessResponse<Service>
+      let checkIsDone = {} as any;
 
       const transaction = await prisma.$transaction(async (ts) => {
         const locationCreated = await prisma.location.create({
@@ -168,125 +172,127 @@ export class userService {
         });
 
         if (ServiceType.HOTEL == becomeSupplier.type_service) {
-          const hotelCreator = await factoryServiceCreator.factory(ServiceType.HOTEL);
-           checkIsDone = await hotelCreator.create({
-              service_name: becomeSupplier.property_name,
-              service_type_id: ServiceType.HOTEL,
-              supplier_id: becomeSupplier.user_id,
-              location_id: locationCreated.id,
-          })
+          const hotelCreator = await factoryServiceCreator.factory(
+            ServiceType.HOTEL
+          );
+          checkIsDone = await hotelCreator.create({
+            service_name: becomeSupplier.property_name,
+            service_type_id: ServiceType.HOTEL,
+            supplier_id: becomeSupplier.user_id,
+            location_id: locationCreated.id,
+          });
         } else if (ServiceType.RENTAL_CAR == becomeSupplier.type_service) {
-          const rentalCreator =await factoryServiceCreator.factory(
+          const rentalCreator = await factoryServiceCreator.factory(
             ServiceType.RENTAL_CAR
           );
-          checkIsDone = await  rentalCreator.create({
-              service_name: becomeSupplier.property_name,
-              service_type_id: ServiceType.RENTAL_CAR,
-              supplier_id: becomeSupplier.user_id,
-              location_id: locationCreated.id,
-          })
+          checkIsDone = await rentalCreator.create({
+            service_name: becomeSupplier.property_name,
+            service_type_id: ServiceType.RENTAL_CAR,
+            supplier_id: becomeSupplier.user_id,
+            location_id: locationCreated.id,
+          });
         } else if (ServiceType.THING_TO_DO == becomeSupplier.type_service) {
-          const tourCreator = await factoryServiceCreator.factory(ServiceType.THING_TO_DO);
-          checkIsDone=await tourCreator?.create(
-            {
-              service_name: becomeSupplier.property_name,
-              service_type_id: ServiceType.THING_TO_DO,
-              supplier_id: becomeSupplier.user_id,
-              location_id: locationCreated.id,
-            },
+          const tourCreator = await factoryServiceCreator.factory(
+            ServiceType.THING_TO_DO
           );
-        }
-
-
-
-      const create_request = await prisma.request_become_supplier.create({
-        data: {
-          name: "service",
-          status: StatusBecomeSupplier.PEDDING,
-          user_id: becomeSupplier.user_id,
-          tax_code:becomeSupplier.tax_code,
-          service_id:checkIsDone.data.id
-        },
-      });
-
-      if (becomeSupplier.tax_files && becomeSupplier.tax_files.length > 0) {
-        const tax = {
-          upload_by_id: becomeSupplier.user_id,
-          file_url: `/upload/user/${becomeSupplier.user_id}/evidence/tax`,
-          file_type: becomeSupplier.type_service,
-          upload_at: new Date(),
-        };
-        for (let taxFile of becomeSupplier.tax_files) {
-          await FileService.uploadFile(taxFile, tax.file_url);
-          const create_tax_file = await prisma.document_supplier.create({
-            data: {
-              file_type: "pdf",
-              file_url: `${tax.file_url}/${taxFile.filename}.${
-                taxFile.mimetype.split("/")[1]
-              }`,
-              request_id: create_request.id,
-              upload_by_id: tax.upload_by_id,
-              upload_at: tax.upload_at,
-            },
+          checkIsDone = await tourCreator?.create({
+            service_name: becomeSupplier.property_name,
+            service_type_id: ServiceType.THING_TO_DO,
+            supplier_id: becomeSupplier.user_id,
+            location_id: locationCreated.id,
           });
         }
-      }
+        const create_request = await prisma.request_become_supplier.create({
+          data: {
+            name: "service",
+            status: StatusBecomeSupplier.PEDDING,
+            user_id: becomeSupplier.user_id,
+            tax_code: becomeSupplier.tax_code,
+            service_id: checkIsDone.data.id,
+          },
+        });
 
-      if (
-        becomeSupplier.business_files &&
-        becomeSupplier.business_files.length > 0
-      ) {
-        const business_license = {
-          upload_by_id: becomeSupplier.user_id,
-          file_url: `/upload/user/${becomeSupplier.user_id}/evidence/license`,
-          file_type: becomeSupplier.type_service,
-          upload_at: new Date(),
-        };
-
-        for (let businessFile of becomeSupplier.business_files) {
-          const url = `${business_license.file_url}/${businessFile.filename}.${
-            businessFile.mimetype.split("/")[1]
-          }`;
-
-          await FileService.uploadFile(businessFile, business_license.file_url);
-
-          const create_business_license = await prisma.document_supplier.create(
-            {
+        if (becomeSupplier.tax_files && becomeSupplier.tax_files.length > 0) {
+          const tax = {
+            upload_by_id: becomeSupplier.user_id,
+            file_url: `/upload/user/${becomeSupplier.user_id}/evidence/tax`,
+            file_type: becomeSupplier.type_service,
+            upload_at: new Date(),
+          };
+          for (let taxFile of becomeSupplier.tax_files) {
+            await FileService.uploadFile(taxFile, tax.file_url);
+            const create_tax_file = await prisma.document_supplier.create({
               data: {
                 file_type: "pdf",
-                file_url: url,
+                file_url: `${tax.file_url}/${taxFile.filename}.${
+                  taxFile.mimetype.split("/")[1]
+                }`,
                 request_id: create_request.id,
-                upload_by_id: business_license.upload_by_id,
-                upload_at: business_license.upload_at,
-                
+                upload_by_id: tax.upload_by_id,
+                upload_at: tax.upload_at,
               },
-            }
-          );
+            });
+          }
         }
-      }
 
+        if (
+          becomeSupplier.business_files &&
+          becomeSupplier.business_files.length > 0
+        ) {
+          const business_license = {
+            upload_by_id: becomeSupplier.user_id,
+            file_url: `/upload/user/${becomeSupplier.user_id}/evidence/license`,
+            file_type: becomeSupplier.type_service,
+            upload_at: new Date(),
+          };
 
-        setImmediate(()=>{
-          const emailService = new EmailService()
-        })
+          for (let businessFile of becomeSupplier.business_files) {
+            const url = `${business_license.file_url}/${
+              businessFile.filename
+            }.${businessFile.mimetype.split("/")[1]}`;
+
+            await FileService.uploadFile(
+              businessFile,
+              business_license.file_url
+            );
+
+            const create_business_license =
+              await prisma.document_supplier.create({
+                data: {
+                  file_type: "pdf",
+                  file_url: url,
+                  request_id: create_request.id,
+                  upload_by_id: business_license.upload_by_id,
+                  upload_at: business_license.upload_at,
+                },
+              });
+          }
+        }
+
+        setImmediate(() => {
+          const emailService = new EmailService();
+        });
       });
-      
-      if(!checkIsDone){
-        throw error("Lỗi trong quá trình thực thi",error)
+
+      if (!checkIsDone) {
+        throw error("Lỗi trong quá trình thực thi", error);
       }
 
       return {
-        status:200,
-        message:"Gửi yêu cầu thành công",
-        success:true
+        status: 200,
+        message: "Gửi yêu cầu thành công",
+        success: true,
       };
     } catch (error) {
-      console.error('error',error)
-      throw Error("Không thể gửi yêu cầu vui lòng thử lại")
+      console.error("error", error);
+      throw Error("Không thể gửi yêu cầu vui lòng thử lại");
     }
   }
 
-  static async handleFavorite(user_id:string, service_id:string): Promise<{success:boolean,message:string,status:number}> {
+  static async handleFavorite(
+    user_id: string,
+    service_id: string
+  ): Promise<{ success: boolean; message: string; status: number }> {
     if (!user_id || !service_id) {
       throw new Error("Chưa có dữ liệu đầu vào");
     }
@@ -296,14 +302,14 @@ export class userService {
       select: { id: true },
     });
 
-    console.log(service)
+    console.log(service);
 
     const person = await prisma.person.findUnique({
       where: { id: user_id },
       select: { id: true },
     });
 
-    console.log(person)
+    console.log(person);
 
     if (!person || !service) {
       throw new Error("Không có người dùng hay dịch vụ tồn tại");
@@ -343,11 +349,5 @@ export class userService {
     return result;
   }
 
-  static async booking(user_id:string,service_id:string){
-    
-    
-
-  }
-
-
+  static async booking(user_id: string, service_id: string) {}
 }

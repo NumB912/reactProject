@@ -66,6 +66,7 @@ class UserController {
         lng,
         lat,
       } = req.body;
+
       const fieldFiles = req.files;
       const tax_file = (fieldFiles as any)?.tax_file as Express.Multer.File[];
       const bussiness_lisence_file = (fieldFiles as any)
@@ -76,8 +77,8 @@ class UserController {
         type_service: type_service,
         lcg: location,
         property_name: property_name,
-        province_id: province_id,
-        district_id: district_id,
+        province_id: province_id.toString(),
+        district_id: district_id.toString(),
         account_number: account_number,
         tax_code: tax_code,
         tax_files: tax_file,

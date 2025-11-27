@@ -2,8 +2,6 @@ import type { ServiceItemTypeEnum } from "@/enum/service_item/type.serviceItem.e
 import type { ErrorResponse, SuccessResponse } from "../api.model";
 import type { ServiceItem } from "@prisma/client";
 
-
-
 export interface BaseServiceItemInterface {
   getListItemService(
     type: ServiceItemTypeEnum,

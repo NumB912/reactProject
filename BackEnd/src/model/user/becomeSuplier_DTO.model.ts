@@ -6,8 +6,8 @@ export interface BecomeSupplierDTO {
   lcg: string;
   lat: number;
   lng: number;
-  province_id: number;
-  district_id: number;
+  province_id: string;
+  district_id: string;
   account_number: string;
   account_holder: string;
   tax_code: string;
