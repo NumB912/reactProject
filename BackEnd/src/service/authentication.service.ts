@@ -102,7 +102,6 @@ export class AuthenticationService {
 
   static async logout(refresh_token: string, access_token: string) {
     try {
-      console.log(refresh_token, access_token);
       const payload = jwt.verify(access_token, JWT_SECRET) as any;
       const key_load = `at:jti:${payload.jti}`;
       await redisClient.del(key_load);
@@ -152,7 +151,7 @@ export class AuthenticationService {
             google_id: googleId,
             email: email.toLowerCase(),
             name: name || email.split("@")[0],
-            Role_id: Role.Role_USER,
+            role_id: Role.ROLE_USER,
             create_at: new Date(),
             update_at: new Date(),
             password: "",
@@ -173,7 +172,7 @@ export class AuthenticationService {
           userId: user.id,
           email: user.email,
           name: user.name,
-          Role_id: user.Role_id,
+          role_id: user.role_id,
         },
         JWT_SECRET,
         { expiresIn: ACCESS_TOKEN_EXPIRES }
@@ -254,7 +253,7 @@ export class AuthenticationService {
           password: hashedPassword,
           name: trimmedName,
           phone: trimmedPhone,
-          Role_id: Role.Role_USER,
+          role_id: Role.ROLE_USER,
           create_at: new Date(),
         },
         select: {

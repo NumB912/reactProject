@@ -37,14 +37,14 @@ model Person {
 }
 
 model RefreshToken {
-  id         BigInt    @id @default(autoincrement())
+  id         String    @id @default(uuid())
   userId     String    @db.Uuid
   tokenHash  String    @unique
   family     String
-  parentId   BigInt?
+  parentId   Int?
   expiresAt  DateTime
   revokedAt  DateTime?
-  replacedBy BigInt?
+  replacedBy Int?
   ip         String?
   ua         String?
   createdAt  DateTime  @default(now())
@@ -97,7 +97,7 @@ model BankAccount {
 model Service {
   id              String    @id @default(uuid()) @db.Uuid
   service_name    String?
-  supplier_id     String    @db.Uuid
+  supplier_id     String?   @db.Uuid 
   rating          Decimal?  @db.Decimal
   total_reviews   Int?
   create_at       DateTime? @db.Timestamptz(6)
@@ -113,7 +113,7 @@ model Service {
   favorites Favorite[]
 
   quantity_room    Int?
-  type_hotel_id    Int?
+  type_hotel_id    String?
   amenities_hotels AmenitiesHotels[]
 
   info String?
@@ -124,20 +124,24 @@ model Service {
   supplier       Person?        @relation(fields: [supplier_id], references: [id])
   type_service   TypeService?   @relation(fields: [service_type_id], references: [id])
   status_service StatusService? @relation(fields: [status_id], references: [id])
+  typeHotel      TypeHotel?      @relation(fields: [type_hotel_id],references: [id])
   serviceItems   ServiceItem[]
-  typeHotels     TypeHotel[]
+
+  requestBecomeSuppliers Request_become_supplier[]
+
+  @@index([supplier_id])
 }
 
 model AmenitiesHotels {
-  id         String       @id @db.Uuid
-  amenity_id BigInt
+  id         String       @id @default(uuid()) @db.Uuid
+  amenity_id Int
   service_id String       @db.Uuid
   amenity    AmenityHotel @relation(fields: [amenity_id], references: [id])
   service    Service      @relation(fields: [service_id], references: [id])
 }
 
 model AmenityHotel {
-  id              BigInt            @id @default(autoincrement())
+  id              Int            @id @default(autoincrement())
   amenity         String            @db.VarChar(150)
   icon            String?           @db.VarChar(255)
   createdAt       DateTime          @default(now()) @db.Timestamptz(6)
@@ -220,7 +224,7 @@ model Review {
   id         String    @id @default(uuid()) @db.Uuid
   title      String?
   content    String?
-  rating     BigInt?
+  rating     Int?
   create_at  DateTime?
   update_at  DateTime?
   person_id  String?   @db.Uuid
@@ -242,16 +246,16 @@ model ServiceItem {
   availiable_from DateTime? @db.Date
   availiable_to   DateTime? @db.Date
   status_id       String?
-  type_id         String?   @unique
-
+  type_id         String?  
+  
   //room
-  room_type_id BigInt?
+  room_type_id String?
   area         Decimal? @db.Decimal
-  max_people   BigInt?
+  max_people   Int?
 
   //car
-  car_type_id     BigInt?
-  transmission_id BigInt?
+  car_type_id     String?
+  transmission_id String?
 
   //tour
   location_id String?   @db.Uuid
@@ -262,6 +266,7 @@ model ServiceItem {
   tranmission          Transmission?                 @relation(fields: [transmission_id], references: [id])
   type                 TypeServiceItem?              @relation(fields: [type_id], references: [id])
   typeCar              TypeCar?                      @relation(fields: [car_type_id], references: [id])
+  typeRoom             TypeRoom?                     @relation(fields: [room_type_id],references: [id])
   serviceItemOffs      ServiceItemOff[]
   serviceItemOccasions ServiceItemServiceOccassion[]
 
@@ -272,6 +277,13 @@ model ServiceItem {
   amenitiesCars AmenitiesCars[]
 }
 
+model TypeRoom{
+  id  String @id @unique
+  type String
+
+  serviceItems ServiceItem[]
+}
+
 model TypeServiceItem {
   id           String        @id @unique
   type         String
@@ -279,7 +291,7 @@ model TypeServiceItem {
 }
 
 model StatusServiceItem {
-  id     String @unique
+  id     String @id @unique
   status String
 
   serviceItems ServiceItem[]
@@ -302,13 +314,13 @@ model ServiceItemServiceOccassion {
 }
 
 model TypeHotel {
-  id      BigInt    @id
+  id      String    @id @unique
   type    String?
   service Service[]
 }
 
 model AmenityRoom {
-  id      BigInt  @id
+  id      Int  @id @unique
   amenity String?
   icon    String?
 
@@ -318,28 +330,28 @@ model AmenityRoom {
 model AmenitiesRooms {
   id              String @id @default(uuid()) @db.Uuid
   service_item_id String @db.Uuid
-  amenity_id      BigInt
+  amenity_id      Int
 
   serviceItems ServiceItem @relation(fields: [service_item_id], references: [id])
   amenityRoom  AmenityRoom @relation(fields: [amenity_id], references: [id])
 }
 
 model TypeCar {
-  id   BigInt  @id
+  id   String  @id @unique
   type String?
 
   serviceItems ServiceItem[]
 }
 
 model Transmission {
-  id           BigInt  @id
+  id           String  @id @unique
   transmission String?
 
   serviceItems ServiceItem[]
 }
 
 model AmenityCar {
-  id            BigInt          @id
+  id            Int          @id
   amenity       String?
   icon          String?
   amenitiesCars AmenitiesCars[]
@@ -347,14 +359,14 @@ model AmenityCar {
 
 model AmenitiesCars {
   id              String      @id @default(uuid()) @db.Uuid
-  amenity_id      BigInt
+  amenity_id      Int
   service_item_id String      @db.Uuid
   amenity         AmenityCar  @relation(fields: [amenity_id], references: [id])
   service_item    ServiceItem @relation(fields: [service_item_id], references: [id])
 }
 
 model TypeBooking {
-  id           String    @id
+  id           String    @id @db.Uuid
   type_booking String?
   bookings     Booking[]
 }
@@ -365,7 +377,7 @@ model Booking {
   name            String?
   email           String?
   phone           String?
-  booking_type_id String?
+  booking_type_id String?   @db.Uuid
   total_amount    Decimal?  @db.Decimal
   check_in        DateTime? @db.Timestamptz(6)
   check_out       DateTime? @db.Timestamptz(6)
@@ -375,8 +387,8 @@ model Booking {
   pick_up_id  String?  @db.Uuid
   drop_off_id String?  @db.Uuid
 
-  adult    BigInt
-  children BigInt
+  adult    Int?
+  children Int?
 
   service_item_id String @db.Uuid
 
@@ -389,13 +401,13 @@ model Booking {
 }
 
 model PaymentMethod {
-  id             BigInt    @id
+  id             Int    @id
   payment_method String?
   payments       Payment[]
 }
 
 model StatusPayment {
-  id       BigInt    @id
+  id       String    @id @unique
   status   String?
   payments Payment[]
 }
@@ -404,8 +416,8 @@ model Payment {
   id                String         @id @default(uuid()) @db.Uuid
   booking_id        String?        @db.Uuid
   amount            Decimal?       @db.Decimal
-  payment_method_id BigInt?
-  status_id         BigInt?
+  payment_method_id Int?
+  status_id         String?
   fee               Decimal?       @db.Decimal
   is_refund         Boolean        @default(false)
   raw_response      Json?
@@ -423,7 +435,7 @@ model Refund {
 }
 
 model StatusRefundRequest {
-  id             BigInt          @id
+  id             Int          @id
   status         String?
   refundRequests RefundRequest[]
 }
@@ -433,7 +445,7 @@ model RefundRequest {
   booking_id  String               @db.Uuid
   customer_id String               @db.Uuid
   reason      String?
-  status_id   BigInt?
+  status_id   Int?
   evidences   RefundEvidence[]
   booking     Booking              @relation(fields: [booking_id], references: [id])
   customer    Person               @relation(fields: [customer_id], references: [id])
@@ -465,8 +477,13 @@ model Request_become_supplier {
   user_id                 String?             @db.Uuid
   status                  String?             @db.VarChar
   name                    String?             @db.VarChar
+  service_id              String?             @db.Uuid
+  tax_code                String?
+  proccess_at             DateTime?
   other_Document_supplier Document_supplier[] @relation("Document_supplierToDocument_supplier")
   Person                  Person?             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  service                 Service?            @relation(fields: [service_id],references: [id])
+  create_at               DateTime?
 }
 
 model Document_supplier {

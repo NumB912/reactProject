@@ -5,7 +5,7 @@ import { hash } from "@/utils/hash.utils";
 import { log } from "console";
 class AuthenticationController {
   static async register(req: Request, res: Response) {
-    let { email, password, name, phone } = req.query;
+    let { email, password, name, phone } = req.body;
 
     try {
       const signUp = await AuthenticationService.signup(
@@ -14,7 +14,6 @@ class AuthenticationController {
         name,
         phone
       );
-      console.log("signUp", signUp);
       return res.status(signUp.status).json(signUp);
     } catch (error: any) {
       console.error(
@@ -101,7 +100,6 @@ class AuthenticationController {
   }
 
   static async login(req: Request, res: Response) {
-    console.log(req.body)
         const { email, password } = req.body;
     if (!email || typeof email !== "string" || !email.trim()) {
       return res.status(400).json({

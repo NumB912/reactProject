@@ -5,9 +5,18 @@ import type { Service } from "@prisma/client";
 import type { ErrorResponse, SuccessResponse } from "../api.model";
 import type { ServiceDetail } from "../type.service.detail.model";
 
+export interface GetListServicesParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sortBy?: 'service_name' | 'price_from' | 'rating' | 'create_at';
+  sortOrder?: 'asc' | 'desc';
+}
+
+
 export interface BaseServiceInterface {
   getListServices(
-    type: ServiceType
+    params:GetListServicesParams
   ): Promise<any | SuccessResponse<Service> | ErrorResponse>;
   getDetailService(serviceId: string): Promise<
     | ServiceDetail

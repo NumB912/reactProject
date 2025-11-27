@@ -30,8 +30,6 @@ class UserController {
       const wallpaperFile = (req.files as any)?.wallpaper?.[0] as
         | Express.Multer.File
         | undefined;
-      console.log(avatarFile)
-      console.log(wallpaperFile)
       const updatedProfile = await userService.editProfile({
         id,
         name,

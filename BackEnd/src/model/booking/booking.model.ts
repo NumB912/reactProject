@@ -6,21 +6,26 @@ export interface Booking {
   name: string;
   email: string;
   phone: string;
-  booking_type_id: string;
+  booking_type_id?: string;
   total_amount: Decimal;
   check_in: Date;
   check_out: Date;
   service_id: string;
-  create_at: Date;
+  create_at?: Date;
   service_item_id: string;
 }
 
-export interface HotelBooking extends Booking{
+export interface HotelBooking extends Booking {
   adult: number;
   children: number;
 }
 
-export interface RentalCarBooking extends Booking{
-  pick_up: string;
-  drop_off: string;
+export interface RentalCarBooking extends Booking {
+  pick_up_id: string;
+  drop_off_id: string;
+}
+
+export interface ThingToDoBooking extends Booking {
+  adult: number;
+  children: number;
 }

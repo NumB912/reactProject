@@ -1,5 +1,5 @@
 import { ServiceType } from "@/enum/service/type.service.enum";
-import { HotelServiceCreator, RentalCarServiceCreator, ThingToDoServiceCreator, } from "./service.creator";
+import { HotelServiceCreator, RentalCarServiceCreator, ThingToDoServiceCreator, } from "./service.service.creator";
 
 class FactoryServiceCreator{
 

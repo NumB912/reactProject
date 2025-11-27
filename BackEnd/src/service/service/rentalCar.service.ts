@@ -1,15 +1,47 @@
 // src/services/HotelService.ts
 import prisma from "@/db";
-import type { BaseServiceInterface } from "../../model/service/base.service.model";
+import type { BaseServiceInterface } from "../../model/service/baseService.model";
 import { ServiceType } from "@/enum/service/type.service.enum";
 import type { Service  } from "@prisma/client";
-import type { RentalCarServiceModel } from "@/model/service.model";
+import type { RentalCarServiceModel } from "@/model/service/service.model";
 import { BaseService } from "./base.service";
 import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type { ServiceDetail } from "@/model/type.service.detail.model";
 
 export class RentalCarService extends BaseService {
+ async getListServices(): Promise<SuccessResponse<any[]> | ErrorResponse> {
+        try{
+      const list = await prisma.service.findMany({
+        select:{
+          imageServices:true,
+          service_name:true,
+          price_from:true,
+          price_to:true,
+          rating:true,
+          total_reviews:true,
+        },
+
+        where:{
+          service_type_id:ServiceType.RENTAL_CAR,
+        }
+      })
+
+      return {
+        data:list,
+        message:"Thành công",
+        status:200,
+        success:true,
+      }
+    }catch(error){
+      console.error()
+      return {
+        status:500,
+        message:"Lỗi",
+        success:false,
+      }
+    }
+  }
   private static instance: RentalCarService;
 
   constructor() {
@@ -30,11 +62,71 @@ export class RentalCarService extends BaseService {
       where: {
         id: serviceId,
       },
-      
-      include:{
-        amenities_hotels:true,
-        type_service:true,
+        select:{
+        amenities_hotels:{
+          select:{
+            amenity:true,
+          }
+        }
+        ,
+        description:true,
+        info:true,
         imageServices:true,
+        price_from:true,
+        price_to:true,
+        rating:true,
+        location:true,
+        total_reviews:true,
+        reviews:{
+          select:{
+            content:true,
+            person:{
+              select:{
+                name:true,
+              }
+            },
+            create_at:true,
+            update_at:true,
+            rating:true,
+            parent:{
+              select:{
+                parent_id:true,
+              }
+            }
+          }
+        },
+
+        service_name:true,
+        serviceItems:{
+          select:{
+            name:true,
+            type_id:true,
+            amenitiesRooms:{
+              include:{
+                amenityRoom:true,
+              }
+            },
+            availiable_from:true,
+            availiable_to:true,
+            amenitiesCars:{
+              include:{
+                amenity:true,
+              }
+            },
+            serviceItemOccasions:{
+              select:{
+                day:true,
+                price_occassion:true,
+              }
+            },
+            serviceItemOffs:{
+              select:{
+                date_off:true,
+              }
+            }
+          }
+        }
+
       }
 
     });
@@ -76,9 +168,9 @@ export class RentalCarService extends BaseService {
             supplier_id: service.supplier_id || "",
             price_from: service.price_from || Decimal(0),
             price_to: service.price_to || Decimal(0),
-            total_reviews: service.total_reviews != null ? Number(service.total_reviews) : undefined,
-            create_at:service.create_at,
-            update_at:service.update_at
+            total_reviews: service.total_reviews||0,
+               create_at:service.create_at||new Date(),
+            update_at:service.update_at||new Date()
           },
         });
 
@@ -102,10 +194,10 @@ export class RentalCarService extends BaseService {
   }
 
   async updateService(
-    service: Service
+    service: RentalCarServiceModel
   ): Promise<
-    | { success: true; data: Service; message: string; status: number }
-    | { success: false; message: string; status: number }
+    | SuccessResponse<Service>
+    | ErrorResponse
   > {
     try {
       const transaction = await prisma.$transaction(async (tx) => {
@@ -116,9 +208,7 @@ export class RentalCarService extends BaseService {
           data: {
             supplier_id: service.supplier_id,
             location_id: service.location_id,
-            type_hotel_id: service.type_hotel_id,
             service_name: service.service_name,
-            quantity_room: service.quantity_room,
             info: service.info,
             rating: service.rating,
             update_at: Date.now().toString(),

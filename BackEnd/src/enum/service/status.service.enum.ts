@@ -1,5 +1,6 @@
 export enum StatusType{
     PEDDING="PEDDING",
     STOP="",
-    ACTIVE=""
+    APPROVED="",
+    ACTIVE="ACTIVE"
 }

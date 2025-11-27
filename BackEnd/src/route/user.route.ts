@@ -2,6 +2,7 @@ import { Router } from 'express'
 import UserController from '../controller/user.controller.js'
 import multer from 'multer';
 import { handleMulterError } from '@/middleware/handleMutalError.middleware.js';
+import BookingController from '@/controller/booking.controller.js';
 const router = Router()
 const upload = multer({ dest: 'uploads/' });
 router.get('/', UserController.getUsers) 
@@ -18,5 +19,6 @@ router.post('/become-supplier',upload.fields([{
 }]),handleMulterError,UserController.becomeSupplier)
 
 router.post('/favorite',UserController.handleFavorite)
+router.post('/booking',BookingController.bookingService)
 
 export default router
