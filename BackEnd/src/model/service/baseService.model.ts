@@ -1,29 +1,35 @@
 import prisma from "@/db";
 import { StatusType } from "@/enum/service/status.service.enum";
 import { ServiceType } from "@/enum/service/type.service.enum";
-import type { Service } from "@prisma/client";
+import type { Prisma, Service } from "@prisma/client";
 import type { ErrorResponse, SuccessResponse } from "../api.model";
 import type { ServiceDetail } from "../type.service.detail.model";
 
 export interface GetListServicesParams {
-  page?: number;
-  limit?: number;
+  page?: string;
+  limit?: string;
   search?: string;
-  sortBy?: 'service_name' | 'price_from' | 'rating' | 'create_at';
-  sortOrder?: 'asc' | 'desc';
-  adult?:number,
-  children?:number,
-  Noroom?:number,
-  rating:string,
+  sortBy?: "service_name" | "rating" | "createdAt" | "price_from";
+  sortOrder?: "asc" | "desc";
+  type_id?: ServiceType;
+  priceTo?: string;
+  priceFrom?: string;
 
-  amenities_hotel?:string[]
-  amenities_room?:string[]
+  amenities_hotel?: string[];
+  type_hotel?: string[];
+  amenities_room?:string[],
+
+  duration?: string[];
+
+  tranmission?: string[];
+  type_car?: string[];
+  number_passenger?: string;
+  amenities_car?:string[];
 }
-
 
 export interface BaseServiceInterface {
   getListServices(
-    params:GetListServicesParams
+    params: GetListServicesParams
   ): Promise<any | SuccessResponse<Service> | ErrorResponse>;
   getDetailService(serviceId: string): Promise<
     | ServiceDetail
@@ -34,12 +40,17 @@ export interface BaseServiceInterface {
       }
   >;
   createService(
-    service: Service
+    service: Service,
+    tx: Prisma.TransactionClient
   ): Promise<SuccessResponse<Service> | ErrorResponse>;
   updateService(
-    service: Service
+    service: Service,
+    tx: Prisma.TransactionClient
   ): Promise<SuccessResponse<Service> | ErrorResponse>;
-  deleteService(service_id: string): Promise<{
+  deleteService(
+    service_id: string,
+    tx: Prisma.TransactionClient
+  ): Promise<{
     success: boolean;
     message: string;
     status: number;

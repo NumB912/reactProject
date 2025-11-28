@@ -6,7 +6,9 @@ import multer from 'multer';
 const router = Router()
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/',ManagementServiceItemController.addServiceItem)
+router.post('/',upload.fields([{
+    name:'imageFiles'
+}]),ManagementServiceItemController.addServiceItem)
 router.put('/',upload.fields([{
     name:'imageFiles'
 }]),ManagementServiceItemController.updateServiceItem)

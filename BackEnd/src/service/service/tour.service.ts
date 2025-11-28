@@ -4,7 +4,7 @@ import type {
   GetListServicesParams,
 } from "../../model/service/baseService.model";
 import { ServiceType } from "@/enum/service/type.service.enum";
-import type { Service } from "@prisma/client";
+import type { Prisma, Service } from "@prisma/client";
 import { BaseService } from "./base.service";
 import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
@@ -31,8 +31,7 @@ export class ThingToDoService extends BaseService {
       const limit = Math.min(Number(params.limit) || 10, 50);
       const search = params.search?.trim() || "";
       const sortBy = params.sortBy || "create_at";
-      const sortOrder = params.sortOrder === "asc" ? "asc" : "desc";
-
+      const sortOrder = params.sortOrder === "asc" ? "asc" : "desc";  
       const skip = (page - 1) * limit;
       const where: any = {
         service_type_id: ServiceType.THING_TO_DO,
@@ -233,10 +232,11 @@ export class ThingToDoService extends BaseService {
   }
 
   async deleteService(
-    service_id: string
+    service_id: string,
+    tx:Prisma.TransactionClient
   ): Promise<{ success: boolean; message: string; status: number }> {
     try {
-      const deleteHotel = await super.deleteService(service_id);
+      const deleteHotel = await super.deleteService(service_id,tx);
 
       return deleteHotel;
     } catch (error) {

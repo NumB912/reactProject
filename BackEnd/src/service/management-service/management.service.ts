@@ -2,6 +2,7 @@ import type {
   AmenitiesHotels,
   AmenityHotel,
   Image,
+  Prisma,
   Service,
   ServiceItem,
   Transmission,
@@ -15,33 +16,40 @@ import { HotelService } from "../service/hotel.service";
 import { RentalCarService } from "../service/rentalCar.service";
 import { ThingToDoService } from "../service/tour.service";
 import { ImageService } from "../image/image.service";
+import { Image_service_Service } from "../image/image_service.service";
+import { ManagementAmenityHotel } from "../service/amenitiesService/amenities.service";
+import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 
 export class ManagementService {
   static async addService(service: Service) {
     try {
-      const { service_type_id } = service;
-      let createService = {};
+      const transaction = await prisma.$transaction(async (tx) => {
+        const { service_type_id } = service;
+        let createService = {};
+        switch (service_type_id) {
+          case ServiceType.HOTEL:
+            createService = await HotelService.getInstance().createService(
+              service,
+              tx
+            );
+            break;
+          case ServiceType.RENTAL_CAR:
+            createService = await RentalCarService.getInstance().createService(
+              service
+            );
+            break;
+          case ServiceType.THING_TO_DO:
+            createService = await ThingToDoService.getInstance().createService(
+              service
+            );
+            break;
+        }
 
-      switch (service_type_id) {
-        case ServiceType.HOTEL:
-          createService = await HotelService.getInstance().createService(
-            service
-          );
-          break;
-        case ServiceType.RENTAL_CAR:
-          createService = await RentalCarService.getInstance().createService(
-            service
-          );
-          break;
-        case ServiceType.THING_TO_DO:
-          createService = await ThingToDoService.getInstance().createService(
-            service
-          );
-          break;
-      }
+        return createService;
+      });
 
       return {
-        createService,
+        transaction,
       };
     } catch (error) {
       console.error("error", error);
@@ -50,35 +58,70 @@ export class ManagementService {
 
   static async updateService(
     service: Service,
-    amenitiesHotel?: AmenityHotel[],
-    type_hotel?: TypeHotel,
-    Transmission?: Transmission
+    image_change: string[],
+    amenities_hotel: number[],
+    imageFiles?: Express.Multer.File[]
   ) {
     try {
-      const { service_type_id } = service;
-      let updateService = {};
+      const transaction = await prisma.$transaction(async (tx) => {
+        const { service_type_id } = service;
+        let updateService = {};
+        switch (service_type_id) {
+          case ServiceType.HOTEL:
+            const update = await HotelService.getInstance().updateService(
+              service,
+              tx
+            );
 
-      switch (service_type_id) {
-        case ServiceType.HOTEL:
-          const update = await HotelService.getInstance().updateService(
-            service
-          );
-          updateService = update;
-          break;
-        case ServiceType.RENTAL_CAR:
-          updateService = await RentalCarService.getInstance().updateService(
-            service
-          );
-          break;
-        case ServiceType.THING_TO_DO:
-          updateService = await ThingToDoService.getInstance().updateService(
-            service
-          );
-          break;
-      }
+            if (!update.success) {
+              throw Error("Cập nhật khôgn thành công");
+            }
+
+            const amenityHotelUpdate =
+              await ManagementAmenityHotel.EditAmenityHotelService(
+                service.id,
+                amenities_hotel,
+                tx
+              );
+
+            if (!amenityHotelUpdate.success) {
+              throw Error("Cập nhật khôgn thành công");
+            }
+
+            const changeImage = await this.updateImages(
+              service.id,
+              imageFiles,
+              image_change,
+              tx
+            );
+
+            if (!changeImage.success) {
+              throw Error("Cập nhật khôgn thành công");
+            }
+
+            updateService = {
+              update,
+              changeImage,
+              amenities_hotel,
+            };
+            break;
+          case ServiceType.RENTAL_CAR:
+            updateService = await RentalCarService.getInstance().updateService(
+              service
+            );
+            break;
+          case ServiceType.THING_TO_DO:
+            updateService = await ThingToDoService.getInstance().updateService(
+              service
+            );
+            break;
+        }
+
+        return updateService;
+      });
 
       return {
-        updateService,
+        transaction,
       };
     } catch (error) {
       console.error("error", error);
@@ -87,68 +130,59 @@ export class ManagementService {
 
   static async updateImages(
     service_id: string,
-    images: Express.Multer.File[] = [], 
-    delete_image: string[] = []               
-  ) {
+    images: Express.Multer.File[] = [],
+    imageChange: string[] = [],
+    tx: Prisma.TransactionClient
+  ): Promise<SuccessResponse<any> | ErrorResponse> {
+    if (!service_id) {
+      throw Error("Không tồn tại dịch vụ");
+    }
 
-    return await prisma.$transaction(async (tx) => {
-      const result = {
-        added: 0,
-        deleted: 0,
-        addedImages: [] as any[],
-        deletedImageIds: [] as string[],
-      };
+    const result = {
+      added: 0,
+      deleted: 0,
+      fileDelete: [],
+      fileAdd: [],
+    };
 
+    const image_exist = await tx.imageService.findMany({
+      where: {
+        service_id: service_id,
+      },
 
-      if (images && images.length > 0) {
-        try {
-          const uploadedImages = await ImageService.addImages(
-            `/upload/service/${service_id}/image`,
-            images
-          );
-          await tx.imageService.createMany({
-            data: uploadedImages.map((image) => ({
-              image_id: image.id,
-              service_id: service_id,
-            })),
-            skipDuplicates: true, 
-          });
-
-          result.added = uploadedImages.length;
-          result.addedImages = uploadedImages;
-
-        } catch (err) {
-          console.error("Lỗi khi upload ảnh mới:", err);
-          throw err; 
-        }
-      }
-
-      if (delete_image && delete_image.length > 0) {
-        try {
-          const deleteResult = await ImageService.deleteImages(delete_image);
-
-          result.deleted = deleteResult.deleted || delete_image.length;
-          result.deletedImageIds = delete_image;
-
-        } catch (err) {
-          console.error("Lỗi khi xóa ảnh:", err);
-          throw err;
-        }
-      }
-      return {
-        success: true,
-        message: "Cập nhật ảnh thành công",
-        data: {
-          service_id,
-          added_count: result.added,
-          deleted_count: result.deleted,
-          added_images: result.addedImages,
-          deleted_image_ids: result.deletedImageIds,
-        },
-      };
-    }).catch((error) => {
-      console.error("Transaction failed trong updateImages:", error);
-      throw new Error("Cập nhật ảnh thất bại: " + error.message);
+      select: {
+        image_id: true,
+      },
     });
+    const existingImageIds = image_exist.map((record) => record.image_id);
+
+    const toDelete = existingImageIds.filter((id) => !imageChange.includes(id));
+
+    if (toDelete.length > 0) {
+      const deleteimage = await Image_service_Service.deleteImages(toDelete, tx, service_id);
+      result.deleted = deleteimage.deleted
+    }
+
+    if (images.length > 0) {
+      const addImage = await Image_service_Service.addImages(
+        `/upload/service/${service_id}/image`,
+        images,
+        service_id,
+        tx
+      );
+
+      result.added = addImage.count;
+    }
+
+    return {
+      data: {
+        service_id,
+        added_count: result.added,
+        deleted_count: result.deleted,
+      },
+      message: "",
+      success: true,
+      status: 200,
+    };
   }
 }

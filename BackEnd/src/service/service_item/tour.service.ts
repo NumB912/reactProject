@@ -1,4 +1,4 @@
-import type { Service, ServiceItem } from "@prisma/client";
+import type { Prisma, Service, ServiceItem } from "@prisma/client";
 import { ServiceItemService } from "./service_item.service";
 import prisma from "@/db";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
@@ -22,7 +22,8 @@ export class TourService extends ServiceItemService {
   }
 
   async updateItemService(
-    service_item: TourModel
+    service_item: TourModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<any> | ErrorResponse> {
     try {
       const transaction = await prisma.$transaction(async (ts) => {
@@ -63,7 +64,8 @@ export class TourService extends ServiceItemService {
   }
 
   async createItemService(
-    service_item: TourModel
+    service_item: TourModel,
+       tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<ServiceItem> | ErrorResponse> {
     try {
       const transaction = await prisma.$transaction(async (ts) => {
@@ -96,10 +98,11 @@ export class TourService extends ServiceItemService {
   }
 
   async deleteServiceItem(
-    service_id: string
+    service_id: string,
+       tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<boolean> | ErrorResponse> {
     try {
-      const deleteServiceItem = await super.deleteItemService(service_id);
+      const deleteServiceItem = await super.deleteItemService(service_id,tx);
       return deleteServiceItem;
     } catch (error) {
       console.error("Erorr:", error);

@@ -1,4 +1,9 @@
-import type { AmenityServiceItem, Image, ServiceItem } from "@prisma/client";
+import type {
+  AmenityServiceItem,
+  Image,
+  Prisma,
+  ServiceItem,
+} from "@prisma/client";
 import prisma from "@/db";
 import { ImageService } from "../image/image.service";
 import { ServiceItemTypeEnum } from "@/enum/service_item/type.serviceItem.enum";
@@ -7,49 +12,78 @@ import { CarService } from "../service_item/car.service";
 import { TourService } from "../service_item/tour.service";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import { AmenitesCarService } from "../service_item/amennitiesServiceItem/amenitesCar.service";
+import { AmenitesRoomService } from "../service_item/amennitiesServiceItem/amenitiesRoom.service";
+import { ImageServiceItem } from "../image/image_service_item.service";
+import { Image_service_Service } from "../image/image_service.service";
 
 export class ManagementServiceItem {
-  static async addService(
+  static async addServiceItem(
     serviceItem: ServiceItem,
-    ChangeAmenity: AmenityServiceItem[],
-    changeImage: Image[]
+    ChangeAmenity: number[],
+    ImageFiles?: Express.Multer.File[]
   ) {
     try {
-      const { type_id } = serviceItem;
-      let createService = {} as SuccessResponse<ServiceItem> | ErrorResponse;
-      let createAmenities = {};
-      let imageChange = {};
-      console.log(ChangeAmenity);
-      switch (type_id) {
-        case ServiceItemTypeEnum.ROOM:
-          createService = await RoomService.getInstance().createItemService(
-            serviceItem
-          );
-          break;
-        case ServiceItemTypeEnum.CAR:
-          createService = await CarService.getInstance().createItemService(
-            serviceItem
-          );
-          break;
-        case ServiceItemTypeEnum.TOUR:
-          createService = await TourService.getInstance().createItemService(
-            serviceItem
-          );
-          break;
-      }
+      return await prisma.$transaction(async (tx) => {
+        const { type_id } = serviceItem;
+        let createAmenities = {};
+        let imageChange = {};
+        let createService: SuccessResponse<ServiceItem> | ErrorResponse;
+        switch (type_id) {
+          case ServiceItemTypeEnum.ROOM:
+            createService = await RoomService.getInstance().createItemService(
+              serviceItem,
+              tx
+            );
+            if (createService.success) {
+              createAmenities =
+                await AmenitesRoomService.EditAmenityRoomService(
+                  createService.data.id,
+                  ChangeAmenity,
+                  tx
+                );
+            }
 
-      if (createService.success) {
-        createAmenities = await AmenitesCarService.EditAmenityCarService(
-          createService.data.id,
-          ChangeAmenity
-        );
-      }
+            break;
 
-      return {
-        createService,
-        createAmenities,
-        imageChange,
-      };
+          case ServiceItemTypeEnum.CAR:
+            createService = await CarService.getInstance().createItemService(
+              serviceItem,
+              tx
+            );
+            if (createService.success) {
+              createAmenities = await AmenitesCarService.EditAmenityCarService(
+                createService.data.id,
+                ChangeAmenity,
+                tx
+              );
+            }
+
+            break;
+
+          case ServiceItemTypeEnum.TOUR:
+            createService = await TourService.getInstance().createItemService(
+              serviceItem,
+              tx
+            );
+            break;
+          default:
+            throw new Error("Invalid service type");
+        }
+
+        if (createService.success && ImageFiles && ImageFiles?.length > 0) {
+          imageChange = await this.updateImagesItem(
+            createService.data,
+            ImageFiles,
+            [],
+            tx
+          );
+        }
+        return {
+          createService,
+          createAmenities,
+          imageChange,
+        };
+      });
     } catch (error) {
       console.error("error", error);
     }
@@ -57,112 +91,129 @@ export class ManagementServiceItem {
 
   static async updateServiceItem(
     serviceItem: ServiceItem,
-    ChangeAmenity: AmenityServiceItem[],
+    ChangeAmenity: number[],
     images: Express.Multer.File[] = [],
     delete_image: string[] = []
   ) {
     try {
-      let updateService = {} as SuccessResponse<ServiceItem> | ErrorResponse;
-      let updateAmenities = {};
-      let updateImages = {}
+      const result = await prisma.$transaction(async (tx) => {
+        let updatedServiceItem: any = null;
+        let updatedAmenities: any = null;
+        let updatedImages: any = null;
 
-      switch (serviceItem.type_id) {
-        case ServiceItemTypeEnum.CAR:
-          const update = await CarService.getInstance().updateItemService(
-            serviceItem
-          );
-          updateService = update;
-          break;
-        case ServiceItemTypeEnum.ROOM:
-          updateService = await RoomService.getInstance().updateItemService(
-            serviceItem
-          );
-          break;
-        case ServiceItemTypeEnum.TOUR:
-          updateService = await TourService.getInstance().updateItemService(
-            serviceItem
-          );
-          break;
-      }
+        switch (serviceItem.type_id) {
+          case ServiceItemTypeEnum.CAR:
+            updatedServiceItem = await CarService.getInstance().updateItemService(
+              serviceItem,
+              tx
+            );
+            if (ChangeAmenity.length > 0) {
+              updatedAmenities = await AmenitesCarService.EditAmenityCarService(
+                serviceItem.id,
+                ChangeAmenity,
+                tx
+              );
+            }
+            break;
 
-      updateAmenities = await AmenitesCarService.EditAmenityCarService(
-        serviceItem.id,
-        ChangeAmenity
-      );
+          case ServiceItemTypeEnum.ROOM:
+            updatedServiceItem = await RoomService.getInstance().updateItemService(
+              serviceItem,
+              tx
+            );
 
-       updateImages = await this.updateImages(serviceItem,images,delete_image)
+            updatedAmenities = await AmenitesRoomService.EditAmenityRoomService(
+              serviceItem.id,
+              ChangeAmenity,
+              tx
+            );
+
+            break;
+
+          case ServiceItemTypeEnum.TOUR:
+            updatedServiceItem = await TourService.getInstance().updateItemService(
+              serviceItem,
+              tx
+            );
+            break;
+
+          default:
+            throw new Error(`Không có loại dịch vụ này: ${serviceItem.type_id}`);
+        }
+
+        updatedImages = await this.updateImagesItem(
+          serviceItem,
+          images || [],
+          delete_image,
+          tx
+        );
+
+        return { updatedServiceItem, updatedAmenities, updatedImages };
+      });
 
       return {
-        updateService,
-        updateAmenities,
+        updatedServiceItem:result.updatedServiceItem,
+        updateAmenities:result.updatedAmenities,
+        updatedImages:result.updatedImages
       };
-    } catch (error) {
-      console.error("error", error);
+    } catch (error: any) {
+      console.error("Error in updateServiceItem:", error);
+      throw error;
     }
   }
 
-  static async updateImages(
+  static async updateImagesItem(
     service_item: ServiceItem,
     images: Express.Multer.File[] = [],
-    delete_image: string[] = []
+    imageChange: string[] = [],
+    tx: Prisma.TransactionClient
   ) {
-    return await prisma
-      .$transaction(async (tx) => {
-        const result = {
-          added: 0,
-          deleted: 0,
-          addedImages: [] as any[],
-          deletedImageIds: [] as string[],
-        };
+    if (!service_item.id) {
+      throw Error("Không tồn tại dịch vụ");
+    }
 
-        if (images && images.length > 0) {
-          try {
-            const uploadedImages = await ImageService.addImages(
-              `/upload/service/${service_item.service_id}/service_item/${service_item.id}`,
-              images
-            );
-            await tx.imageServiceItem.createMany({
-              data: uploadedImages.map((image) => ({
-                image_id: image.id,
-                service_item_id:service_item.id,
-              })),
-              skipDuplicates: true,
-            });
+    const result = {
+      added: 0,
+      deleted: 0,
+      fileDelete:[],
+      fileAdd:[]
+    };
 
-            result.added = uploadedImages.length;
-            result.addedImages = uploadedImages;
-          } catch (err) {
-            console.error("Lỗi khi upload ảnh mới:", err);
-            throw err;
-          }
-        }
+    const image_exist = await tx.imageServiceItem.findMany({
+      where: {
+        service_item_id: service_item.id,
+      },
 
-        if (delete_image && delete_image.length > 0) {
-          try {
-            const deleteResult = await ImageService.deleteImages(delete_image);
+      select: {
+        image_id: true,
+      },
+    });
 
-            result.deleted = deleteResult.deleted || delete_image.length;
-            result.deletedImageIds = delete_image;
-          } catch (err) {
-            console.error("Lỗi khi xóa ảnh:", err);
-            throw err;
-          }
-        }
-        return {
-          success: true,
-          message: "Cập nhật ảnh thành công",
-          data: {
-            service_item,
-            added_count: result.added,
-            deleted_count: result.deleted,
-            added_images: result.addedImages,
-            deleted_image_ids: result.deletedImageIds,
-          },
-        };
-      })
-      .catch((error) => {
-        console.error("Transaction failed trong updateImages:", error);
-        throw new Error("Cập nhật ảnh thất bại: " + error.message);
-      });
+    const existingImageIds = image_exist.map((record) => record.image_id);
+
+    const toDelete = existingImageIds.filter((id) => !imageChange.includes(id));
+
+    if (toDelete.length > 0) {
+      await ImageServiceItem.deleteImages(toDelete, tx, service_item.id);
+    }
+
+    if (images.length > 0) {
+      const addImage = await ImageServiceItem.addImages(
+        `/upload/service/${service_item.id}/service_item/image`,
+        images,
+        service_item.id,
+        tx
+      );
+
+      result.added = addImage.count
+    }
+
+    return {
+      data: {
+        service_item,
+        added_count: result.added,
+        deleted_count: result.deleted,
+      },
+    };
   }
 }

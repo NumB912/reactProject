@@ -1,10 +1,9 @@
-import type { Service, ServiceItem } from "@prisma/client";
+import type { Prisma, Service, ServiceItem } from "@prisma/client";
 import { ServiceItemService } from "./service_item.service";
 import prisma from "@/db";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type { ServiceItemTypeEnum } from "@/enum/service_item/type.serviceItem.enum";
 import type { RoomModel } from "@/model/serviceItem/serviceItem.model";
-
 export class RoomService extends ServiceItemService {
 
   private static instance:RoomService;
@@ -82,11 +81,11 @@ export class RoomService extends ServiceItemService {
   }
 
   async updateItemService(
-    service_item: RoomModel
+    service_item: RoomModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<any> | ErrorResponse> {
     try {
-      const transaction = await prisma.$transaction(async (ts) => {
-        const createRoom = await ts.serviceItem.update({
+        const updateRoom= await tx.serviceItem.update({
           where:{
             id:service_item.id
           },
@@ -104,12 +103,9 @@ export class RoomService extends ServiceItemService {
           },
         });
 
-        return createRoom;
-        
-      });
 
       return {
-        data:transaction,
+        data:updateRoom,
         message:"Sửa thành công",
         status:200,
         success:true,
@@ -125,11 +121,12 @@ export class RoomService extends ServiceItemService {
   }
 
   async createItemService(
-    service_item: RoomModel
+    service_item: RoomModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<ServiceItem> | ErrorResponse> {
     try {
-      const transaction = await prisma.$transaction(async (ts) => {
-        const createRoom = await ts.serviceItem.create({
+   
+        const createRoom = await tx.serviceItem.create({
           data: {
             area: service_item.area,
             room_type_id: service_item.room_type_id,
@@ -144,11 +141,8 @@ export class RoomService extends ServiceItemService {
           },
         });
 
-        return createRoom;
-      });
-
       return {
-        data: transaction,
+        data: createRoom,
         status: 500,
         success: true,
         message: "Hoàn thành",
@@ -164,10 +158,11 @@ export class RoomService extends ServiceItemService {
   }
 
   async deleteItemService(
-    service_id: string
+    service_id: string,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<boolean> | ErrorResponse> {
     try {
-      const deleteServiceItem = await super.deleteItemService(service_id);
+      const deleteServiceItem = await super.deleteItemService(service_id,tx);
       return deleteServiceItem;
     } catch (error) {
       console.error("Erorr:", error);

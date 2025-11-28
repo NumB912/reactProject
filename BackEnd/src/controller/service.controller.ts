@@ -5,6 +5,7 @@ import { BaseService } from "@/service/service/base.service";
 import { HotelService } from "@/service/service/hotel.service";
 import { RentalCarService } from "@/service/service/rentalCar.service";
 import { ThingToDoService } from "@/service/service/tour.service";
+import type { Service } from "@prisma/client";
 import type { Request, Response } from "express";
 
 interface SearchQuery {
@@ -13,17 +14,20 @@ interface SearchQuery {
   search?: string;
   sortBy?: "service_name" | "rating" | "createdAt" | "price_from";
   sortOrder?: "asc" | "desc";
-  type_id: ServiceType;
-  priceTo: number;
-  priceFrom: number;
-  amenities_hotel: string[];
-  type_hotel: string[];
+  type_id?: ServiceType;
+  priceTo?: string;
+  priceFrom?: string;
 
-  duration: string[];
+  amenities_hotel?: string[];
+  type_hotel?: string[];
+  amenities_room?:string[],
 
-  tranmission: string[];
-  type_car: string[];
-  number_passenger: string;
+  duration?: string[];
+
+  tranmission?: string[];
+  type_car?: string[];
+  number_passenger?: string;
+  amenities_car?:string[];
 }
 
 export class serviceController {
@@ -32,11 +36,8 @@ export class serviceController {
     res: Response
   ) {
     try {
-      const page = Math.max(1, parseInt(req.query.page || "1", 10));
-      const limit = Math.min(
-        100,
-        Math.max(1, parseInt(req.query.limit || "10", 10))
-      );
+      const page = req.query.page
+      const limit = req.query.limit
       const search = (req.query.search || "").trim();
       const sortBy = req.query.sortBy;
       const sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
@@ -54,24 +55,46 @@ export class serviceController {
 
       switch (service_type_id) {
         case ServiceType.HOTEL:
-          const amenities_hotel = req.query.amenities_hotel;
-          const type = req.query.type_hotel;
-
+          const amenities_hotel = req.query.amenities_hotel as string[];
+          const amenities_room = req.query.amenities_room as string[]
+          const type_hotel = req.query.type_hotel as string[];
           const paramsHotel = {
             ...paramsTemp,
             amenities_hotel,
-            type,
+            amenities_room,
+            type_hotel
           };
-          result = await HotelService.getInstance().getListServices(paramsHotel);
+
+          console.log(paramsHotel)
+          result = await HotelService.getInstance().getListServices(
+            paramsHotel
+          );
           break;
         case ServiceType.RENTAL_CAR:
+          const amenities_car = req.query.amenities_car as string[];
+          const tranmission = req.query.tranmission as string[]
+          const type = req.query.type_hotel;
+
+          const paramCar = {
+            ...paramsTemp,
+            amenities_car,
+            tranmission,
+            type
+          };
+          
+          result = await HotelService.getInstance().getListServices(
+            paramCar
+          );
+        
           break;
         case ServiceType.THING_TO_DO:
           const paramsThingToDo = {
             ...paramsTemp,
           };
 
-          result = await ThingToDoService.getInstance().getListServices(paramsThingToDo);
+          result = await ThingToDoService.getInstance().getListServices(
+            paramsThingToDo
+          );
           break;
       }
 

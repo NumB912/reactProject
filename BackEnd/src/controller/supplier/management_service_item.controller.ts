@@ -6,20 +6,30 @@ import { RoomService } from "@/service/service_item/room.service";
 import { ServiceItemService } from "@/service/service_item/service_item.service";
 import { TourService } from "@/service/service_item/tour.service";
 import type { Request, Response } from "express";
+import type multer from "multer";
 
 export class ManagementServiceItemController {
   static async addServiceItem(req: Request, res: Response) {
     try {
-      const { service_item, ChangeAmenity, changeImage } = req.body;
+      const { data } = req.body;
+
+      if(!data){
+        return
+      }
+
+      const {service_item, change_amenity} = JSON.parse(data)
+      const imageFiles = (req.files as any)?.imageFiles as
+        | Express.Multer.File[]
+        | undefined;
+
       if (!service_item || typeof service_item !== "object") {
         return res.json({ message: "service phải là object" });
       }
-      console.log(ChangeAmenity);
 
-      const create_item_service = await ManagementServiceItem.addService(
+      const create_item_service = await ManagementServiceItem.addServiceItem(
         service_item,
-        ChangeAmenity,
-        changeImage
+        change_amenity,
+        imageFiles
       );
 
       return res.json({
@@ -32,23 +42,28 @@ export class ManagementServiceItemController {
 
   static async updateServiceItem(req: Request, res: Response) {
     try {
-      const { service_item, delete_image, ChangeAmenity } = req.body;
+      const {data} = req.body
+
+      if(!data){
+        return
+      }
+
+      const { service_item, delete_image, change_amenity } = JSON.parse(data);
       const imageFiles = (req.files as any)?.imageFiles as
         | Express.Multer.File[]
         | undefined;
-
       if (!service_item || typeof service_item !== "object") {
         return res.json({ message: "service phải là object" });
       }
-      const uploadServiceItem = ManagementServiceItem.updateServiceItem(
+      const uploadServiceItem = await ManagementServiceItem.updateServiceItem(
         service_item,
-        ChangeAmenity,
+        change_amenity,
         imageFiles,
         delete_image
       );
-      return {
-        uploadServiceItem,
-      };
+      return res.json({
+        uploadServiceItem
+      })
     } catch (error) {
       console.error("error", error);
     }
