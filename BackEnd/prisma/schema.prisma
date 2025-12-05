@@ -106,8 +106,8 @@ model Service {
   location_id     String?   @db.Uuid
   service_type_id String?
   status_id       String?
-  price_from      Decimal
-  price_to        Decimal
+  price_from      Decimal?
+  price_to        Decimal?
 
   bookings  Booking[]
   favorites Favorite[]
@@ -164,17 +164,77 @@ model TypeService {
 }
 
 model Location {
-  id          String    @id @default(uuid()) @db.Uuid
-  lat         Decimal?  @db.Decimal
-  lng         Decimal?  @db.Decimal
-  location    String?
-  district_id String?
-  province_id String?
-  services    Service[]
+  id       String    @id @default(uuid()) @db.Uuid
+  lat      Decimal?  @db.Decimal
+  lng      Decimal?  @db.Decimal
+  location String?
+  ward_id  String?
+  services Service[]
 
-  bookings Booking[] @relation("BookingDropoff")
-
+  bookings       Booking[] @relation("BookingDropoff")
+  ward           Ward?     @relation(fields: [ward_id], references: [code])
   pickUpBookings Booking[] @relation("BookingPickup")
+}
+
+model AdministrativeRegion {
+  id         Int     @id @default(autoincrement())
+  name       String
+  nameEn     String  @map("name_en")
+  codeName   String? @map("code_name")
+  codeNameEn String? @map("code_name_en")
+
+  @@map("administrative_regions")
+}
+
+model AdministrativeUnit {
+  id          Int     @id @default(autoincrement())
+  fullName    String? @map("full_name")
+  fullNameEn  String? @map("full_name_en")
+  shortName   String? @map("short_name")
+  shortNameEn String? @map("short_name_en")
+  codeName    String? @map("code_name")
+  codeNameEn  String? @map("code_name_en")
+
+  provinces Province[] @relation("province_administrative_unit")
+  wards     Ward[]     @relation("ward_administrative_unit")
+
+  @@map("administrative_units")
+}
+
+model Province {
+  code       String  @id @db.VarChar(20)
+  name       String
+  nameEn     String? @map("name_en")
+  fullName   String  @map("full_name")
+  fullNameEn String? @map("full_name_en")
+  codeName   String? @map("code_name")
+
+  administrativeUnitId Int?                @map("administrative_unit_id")
+  administrativeUnit   AdministrativeUnit? @relation("province_administrative_unit", fields: [administrativeUnitId], references: [id])
+  wards                Ward[]
+
+  @@index([administrativeUnitId], name: "idx_provinces_unit")
+  @@map("provinces")
+}
+
+model Ward {
+  code       String  @id @db.VarChar(20)
+  name       String
+  nameEn     String? @map("name_en")
+  fullName   String? @map("full_name")
+  fullNameEn String? @map("full_name_en")
+  codeName   String? @map("code_name")
+
+  province_code String   @db.VarChar(20)
+  province      Province @relation(fields: [province_code], references: [code])
+
+  administrativeUnitId Int?                @map("administrative_unit_id")
+  administrativeUnit   AdministrativeUnit? @relation("ward_administrative_unit", fields: [administrativeUnitId], references: [id])
+  locations            Location[]
+
+  @@index([province_code], name: "idx_wards_province")
+  @@index([administrativeUnitId], name: "idx_wards_unit")
+  @@map("wards")
 }
 
 model ImageReview {
@@ -188,18 +248,17 @@ model ImageReview {
 }
 
 model Image {
-  id               String              @id @default(uuid()) @db.Uuid
-  url              String?
-  alt              String?
-  description      String?
-  createdAt        DateTime            @default(now()) @db.Timestamptz(6)
-  updatedAt        DateTime?           @updatedAt
-  imageServices    ImageService[]
-  personAvatar     Person?             @relation("PersonAvatar")
-  personWallpaper  Person?             @relation("PersonWallpaper")
+  id              String         @id @default(uuid()) @db.Uuid
+  url             String?
+  alt             String?
+  description     String?
+  createdAt       DateTime       @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime?      @updatedAt
+  imageServices   ImageService[]
+  personAvatar    Person?        @relation("PersonAvatar")
+  personWallpaper Person?        @relation("PersonWallpaper")
 
   imageReviews ImageReview[]
-
 
   imageServiceItems ImageServiceItem[]
 }
@@ -276,7 +335,7 @@ model ServiceItem {
 
   amenitiesRooms AmenitiesRooms[]
 
-  amenitiesCars AmenitiesCars[]
+  amenitiesCars     AmenitiesCars[]
   imageServiceItems ImageServiceItem[]
 }
 
@@ -313,18 +372,20 @@ model StatusServiceItem {
 
 model ServiceItemOff {
   id              String      @id @default(uuid()) @db.Uuid
-  date_off        DateTime    @db.Date
+  date_off_start  DateTime    @db.Date
+  date_off_end    DateTime?   @db.Date
   service_item_id String      @db.Uuid
   serviceItem     ServiceItem @relation(fields: [service_item_id], references: [id])
 }
 
 model ServiceItemServiceOccassion {
-  id              String      @id @default(uuid()) @db.Uuid
-  price_occassion Decimal?    @db.Decimal
-  day             DateTime    @db.Date
-  note            String?
-  service_item_id String      @db.Uuid
-  serviceItem     ServiceItem @relation(fields: [service_item_id], references: [id])
+  id                 String      @id @default(uuid()) @db.Uuid
+  price_occassion    Decimal?    @db.Decimal
+  DateOccassionStart DateTime    @db.Date
+  DateOccassionEnd   DateTime?   @db.Date
+  note               String?
+  service_item_id    String      @db.Uuid
+  serviceItem        ServiceItem @relation(fields: [service_item_id], references: [id])
 }
 
 model TypeHotel {

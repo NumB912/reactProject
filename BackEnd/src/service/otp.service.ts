@@ -1,40 +1,72 @@
 import { EmailService } from "./email.Service";
 import redisClient from "@/config/redis.config";
+import Jwt from "jsonwebtoken";
+
+const ACCESS_TOKEN_EXPIRES = process.env.JWT_SECRET
+
 export class OtpService {
   static generateOtp() {
     return Math.floor(100000 + Math.random() * 900000).toString();
   }
 
   static async verifyOtp(
-    otp: string,
-    email: string
-  ): Promise<
-    | { email: string; status: number; success: boolean }
-    | { success: boolean; message: string; status: number }
-  > {
-    const stored = await redisClient.hGet(`otp:${email}`, `otp`);
-    if (!stored || stored !== otp)
-      return {
-        success: false,
-        message: "Mã OTP không hợp lệ hoặc đã hết hạn",
-        status: 400,
-      };
-    await redisClient.del(`otp:${email}`);
+  otp: string,
+  email: string
+): Promise<
+  | { email: string; status: number; success: boolean ,message:string}
+  | { success: boolean; message: string; status: number }
+> {
+  const stored = await redisClient.hGet(`otp:${email}`, "otp");
 
+  const attempts = await redisClient.get(`opt-attempts:${email}`);
+
+  if (!stored) {
     return {
-      email,
-      status: 200,
-      success: true,
+      success: false,
+      message: "Mã OTP không hợp lệ hoặc đã hết hạn",
+      status: 400,
     };
   }
 
+
+
+  if((attempts && Number(attempts) >= 5)){
+    return {
+      message:"Bạn đã thử quá 5 lần vui lòng thử lại sau",
+      status:405,
+      success:false
+    }
+  }
+
+  if (otp !== stored) {
+    await redisClient.incr(`opt-attempts:${email}`);
+
+    return {
+      success: false,
+      message: "OTP không đúng",
+      status: 400,
+    };
+  }
+
+  await redisClient.del(`otp:${email}`);
+  await redisClient.del(`opt-attempts:${email}`);
+
+  return {
+    message:"Thành công",
+    email,
+    status: 200,
+    success: true,
+  };
+}
+
   static async storeRedisOtp(email: string, otp: string) {
     await redisClient.del(`otp:${email}`);
+    await redisClient.del(`opt-attempts:${email}`)
     await redisClient.hSet(`otp:${email}`, {
       otp: otp,
       create_at: Date.now().toString(),
     });
-
+    await redisClient.incr(`opt-attempts:${email}`);
     await redisClient.expire(`otp:${email}`, 300);
   }
 

@@ -4,8 +4,9 @@ import { ServiceType } from "@/enum/service/type.service.enum";
 import type { Prisma, Service } from "@prisma/client";
 import type { ErrorResponse, SuccessResponse } from "../api.model";
 import type { ServiceDetail } from "../type.service.detail.model";
+import type { SearchQuery } from "@/controller/service.controller";
 
-export interface GetListServicesParams {
+export interface ParamHotel extends SearchQuery{
   page?: string;
   limit?: string;
   search?: string;
@@ -15,21 +16,14 @@ export interface GetListServicesParams {
   priceTo?: string;
   priceFrom?: string;
 
-  amenities_hotel?: string[];
-  type_hotel?: string[];
-  amenities_room?:string[],
-
-  duration?: string[];
-
-  tranmission?: string[];
-  type_car?: string[];
-  number_passenger?: string;
-  amenities_car?:string[];
+  amenities_hotel?: string;
+  type_hotel?: string;
+  amenities_room?: string;
 }
 
 export interface BaseServiceInterface {
   getListServices(
-    params: GetListServicesParams
+    params: ParamHotel
   ): Promise<any | SuccessResponse<Service> | ErrorResponse>;
   getDetailService(serviceId: string): Promise<
     | ServiceDetail

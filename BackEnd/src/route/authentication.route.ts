@@ -13,5 +13,6 @@ router.post('/reset-password',AuthenticationController.resetPassword)
 router.post('/mail-reset-password',AuthenticationController.mailResetPassword)
 router.post('/google-login',AuthenticationController.googleLogin)
 router.post('/logout',AuthenticationController.logout)
+router.post('/verify-reset-token',AuthenticationController.verifyToken)
 
 export default router

@@ -160,11 +160,10 @@ export class userService {
     try {
       let checkIsDone = {} as any;
 
-      const transaction = await prisma.$transaction(async (ts) => {
+      const transaction = await prisma.$transaction(async (tx) => {
         const locationCreated = await prisma.location.create({
           data: {
-            district_id: becomeSupplier.district_id,
-            province_id: becomeSupplier.province_id,
+            ward_id:becomeSupplier.ward_id,
             lat: becomeSupplier.lat,
             lng: becomeSupplier.lng,
             location: becomeSupplier.lcg,
@@ -175,12 +174,14 @@ export class userService {
           const hotelCreator = await factoryServiceCreator.factory(
             ServiceType.HOTEL
           );
+
+          console.log(hotelCreator)
           checkIsDone = await hotelCreator.create({
             service_name: becomeSupplier.property_name,
             service_type_id: ServiceType.HOTEL,
             supplier_id: becomeSupplier.user_id,
             location_id: locationCreated.id,
-          });
+          },tx);
         } else if (ServiceType.RENTAL_CAR == becomeSupplier.type_service) {
           const rentalCreator = await factoryServiceCreator.factory(
             ServiceType.RENTAL_CAR
@@ -190,19 +191,20 @@ export class userService {
             service_type_id: ServiceType.RENTAL_CAR,
             supplier_id: becomeSupplier.user_id,
             location_id: locationCreated.id,
-          });
+          },tx);
         } else if (ServiceType.THING_TO_DO == becomeSupplier.type_service) {
           const tourCreator = await factoryServiceCreator.factory(
             ServiceType.THING_TO_DO
           );
+          
           checkIsDone = await tourCreator?.create({
             service_name: becomeSupplier.property_name,
             service_type_id: ServiceType.THING_TO_DO,
             supplier_id: becomeSupplier.user_id,
             location_id: locationCreated.id,
-          });
+          },tx);
         }
-        const create_request = await prisma.request_become_supplier.create({
+        const create_request = await tx.request_become_supplier.create({
           data: {
             name: "service",
             status: StatusBecomeSupplier.PEDDING,
@@ -221,7 +223,7 @@ export class userService {
           };
           for (let taxFile of becomeSupplier.tax_files) {
             await FileService.uploadFile(taxFile, tax.file_url);
-            const create_tax_file = await prisma.document_supplier.create({
+            const create_tax_file = await tx.document_supplier.create({
               data: {
                 file_type: "pdf",
                 file_url: `${tax.file_url}/${taxFile.filename}.${

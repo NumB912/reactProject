@@ -1,6 +1,6 @@
 import prisma from "@/db";
 import { ServiceType } from "@/enum/service/type.service.enum";
-import type { GetListServicesParams } from "@/model/service/baseService.model";
+import type { ParamHotel } from "@/model/service/baseService.model";
 import { BaseService } from "@/service/service/base.service";
 import { HotelService } from "@/service/service/hotel.service";
 import { RentalCarService } from "@/service/service/rentalCar.service";
@@ -8,7 +8,7 @@ import { ThingToDoService } from "@/service/service/tour.service";
 import type { Service } from "@prisma/client";
 import type { Request, Response } from "express";
 
-interface SearchQuery {
+export interface SearchQuery{
   page?: string;
   limit?: string;
   search?: string;
@@ -17,32 +17,38 @@ interface SearchQuery {
   type_id?: ServiceType;
   priceTo?: string;
   priceFrom?: string;
-
-  amenities_hotel?: string[];
-  type_hotel?: string[];
-  amenities_room?:string[],
+  startDate?:Date;
+  endDate?:Date;
+  adult?:number,
+  children?:number,
+  room?:number,
+  rating?:number,
 
   duration?: string[];
 
   tranmission?: string[];
   type_car?: string[];
   number_passenger?: string;
-  amenities_car?:string[];
+  amenities_car?: string[];
 }
 
 export class serviceController {
   static async getServiceList(
-    req: Request<{}, {}, {}, SearchQuery>,
+    req: Request<{}, {}, {}, SearchQuery & ParamHotel>,
     res: Response
   ) {
     try {
-      const page = req.query.page
-      const limit = req.query.limit
+      const page = req.query.page;
+      const limit = req.query.limit;
       const search = (req.query.search || "").trim();
       const sortBy = req.query.sortBy;
       const sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
       const service_type_id = req.query.type_id;
-
+      const startDate = req.query.startDate
+      const endDate = req.query.endDate
+      const adult = req.query.adult
+      const children = req.query.children
+      const rating = req.query.rating
       let result = {};
 
       const paramsTemp = {
@@ -51,41 +57,42 @@ export class serviceController {
         page: page,
         sortBy: sortBy,
         sortOrder: sortOrder,
-      } as GetListServicesParams;
+        rating:rating,
+        children:children,
+        adult:adult,
+        startDate:startDate,
+        endDate:endDate
+      } as SearchQuery;
 
       switch (service_type_id) {
         case ServiceType.HOTEL:
-          const amenities_hotel = req.query.amenities_hotel as string[];
-          const amenities_room = req.query.amenities_room as string[]
-          const type_hotel = req.query.type_hotel as string[];
-          const paramsHotel = {
+          const amenitiesHotel = req.query.amenities_hotel;
+          const amenities_room = req.query.amenities_room;
+          const type_hotel = req.query.type_hotel;
+          const paramsHotel:ParamHotel = {
             ...paramsTemp,
-            amenities_hotel,
-            amenities_room,
-            type_hotel
+            amenities_hotel:amenitiesHotel,
+            amenities_room:amenities_room,
+            type_hotel:type_hotel,
           };
-
-          console.log(paramsHotel)
           result = await HotelService.getInstance().getListServices(
             paramsHotel
           );
           break;
         case ServiceType.RENTAL_CAR:
           const amenities_car = req.query.amenities_car as string[];
-          const tranmission = req.query.tranmission as string[]
+          const tranmission = req.query.tranmission as string[];
           const type = req.query.type_hotel;
 
           const paramCar = {
             ...paramsTemp,
             amenities_car,
             tranmission,
-            type
+            type,
           };
-          
-          result = await HotelService.getInstance().getListServices(
-            paramCar
-          );
-        
+
+          result = await HotelService.getInstance().getListServices(paramCar);
+
           break;
         case ServiceType.THING_TO_DO:
           const paramsThingToDo = {
@@ -99,7 +106,89 @@ export class serviceController {
       }
 
       return res.json({
-        result,
+        ...result,
+      });
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách dịch vụ:", error);
+      return res
+        .status(500)
+        .json({ message: "Lỗi hệ thống, vui lòng thử lại sau." });
+    }
+  }
+    static async getServiceItemList(
+    req: Request<{}, {}, {}, SearchQuery & ParamHotel>,
+    res: Response
+  ) {
+    try {
+      const page = req.query.page;
+      const limit = req.query.limit;
+      const search = (req.query.search || "").trim();
+      const sortBy = req.query.sortBy;
+      const sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
+      const service_type_id = req.query.type_id;
+      const startDate = req.query.startDate
+      const endDate = req.query.endDate
+      const adult = req.query.adult
+      const children = req.query.children
+      const rating = req.query.rating
+      let result = {};
+
+      const paramsTemp = {
+        search: search,
+        limit: limit,
+        page: page,
+        sortBy: sortBy,
+        sortOrder: sortOrder,
+        rating:rating,
+        children:children,
+        adult:adult,
+        startDate:startDate,
+        endDate:endDate
+      } as SearchQuery;
+
+      switch (service_type_id) {
+        case ServiceType.HOTEL:
+          const amenitiesHotel = req.query.amenities_hotel;
+          const amenities_room = req.query.amenities_room;
+          const type_hotel = req.query.type_hotel;
+          const paramsHotel:ParamHotel = {
+            ...paramsTemp,
+            amenities_hotel:amenitiesHotel,
+            amenities_room:amenities_room,
+            type_hotel:type_hotel,
+          };
+          result = await HotelService.getInstance().getListServices(
+            paramsHotel
+          );
+          break;
+        case ServiceType.RENTAL_CAR:
+          const amenities_car = req.query.amenities_car as string[];
+          const tranmission = req.query.tranmission as string[];
+          const type = req.query.type_hotel;
+
+          const paramCar = {
+            ...paramsTemp,
+            amenities_car,
+            tranmission,
+            type,
+          };
+
+          result = await HotelService.getInstance().getListServices(paramCar);
+
+          break;
+        case ServiceType.THING_TO_DO:
+          const paramsThingToDo = {
+            ...paramsTemp,
+          };
+
+          result = await ThingToDoService.getInstance().getListServices(
+            paramsThingToDo
+          );
+          break;
+      }
+
+      return res.json({
+        ...result,
       });
     } catch (error) {
       console.error("Lỗi khi lấy danh sách dịch vụ:", error);

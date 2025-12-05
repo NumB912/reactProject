@@ -35,12 +35,12 @@ export class ManagementService {
             break;
           case ServiceType.RENTAL_CAR:
             createService = await RentalCarService.getInstance().createService(
-              service
+              service,tx
             );
             break;
           case ServiceType.THING_TO_DO:
             createService = await ThingToDoService.getInstance().createService(
-              service
+              service,tx
             );
             break;
         }
@@ -73,6 +73,7 @@ export class ManagementService {
               tx
             );
 
+            console.log(update)
             if (!update.success) {
               throw Error("Cập nhật khôgn thành công");
             }

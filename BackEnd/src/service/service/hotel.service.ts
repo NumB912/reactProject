@@ -8,7 +8,7 @@ import type {
 } from "@/model/service/service.model";
 import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
-import type { GetListServicesParams } from "@/model/service/baseService.model";
+import type { ParamHotel } from "@/model/service/baseService.model";
 import { BaseService } from "./base.service";
 
 export class HotelService extends BaseService {
@@ -18,7 +18,7 @@ export class HotelService extends BaseService {
     super();
   }
 
-  async getListServices(params: GetListServicesParams): Promise<any> {
+  async getListServices(params: ParamHotel): Promise<any> {
     try {
       const page = Number(params.page) || 1;
       const limit = Math.min(Number(params.limit) || 10, 50);
@@ -28,40 +28,95 @@ export class HotelService extends BaseService {
       const skip = (page - 1) * limit;
       const amenities_hotel = params.amenities_hotel;
       const room_amenities = params.amenities_room;
-
-      const where: any = {
+      const type_hotel = params.type_hotel;
+      const rating = params.rating;
+      const startDate = params.startDate;
+      const endDate = params.endDate;
+      const amenities_room = params.amenities_room;
+      const where: Prisma.ServiceWhereInput = {
         service_type_id: ServiceType.HOTEL,
       };
+      if (search) {
+        where.OR = [
+          {
+            location: {
+              ward: {
+                OR: [
+                  {
+                    province: {
+                      OR: [
+                        { fullName: { contains: search, mode: "insensitive" } },
+                        {
+                          fullNameEn: { contains: search, mode: "insensitive" },
+                        },
+                      ],
+                    },
+                  },
+                  { fullName: { contains: search, mode: "insensitive" } },
+                  {
+                    fullNameEn: { contains: search, mode: "insensitive" },
+                  },
+                ],
+              },
+            },
+          },
+          {
+            service_name: { contains: search, mode: "insensitive" },
+          },
+        ];
+      }
 
       if (amenities_hotel && amenities_hotel.length > 0) {
         where.amenities_hotels = {
           some: {
-            amenity_id: { in: amenities_hotel.map((item) => Number(item)) },
+            amenity_id: {
+              in: amenities_hotel.split(",").map((item) => Number(item)),
+            },
           },
         };
       }
 
+      if (rating) {
+        where.rating = {
+          gte: Number(rating),
+        };
+      }
+
       if (room_amenities && room_amenities.length > 0) {
-        where.serviceItems={
-              some:{
-                amenitiesRooms:{
-                  some:{
-                    amenity_id:{
-                      in:room_amenities.map((item) => Number(item))
-                    }
-                  }
-                }
-              }
-            }
+        where.serviceItems = {
+          some: {
+            amenitiesRooms: {
+              some: {
+                amenity_id: {
+                  in: room_amenities.split(",").map((item) => Number(item)),
+                },
+              },
+            },
+          },
+        };
       }
 
-      if (search) {
-        where.OR = [
-          { service_name: { contains: search, mode: "insensitive" } },
-        ];
+      if (type_hotel && type_hotel.length > 0) {
+        where.type_hotel_id = {
+          in: type_hotel.split(","),
+        };
+      }
+      if (startDate && endDate) {
+        where.serviceItems = {
+          some: {
+
+            availiable_from: {
+              lte: endDate,
+            },
+            availiable_to: {
+              gte: startDate,
+            },
+
+          },
+        };
       }
 
-      const [list, total] = await Promise.all([
+      const [data, total] = await Promise.all([
         prisma.service.findMany({
           where,
           select: {
@@ -71,6 +126,7 @@ export class HotelService extends BaseService {
             price_to: true,
             rating: true,
             total_reviews: true,
+            info:true,
             imageServices: {
               select: {
                 image: {
@@ -80,6 +136,33 @@ export class HotelService extends BaseService {
                 },
               },
             },
+            location:{
+              select:{
+                location:true,
+                ward:{
+                  select:{
+                    fullName:true,
+                    name:true,
+                    province:{
+                      select:{
+                        fullName:true,
+                        name:true,
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            amenities_hotels: {
+              select: {
+                amenity: {
+                  select: {
+                    amenity: true,
+                  },
+                },
+              },
+            },
+            typeHotel: true,
           },
           orderBy: { [sortBy]: sortOrder },
           skip,
@@ -93,16 +176,14 @@ export class HotelService extends BaseService {
         success: true,
         status: 200,
         message: "Thành công",
-        data: {
-          list,
-          pagination: {
-            page,
-            limit,
-            total,
-            totalPages: Math.ceil(total / limit),
-            hasNext: page < Math.ceil(total / limit),
-            hasPrev: page > 1,
-          },
+        data,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+          hasNext: page < Math.ceil(total / limit),
+          hasPrev: page > 1,
         },
       };
     } catch (error) {
@@ -131,6 +212,7 @@ export class HotelService extends BaseService {
       },
 
       select: {
+        id:true,
         amenities_hotels: {
           select: {
             amenity: true,
@@ -138,11 +220,35 @@ export class HotelService extends BaseService {
         },
         description: true,
         info: true,
-        imageServices: true,
+        imageServices: {
+          select:{
+            image:{
+              select:{
+                url:true
+              }
+            }
+          }
+        },
+        supplier:{
+          select:{
+            phone:true,
+            email:true,
+          }
+        },
         price_from: true,
         price_to: true,
         rating: true,
-        location: true,
+        location: {
+          select:{
+            location:true,
+            ward:{
+              select:{
+                fullName:true,
+                province:true
+              }
+            }
+          }
+        },
         total_reviews: true,
         reviews: {
           select: {
@@ -166,6 +272,7 @@ export class HotelService extends BaseService {
         service_name: true,
         serviceItems: {
           select: {
+            id:true,
             name: true,
             type_id: true,
             amenitiesRooms: {
@@ -179,14 +286,25 @@ export class HotelService extends BaseService {
             max_people: true,
             serviceItemOccasions: {
               select: {
-                day: true,
+                DateOccassionEnd: true,
+                DateOccassionStart:true,
                 price_occassion: true,
               },
             },
-            imageServiceItems: true,
+            price:true,
+            imageServiceItems: {
+              select:{
+                image:{
+                  select:{
+                    url:true,
+                  }
+                }
+              }
+            },
             serviceItemOffs: {
               select: {
-                date_off: true,
+                date_off_end: true,
+                date_off_start:true
               },
             },
           },
@@ -264,6 +382,8 @@ export class HotelService extends BaseService {
           type_hotel_id: service.type_hotel_id,
           service_name: service.service_name,
           quantity_room: service.quantity_room,
+          price_from:service.price_from??0,
+          price_to:service.price_to??0,
           info: service.info,
           rating: service.rating,
           status_id: service.status_id,

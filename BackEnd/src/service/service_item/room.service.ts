@@ -33,7 +33,11 @@ export class RoomService extends ServiceItemService {
             area:true,
             imageServiceItems:{
               select:{
-                image:true
+                image:{
+                  select:{
+                    url:true,
+                  }
+                }
               }
             },
             price:true,
@@ -51,12 +55,15 @@ export class RoomService extends ServiceItemService {
             serviceItemOccasions:{
               select:{
                 price_occassion:true,
-                day:true,
+                DateOccassionEnd:true,
+                DateOccassionStart:true,
               }
             },
 
             serviceItemOffs:{
-              select:{date_off:true,}
+              select:{date_off_end:true,
+                date_off_start:true,
+              }
             }
             
           },
@@ -125,7 +132,6 @@ export class RoomService extends ServiceItemService {
     tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<ServiceItem> | ErrorResponse> {
     try {
-   
         const createRoom = await tx.serviceItem.create({
           data: {
             area: service_item.area,

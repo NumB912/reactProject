@@ -5,7 +5,7 @@ import type { BecomeSupplierDTO } from "@/model/user/becomeSuplier_DTO.model";
 import type { IServiceCreator } from "@/model/IserviceCreator.model";
 import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
-import type { Service } from "@prisma/client";
+import type { Prisma, Service } from "@prisma/client";
 import { StatusType } from "@/enum/service/status.service.enum";
 import { type HotelServiceModel, type RentalCarServiceModel, type ThingToDoServiceModel } from "@/model/service/service.model";
 import { ThingToDoService } from "../service/tour.service";
@@ -15,6 +15,7 @@ import { HotelService } from "../service/hotel.service";
 export class HotelServiceCreator implements IServiceCreator {
   async create(
     hotel: HotelServiceModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<Service> | ErrorResponse> {
     try {
       const createHotel = await HotelService.getInstance().createService({
@@ -33,7 +34,7 @@ export class HotelServiceCreator implements IServiceCreator {
         info:"",
         rating:Decimal(0),
         type_hotel_id:null,
-      });
+      },tx);
 
       return createHotel;
     } catch (error) {
@@ -49,6 +50,7 @@ export class HotelServiceCreator implements IServiceCreator {
 export class RentalCarServiceCreator implements IServiceCreator {
   async create(
     rentalCar: RentalCarServiceModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<Service> | ErrorResponse> {
     try {
       const createHotel = await RentalCarService.getInstance().createService({
@@ -65,7 +67,7 @@ export class RentalCarServiceCreator implements IServiceCreator {
         total_reviews:0,
         info:"",
         rating:Decimal(0),
-      });
+      },tx);
 
       return createHotel;
     } catch (error) {
@@ -81,6 +83,7 @@ export class RentalCarServiceCreator implements IServiceCreator {
 export class ThingToDoServiceCreator implements IServiceCreator {
   async create(
     ThingToDo: ThingToDoServiceModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<Service> | ErrorResponse> {
     try {
       const create = await ThingToDoService.getInstance().createService({
@@ -97,7 +100,7 @@ export class ThingToDoServiceCreator implements IServiceCreator {
         total_reviews:0,
         info:"",
         rating:Decimal(0),
-      });
+      },tx);
 
       return create;
     } catch (error) {

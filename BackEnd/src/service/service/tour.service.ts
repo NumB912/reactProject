@@ -43,7 +43,7 @@ export class ThingToDoService extends BaseService {
         ];
       }
 
-      const [list, total] = await Promise.all([
+      const [data, total] = await Promise.all([
         prisma.service.findMany({
           where,
           select: {
@@ -75,8 +75,7 @@ export class ThingToDoService extends BaseService {
         success: true,
         status: 200,
         message: "Thành công",
-        data: {
-          list,
+          ...data,
           pagination: {
             page,
             limit,
@@ -84,8 +83,8 @@ export class ThingToDoService extends BaseService {
             totalPages: Math.ceil(total / limit),
             hasNext: page <= total - 1,
             hasPrev: page - 1 > 0,
-          },
-        },
+          }
+      
       };
     } catch (error) {
       console.error(error);
@@ -151,10 +150,10 @@ export class ThingToDoService extends BaseService {
   }
 
   async createService(
-    service: ThingToDoServiceModel
+    service: ThingToDoServiceModel,
+    tx:Prisma.TransactionClient
   ): Promise<SuccessResponse<Service> | ErrorResponse> {
     try {
-      const transaction = await prisma.$transaction(async (tx) => {
         const createThingToDo = await tx.service.create({
           data: {
             service_name: service.service_name,
@@ -172,14 +171,11 @@ export class ThingToDoService extends BaseService {
           },
         });
 
-        return createThingToDo;
-      });
-
       return {
         success: true,
         message: "thành công",
         status: 200,
-        data: transaction,
+        data: createThingToDo,
       };
     } catch (error) {
       console.error("Lỗi trong quá trình thực thi", error);

@@ -34,6 +34,7 @@ export class ManagementServiceItem {
               serviceItem,
               tx
             );
+            console.log(serviceItem)
             if (createService.success) {
               createAmenities =
                 await AmenitesRoomService.EditAmenityRoomService(

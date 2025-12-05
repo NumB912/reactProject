@@ -7,10 +7,7 @@ import redisClient from "@/config/redis.config.js";
 import jwt from "jsonwebtoken";
 import { randomUUID } from "crypto";
 import { OAuth2Client } from "google-auth-library";
-import type {
-  ErrorResponse,
-  SuccessResponse,
-} from "@/model/api.model.js";
+import type { ErrorResponse, SuccessResponse } from "@/model/api.model.js";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const ACCESS_TOKEN_EXPIRES = "15m";
@@ -80,11 +77,11 @@ export class AuthenticationService {
       });
 
       return {
-        data:{
+        data: {
           user_id: userId,
-        access_token: accessToken,
-        refresh_token: refreshToken,
-        expires_in: 15 * 60,
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_in: 15 * 60,
         },
         status: 200,
         success: true,
@@ -105,7 +102,7 @@ export class AuthenticationService {
       const payload = jwt.verify(access_token, JWT_SECRET) as any;
       const key_load = `at:jti:${payload.jti}`;
       await redisClient.del(key_load);
-      const deleterefeshToken = await prisma.refreshToken.delete({
+      const deleteRefeshToken = await prisma.refreshToken.deleteMany({
         where: {
           tokenHash: await hashToken(refresh_token),
         },
@@ -115,7 +112,10 @@ export class AuthenticationService {
         message: "Thành công",
       };
     } catch (error) {
-      console.error("Lỗi trong quá trình thực thi", error);
+      return {
+        message: error,
+        status: 500,
+      };
     }
   }
 
@@ -229,6 +229,16 @@ export class AuthenticationService {
     | { success: false; message: string; status: number }
   > {
     try {
+      const token = await redisClient.get(`token_register:${email}`);
+
+      if (!token) {
+        return {
+          success: false,
+          status: 400,
+          message: "Hết hạn để đăng ký vui lòng thử lại",
+        };
+      }
+
       const normalizedEmail = email.trim().toLowerCase();
       const trimmedName = name.trim();
       const trimmedPhone = phone.trim();
@@ -301,9 +311,8 @@ export class AuthenticationService {
     newPassword: string
   ): Promise<{ success: boolean; message: string; status: number }> {
     try {
-      const resetToken = await hashToken(token);
+      const resetToken = token
       const userId = await redisClient.get(`pwd-reset:${resetToken}`);
-      console.log(resetToken);
       if (!userId) {
         return {
           success: false,
@@ -324,7 +333,7 @@ export class AuthenticationService {
         };
       }
 
-      const isCompare = await compareHash(newPassword, user.password);
+      const isCompare = await bcrypt.compare(newPassword, user.password);
 
       const hashedNewPassword = await hash(newPassword);
 
@@ -348,6 +357,8 @@ export class AuthenticationService {
           status: 500,
         };
       }
+
+      const deleteToken = await redisClient.del(`pwd-reset:${resetToken}`);
 
       return {
         success: true,
@@ -375,11 +386,10 @@ export class AuthenticationService {
         };
       }
 
-      const resetToken = randomUUID() + "." + randomUUID();
-      const resetTokenHash = await hashToken(resetToken);
-      const redisKey = `pwd-reset:${resetTokenHash}`;
+      const resetToken = jwt.sign({email:email,user_id:user.id},JWT_SECRET)
+      const redisKey = `pwd-reset:${resetToken}`;
       await redisClient.set(redisKey, user.id, {
-        EX: 1 * 60,
+        EX: 15 * 60,
       });
 
       const emailService = new EmailService();
@@ -398,6 +408,33 @@ export class AuthenticationService {
         success: false,
         message: "Lỗi vui lòng thực hiện lại",
         status: 500,
+      };
+    }
+  }
+
+  static async verifyTokenResetPassword(token: string) {
+    try {
+      const tokenVerify = await redisClient.get(
+        `pwd-reset:${token}`
+      );
+      if (!tokenVerify) {
+        return {
+          message: "Không tồn tại token hoặc hết hạn",
+          status: 401,
+          success: false,
+        };
+      }
+
+      return {
+        message: "Tồn tại",
+        status: 200,
+        success: true,
+      };
+    } catch (error) {
+      return {
+        message: "Lỗi trong quá trình thực hiện",
+        status: 500,
+        success: false,
       };
     }
   }

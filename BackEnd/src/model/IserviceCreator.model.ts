@@ -1,4 +1,4 @@
-import type { Service } from "@prisma/client";
+import type { Prisma, Service } from "@prisma/client";
 import type { Service as ServiceType } from "@prisma/client";
 
 type SuccessResponse<T> = {
@@ -17,7 +17,7 @@ type ErrorResponse = {
 export interface IServiceCreator {
   create(
     service: ServiceType,
-    locationId: bigint
+    tx:Prisma.TransactionClient
   ): Promise<
     SuccessResponse<Service>|ErrorResponse
   >;

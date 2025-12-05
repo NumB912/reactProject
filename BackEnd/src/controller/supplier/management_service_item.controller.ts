@@ -12,7 +12,7 @@ export class ManagementServiceItemController {
   static async addServiceItem(req: Request, res: Response) {
     try {
       const { data } = req.body;
-
+      console.log(data)
       if(!data){
         return
       }

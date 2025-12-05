@@ -20,7 +20,7 @@ export class managementServiceController {
       if (!service || typeof service !== "object") {
         return res.json({ message: "service phải là object" });
       }
-
+      console.log(service)
       const createService = await ManagementService.addService(service);
 
       return res.json(createService);

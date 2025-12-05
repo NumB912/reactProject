@@ -7,5 +7,6 @@ export enum StatusBecomeSupplier{
     APPROVED="APPROVED",
     REJECT="REJECT",
     COMPLETE="COMPLETE",
-    CANCEL="CANCEL"
+    CANCEL="CANCEL",
+    DRAFT="DRAFT"
 }

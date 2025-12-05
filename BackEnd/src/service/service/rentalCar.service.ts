@@ -2,7 +2,7 @@
 import prisma from "@/db";
 import type { BaseServiceInterface } from "../../model/service/baseService.model";
 import { ServiceType } from "@/enum/service/type.service.enum";
-import type { Service  } from "@prisma/client";
+import type { Prisma, Service  } from "@prisma/client";
 import type { RentalCarServiceModel } from "@/model/service/service.model";
 import { BaseService } from "./base.service";
 import { Decimal } from "@prisma/client/runtime/library";
@@ -101,11 +101,6 @@ export class RentalCarService extends BaseService {
           select:{
             name:true,
             type_id:true,
-            amenitiesRooms:{
-              include:{
-                amenityRoom:true,
-              }
-            },
             availiable_from:true,
             availiable_to:true,
             amenitiesCars:{
@@ -148,13 +143,13 @@ export class RentalCarService extends BaseService {
   }
 
   async createService(
-    service: RentalCarServiceModel
+    service: RentalCarServiceModel,
+    tx:Prisma.TransactionClient
   ): Promise<
     | SuccessResponse<Service>
     | ErrorResponse
   > {
     try {
-      const transaction = await prisma.$transaction(async (tx) => {
         const createRentalCar = await tx.service.create({
           data: {
             service_name: service.service_name,
@@ -169,19 +164,15 @@ export class RentalCarService extends BaseService {
             price_from: service.price_from || Decimal(0),
             price_to: service.price_to || Decimal(0),
             total_reviews: service.total_reviews||0,
-               create_at:service.create_at||new Date(),
-            update_at:service.update_at||new Date()
+               createdAt:service.create_at||new Date(),
+            updatedAt:service.update_at||new Date()
           },
         });
-
-        return createRentalCar;
-      });
-
       return {
         success: true,
         message: "thành công",
         status: 200,
-        data: transaction,
+        data: createRentalCar,
       };
     } catch (error) {
       console.error("Lỗi trong quá trình thực thi", error);
@@ -211,7 +202,7 @@ export class RentalCarService extends BaseService {
             service_name: service.service_name,
             info: service.info,
             rating: service.rating,
-            update_at: Date.now().toString(),
+            updatedAt: Date.now().toString(),
             status_id: service.status_id,
           },
         });
@@ -234,10 +225,11 @@ export class RentalCarService extends BaseService {
   }
 
   async deleteService(
-    service_id: string
+    service_id: string,
+    tx:Prisma.TransactionClient
   ): Promise<{ success: boolean; message: string; status: number }> {
     try {
-      const deleteHotel = await super.deleteService(service_id);
+      const deleteHotel = await super.deleteService(service_id,tx);
 
       return deleteHotel;
     } catch (error) {
