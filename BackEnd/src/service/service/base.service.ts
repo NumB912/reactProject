@@ -1,11 +1,12 @@
 import prisma from "@/db";
 import type { ServiceType } from "@/enum/service/type.service.enum";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
-import type { BaseServiceInterface, GetListServicesParams } from "@/model/service/baseService.model";
+import type { BaseServiceInterface } from "@/model/service/baseService.model";
 import type { ServiceModel } from "@/model/service/service.model";
 import type {Prisma, Service as ServiceClient} from '@prisma/client'
 import type { ServiceDetail } from "@/model/type.service.detail.model";
 import type { Decimal } from "@prisma/client/runtime/library";
+import type { SearchQueryServiceDetail } from "@/controller/service.controller";
 
 export abstract class BaseService implements BaseServiceInterface {
   
@@ -40,7 +41,7 @@ export abstract class BaseService implements BaseServiceInterface {
     }
   }
 
-  abstract getListServices(params:GetListServicesParams): Promise<
+  abstract getListServices(params:SearchQueryServiceDetail): Promise<
     | SuccessResponse<any[]>
     | ErrorResponse
   > 
@@ -50,7 +51,7 @@ export abstract class BaseService implements BaseServiceInterface {
     | ErrorResponse
   >;
   abstract getDetailService(
-    serviceId: string
+    params: SearchQueryServiceDetail
   ): Promise<
     | SuccessResponse<ServiceDetail>
     | ErrorResponse

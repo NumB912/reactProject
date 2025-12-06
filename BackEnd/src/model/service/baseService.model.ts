@@ -4,6 +4,7 @@ import { ServiceType } from "@/enum/service/type.service.enum";
 import type { Prisma, Service } from "@prisma/client";
 import type { ErrorResponse, SuccessResponse } from "../api.model";
 import type { ServiceDetail } from "../type.service.detail.model";
+import type { SearchQueryServiceDetail } from "@/controller/service.controller";
 
 export interface SearchQuery {
   page?: string;
@@ -53,7 +54,7 @@ export interface BaseServiceInterface {
   getListServices(
     params: ParamHotel
   ): Promise<any | SuccessResponse<Service> | ErrorResponse>;
-  getDetailService(serviceId: string): Promise<
+  getDetailService(param:SearchQueryServiceDetail): Promise<
     | ServiceDetail
     | {
         success: boolean;

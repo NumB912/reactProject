@@ -6,6 +6,7 @@ import type { ServiceItemTypeEnum } from "@/enum/service_item/type.serviceItem.e
 import type { RoomModel } from "@/model/serviceItem/serviceItem.model";
 import type { SearchQueryServiceItem } from "@/controller/service.controller";
 import { toISODate } from "@/utils/formatDate";
+import { StatusBooking } from "@/enum/booking/status.enum";
 export class RoomService extends ServiceItemService {
   private static instance: RoomService;
   constructor() {
@@ -39,7 +40,7 @@ export class RoomService extends ServiceItemService {
             id: service_item_id,
           },
           select: {
-            id:true,
+            id: true,
             name: true,
             imageServiceItems: {
               select: {
@@ -50,17 +51,17 @@ export class RoomService extends ServiceItemService {
                 },
               },
             },
-            amenitiesRooms:{
-              select:{
-                amenityServiceItems:{
-                  select:{
-                    amenity:true,
-                  }
-                }
-              }
+            amenitiesServiceItems: {
+              select: {
+                amenityServiceItem: {
+                  select: {
+                    amenity: true,
+                  },
+                },
+              },
             },
-            max_people:true,
-            area:true,
+            max_people: true,
+            area: true,
             price: true,
             serviceItemOccasions: {
               select: {
@@ -76,7 +77,7 @@ export class RoomService extends ServiceItemService {
             id: service_id,
           },
           select: {
-            id:true,
+            id: true,
             service_name: true,
             location: {
               select: {
@@ -94,7 +95,7 @@ export class RoomService extends ServiceItemService {
               },
             },
             rating: true,
-            total_reviews:true,
+            total_reviews: true,
           },
         }),
       ]);
@@ -135,7 +136,7 @@ export class RoomService extends ServiceItemService {
 
       const startDate = params.startDate;
       const endDate = params.endDate;
-
+      const service_id = params.service_id;
       if (numberOfPeople <= 0) {
         return {
           message: "Số lượng người (người lớn + trẻ em) phải lớn hơn 0",
@@ -144,9 +145,33 @@ export class RoomService extends ServiceItemService {
         };
       }
 
+      const bookedList = await prisma.booking.groupBy({
+        by: ["service_id", "service_item_id"],
+        where: {
+          NOT: [
+            {
+              OR: [
+                { check_out: { lte: startDate } },
+                { check_in: { gte: endDate } },
+              ],
+            },
+          ],
+          service_id: service_id,
+          // status: StatusBooking.PAID,
+        },
+        _sum: {
+          quantity: true,
+        },
+      });
+      console.log(bookedList)
+
+      const bookedMap = Object.fromEntries(
+        bookedList.map((b) => [b.service_item_id, b._sum.quantity ?? 0])
+      );
+
       const maxPeople = Math.ceil(numberOfPeople / room);
       const where: Prisma.ServiceItemWhereInput = {
-        service_id: params.service_id,
+        service_id: service_id,
         max_people: {
           gte: maxPeople,
         },
@@ -176,7 +201,7 @@ export class RoomService extends ServiceItemService {
           area: true,
           availiable_from: true,
           availiable_to: true,
-
+          quantity: true,
           imageServiceItems: {
             select: {
               image: {
@@ -192,9 +217,9 @@ export class RoomService extends ServiceItemService {
             },
           },
 
-          amenitiesRooms: {
+          amenitiesServiceItems: {
             select: {
-              amenityServiceItems: {
+              amenityServiceItem: {
                 select: {
                   amenity: true,
                 },
@@ -213,20 +238,17 @@ export class RoomService extends ServiceItemService {
               DateOccassionEnd: true,
             },
           },
-          serviceItemOffs: {
-            where: {
-              date_off_start: { lte: endDate },
-              date_off_end: { gte: startDate },
-            },
-            select: {
-              date_off_start: true,
-              date_off_end: true,
-            },
-          },
         },
       });
 
-      if (roomList.length === 0) {
+      const roomfilter = roomList.filter((room) => {
+        if (!room.quantity) {
+          return false;
+        }
+        return room.quantity - (bookedMap[room.id] || 0) > 0;
+      });
+
+      if (roomfilter.length === 0) {
         return {
           data: [],
           message: "Không tìm thấy dịch vụ phù hợp",
@@ -236,7 +258,7 @@ export class RoomService extends ServiceItemService {
       }
 
       return {
-        data: roomList,
+        data: roomfilter,
         message: "Lấy danh sách dịch vụ thành công",
         status: 200,
         success: true,

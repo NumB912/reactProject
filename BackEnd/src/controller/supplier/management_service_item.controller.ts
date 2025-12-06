@@ -1,6 +1,5 @@
 import { ServiceItemTypeEnum } from "@/enum/service_item/type.serviceItem.enum";
 import { ManagementServiceItem } from "@/service/management-service-item.ts/management_service_item.service";
-import { AmenitesCarService } from "@/service/service_item/amennitiesServiceItem/amenitesCar.service";
 import { CarService } from "@/service/service_item/car.service";
 import { RoomService } from "@/service/service_item/room.service";
 import { ServiceItemService } from "@/service/service_item/service_item.service";

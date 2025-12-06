@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "../../../component/UI";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../../../../API/api";
 import { room } from "../../../model/hotel/room/room";
 import { Hotel } from "../../../model/hotel/hotel";
@@ -10,12 +10,15 @@ import {
   usePassengerCar,
   useTravelerHotel,
 } from "../../../store";
+import useStateLogin from "../../../store/LoginStore/login_store";
 
 const BASE_IMAGE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const HotelBook: React.FC = () => {
   const { hotelID, roomID } = useParams<{ hotelID: string; roomID: string }>();
+  const navigate = useNavigate()
 
+  const {user_id} = useStateLogin()
   const [firstName, setfirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [numberPhone, setNumberPhone] = useState("");
@@ -85,32 +88,29 @@ const HotelBook: React.FC = () => {
   };
 
   const submitPost = () => {
-    console.log(
-      hotel?.id,
-      room?.id,
-      lastName,
-      firstName,
-      numberPhone,
-      email,
-      dateSelectedBook,
-      dateSelectedCheckOut,
-      adultQuantity,
-      roomQuantity,
-      childrenQuantity
-    );
     api.post("/user/booking", {
       service_id:hotel?.id,
       service_item_id:room?.id,
       lastName:lastName,
       firstName:firstName,
       phone:numberPhone,
-      check_id:dateSelectedBook,
+      check_in:dateSelectedBook,
       check_out:dateSelectedCheckOut,
       adult:adultQuantity,
       children:childrenQuantity,
+      quantity:roomQuantity,
+      user_id:user_id,
+      email:email,
     }).then((res)=>{
-      console.log(res)
-    }).catch();
+      const payment = res.data
+      if(!payment){
+        return
+      }
+
+      navigate(`/payment/${payment.id}`)
+    }).catch(error=>{
+      console.log(`${error}`)
+    });
   };
 
   const isFormValid =
@@ -177,7 +177,7 @@ const HotelBook: React.FC = () => {
 
           <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
             <div className="bg-black p-2 rounded-full text-center text-white font-bold border-4 border-white shadow">
-              3. Xác thực
+              3. Thanh toán
             </div>
           </div>
         </div>

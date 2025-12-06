@@ -11,10 +11,9 @@ import { RoomService } from "../service_item/room.service";
 import { CarService } from "../service_item/car.service";
 import { TourService } from "../service_item/tour.service";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
-import { AmenitesCarService } from "../service_item/amennitiesServiceItem/amenitesCar.service";
-import { AmenitesRoomService } from "../service_item/amennitiesServiceItem/amenitiesRoom.service";
 import { ImageServiceItem } from "../image/image_service_item.service";
 import { Image_service_Service } from "../image/image_service.service";
+import { AmenitesServiceItems } from "../service_item/amennitiesServiceItem/amenitiesServiceItem.service";
 
 export class ManagementServiceItem {
   static async addServiceItem(
@@ -34,16 +33,6 @@ export class ManagementServiceItem {
               serviceItem,
               tx
             );
-            console.log(serviceItem)
-            if (createService.success) {
-              createAmenities =
-                await AmenitesRoomService.EditAmenityRoomService(
-                  createService.data.id,
-                  ChangeAmenity,
-                  tx
-                );
-            }
-
             break;
 
           case ServiceItemTypeEnum.CAR:
@@ -51,14 +40,6 @@ export class ManagementServiceItem {
               serviceItem,
               tx
             );
-            if (createService.success) {
-              createAmenities = await AmenitesCarService.EditAmenityCarService(
-                createService.data.id,
-                ChangeAmenity,
-                tx
-              );
-            }
-
             break;
 
           case ServiceItemTypeEnum.TOUR:
@@ -69,6 +50,15 @@ export class ManagementServiceItem {
             break;
           default:
             throw new Error("Invalid service type");
+        }
+
+        if (createService.success) {
+              createAmenities =
+                await AmenitesServiceItems.EditAmenityServiceItems(
+                  createService.data.id,
+                  ChangeAmenity,
+                  tx
+                );
         }
 
         if (createService.success && ImageFiles && ImageFiles?.length > 0) {
@@ -102,45 +92,9 @@ export class ManagementServiceItem {
         let updatedAmenities: any = null;
         let updatedImages: any = null;
 
-        switch (serviceItem.type_id) {
-          case ServiceItemTypeEnum.CAR:
-            updatedServiceItem = await CarService.getInstance().updateItemService(
-              serviceItem,
-              tx
-            );
-            if (ChangeAmenity.length > 0) {
-              updatedAmenities = await AmenitesCarService.EditAmenityCarService(
-                serviceItem.id,
+        updatedServiceItem = AmenitesServiceItems.EditAmenityServiceItems(serviceItem.id,
                 ChangeAmenity,
-                tx
-              );
-            }
-            break;
-
-          case ServiceItemTypeEnum.ROOM:
-            updatedServiceItem = await RoomService.getInstance().updateItemService(
-              serviceItem,
-              tx
-            );
-
-            updatedAmenities = await AmenitesRoomService.EditAmenityRoomService(
-              serviceItem.id,
-              ChangeAmenity,
-              tx
-            );
-
-            break;
-
-          case ServiceItemTypeEnum.TOUR:
-            updatedServiceItem = await TourService.getInstance().updateItemService(
-              serviceItem,
-              tx
-            );
-            break;
-
-          default:
-            throw new Error(`Không có loại dịch vụ này: ${serviceItem.type_id}`);
-        }
+                tx)
 
         updatedImages = await this.updateImagesItem(
           serviceItem,

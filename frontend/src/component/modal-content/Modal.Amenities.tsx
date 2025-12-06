@@ -29,7 +29,7 @@ const ModalAmenities = ({
       <div className="grid grid-cols-2 gap-5 p-5">
         {amenity?.map((item) => (
           <div className="my-2 w-md">
-            <div className="font-bold my-2">{item.amenityServiceItems.amenity}</div>
+            <div className="font-bold my-2">{item.amenityServiceItem.amenity}</div>
           </div>
         ))}
       </div>

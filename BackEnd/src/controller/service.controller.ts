@@ -176,8 +176,6 @@ export class serviceController {
         endDate: endDate,
       } as SearchQueryServiceItem;
 
-      console.log(startDate);
-      console.log(endDate);
 
       const service = await prisma.service.findUnique({
         where: {
@@ -233,8 +231,14 @@ export class serviceController {
     res: Response
   ) {
     try {
-      const { search, service_id, startDate, endDate } = req.query;
-
+      const params = req.query;
+      const service_id = params.service_id
+      const search = params.search
+      const adult = params.adult
+      const children = params.children
+      const endDate = params.endDate
+      const startDate = params.startDate
+      const room = params.room
       if (!service_id || typeof service_id !== "string") {
         return res
           .status(400)
@@ -251,11 +255,21 @@ export class serviceController {
         },
       });
 
+      const paramTemp = {
+        adult:adult,
+        children:children,
+        endDate:endDate,
+        startDate:startDate,
+        search:search,
+        room:room,
+        service_id:service_id
+      } as SearchQueryServiceDetail
+
       const type_id = service?.service_type_id || "";
       let data = {};
       switch (type_id) {
         case ServiceType.HOTEL:
-          data = await HotelService.getInstance().getDetailService(service_id);
+          data = await HotelService.getInstance().getDetailService(paramTemp);
           break;
         case ServiceType.RENTAL_CAR:
           data = await RentalCarService.getInstance().getDetailService(

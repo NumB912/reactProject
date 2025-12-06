@@ -103,11 +103,15 @@ export class RentalCarService extends BaseService {
             type_id:true,
             availiable_from:true,
             availiable_to:true,
-            amenitiesCars:{
+            amenitiesServiceItems:{
               include:{
-                amenity:true,
+                amenityServiceItem:{
+                  select:{
+                    amenity:true,
+                  }
+                }
               }
-            },
+            }
         
           }
         }

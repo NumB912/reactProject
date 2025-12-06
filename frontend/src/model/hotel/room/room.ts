@@ -5,12 +5,12 @@ import { ServiceItem } from "../../service_item";
 export interface room extends ServiceItem{
     area:number,
     typeRoom:RoomType,
-    amenitiesRooms:AmenityServiceItem[],
+    amenitiesServiceItems:AmenityServiceItem[],
     max_people:number;
 }
 
 export interface AmenityServiceItem{
-    amenityServiceItems:amenity;
+    amenityServiceItem:amenity;
 }
 
 interface RoomType{

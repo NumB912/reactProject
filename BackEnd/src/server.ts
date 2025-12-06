@@ -10,6 +10,7 @@ import routerAmin from "./route/admin/admin.route";
 import routerLocation from "@/route/location.route";
 import routerAmenitiesService from "@/route/amenity_service.route";
 import routerHotelType from "@/route/hotel_type.route";
+import routerPayment from "@/route/payment.route"
 import path from "path";
 import "dotenv/config";
 import cors from "cors";
@@ -47,6 +48,8 @@ app.use("/api/hotel-type", routerHotelType);
 app.get("/api/test-cookie", (req, res) => {
   res.json({ cookies: req.cookies });
 });
+app.use("/api/payment",routerPayment)
+
 
 app.listen(PORT, () => {
   console.log(`Server chạy tại http://localhost:${PORT}`);

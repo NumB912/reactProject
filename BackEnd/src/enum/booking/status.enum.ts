@@ -1,0 +1,9 @@
+export enum StatusBooking{
+    COMPLETED="COMPLETE",
+    WAITING_PAYMENT="WAITING_PAYMENT",
+    CHECK_IN="CHECK_IN",
+    CHECK_OUT="CHECK_OUT",
+    CANCEL = "CANCEL",
+    REFUND = "REFUND",
+    PAID = "PAID"
+}

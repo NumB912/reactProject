@@ -332,11 +332,11 @@ model ServiceItem {
   typeRoom             TypeRoom?                     @relation(fields: [room_type_id], references: [id])
   serviceItemOffs      ServiceItemOff[]
   serviceItemOccasions ServiceItemServiceOccassion[]
-
-  amenitiesRooms AmenitiesRooms[]
-
-  amenitiesCars     AmenitiesCars[]
   imageServiceItems ImageServiceItem[]
+
+  bookings Booking[]
+
+  amenitiesServiceItems AmenitiesServiceItems[]
 }
 
 model ImageServiceItem {
@@ -401,19 +401,19 @@ model AmenityServiceItem {
   type_id        String?
   createdAt      DateTime         @default(now()) @db.Timestamptz(6)
   updatedAt      DateTime?        @updatedAt
-  amenitiesRooms AmenitiesRooms[]
   amenityType    TypeServiceItem? @relation(fields: [type_id], references: [id])
-  amenitiesCars  AmenitiesCars[]
+
+  amenitiesServiceItems AmenitiesServiceItems[]
 }
 
-model AmenitiesRooms {
-  id              String @id @default(uuid()) @db.Uuid
-  service_item_id String @db.Uuid
-  amenity_id      Int
-
-  serviceItems        ServiceItem        @relation(fields: [service_item_id], references: [id])
-  amenityServiceItems AmenityServiceItem @relation(fields: [amenity_id], references: [id])
+model AmenitiesServiceItems{
+   id              String @id @default(uuid()) @db.Uuid
+    service_item_id String @db.Uuid
+   amenity_id      Int
+  amenityServiceItem AmenityServiceItem @relation(fields: [amenity_id],references: [id])
+  serviceItem ServiceItem @relation(fields: [service_item_id],references: [id])
 }
+
 
 model TypeCar {
   id           String        @id @unique
@@ -427,16 +427,8 @@ model Transmission {
   serviceItems ServiceItem[]
 }
 
-model AmenitiesCars {
-  id              String             @id @default(uuid()) @db.Uuid
-  amenity_id      Int
-  service_item_id String             @db.Uuid
-  amenity         AmenityServiceItem @relation(fields: [amenity_id], references: [id])
-  service_item    ServiceItem        @relation(fields: [service_item_id], references: [id])
-}
-
 model TypeBooking {
-  id           String    @id @db.Uuid
+  id           String    @id 
   type_booking String?
   bookings     Booking[]
 }
@@ -447,12 +439,15 @@ model Booking {
   name            String?
   email           String?
   phone           String?
-  booking_type_id String?   @db.Uuid
+  booking_type_id String?   
   total_amount    Decimal?  @db.Decimal
   check_in        DateTime? @db.Timestamptz(6)
   check_out       DateTime? @db.Timestamptz(6)
   service_id      String?   @db.Uuid
+  status          String?
   create_at       DateTime? @db.Timestamptz(6)
+
+  quantity        Int?  
 
   pick_up_id  String? @db.Uuid
   drop_off_id String? @db.Uuid
@@ -461,7 +456,9 @@ model Booking {
   children Int?
 
   service_item_id String @db.Uuid
+  expired_at      DateTime? @db.Timestamptz(6)
 
+  service_item   ServiceItem?    @relation(fields: [service_item_id],references: [id])
   typeBooking    TypeBooking?    @relation(fields: [booking_type_id], references: [id])
   service        Service?        @relation(fields: [service_id], references: [id])
   pickup         Location?       @relation("BookingPickup", fields: [pick_up_id], references: [id])
@@ -492,6 +489,9 @@ model Payment {
   is_refund         Boolean        @default(false)
   raw_response      Json?
   create_at         DateTime?      @db.Timestamptz(6)
+  expired_date      DateTime?      @db.Timestamptz(6)
+
+
   booking           Booking?       @relation(fields: [booking_id], references: [id])
   paymentMethod     PaymentMethod? @relation(fields: [payment_method_id], references: [id])
   status            StatusPayment? @relation(fields: [status_id], references: [id])

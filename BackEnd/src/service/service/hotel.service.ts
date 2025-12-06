@@ -1,7 +1,7 @@
 // src/services/HotelService.ts
 import prisma from "@/db";
 import { ServiceType } from "@/enum/service/type.service.enum";
-import type { Prisma, Service } from "@prisma/client";
+import { Prisma, type Service } from "@prisma/client";
 import type {
   HotelServiceModel,
   ServiceModel,
@@ -10,6 +10,9 @@ import { Decimal } from "@prisma/client/runtime/library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type { ParamHotel } from "@/model/service/baseService.model";
 import { BaseService } from "./base.service";
+import type { SearchQueryServiceDetail } from "@/controller/service.controller";
+import { RoomService } from "../service_item/room.service";
+import { ServiceItemService } from "../service_item/service_item.service";
 
 export class HotelService extends BaseService {
   private static instance: HotelService;
@@ -33,15 +36,14 @@ export class HotelService extends BaseService {
       const startDate = params.startDate;
       const endDate = params.endDate;
       const amenities_room = params.amenities_room;
-      const quantity_room = Number(params.room) ?? 1
-      const adult = Number(params.adult) ?? 1
-      const children = Number(params.children) ?? 0
+      const quantity_room = Number(params.room) ?? 1;
+      const adult = Number(params.adult) ?? 1;
+      const children = Number(params.children) ?? 0;
 
-      const numberOfPeople = adult
+      const numberOfPeople = adult;
       const where: Prisma.ServiceWhereInput = {
         service_type_id: ServiceType.HOTEL,
       };
-
 
       if (search) {
         where.OR = [
@@ -92,7 +94,7 @@ export class HotelService extends BaseService {
       if (room_amenities && room_amenities.length > 0) {
         where.serviceItems = {
           some: {
-            amenitiesRooms: {
+            amenitiesServiceItems: {
               some: {
                 amenity_id: {
                   in: room_amenities.split(",").map((item) => Number(item)),
@@ -115,29 +117,32 @@ export class HotelService extends BaseService {
             availiable_from: {
               lte: endDate,
             },
-            OR:[{
-              availiable_to:null
-            },{
-              availiable_to:{
-                gte: startDate,
-              }
-            }]
-
+            OR: [
+              {
+                availiable_to: null,
+              },
+              {
+                availiable_to: {
+                  gte: startDate,
+                },
+              },
+            ],
           },
         };
       }
-    const minMaxPeople = Math.ceil(numberOfPeople / quantity_room)
-    if(numberOfPeople&&quantity_room){
+
+      const minMaxPeople = Math.ceil(numberOfPeople / quantity_room);
+      if (numberOfPeople && quantity_room) {
         where.serviceItems = {
-          some:{
-            quantity:{
-              gte:quantity_room
+          some: {
+            quantity: {
+              gte: quantity_room,
             },
-            max_people:{
-              gte:minMaxPeople
-            }
-          }
-        }
+            max_people: {
+              gte: minMaxPeople,
+            },
+          },
+        };
       }
 
       const [data, total] = await Promise.all([
@@ -150,7 +155,7 @@ export class HotelService extends BaseService {
             price_to: true,
             rating: true,
             total_reviews: true,
-            info:true,
+            info: true,
             imageServices: {
               select: {
                 image: {
@@ -160,22 +165,22 @@ export class HotelService extends BaseService {
                 },
               },
             },
-            location:{
-              select:{
-                location:true,
-                ward:{
-                  select:{
-                    fullName:true,
-                    name:true,
-                    province:{
-                      select:{
-                        fullName:true,
-                        name:true,
-                      }
-                    }
-                  }
-                }
-              }
+            location: {
+              select: {
+                location: true,
+                ward: {
+                  select: {
+                    fullName: true,
+                    name: true,
+                    province: {
+                      select: {
+                        fullName: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
             },
             amenities_hotels: {
               select: {
@@ -228,15 +233,38 @@ export class HotelService extends BaseService {
   }
 
   async getDetailService(
-    serviceId: string
+    params: SearchQueryServiceDetail
   ): Promise<SuccessResponse<any> | ErrorResponse> {
-    const hotel = await prisma.service.findUnique({
-      where: {
-        id: serviceId,
-      },
+   try{
+ const page = Math.max(1, Number(params.page) || 1);
+    const limit = Math.min(Math.max(1, Number(params.limit) || 10), 50);
+    const skip = (page - 1) * limit;
 
+    const children = Number(params.children) || 0;
+    const adult = Number(params.adult) || 1;
+    const numberOfPeople = adult;
+
+    const room = Number(params.room) || 1;
+
+    const startDate = params.startDate;
+    const endDate = params.endDate;
+    const service_id = params.service_id;
+
+    if(!service_id){
+      return {
+        message:"Không tồn tại dịch vụ",
+        status:400,
+        success:false,
+      }
+    }
+
+
+    const hotel = await prisma.service.findUnique({
+      where:{
+        id: service_id,
+      },
       select: {
-        id:true,
+        id: true,
         amenities_hotels: {
           select: {
             amenity: true,
@@ -245,33 +273,33 @@ export class HotelService extends BaseService {
         description: true,
         info: true,
         imageServices: {
-          select:{
-            image:{
-              select:{
-                url:true
-              }
-            }
-          }
+          select: {
+            image: {
+              select: {
+                url: true,
+              },
+            },
+          },
         },
-        supplier:{
-          select:{
-            phone:true,
-            email:true,
-          }
+        supplier: {
+          select: {
+            phone: true,
+            email: true,
+          },
         },
         price_from: true,
         price_to: true,
         rating: true,
         location: {
-          select:{
-            location:true,
-            ward:{
-              select:{
-                fullName:true,
-                province:true
-              }
-            }
-          }
+          select: {
+            location: true,
+            ward: {
+              select: {
+                fullName: true,
+                province: true,
+              },
+            },
+          },
         },
         total_reviews: true,
         reviews: {
@@ -294,52 +322,18 @@ export class HotelService extends BaseService {
         },
 
         service_name: true,
-        serviceItems: {
-          select: {
-            id:true,
-            name: true,
-            type_id: true,
-            typeRoom:{
-              select:{
-                type:true,
-              }
-            },
-            amenitiesRooms: {
-              include: {
-                amenityServiceItems: true,
-              },
-            },
-            availiable_from: true,
-            availiable_to: true,
-            area: true,
-            max_people: true,
-            serviceItemOccasions: {
-              select: {
-                DateOccassionEnd: true,
-                DateOccassionStart:true,
-                price_occassion: true,
-              },
-            },
-            price:true,
-            imageServiceItems: {
-              select:{
-                image:{
-                  select:{
-                    url:true,
-                  }
-                }
-              }
-            },
-            serviceItemOffs: {
-              select: {
-                date_off_end: true,
-                date_off_start:true
-              },
-            },
-          },
-        },
       },
     });
+
+    const serviceItems = await RoomService.getInstance().getListItemService({
+      service_id:service_id,
+      adult:adult,
+      children:children,
+      endDate:endDate,
+      startDate:startDate,
+    })
+
+    console.log(serviceItems)
 
     if (!hotel) {
       return {
@@ -350,11 +344,21 @@ export class HotelService extends BaseService {
     }
 
     return {
-      data: hotel,
+      data: {
+        hotel:hotel,
+        serviceItems:serviceItems.data
+      },
       message: "Hoàn thành",
       status: 200,
       success: true,
     };
+   }catch(error){
+    return {
+      message:"Lỗi trong quá trình lấy dữ liệu",
+      status:500,
+      success:false,
+    }
+   }
   }
 
   async createService(
@@ -411,8 +415,8 @@ export class HotelService extends BaseService {
           type_hotel_id: service.type_hotel_id,
           service_name: service.service_name,
           quantity_room: service.quantity_room,
-          price_from:service.price_from??0,
-          price_to:service.price_to??0,
+          price_from: service.price_from ?? 0,
+          price_to: service.price_to ?? 0,
           info: service.info,
           rating: service.rating,
           status_id: service.status_id,

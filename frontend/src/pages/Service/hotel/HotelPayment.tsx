@@ -1,64 +1,53 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router";
 import { Button } from "../../../component/UI";
+import api from "../../../../API/api";
 const HotelPayment = () => {
+
+  const {id} = useParams()
+
+  console.log(id)
+
+  useEffect(()=>{
+    api.get("/api/payment",{
+      params:{
+        id:id
+      }
+    }).then((res)=>console.log(res))
+  })
+
   return (
-    <div className="w-7xl max-w-full">
-      <div className="flex w-full border border-gray-300 rounded-md *:text-sm my-2 items-center">
-        <div className="flex flex-col justify-center items-start p-4">
-          <p className="font-bold">John F Kennedy International Airport</p>
-          <p className="text-[12px]">Mon, Jun 2, 2025, 10:00 AM</p>
-        </div>
-
-        <div>-</div>
-        <div className="flex flex-col justify-between items-center p-4">
-          <div>
-            <p className="font-bold">John F Kennedy International Airport</p>
-            <p className="text-[12px]">Mon, Jun 2, 2025, 10:00 AM</p>
-          </div>
-        </div>
-      </div>
-
+    <div className="w-7xl max-w-full py-8 container">
       <div className="w-full flex items-center justify-center p-3 flex-wrap">
-        {/* Progress Bar Background */}
-        <div className="flex w-3/4  flex-row justify-between items-center relative">
+        <div className="flex w-full flex-row justify-between items-center relative mb-5">
           <div className="absolute w-full h-1 top-6 bg-gray-200 z-0"></div>
-          <div className="absolute w-1/2 h-1 top-6 bg-blue-200 z-0"></div>
-          {/* Step 1 */}
-          <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
-            <div className="bg-black p-2 rounded-full aspect-square text-center text-white font-bold border-4 border-white shadow">
-              1
-            </div>
-          </div>
-          {/* Step 2 */}
-          <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
-            <div className="bg-black p-2 rounded-full aspect-square text-center text-white font-bold border-4 border-white shadow">
-              2
-            </div>
-          </div>
-          {/* Step 3 */}
-          <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
-            <div className="bg-black p-2 rounded-full aspect-square text-center text-white font-bold border-4 border-white shadow">
-              3
-            </div>
-            {/* <p className="text-[15px]">Confirmation</p> */}
-          </div>
-        </div>
+          <div className="absolute w-full h-1 top-6 bg-blue-200 z-0"></div>
 
-        <div className="flex justify-between items-end w-3/4">
-          <p className="text-[15px] text-center">Information</p>
-          <p className="text-[15px] text-center">Detail Payment</p>
-          <p className="text-[15px] text-center">Confirmation</p>
+          <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
+            <div className="bg-black p-2 rounded-full text-center text-white font-bold border-4 border-white shadow">
+              1. Thông tin dịch vụ
+            </div>
+          </div>
+
+          <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
+            <div className="bg-black p-2 rounded-full text-center text-white font-bold border-4 border-white shadow">
+              2. Thông tin đặt dịch vụ
+            </div>
+          </div>
+
+          <div className="booking z-10 flex flex-col justify-center items-center gap-2 relative">
+            <div className="bg-black p-2 rounded-full text-center text-white font-bold border-4 border-white shadow">
+              3. Thanh toán
+            </div>
+          </div>
         </div>
       </div>
-
-      <p className="font-bold text-2xl">Your Deal</p>
-      <div className="grid grid-cols-[1fr_350px] grid-rows-1 border-t border-gray-300 py-5 w-full">
+      <div className="grid grid-cols-[1fr_600px] grid-rows-1 border-t border-gray-300 py-5 w-full">
         <div className="flex flex-col gap-3">
           <div className=" infoDriverDetailForm flex flex-col gap-3 border border-gray-300 rounded-md p-3">
             <div className="flex flex-col gap-1">
               <div className="flex flex-col justify-center ">
-                <p className="text-2xl font-bold">Payment method</p>
+                <p className="text-2xl font-bold">Chọn phương thức thanh toán</p>
               </div>
             </div>
             <div className="flex flex-col gap-2 justify-center">
@@ -69,243 +58,139 @@ const HotelPayment = () => {
                     alt="Payment Method"
                     className="w-10 h-10 object-cover"
                   />
-                  <p className="text-md">pay with vnPay</p>
+                  <p className="text-md">Thanh toán với VNpay</p>
                 </div>
-                <Button
-                  className="bg-black p-3 text-white rounded-md"
-                  onClick={() => {}}
-                >
-                  <Link
-                    to="/hotels/123/booking/123/payment"
-                    className="p-3 text-white rounded-md"
-                  >
-                    Choose
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="flex items-center justify-between gap-2 w-full">
-                <div className="w-full flex gap-3">
-                  <img
-                    src={"https://via.placeholder.com/150"}
-                    alt="Payment Method"
-                    className="w-10 h-10 object-cover"
-                  />
-                  <p className="text-md">pay with momo</p>
-                </div>
-                <Button
-                  className="bg-black p-3 text-white rounded-md"
-                  onClick={() => {}}
-                >
-                  <Link
-                    to="/hotels/123/booking/123/payment"
-                    className=" p-3 text-white rounded-md"
-                  >
-                    Choose
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className=" infoDriverDetailForm flex flex-col gap-3 border border-gray-300 rounded-md p-3">
-            <div className="flex flex-col gap-1">
-              <div className="flex flex-col justify-center ">
-                <p className="text-2xl font-bold">Credit card</p>
-              </div>
-            </div>
-            <div className="flex gap-2 justify-center">
-              <div className="flex w-full gap-3 flex-col">
-                <div className="flex-1">
-                  <div className="flex-1">
-                    <label className="text-[14px] font-bold">
-                      Cardholder Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Cardholder Name"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-[14px] font-bold">Card Number</label>
-                    <input
-                      type="text"
-                      placeholder="Card Number"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                      maxLength={19}
-                    />
-                  </div>
-                </div>
-
-                <div className="w-full flex gap-3">
-                  <div className="flex flex-col w-1/2 gap-3">
-                    <label className="text-[14px] font-bold">Expiry Date</label>
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                      maxLength={5}
-                    />
-                  </div>
-
-                  <div className="flex flex-col w-1/2 gap-3">
-                    <label className="text-[14px] font-bold">CVC</label>
-                    <input
-                      type="text"
-                      placeholder="CVC"
-                      className="border border-gray-300 rounded-md p-2 w-full"
-                      maxLength={4}
-                    />
-                  </div>
-                  
-                </div>
-
-                   <div className="w-full">
-                    <Button
-                      className="w-full bg-black text-white py-2 rounded-md"
-                      onClick={() => {}}
-                    >
-                      Pay Now
-                    </Button>
-                  </div> 
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col justify-start items-center px-4 row-span-1">
-          <div className="flex flex-col gap-3 w-full p-3 border border-gray-300 rounded-md">
-            <p className="text-[16px] font-bold nameHotel">
-              3F 14 alley 31 Xuan Dieu
-            </p>
-            <p className="location text-[12px]">
-              14 Ngõ 31 Đường Xuân Diệu, Quận Tây Hồ, 100000 Hà Nội, Việt Nam
-            </p>
-            <div className="rating">
-              <p className="text-[16px] font-bold">Rating</p>
-              <div className="flex gap-2 items-center">
+        {/* <div className="flex flex-col gap-6">
+          <div className="border border-gray-300 rounded-lg p-5 bg-white shadow-sm">
+            <h3 className="text-lg font-bold">{hotel.service_name}</h3>
+            <p className="text-sm text-gray-600 mt-1">{fullAddress}</p>
+
+            <div className="mt-4">
+              <p className="text-sm font-semibold">Đánh giá</p>
+              <div className="flex items-center gap-2 mt-1">
                 <i className="fa-solid fa-star text-yellow-500"></i>
-                <p className="text-[16px]">4.5</p>
-                <p>Good</p>
-                <p className="text-[14px] text-gray-600">(1,645 Reviews)</p>
+                <span className="font-medium">{hotel.rating ?? 0}</span>
+                <span className="text-sm text-gray-600">Good</span>
+                <span className="text-sm text-gray-500">
+                  ({hotel.total_reviews ?? 0} đánh giá)
+                </span>
               </div>
-            </div>
-          </div>
 
-          <div className="pickUpAndDropOff flex flex-col gap-3 border border-gray-300 rounded-md p-3 w-full">
-            <p className="font-bold py-1 w-full text-md">
-              Check-in, check-out details
-            </p>
-            <div className="pickup flex justify-center gap-3">
-              <div className="icon">o</div>
-              <div className=" flex flex-col justify-center gap-1 w-full">
-                <p className="font-semibold">Monday, June 2,2025</p>
-                <p className="text-[12px]">10:00 AM - 23:30 PM</p>
-              </div>
-            </div>
-
-            <div className="dropOff flex justify-center gap-3">
-              <div className="icon">o</div>
-              <div className=" flex flex-col justify-center gap-1 w-full">
-                <p className="font-semibold">Monday, June 2,2025</p>
-                <p className="text-[12px]">10:00 AM - 12:00 PM</p>
-              </div>
-            </div>
-          </div>
-               <div className="flex flex-col gap-3 w-full p-3 border border-gray-300 rounded-md mt-3">
-            <div className="flex justify-between items-center w-full">
-              <p className="text-[16px] font-bold">Price</p>
-              <p className="text-[16px] font-bold">$ 100.00</p>
-            </div>
-            <div className="flex justify-between items-center w-full">
-              <p className="text-[16px] font-bold">Insurance</p>
-              <p className="text-[16px] font-bold">$ 20.00</p>
-            </div>
-            <div className="flex justify-between items-center w-full">
-              <p className="text-[16px] font-bold">Taxes and fees</p>
-              <p className="text-[16px] font-bold">$ 10.00</p>
-            </div>
-            <hr />
-            <div className="flex justify-between items-center w-full">
-              <p className="text-[16px] font-bold">Total</p>
-              <p className="text-[16px] font-bold">$ 130.00</p>
-            </div>
-          </div>
-          {/* <div className="furtherDetails flex flex-col gap-3 border border-gray-300 rounded-md p-3 w-full mt-3">
-            <p className="font-bold py-3 w-full text-xl">Further details</p>
-            <div className="flex flex-col gap-2">
-              <p className="text-[14px]">
-                Please note that the car will be picked up and dropped off at
-                the airport. The car rental company will provide you with the
-                necessary instructions for the pick-up and drop-off process.
-              </p>
-              <p className="text-[14px]">
-                If you have any special requests or requirements, please let us
-                know in advance so we can assist you accordingly.
-              </p>
-            </div>
-          </div> */}
-
-          <div className="flex flex-col gap-3 w-full p-3 border border-gray-300 rounded-md mt-3">
-            <div className="flex justify-between items-center w-full">
-              <p className="font-bold">You're choosen</p>
-            </div>
-            <div className=" rounded-b-2xl w-full">
-              <div className="infoRoom flex gap-3">
-                <div className="flex gap-2">
-                  <img
-                    src={"https://via.placeholder.com/150"}
-                    alt="Hotel"
-                    className="w-20 h-20 object-cover rounded-md"
-                  />
+              <div className="grid grid-cols-2 w-full mt-5">
+                <div className="w-fit">
+                  <p className="font-bold">Ngày đặt</p>
+                  <span>
+                    {dateSelectedBook?.toLocaleString("vi-vn", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </span>
                 </div>
-                <div className="propertyDetails">
-                  <p className="font-semibold text-sm">
-                    1 Queen Premium High Floor
+                <div className="w-fit">
+                  <p className="font-bold">Ngày trả</p>
+                  <span>
+                    {" "}
+                    {dateSelectedCheckOut?.toLocaleString("vi-vn", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border border-gray-300 rounded-lg p-5 bg-white shadow-sm">
+            <h4 className="font-bold text-lg mb-4">Phòng của bạn</h4>
+
+            <div className="flex gap-4">
+              <img
+                src={
+                  room.imageServiceItems?.[0]?.image?.url
+                    ? `${BASE_IMAGE_URL}/${room.imageServiceItems[0].image.url}`
+                    : "https://via.placeholder.com/150"
+                }
+                alt={room.name}
+                className="w-24 h-24 object-cover rounded-md bg-gray-100"
+              />
+              <div className="flex-1">
+                <h5 className="font-semibold">{room.name}</h5>
+                <div className="mt-2 space-y-1 text-sm">
+                  {room.area && (
+                    <p>
+                      <i className="fa-solid fa-maximize mr-2"></i>
+                      {room.area} m²
+                    </p>
+                  )}
+                  <p>
+                    <i className="fa-solid fa-user-group mr-2"></i>
+                    Tối đa {room.max_people} người
                   </p>
-                  <div className="Amenity flex flex-col gap-1 *:text-[10px]">
-                    <p>
-                      <i className="fa-solid fa-maximize"></i> 310 sq ft
-                    </p>
-                    <p>
-                      <i className="fa-solid fa-user-group"></i> Sleeps 2
-                    </p>
-                    <p>
-                      <i className="fa-solid fa-bed"></i> 1 Double bed
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="Amenities flex flex-col gap-2 p-3">
-                <p className="text-[14px] font-bold">Amenities</p>
-                <div className="list-disc pl-5 text-[12px] flex flex-wrap gap-2">
-                  <div className="flex gap-2 min-w-[100px]">
-                    <i className="fa-solid fa-wifi"></i>
-                    <p>Free Wi-Fi</p>
-                  </div>
-                  <div className="flex gap-2 min-w-[100px]">
-                    <i className="fa-solid fa-tv"></i>
-                    <p>Flat-screen TV</p>
-                  </div>
-                  <div className="flex gap-2 min-w-[100px]">
-                    <i className="fa-solid fa-snowflake"></i>
-                    <p>Air Conditioning</p>
-                  </div>
-
-                  <div className="flex gap-2 min-w-[100px]">
-                    <i className="fa-solid fa-shower"></i>
-                    <p>Room Service</p>
-                  </div>
-                  <div className="flex gap-2 min-w-[100px]">
-                    <i className="fa-solid fa-water"></i>
-                    <p>Swimming Pool</p>
-                  </div>
                 </div>
               </div>
             </div>
+
+            {room.amenitiesRooms && (
+              <div className="mt-2">
+                <p className="font-semibold text-sm mb-2">Tiện ích</p>
+                <div className="grid grid-cols-3 gap-2 text-sm">
+                  {room.amenitiesRooms.map((amenity) => (
+                    <div className="flex items-center gap-2">
+                      <Check color="success" />
+                      <span className="text-sm italic">
+                        {amenity.amenityServiceItems.amenity}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
+
+          <div className="border border-gray-300 rounded-lg p-5 bg-white shadow-sm">
+            <h4 className="font-bold text-lg mb-4">Chi tiết giá</h4>
+            <div className="space-y-3 text-base">
+              <div className="flex justify-between">
+                <span>
+                  Giá phòng{" "}
+                  <span className="italic text-sm">
+                    ({roomQuantity} x {room.name})
+                  </span>
+                </span>
+                <span className="font-medium">
+                  {room.price ? roomQuantity * room.price + " VNĐ" : ""}
+                </span>
+              </div>
+              <hr className="border-gray-300" />
+              <div className="flex justify-between text-lg font-bold">
+                <span>Tổng cộng</span>
+                <span className="font-medium">
+                  {room.price ? roomQuantity * room.price + " VNĐ" : ""}
+                </span>
+              </div>
+            </div>
+
+            <Button
+              disabled={!isFormValid}
+              className={`mt-6 w-full py-3 rounded-md transition 
+                 ${
+                   isFormValid
+                     ? "bg-black text-white hover:bg-gray-900"
+                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                 }`}
+              onClick={submitPost}
+            >
+              Đặt ngay
+            </Button>
+          </div>
+        </div> */}
       </div>
     </div>
   );

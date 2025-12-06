@@ -4,7 +4,7 @@ import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type {
   Booking,
 } from "@/model/booking/booking.model";
-import type { Booking as PrismaBooking } from "@prisma/client";
+import type { Prisma, Booking as PrismaBooking } from "@prisma/client";
 
 export interface IBookingService<T extends Booking = Booking> {
   bookingService( data: T): Promise< SuccessResponse<PrismaBooking> | ErrorResponse>;

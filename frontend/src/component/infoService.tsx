@@ -27,7 +27,7 @@ const InfoContactService = ({ service }: InfoContactServiceProp) => {
 
           <div className="location-service">
             <Icon name="location-dot" size={18} className="mr-2" />
-            <span>{`${service.location.location}, ${service.location.ward.fullName}, ${service.location.ward.province.f}`}</span>
+            <span>{`${service.location.location}, ${service.location.ward.fullName}, ${service.location.ward.province.fullName}`}</span>
           </div>
 
           <div className="flex gap-3">

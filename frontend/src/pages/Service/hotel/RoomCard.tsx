@@ -26,13 +26,13 @@ const RoomCard = ({ hotelId,room }: RoomCardProp) => {
     return url ? `${BASE_IMAGE_URL}${url}` : FALLBACK_IMAGE;
   }, [room?.imageServiceItems]);
   const { visibleAmenities, hiddenCount } = useMemo(() => {
-    if (!room?.amenitiesRooms?.length) {
+    if (!room?.amenitiesServiceItems?.length) {
       return { visibleAmenities: [], hiddenCount: 0 };
     }
-    const visible = room.amenitiesRooms.slice(0, MAX_VISIBLE_AMENITIES);
-    const hidden = room.amenitiesRooms.length - MAX_VISIBLE_AMENITIES;
+    const visible = room.amenitiesServiceItems.slice(0, MAX_VISIBLE_AMENITIES);
+    const hidden = room.amenitiesServiceItems.length - MAX_VISIBLE_AMENITIES;
     return { visibleAmenities: visible, hiddenCount: hidden > 0 ? hidden : 0 };
-  }, [room?.amenitiesRooms]);
+  }, [room?.amenitiesServiceItems]);
 
   if (!room) return null;
 
@@ -69,7 +69,7 @@ const RoomCard = ({ hotelId,room }: RoomCardProp) => {
                 <div key={index} className="flex items-center gap-2 text-gray-700">
                   <Check fontSize="small" className="text-green-600 flex-shrink-0" />
                   <span className="text-[13px]">
-                    {item.amenityServiceItems.amenity}
+                    {item.amenityServiceItem.amenity}
                   </span>
                 </div>
               ))}
@@ -104,7 +104,7 @@ const RoomCard = ({ hotelId,room }: RoomCardProp) => {
       </div>
 
       <ModalAmenities
-        amenity={room.amenitiesRooms}
+        amenity={room.amenitiesServiceItems}
         isOpen={seeMore}
         onClose={() => setSeeMore(false)}
       />

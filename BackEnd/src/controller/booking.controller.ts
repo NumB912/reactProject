@@ -1,36 +1,67 @@
 import prisma from "@/db";
 import { BookingType } from "@/enum/booking/booking.enum";
+import { PaymentEnum } from "@/enum/Payment/payment.enum";
+import { ServiceType } from "@/enum/service/type.service.enum";
+import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type { HotelBooking } from "@/model/booking/booking.model";
 import { HotelBookingService } from "@/service/booking/bookingHotel.service";
 import { RentalCarBookingService } from "@/service/booking/bookingRentalCar.service";
 import { ThingToDoBookingService } from "@/service/booking/bookingThingToDo.service";
+import type { Booking } from "@prisma/client";
 import type { Request, Response } from "express";
 
 class BookingController {
   static async bookingService(req: Request, res: Response) {
     try {
       const booking = req.body;
-
       if (!booking || typeof booking !== "object") {
         return res.status(400).json({ message: "service phải là object" });
       }
 
-      const typeService = await prisma.
+      const typeService = await prisma.service.findUnique({
+        where:{
+          id:booking.service_id
+        },
+        select:{
+          service_type_id:true,
+        }
+      })
 
-      const {type} = booking;
-      let services = {}
-      switch(type){
-        case BookingType.BOOKING_THING_TO_DO:
-             services = await ThingToDoBookingService.getInstance().bookingService(booking)
+
+      let bookingTemp:SuccessResponse<Booking> | ErrorResponse
+      switch(typeService?.service_type_id as ServiceType){
+        case ServiceType.THING_TO_DO:
+             bookingTemp = await ThingToDoBookingService.getInstance().bookingService(booking)
              break;
-        case BookingType.BOOKING_RENTAL_CAR:
-             services = await RentalCarBookingService.getInstance().bookingService(booking);
+        case ServiceType.RENTAL_CAR:
+             bookingTemp = await RentalCarBookingService.getInstance().bookingService(booking);
              break;
-        case BookingType.BOOKING_ROOM:
-             services = await HotelBookingService.getInstance().bookingService(booking)
+        case ServiceType.HOTEL:
+             bookingTemp = await HotelBookingService.getInstance().bookingService(booking)
              break;
       }
-      return res.status(200).json(services)
+
+      
+      if(!bookingTemp.success){
+        return res.status(bookingTemp.status).json({
+          ...bookingTemp
+        })
+      }
+
+      const createPayment = await prisma.payment.create({
+        data:{
+          amount:bookingTemp.data.total_amount,
+          booking_id:bookingTemp.data.id,
+          status_id:PaymentEnum.AWAITTING_PAYMENT,
+          create_at:new Date(),
+          expired_date:new Date(new Date().getTime() + 30 * 60 * 1000),
+        }
+      })
+
+      return res.status(bookingTemp.status).json({
+        booking:bookingTemp,
+        id:createPayment.id
+      })
 
     } catch (error) {
       console.error("Lỗi khi lấy danh sách dịch vụ:", error);

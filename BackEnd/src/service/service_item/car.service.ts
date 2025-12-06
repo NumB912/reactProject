@@ -14,7 +14,7 @@ export class CarService extends ServiceItemService {
     throw new Error("Method not implemented.");
   }
   private static instance: CarService;
-  constructor() {
+  constructor() { 
     super();
   }
   public static getInstance(): CarService {

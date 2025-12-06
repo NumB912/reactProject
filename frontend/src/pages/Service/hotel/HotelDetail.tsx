@@ -23,9 +23,9 @@ const BASE_IMAGE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const HotelDetail = () => {
   const [hotel, setHotel] = useState<Hotel | null>();
-  const [room,setRoom] = useState<room[]>()
+  const [room, setRoom] = useState<room[]>();
   const { dateSelectedBook, dateSelectedCheckOut } = useCalendarHotel();
-  const {adultQuantity,childrenQuantity,roomQuantity} = useTravelerHotel()
+  const { adultQuantity, childrenQuantity, roomQuantity } = useTravelerHotel();
   const param = useParams();
 
   useEffect(() => {
@@ -33,30 +33,38 @@ const HotelDetail = () => {
       .get("/service/detail", {
         params: {
           service_id: param.hotelID,
+          children: childrenQuantity,
+          adult: adultQuantity,
+          room: roomQuantity,
+          startDate: dateSelectedBook,
+          endDate: dateSelectedCheckOut,
         },
       })
       .then((res) => {
-        setHotel(res.data.data);
-        setRoom(res.data.data.serviceItems)
+        console.log(res)
+        setHotel(res.data.data.hotel);
+        setRoom(res.data.data.serviceItems);
+      }).catch((error)=>{
+        console.log(error)
       });
   }, [param]);
 
-  const handleSubmitSearchRoom = ()=>{
-    api.get("/service/service-item",{
-      params:{
-        service_id:param.hotelID,
-        children:childrenQuantity,
-        adult:adultQuantity,
-        room:roomQuantity,
-        startDate:dateSelectedBook,
-        endDate:dateSelectedCheckOut,
-      }
-    }).then((res) => {
-
-      console.log(res)
-      setRoom(res.data.data)
-
-    });
+  const handleSubmitSearchRoom = () => {
+    api
+      .get("/service/service-item", {
+        params: {
+          service_id: param.hotelID,
+          children: childrenQuantity,
+          adult: adultQuantity,
+          room: roomQuantity,
+          startDate: dateSelectedBook,
+          endDate: dateSelectedCheckOut,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setRoom(res.data.data);
+      });
   };
 
   return (
@@ -159,11 +167,15 @@ const HotelDetail = () => {
         </div>
       </div>
       <div className="booking_choose w-full flex flex-col items-center gap-5 justify-center p-5 mt-10 border border-gray-300 rounded-full">
-        <Typography variant="h4" fontWeight={"bold"}>Lựa chọn ngày mà người dùng muốn đặt</Typography>
+        <Typography variant="h4" fontWeight={"bold"}>
+          Lựa chọn ngày mà người dùng muốn đặt
+        </Typography>
         <div className="flex w-8/12 gap-10">
           <Calendar_Hotel />
           <PassengersHotel />
-          <Button className="min-w-[200px]" onClick={handleSubmitSearchRoom}>Tìm kiếm</Button>
+          <Button className="min-w-[200px]" onClick={handleSubmitSearchRoom}>
+            Tìm kiếm
+          </Button>
         </div>
       </div>
       <Rooms rooms={room} hotelId={hotel?.id} />
