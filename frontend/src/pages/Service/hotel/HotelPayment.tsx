@@ -1,21 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { Button } from "../../../component/UI";
 import api from "../../../../API/api";
+import { room } from "../../../model/hotel/room/room";
+import { Check } from "@mui/icons-material";
+import { Hotel } from "../../../model/hotel/hotel";
+import { BookingRoom } from "../../../model/hotel/room/bookingRoom";
+const BASE_IMAGE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 const HotelPayment = () => {
+  const { id } = useParams();
+  const [hotel,setHotel] = useState<Hotel|null>()
+  const [room,setRoom] = useState<room>()
+  const [booking,setBooking] = useState<BookingRoom>()
+  useEffect(() => {
+    api
+      .get("/payment", {
+        params: {
+          id: id,
+        },
+      })
+      .then((res) => {
+        setHotel(res.data.data.service)
+        setRoom(res.data.data.serviceItem)
+        setBooking(res.data.data.booking)
+      }).catch((error)=>{
 
-  const {id} = useParams()
-
-  console.log(id)
-
-  useEffect(()=>{
-    api.get("/api/payment",{
-      params:{
-        id:id
-      }
-    }).then((res)=>console.log(res))
-  })
-
+      });
+  },[]);
+  console.log( room?.imageServiceItems?.[0]?.image?.url)
   return (
     <div className="w-7xl max-w-full py-8 container">
       <div className="w-full flex items-center justify-center p-3 flex-wrap">
@@ -42,12 +55,14 @@ const HotelPayment = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-[1fr_600px] grid-rows-1 border-t border-gray-300 py-5 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-6">
         <div className="flex flex-col gap-3">
           <div className=" infoDriverDetailForm flex flex-col gap-3 border border-gray-300 rounded-md p-3">
             <div className="flex flex-col gap-1">
               <div className="flex flex-col justify-center ">
-                <p className="text-2xl font-bold">Chọn phương thức thanh toán</p>
+                <p className="text-2xl font-bold">
+                  Chọn phương thức thanh toán
+                </p>
               </div>
             </div>
             <div className="flex flex-col gap-2 justify-center">
@@ -65,19 +80,19 @@ const HotelPayment = () => {
           </div>
         </div>
 
-        {/* <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           <div className="border border-gray-300 rounded-lg p-5 bg-white shadow-sm">
-            <h3 className="text-lg font-bold">{hotel.service_name}</h3>
-            <p className="text-sm text-gray-600 mt-1">{fullAddress}</p>
+            <h3 className="text-lg font-bold">{hotel?.service_name}</h3>
+            <p className="text-sm text-gray-600 mt-1">{`${hotel?.location.location}, ${hotel?.location.ward.fullName}, ${hotel?.location.ward.province.fullName}`}</p>
 
             <div className="mt-4">
               <p className="text-sm font-semibold">Đánh giá</p>
               <div className="flex items-center gap-2 mt-1">
                 <i className="fa-solid fa-star text-yellow-500"></i>
-                <span className="font-medium">{hotel.rating ?? 0}</span>
+                <span className="font-medium">{hotel?.rating ?? 0}</span>
                 <span className="text-sm text-gray-600">Good</span>
                 <span className="text-sm text-gray-500">
-                  ({hotel.total_reviews ?? 0} đánh giá)
+                  ({hotel?.total_reviews ?? 0} đánh giá)
                 </span>
               </div>
 
@@ -85,7 +100,7 @@ const HotelPayment = () => {
                 <div className="w-fit">
                   <p className="font-bold">Ngày đặt</p>
                   <span>
-                    {dateSelectedBook?.toLocaleString("vi-vn", {
+                    {booking?.check_in?.toLocaleString("vi-vn", {
                       day: "numeric",
                       month: "short",
                       year: "numeric",
@@ -96,7 +111,7 @@ const HotelPayment = () => {
                   <p className="font-bold">Ngày trả</p>
                   <span>
                     {" "}
-                    {dateSelectedCheckOut?.toLocaleString("vi-vn", {
+                    {booking?.check_out?.toLocaleString("vi-vn", {
                       day: "numeric",
                       month: "short",
                       year: "numeric",
@@ -113,17 +128,17 @@ const HotelPayment = () => {
             <div className="flex gap-4">
               <img
                 src={
-                  room.imageServiceItems?.[0]?.image?.url
-                    ? `${BASE_IMAGE_URL}/${room.imageServiceItems[0].image.url}`
+                  room?.imageServiceItems?.[0]?.image?.url
+                    ? `${BASE_IMAGE_URL}${room.imageServiceItems[0].image.url}`
                     : "https://via.placeholder.com/150"
                 }
-                alt={room.name}
+                alt={room?.name}
                 className="w-24 h-24 object-cover rounded-md bg-gray-100"
               />
               <div className="flex-1">
-                <h5 className="font-semibold">{room.name}</h5>
+                <h5 className="font-semibold">{room?.name}</h5>
                 <div className="mt-2 space-y-1 text-sm">
-                  {room.area && (
+                  {room?.area && (
                     <p>
                       <i className="fa-solid fa-maximize mr-2"></i>
                       {room.area} m²
@@ -131,21 +146,21 @@ const HotelPayment = () => {
                   )}
                   <p>
                     <i className="fa-solid fa-user-group mr-2"></i>
-                    Tối đa {room.max_people} người
+                    Tối đa {room?.max_people} người
                   </p>
                 </div>
               </div>
             </div>
 
-            {room.amenitiesRooms && (
+            {room?.amenitiesServiceItems && (
               <div className="mt-2">
                 <p className="font-semibold text-sm mb-2">Tiện ích</p>
                 <div className="grid grid-cols-3 gap-2 text-sm">
-                  {room.amenitiesRooms.map((amenity) => (
+                  {room.amenitiesServiceItems.map((amenity) => (
                     <div className="flex items-center gap-2">
                       <Check color="success" />
                       <span className="text-sm italic">
-                        {amenity.amenityServiceItems.amenity}
+                        {amenity.amenityServiceItem.amenity}
                       </span>
                     </div>
                   ))}
@@ -161,36 +176,30 @@ const HotelPayment = () => {
                 <span>
                   Giá phòng{" "}
                   <span className="italic text-sm">
-                    ({roomQuantity} x {room.name})
+                    ({booking?.quantity} x {room?.name})
                   </span>
                 </span>
                 <span className="font-medium">
-                  {room.price ? roomQuantity * room.price + " VNĐ" : ""}
+                  {booking?.total_amount ? booking?.total_amount + " VNĐ" : ""}
                 </span>
               </div>
               <hr className="border-gray-300" />
               <div className="flex justify-between text-lg font-bold">
                 <span>Tổng cộng</span>
                 <span className="font-medium">
-                  {room.price ? roomQuantity * room.price + " VNĐ" : ""}
+                  {booking?.total_amount ? booking?.total_amount + " VNĐ" : ""}
                 </span>
               </div>
             </div>
 
             <Button
-              disabled={!isFormValid}
-              className={`mt-6 w-full py-3 rounded-md transition 
-                 ${
-                   isFormValid
-                     ? "bg-black text-white hover:bg-gray-900"
-                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                 }`}
-              onClick={submitPost}
+            className="mt-5"
+
             >
               Đặt ngay
             </Button>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

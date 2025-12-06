@@ -289,7 +289,7 @@ const HotelBook: React.FC = () => {
               <img
                 src={
                   room.imageServiceItems?.[0]?.image?.url
-                    ? `${BASE_IMAGE_URL}/${room.imageServiceItems[0].image.url}`
+                    ? `${BASE_IMAGE_URL}${room.imageServiceItems[0].image.url}`
                     : "https://via.placeholder.com/150"
                 }
                 alt={room.name}
@@ -312,15 +312,15 @@ const HotelBook: React.FC = () => {
               </div>
             </div>
 
-            {room.amenitiesRooms && (
+            {room.amenitiesServiceItems && (
               <div className="mt-2">
                 <p className="font-semibold text-sm mb-2">Tiện ích</p>
                 <div className="grid grid-cols-3 gap-2 text-sm">
-                  {room.amenitiesRooms.map((amenity) => (
+                  {room.amenitiesServiceItems.map((amenity) => (
                     <div className="flex items-center gap-2">
                       <Check color="success" />
                       <span className="text-sm italic">
-                        {amenity.amenityServiceItems.amenity}
+                        {amenity.amenityServiceItem.amenity}
                       </span>
                     </div>
                   ))}
