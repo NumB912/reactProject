@@ -1,0 +1,5 @@
+export enum ServiceType{
+    THING_TO_DO="THING_TO_DO_SERVICE",
+    HOTEL="HOTEL_SERVICE",
+    RENTAL_CAR="RENTAL_CAR_SERVICE",
+}

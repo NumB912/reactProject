@@ -1,0 +1,34 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js" // ← SỬA DÒNG NÀY (trước bạn ghi sai thành "prisma-client")
+  output   = "../src/generated/client" // ← SỬA ĐƯỜNG DẪN NÀY (chuẩn nhất, dễ import)
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id         String  @id @default(uuid()) @db.Uuid
+  name       String? @db.VarChar(255)
+  email      String  @unique @db.VarChar(255)
+  password   String  @db.VarChar(255)
+  locationId String? @map("location_id") @db.VarChar(100)
+  phone      String? @db.VarChar(20)
+  imageId    String? @map("image_id") @db.Uuid
+  roleId     String  @default("user") @map("role_id") @db.VarChar(50)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("person")
+}
+
+model Role {
+  id          String  @id @default(cuid()) @db.VarChar(50)
+  name        String  @unique
+  description String?
+
+  @@map("role")
+}

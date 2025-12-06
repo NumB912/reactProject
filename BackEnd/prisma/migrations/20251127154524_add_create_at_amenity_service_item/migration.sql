@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "AmenityServiceItem" ADD COLUMN     "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "updatedAt" TIMESTAMP(3);

@@ -1,0 +1,5 @@
+export enum PaymentEnum{
+    AWAITTING_PAYMENT="AWAITTING_PAYMENT",
+    PAID="PAID",
+    CANCEL="CANCEL"
+}
