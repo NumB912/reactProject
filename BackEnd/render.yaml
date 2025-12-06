@@ -1,1 +1,25 @@
 
+# render.yaml
+services:
+  - type: web
+    name: hotel-booking-api
+    env: node
+    branch: backend
+    region: singapore
+    plan: starter
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hotel_db
+          property: connectionString
+      - key: PORT
+        value: 10000
+
+databases:
+  - name: hotel_db
+    region: singapore
+    plan: starter
