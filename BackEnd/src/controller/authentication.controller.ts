@@ -32,8 +32,6 @@ class AuthenticationController {
   static async checkEmail(req: Request, res: Response) {
     try {
       const { email } = req.body;
-
-      console.log(email);
       if (!email || typeof email !== "string" || !email.trim()) {
         return res.status(400).json({
           status: 400,
@@ -245,14 +243,14 @@ class AuthenticationController {
 
   static async logout(req: Request, res: Response) {
     try {
-      const refreshToken = req.cookies.refresh_token;
-      const authHeader = req.headers.authorization || "";
-      const accessToken = authHeader.startsWith("Bearer ")
-        ? authHeader.split(" ")[1]
-        : null;
 
-      if (refreshToken && accessToken) {
-        await AuthenticationService.logout(refreshToken, accessToken);
+      const refreshToken = req.cookies.refresh_token;
+      const payload = req.user
+
+      console.log(payload)
+
+      if (refreshToken && payload) {
+        await AuthenticationService.logout(refreshToken, payload);
       }
 
       res.clearCookie("refresh_token", {
@@ -302,6 +300,9 @@ class AuthenticationController {
       });
     }
   }
+
+
+
 }
 
 export default AuthenticationController;

@@ -4,6 +4,7 @@ import type { IBookingService } from "./booking.service";
 import prisma from "@/db";
 import type { Booking as PrismaBooking } from "@prisma/client";
 import { ServiceItemStatus } from "@/enum/service_item/status.serviceItem.enum";
+import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 export class ThingToDoBookingService implements IBookingService {
   private constructor() {}
   private static instance: ThingToDoBookingService;
@@ -15,7 +16,7 @@ export class ThingToDoBookingService implements IBookingService {
   }
   async bookingService(
     data: ThingToDoBooking
-  ): Promise<PrismaBooking> {
+  ):Promise< SuccessResponse<PrismaBooking> | ErrorResponse> {
 
     const service_item = await prisma.serviceItem.findFirst({
       where: {

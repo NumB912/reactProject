@@ -33,9 +33,16 @@ export class HotelService extends BaseService {
       const startDate = params.startDate;
       const endDate = params.endDate;
       const amenities_room = params.amenities_room;
+      const quantity_room = Number(params.room) ?? 1
+      const adult = Number(params.adult) ?? 1
+      const children = Number(params.children) ?? 0
+
+      const numberOfPeople = adult
       const where: Prisma.ServiceWhereInput = {
         service_type_id: ServiceType.HOTEL,
       };
+
+
       if (search) {
         where.OR = [
           {
@@ -101,19 +108,36 @@ export class HotelService extends BaseService {
           in: type_hotel.split(","),
         };
       }
+
       if (startDate && endDate) {
         where.serviceItems = {
           some: {
-
             availiable_from: {
               lte: endDate,
             },
-            availiable_to: {
-              gte: startDate,
-            },
+            OR:[{
+              availiable_to:null
+            },{
+              availiable_to:{
+                gte: startDate,
+              }
+            }]
 
           },
         };
+      }
+    const minMaxPeople = Math.ceil(numberOfPeople / quantity_room)
+    if(numberOfPeople&&quantity_room){
+        where.serviceItems = {
+          some:{
+            quantity:{
+              gte:quantity_room
+            },
+            max_people:{
+              gte:minMaxPeople
+            }
+          }
+        }
       }
 
       const [data, total] = await Promise.all([
@@ -275,6 +299,11 @@ export class HotelService extends BaseService {
             id:true,
             name: true,
             type_id: true,
+            typeRoom:{
+              select:{
+                type:true,
+              }
+            },
             amenitiesRooms: {
               include: {
                 amenityServiceItems: true,

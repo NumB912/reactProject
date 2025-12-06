@@ -5,13 +5,13 @@ import { Star } from "@mui/icons-material";
 import { FaHeart } from "react-icons/fa";
 import { Hotel } from "../../../model/hotel/hotel";
 
-  const BASE_IMAGE_URL =import.meta.env.VITE_API_URL || "http://localhost:3000";
+const BASE_IMAGE_URL =import.meta.env.VITE_API_URL || "http://localhost:3000";
 const HotelCard: React.FC<{ hotel: Hotel }> = ({ hotel }) => {
   const navigate = useNavigate();
 
   const images = hotel.imageServices.map((i) => i.image.url);
   const amenities = hotel.amenities_hotels.map((a) => a.amenity.amenity);
-  const ratingNum = parseFloat(hotel.rating) || 0;
+  const ratingNum = hotel.rating || 0;
   const reviewCount = hotel.total_reviews || 0;
 
   const getRatingInfo = (rating: number) => {
@@ -60,8 +60,8 @@ const HotelCard: React.FC<{ hotel: Hotel }> = ({ hotel }) => {
 
         <div className="absolute bottom-3 left-3 bg-black/80 text-white rounded-lg p-2 sm:hidden">
           <div className="flex items-center gap-1 font-bold">
-            <span>{ratingNum.toFixed(1)}</span>
-            <Rating value={5} />
+            <span>{ratingNum}</span>
+            <Rating value={ratingNum} />
           </div>
           <p className="text-xs">{ratingInfo.text}</p>
         </div>
@@ -84,7 +84,7 @@ const HotelCard: React.FC<{ hotel: Hotel }> = ({ hotel }) => {
             <span
               className={`px-3 py-1.5 rounded-md text-white font-bold text-sm ${ratingInfo.color}`}
             >
-              {ratingNum.toFixed(1)} - {ratingInfo.text}
+              {ratingNum} - {ratingInfo.text}
             </span>
             <div className="flex items-center gap-2">
               <Rating value={5} />

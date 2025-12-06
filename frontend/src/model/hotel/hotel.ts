@@ -8,8 +8,6 @@ import { room } from "./room/room";
 
 export interface Hotel extends Service {
   id: string;
-  service_name: string;
-  total_reviews: number;
   imageServices: Image[];
   amenities_hotels: AmenityHotel[];
   typeHotel: HotelType | null;

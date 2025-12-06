@@ -7,7 +7,6 @@ export interface Booking {
   email: string;
   phone: string;
   booking_type_id?: string;
-  total_amount: Decimal;
   check_in: Date;
   check_out: Date;
   service_id: string;

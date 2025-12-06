@@ -49,8 +49,10 @@ const RoomCard = ({ hotelId,room }: RoomCardProp) => {
 
         <div className="p-5 flex flex-col justify-between flex-1">
           <div>
-            <h3 className="font-bold text-lg text-gray-900 mb-3">{room.name}</h3>
-
+          <div className="mb-3">
+              <h3 className="font-bold text-lg text-gray-900">{room.name}</h3>
+            <p className="italic text-sm text-gray-600">{room?.typeRoom?.type}</p>
+          </div>
             <div className="space-y-2 text-sm text-gray-600 mb-4">
               <div className="flex items-center gap-2">
                 <Icon name="square" size={16} />

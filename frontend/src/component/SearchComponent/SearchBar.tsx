@@ -30,7 +30,7 @@ const SearchBar = () => {
           className="w-full flex justify-center items-center mx-4 p-2 my-2 h-full *:hover:bg-gray-200 overflow-hidden max-md:overflow-x-scroll max-md:justify-start max-lg:w-4/5
         *:p-1.5 *:rounded-4xl *:max-sm:text-sm *:min-w-30 *:flex *:flex-nowrap *:justify-center *:items-center max-md:max-w-2xl *:shrink-0 *:m-1 *:max-lg:w-25"
         >
-          <Button
+          {/* <Button
             onClick={() => setType("SearchALL")}
             variant="outline"
             rounded="full"
@@ -39,7 +39,7 @@ const SearchBar = () => {
             }`}
           >
             <IconAndLabel Label="Tất cả" name="border-all" />
-          </Button>
+          </Button> */}
           <Button
             onClick={() => setType("Hotels")}
             variant="outline"
@@ -62,7 +62,7 @@ const SearchBar = () => {
             <IconAndLabel Label="Tour" name="location-dot" />
           </Button>
 
-          <Button
+          {/* <Button
             onClick={() => setType("Flights")}
             variant="outline"
             rounded="full"
@@ -71,7 +71,7 @@ const SearchBar = () => {
             }`}
           >
             <IconAndLabel Label="Vé máy bay" name="plane" />
-          </Button>
+          </Button> */}
 
           <Button
             onClick={() => setType("RentalCar")}

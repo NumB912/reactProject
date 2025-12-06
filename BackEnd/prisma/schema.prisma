@@ -310,7 +310,7 @@ model ServiceItem {
   availiable_to   DateTime? @db.Date
   status_id       String?
   type_id         String?
-
+  quantity        Int?
   //room
   room_type_id String?
   area         Decimal? @db.Decimal

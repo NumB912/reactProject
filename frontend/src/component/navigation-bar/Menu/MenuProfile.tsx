@@ -33,15 +33,7 @@ const MenuProfile = ({ anchorE1, open, onClose }: MenuProfileProp) => {
   const handleLogout = async () => {
     const lg = await api
       .post(
-        "/authentication/logout/",
-        {
-          accessToken: accessToken,
-        },
-        {
-          headers: {
-            Authorization: `bearer ${accessToken}`,
-          },
-        }
+        "/authentication/logout/"
       )
       .then((res) => {
         logout();

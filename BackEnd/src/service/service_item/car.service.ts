@@ -7,8 +7,12 @@ import type {
   CarModel,
   RoomModel,
 } from "@/model/serviceItem/serviceItem.model";
+import type { SearchQueryServiceItem } from "@/controller/service.controller";
 
 export class CarService extends ServiceItemService {
+  async getBookingServiceItem(service_id: string, service_item_id: string): Promise<SuccessResponse<any> | ErrorResponse> {
+    throw new Error("Method not implemented.");
+  }
   private static instance: CarService;
   constructor() {
     super();
@@ -22,9 +26,13 @@ export class CarService extends ServiceItemService {
   }
 
   async getListItemService(
-    service_id: string
+      param:SearchQueryServiceItem
   ): Promise<SuccessResponse<any[]> | ErrorResponse> {
     try {
+
+      const service_id = param.service_id
+
+
       const getCarList = await prisma.serviceItem.findMany({
         where: {
           service_id: service_id,
@@ -93,13 +101,14 @@ export class CarService extends ServiceItemService {
         data: {
           service_id: service_item.service_id,
           availiable_from: service_item.availiable_from,
-          availiable_to: service_item.availiable_to,
+          availiable_to: service_item.availiable_to??null,
           name: service_item.name,
           price: service_item.price,
           status_id: service_item.status_id,
           type_id: service_item.type_id,
           transmission_id: service_item.transmission_id,
           car_type_id: service_item.car_type_id,
+          quantity:service_item.quantity,
         },
       });
 
@@ -137,6 +146,7 @@ export class CarService extends ServiceItemService {
             type_id: service_item.type_id,
             car_type_id: service_item.car_type_id,
             transmission_id: service_item.transmission_id,
+            quantity:service_item.quantity??0
           },
         });
 

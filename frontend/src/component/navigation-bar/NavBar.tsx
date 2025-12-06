@@ -34,7 +34,6 @@ const NavBar = () => {
   >("loginOptions");
 
   const { isShow, setShow, user_id } = useStateLogin();
-  console.log(user_id)
   const [isOpenProfileTab, setIsOpenProfileTab] = useState(false);
   const profileRef = useRef<HTMLDivElement|null>(null);
   const navArrs: Tab[] = [

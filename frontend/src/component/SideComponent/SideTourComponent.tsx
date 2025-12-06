@@ -16,9 +16,7 @@ const SideTourComponent = () => {
   return (
     <>
       <SideComponent>
-        <SideContentComponent label="Price">
-          <SliderDual />
-        </SideContentComponent>
+
 
         <SideContentComponent label="Rating">
           <RadioOption

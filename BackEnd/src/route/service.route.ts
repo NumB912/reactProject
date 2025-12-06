@@ -8,5 +8,6 @@ const router = Router()
 
 router.get('/',serviceController.getServiceList) 
 router.get('/detail',serviceController.getServiceDetail)
-router.get('/service-item',serviceController.getServiceDetail)
+router.get('/service-item',serviceController.getServiceItemList)
+router.get('/service-item-detail',serviceController.getBookingServiceItem)
 export default router

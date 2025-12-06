@@ -7,9 +7,9 @@ export type ServiceStatus = 'active' | 'inactive' | 'pending' | 'deleted';
 
 export interface Service {
   id: string;
-  serviceName: string;
+  service_name: string;
   rating: number;
-  totalReviews: number;
+  total_reviews: number;
   description?: string | null;
   statusId: string;
   status?: { id: string; name: string };

@@ -3,9 +3,10 @@ import { ServiceItemService } from "./service_item.service";
 import prisma from "@/db";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type { TourModel } from "@/model/serviceItem/serviceItem.model";
+import type { SearchQueryServiceItem } from "@/controller/service.controller";
 
 export class TourService extends ServiceItemService {
-  getListItemService(service_id: string): Promise<SuccessResponse<any[]> | ErrorResponse> {
+  getListItemService(params: SearchQueryServiceItem): Promise<SuccessResponse<any[]> | ErrorResponse> {
     throw new Error("Method not implemented.");
   }
 
@@ -20,6 +21,10 @@ export class TourService extends ServiceItemService {
 
     return this.instance
   }
+
+  async getBookingServiceItem(service_id: string, service_item_id: string): Promise<SuccessResponse<any> | ErrorResponse> {
+          throw new Error("Method not implemented.");
+  }  
 
   async updateItemService(
     service_item: TourModel,
@@ -40,7 +45,7 @@ export class TourService extends ServiceItemService {
             status_id: service_item.status_id,
             type_id: service_item.type_id,
             duration:service_item.duration,
-            
+            quantity:service_item.quantity
           },
         });
 
@@ -78,7 +83,8 @@ export class TourService extends ServiceItemService {
             price: service_item.price,
             status_id: service_item.status_id,
             type_id: service_item.type_id,
-            duration:service_item.duration
+            duration:service_item.duration,
+            quantity:service_item.quantity??0
           },
         });
 

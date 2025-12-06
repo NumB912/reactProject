@@ -8,12 +8,9 @@ import jwt from "jsonwebtoken";
 import { randomUUID } from "crypto";
 import { OAuth2Client } from "google-auth-library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model.js";
+import { createAccessToken, createRefreshToken, verifyRefreshToken } from "@/utils/token.js";
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-const ACCESS_TOKEN_EXPIRES = "15m";
-const REFRESH_TOKEN_EXPIRES_DAYS = 30;
-const CLIENT_ID = process.env.CLIENT_ID!;
-
+const JWT_SECRET = process.env.JWT_SECRET
 export class AuthenticationService {
   static async login(
     email: string,
@@ -44,32 +41,29 @@ export class AuthenticationService {
 
       const accessJti = randomUUID();
 
-      const accessToken = jwt.sign(
-        {
+      const accessToken = createAccessToken(  {
           sub: userId,
           jti: accessJti,
           type: "access",
-        },
-        JWT_SECRET,
-        { expiresIn: ACCESS_TOKEN_EXPIRES }
-      );
+        })
 
       await redisClient.set(`at:jti:${accessJti}`, userId, {
         EX: 15 * 60,
       });
 
-      const refreshToken = randomUUID() + "." + randomUUID();
-      const refreshTokenHash = await hashToken(refreshToken);
+      const refreshToken = createRefreshToken({
+        sub:userId
+      })
 
       const tokenFamily = randomUUID();
 
       await prisma.refreshToken.create({
         data: {
           userId: userId,
-          tokenHash: refreshTokenHash,
+          tokenHash: refreshToken,
           family: tokenFamily,
           expiresAt: new Date(
-            Date.now() + REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 * 1000
+            Date.now() + 7 * 24 * 60 * 60 * 1000
           ),
           ip: "",
           ua: "",
@@ -97,9 +91,9 @@ export class AuthenticationService {
     }
   }
 
-  static async logout(refresh_token: string, access_token: string) {
+  static async logout(refresh_token: string, user: any) {
     try {
-      const payload = jwt.verify(access_token, JWT_SECRET) as any;
+      const payload = user
       const key_load = `at:jti:${payload.jti}`;
       await redisClient.del(key_load);
       const deleteRefeshToken = await prisma.refreshToken.deleteMany({
@@ -119,85 +113,85 @@ export class AuthenticationService {
     }
   }
 
-  static async loginWithGoogle(token: string) {
-    try {
-      const client = new OAuth2Client(CLIENT_ID);
-      const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID,
-      });
+  // static async loginWithGoogle(token: string) {
+  //   try {
+  //     const client = new OAuth2Client(CLIENT_ID);
+  //     const ticket = await client.verifyIdToken({
+  //       idToken: token,
+  //       audience: CLIENT_ID,
+  //     });
 
-      const payload = ticket.getPayload();
-      if (!payload) {
-        return { success: false, message: "Invalid Google token payload" };
-      }
-      if (!payload.email_verified) {
-        return { success: false, message: "Email chưa được Google xác minh" };
-      }
+  //     const payload = ticket.getPayload();
+  //     if (!payload) {
+  //       return { success: false, message: "Invalid Google token payload" };
+  //     }
+  //     if (!payload.email_verified) {
+  //       return { success: false, message: "Email chưa được Google xác minh" };
+  //     }
 
-      const { sub: googleId, email, name } = payload;
+  //     const { sub: googleId, email, name } = payload;
 
-      if (!email) {
-        return { success: false, message: "Không lấy được email từ Google" };
-      }
+  //     if (!email) {
+  //       return { success: false, message: "Không lấy được email từ Google" };
+  //     }
 
-      let user = await prisma.person.findFirst({
-        where: { google_id: googleId },
-      });
+  //     let user = await prisma.person.findFirst({
+  //       where: { google_id: googleId },
+  //     });
 
-      if (!user) {
-        user = await prisma.person.create({
-          data: {
-            google_id: googleId,
-            email: email.toLowerCase(),
-            name: name || email.split("@")[0],
-            role_id: Role.ROLE_USER,
-            create_at: new Date(),
-            update_at: new Date(),
-            password: "",
-          },
-        });
-      } else {
-        user = await prisma.person.update({
-          where: { id: user.id },
-          data: {
-            name: name || user.name,
-            update_at: new Date(),
-          },
-        });
-      }
+  //     if (!user) {
+  //       user = await prisma.person.create({
+  //         data: {
+  //           google_id: googleId,
+  //           email: email.toLowerCase(),
+  //           name: name || email.split("@")[0],
+  //           role_id: Role.ROLE_USER,
+  //           create_at: new Date(),
+  //           update_at: new Date(),
+  //           password: "",
+  //         },
+  //       });
+  //     } else {
+  //       user = await prisma.person.update({
+  //         where: { id: user.id },
+  //         data: {
+  //           name: name || user.name,
+  //           update_at: new Date(),
+  //         },
+  //       });
+  //     }
 
-      const jwtToken = jwt.sign(
-        {
-          userId: user.id,
-          email: user.email,
-          name: user.name,
-          role_id: user.role_id,
-        },
-        JWT_SECRET,
-        { expiresIn: ACCESS_TOKEN_EXPIRES }
-      );
-      const { password, ...safeUser } = user;
+  //     const jwtToken = jwt.sign(
+  //       {
+  //         userId: user.id,
+  //         email: user.email,
+  //         name: user.name,
+  //         role_id: user.role_id,
+  //       },
+  //       JWT_SECRET as string,
+  //       { expiresIn: "15m" }
+  //     );
+  //     const { password, ...safeUser } = user;
 
-      return {
-        success: true,
-        token: jwtToken,
-        user: safeUser,
-        message: "Đăng nhập Google thành công",
-      };
-    } catch (error: any) {
-      console.error("Google OAuth Error:", error.message || error);
+  //     return {
+  //       success: true,
+  //       token: jwtToken,
+  //       user: safeUser,
+  //       message: "Đăng nhập Google thành công",
+  //     };
+  //   } catch (error: any) {
+  //     console.error("Google OAuth Error:", error.message || error);
 
-      if (error.message?.includes("Token used too late")) {
-        return { success: false, message: "Token đã hết hạn" };
-      }
-      if (error.message?.includes("Invalid token")) {
-        return { success: false, message: "Token không hợp lệ" };
-      }
+  //     if (error.message?.includes("Token used too late")) {
+  //       return { success: false, message: "Token đã hết hạn" };
+  //     }
+  //     if (error.message?.includes("Invalid token")) {
+  //       return { success: false, message: "Token không hợp lệ" };
+  //     }
 
-      return { success: false, message: "Xác thực Google thất bại" };
-    }
-  }
+  //     return { success: false, message: "Xác thực Google thất bại" };
+  //   }
+  // }
 
   static async isExistEmail(email: string) {
     if (email.length == 0) {
@@ -386,7 +380,7 @@ export class AuthenticationService {
         };
       }
 
-      const resetToken = jwt.sign({email:email,user_id:user.id},JWT_SECRET)
+      const resetToken = createAccessToken({email:email,user_id:user.id})
       const redisKey = `pwd-reset:${resetToken}`;
       await redisClient.set(redisKey, user.id, {
         EX: 15 * 60,
@@ -438,4 +432,41 @@ export class AuthenticationService {
       };
     }
   }
+static async refreshAccessToken(refresh_token: string) {
+  try {
+    const decoded = await verifyRefreshToken(refresh_token);
+    console.log(decoded)
+    if (!decoded.valid) {
+      throw new Error(
+        decoded.expired 
+          ? "Refresh token expired" 
+          : "Invalid refresh token"
+      );
+    }
+    const payload = decoded.decoded;
+
+    if(!payload){
+      return {
+        message:"Lỗi trong quá trình thực thi"
+      }
+    }
+
+    const newAccessToken = createAccessToken({
+      id: payload.id,
+      userId: payload.userId,
+    });
+
+    return {
+      access_token: newAccessToken,
+      refresh_token:refresh_token, 
+    };
+
+  } catch (error: any) {
+    return {
+      error: true,
+      message: error.message
+    };
+  }
+}
+
 }

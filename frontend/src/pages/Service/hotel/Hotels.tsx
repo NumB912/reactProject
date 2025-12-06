@@ -41,7 +41,7 @@ const Hotels = () => {
     setRoomQuantity,
   } = useTravelerHotel();
 
-  const { setDateSelectedBook, setDateSelectedCheckOut } = useCalendarHotel();
+  const { setDateSelectedBook, setDateSelectedCheckOut,dateSelectedBook,dateSelectedCheckOut } = useCalendarHotel();
 
   const {
     destination,
@@ -75,8 +75,11 @@ const Hotels = () => {
         params: {
           search: searchText,
           type_id: "HOTEL_SERVICE",
-          startDate: new Date(),
-          endDate:new Date(),
+          startDate:dateSelectedBook,
+          endDate:dateSelectedCheckOut,
+          children:childrenQuantity,
+          adult:adultQuantity,
+          room:roomQuantity
         },
       })
       .then((res) => {
@@ -84,7 +87,9 @@ const Hotels = () => {
       });
   }, [searchParams]);
 
+
   const handleSubmit = async () => {
+    console.log(dateSelectedCheckOut)
     await api
       .get("/service", {
         params: {
@@ -93,12 +98,14 @@ const Hotels = () => {
           amenities_hotel: selectedAmenities.join(","),
           type_hotel: selectHotelTypes.join(","),
           rating: selectedRating,
-          startDate: startDate,
-          endDate: endDate,
+          startDate: dateSelectedBook,
+          endDate: dateSelectedCheckOut,
+          children:childrenQuantity,
+          room:roomQuantity,
+          adult:adultQuantity
         },
       })
       .then((res) => {
-        console.log(res.data.data)
         setHotels(res.data.data);
       })
       .catch((err) => {

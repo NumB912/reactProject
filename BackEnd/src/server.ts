@@ -11,7 +11,6 @@ import routerLocation from "@/route/location.route";
 import routerAmenitiesService from "@/route/amenity_service.route";
 import routerHotelType from "@/route/hotel_type.route";
 import path from "path";
-// Chỉ import 1 lần là đủ
 import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";

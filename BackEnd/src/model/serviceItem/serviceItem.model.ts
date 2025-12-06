@@ -10,6 +10,7 @@ export interface ServiceItemModel {
   status_id: string|null;
   type_id: string|null;
   location_id: string|null ;
+  quantity:number|null;
 }
 
 export interface RoomModel extends ServiceItemModel {

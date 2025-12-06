@@ -70,6 +70,18 @@ export function formatDateWeek(date?: Date | null): string {
   });
 }
 
+export function formatDateVN(date:Date|null):string{
+    if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export function getEndOfWeek(fromDate: Date = new Date()): Date {
   const date = new Date(fromDate);
   const day = date.getDay(); 

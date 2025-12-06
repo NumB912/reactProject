@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "../../../component/UI";
 import FilterCheckInHotel from "../../../component/filter-component/SearchFilterHotel";
 import Comment from "../../comment";
@@ -9,17 +9,23 @@ import InfoService from "../../../component/infoService";
 import ImageSlide from "../../../component/ImageSlide";
 import { useParams, useSearchParams } from "react-router";
 import { Amenity } from "../../../model/facility";
-import { Icon } from "@mui/material";
+import { Icon, Typography } from "@mui/material";
 import Rooms from "./Rooms";
 import { Hotel } from "../../../model/hotel/hotel";
 import api from "../../../../API/api";
 import { Check } from "@mui/icons-material";
-import { useCalendarHotel } from "../../../store";
+import { useCalendarHotel, useTravelerHotel } from "../../../store";
+import { CalendarHotel } from "../../../component";
+import Calendar_Hotel from "../../../component/calendar/CalendarHotel";
+import PassengersHotel from "../../../component/passenger-content/PassengersHotel";
+import { room } from "../../../model/hotel/room/room";
 const BASE_IMAGE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const HotelDetail = () => {
-  const [hotel, setHotel] = useState<Hotel | null>(null);
-  const {dateSelectedBook,dateSelectedCheckOut} = useCalendarHotel()
+  const [hotel, setHotel] = useState<Hotel | null>();
+  const [room,setRoom] = useState<room[]>()
+  const { dateSelectedBook, dateSelectedCheckOut } = useCalendarHotel();
+  const {adultQuantity,childrenQuantity,roomQuantity} = useTravelerHotel()
   const param = useParams();
 
   useEffect(() => {
@@ -31,17 +37,27 @@ const HotelDetail = () => {
       })
       .then((res) => {
         setHotel(res.data.data);
+        setRoom(res.data.data.serviceItems)
       });
   }, [param]);
 
-  useEffect(()=>{
+  const handleSubmitSearchRoom = ()=>{
+    api.get("/service/service-item",{
+      params:{
+        service_id:param.hotelID,
+        children:childrenQuantity,
+        adult:adultQuantity,
+        room:roomQuantity,
+        startDate:dateSelectedBook,
+        endDate:dateSelectedCheckOut,
+      }
+    }).then((res) => {
 
-    api.get("/").then((res)=>{
-    
-    })
+      console.log(res)
+      setRoom(res.data.data)
 
-
-  },[dateSelectedBook,dateSelectedCheckOut])
+    });
+  };
 
   return (
     <div className="container p-5">
@@ -68,10 +84,12 @@ const HotelDetail = () => {
               <CardContent title="Tiện ích" variant="outline" className="p-4">
                 <div className="grid grid-cols-5 max-md:grid-cols-2 gap-3">
                   {hotel?.amenities_hotels.map((item) => {
-                    return <div className="flex gap-3">
-                      <Check color="success"/>
-                      <p>{item.amenity.amenity}</p>
-                    </div>;
+                    return (
+                      <div className="flex gap-3">
+                        <Check color="success" />
+                        <p>{item.amenity.amenity}</p>
+                      </div>
+                    );
                   })}
                 </div>
               </CardContent>
@@ -140,10 +158,15 @@ const HotelDetail = () => {
           </div>
         </div>
       </div>
-       <div className="">
-                  
-       </div>
-      <Rooms rooms={hotel?.serviceItems} hotelId={hotel?.id}/>
+      <div className="booking_choose w-full flex flex-col items-center gap-5 justify-center p-5 mt-10 border border-gray-300 rounded-full">
+        <Typography variant="h4" fontWeight={"bold"}>Lựa chọn ngày mà người dùng muốn đặt</Typography>
+        <div className="flex w-8/12 gap-10">
+          <Calendar_Hotel />
+          <PassengersHotel />
+          <Button className="min-w-[200px]" onClick={handleSubmitSearchRoom}>Tìm kiếm</Button>
+        </div>
+      </div>
+      <Rooms rooms={room} hotelId={hotel?.id} />
 
       {/* 
       {hotel?.service.reviewsAndPostPhotos && (

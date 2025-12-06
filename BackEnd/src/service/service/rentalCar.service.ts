@@ -1,6 +1,6 @@
 // src/services/HotelService.ts
 import prisma from "@/db";
-import type { BaseServiceInterface } from "../../model/service/baseService.model";
+import type { BaseServiceInterface, ParamRentalCar } from "../../model/service/baseService.model";
 import { ServiceType } from "@/enum/service/type.service.enum";
 import type { Prisma, Service  } from "@prisma/client";
 import type { RentalCarServiceModel } from "@/model/service/service.model";
@@ -10,7 +10,7 @@ import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import type { ServiceDetail } from "@/model/type.service.detail.model";
 
 export class RentalCarService extends BaseService {
- async getListServices(): Promise<SuccessResponse<any[]> | ErrorResponse> {
+ async getListServices(param:ParamRentalCar): Promise<SuccessResponse<any[]> | ErrorResponse> {
         try{
       const list = await prisma.service.findMany({
         select:{
@@ -108,17 +108,7 @@ export class RentalCarService extends BaseService {
                 amenity:true,
               }
             },
-            serviceItemOccasions:{
-              select:{
-                day:true,
-                price_occassion:true,
-              }
-            },
-            serviceItemOffs:{
-              select:{
-                date_off:true,
-              }
-            }
+        
           }
         }
 
