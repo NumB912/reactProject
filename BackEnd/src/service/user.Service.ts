@@ -13,34 +13,125 @@ import type { Service } from "@prisma/client";
 import type { SuccessResponse, ErrorResponse } from "@/model/api.model.js";
 
 export class userService {
-  static async getAllUsers() {
-    return await prisma.person.findMany({
+static async getAllUsers(
+  filters: {
+    search?: string;
+    role?: string;
+    page?: number;
+    limit?: number;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+  } = {}
+) {
+  const {
+    search,
+    role,
+    page = 1,
+    limit = 10,
+    sortBy = 'name',
+    sortOrder = 'asc'
+  } = filters;
+
+  const skip = (page - 1) * limit;
+
+  // Build search conditions
+  const where: any = {};
+  
+  if (search) {
+    where.OR = [
+      {
+        name: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      },
+      {
+        email: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      },
+      {
+        phone: {
+          contains: search,
+        },
+      },
+    ];
+  }
+
+  if (role) {
+    where.role = {
+      name: {
+        equals: role,
+        mode: 'insensitive',
+      },
+    };
+  }
+
+  const total = await prisma.person.count({ where });
+  const users = await prisma.person.findMany({
+    where,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      location_id: true,
+      role_id: true,
+      image_id: true,
+      image: true,
+      role: true,
+      services: true,
+      create_at: true,
+      update_at: true,
+    },
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    skip,
+    take: limit,
+  });
+
+  return {
+    users,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+  };
+}
+  static async findOne(id: string) {
+    return await prisma.person.findFirst({
+      where:{
+        id:id,
+      },
       select: {
         id: true,
-        name: true,
-        email: true,
+        bio: true,
         phone: true,
-        location_id: true,
-        role_id: true,
-        image_id: true,
-        image: true,
-        role: true,
-        services: true,
+        name: true,
+        image: {
+          select: {
+            url: true,
+          },
+        },
+        // wallpaper: {
+        //   select: {
+        //     url: true,
+        //   },
+        // },
+
+
       },
     });
   }
 
-  static async findOne() {
-    return await prisma.person.findFirst({
-      select: {
-        id: true,
-      },
-    });
-  }
+
+
 
   static async editProfile(
     profile: EditProfileDTO
-  ): Promise<{ success: boolean; status: number; message: string }> {
+  ): Promise<SuccessResponse<any>|ErrorResponse> {
     try {
       const data: any = {
         name: profile.name,
@@ -84,44 +175,46 @@ export class userService {
             url: `/upload/user/${profile.id}/avatar/`,
             description: "User avatar",
           };
-          await FileService.uploadFile(profile.avatarFile, avatar.url);
+          const file = await FileService.uploadFile(profile.avatarFile, avatar.url);
           const avatarCreate = await prisma.image.create({
             data: {
               url:
-                avatar.url +
-                profile.avatarFile.filename +
-                "." +
-                profile.avatarFile.mimetype.split("/")[1],
+               file.url,
               description: "User avatar",
             },
           });
-
           data.image_id = avatarCreate.id;
         }
 
-        if (profile.wallpaperFile && profile.wallpaperFile.size > 0) {
-          const wallpaper = {
-            url: `/upload/user/${profile.id}/wallpaper/`,
-            description: "User wallpaper",
-          };
-          await FileService.uploadFile(profile.wallpaperFile, wallpaper.url);
-          const wallpaperCreate = await prisma.image.create({
-            data: {
-              url:
-                wallpaper.url +
-                profile.wallpaperFile.filename +
-                "." +
-                profile.wallpaperFile.mimetype.split("/")[1],
-              description: "User wallpaper",
-            },
-          });
-          data.wallpaper_id = wallpaperCreate.id;
-        }
+        // if (profile.wallpaperFile && profile.wallpaperFile.size > 0) {
+        //   const wallpaper = {
+        //     url: `/upload/user/${profile.id}/wallpaper/`,
+        //     description: "User wallpaper",
+        //   };
+        //   await FileService.uploadFile(profile.wallpaperFile, wallpaper.url);
+        //   const wallpaperCreate = await prisma.image.create({
+        //     data: {
+        //       url:
+        //         wallpaper.url +
+        //         profile.wallpaperFile.filename +
+        //         "." +
+        //         profile.wallpaperFile.mimetype.split("/")[1],
+        //       description: "User wallpaper",
+        //     },
+        //   });
+        //   data.wallpaper_id = wallpaperCreate.id;
+        // }
 
         const updated = await tx.person.update({
           where: { id: profile.id },
           data: data,
-          include: { image: true, wallpaper: true },
+          select:{
+            image:true,
+            name:true,
+            email:true,
+            phone:true,
+            bio:true
+          }
         });
 
         setImmediate(async () => {
@@ -132,7 +225,6 @@ export class userService {
             }
             if (wallpaperFile && person?.wallpaper_id) {
               await prisma.image.delete({ where: { id: person.wallpaper_id } });
-              console.log(person.wallpaper?.url);
               await FileService.deleteFile(person.wallpaper?.url || "");
             }
           } catch (err) {
@@ -144,152 +236,124 @@ export class userService {
       });
 
       return {
+        data:prismaTransaction,
         success: true,
         message: "Cập nhật thông tin người dùng thành công",
         status: 200,
       };
     } catch (error) {
-      console.error("Error updating profile:", error);
-      throw error;
+      return {
+        success: false,
+        message: "Cập nhật thông tin người dùng thành công",
+        status: 200,
+      };
     }
   }
 
-  static async becomeSupplier(
-    becomeSupplier: BecomeSupplierDTO
-  ): Promise<{ success: boolean; message: string; status: number }> {
-    try {
-      let checkIsDone = {} as any;
+static async becomeSupplier(
+  becomeSupplier: BecomeSupplierDTO
+): Promise<{ success: boolean; message: string; status: number }> {
+  try {
+    let checkIsDone = {} as any;
 
-      const transaction = await prisma.$transaction(async (tx) => {
-        const locationCreated = await prisma.location.create({
-          data: {
-            ward_id:becomeSupplier.ward_id,
-            lat: becomeSupplier.lat,
-            lng: becomeSupplier.lng,
-            location: becomeSupplier.lcg,
-          },
-        });
-
-        if (ServiceType.HOTEL == becomeSupplier.type_service) {
-          const hotelCreator = await factoryServiceCreator.factory(
-            ServiceType.HOTEL
-          );
-
-          console.log(hotelCreator)
-          checkIsDone = await hotelCreator.create({
-            service_name: becomeSupplier.property_name,
-            service_type_id: ServiceType.HOTEL,
-            supplier_id: becomeSupplier.user_id,
-            location_id: locationCreated.id,
-          },tx);
-        } else if (ServiceType.RENTAL_CAR == becomeSupplier.type_service) {
-          const rentalCreator = await factoryServiceCreator.factory(
-            ServiceType.RENTAL_CAR
-          );
-          checkIsDone = await rentalCreator.create({
-            service_name: becomeSupplier.property_name,
-            service_type_id: ServiceType.RENTAL_CAR,
-            supplier_id: becomeSupplier.user_id,
-            location_id: locationCreated.id,
-          },tx);
-        } else if (ServiceType.THING_TO_DO == becomeSupplier.type_service) {
-          const tourCreator = await factoryServiceCreator.factory(
-            ServiceType.THING_TO_DO
-          );
-          
-          checkIsDone = await tourCreator?.create({
-            service_name: becomeSupplier.property_name,
-            service_type_id: ServiceType.THING_TO_DO,
-            supplier_id: becomeSupplier.user_id,
-            location_id: locationCreated.id,
-          },tx);
-        }
-        const create_request = await tx.request_become_supplier.create({
-          data: {
-            name: "service",
-            status: StatusBecomeSupplier.PEDDING,
-            user_id: becomeSupplier.user_id,
-            tax_code: becomeSupplier.tax_code,
-            service_id: checkIsDone.data.id,
-          },
-        });
-
-        if (becomeSupplier.tax_files && becomeSupplier.tax_files.length > 0) {
-          const tax = {
-            upload_by_id: becomeSupplier.user_id,
-            file_url: `/upload/user/${becomeSupplier.user_id}/evidence/tax`,
-            file_type: becomeSupplier.type_service,
-            upload_at: new Date(),
-          };
-          for (let taxFile of becomeSupplier.tax_files) {
-            await FileService.uploadFile(taxFile, tax.file_url);
-            const create_tax_file = await tx.document_supplier.create({
-              data: {
-                file_type: "pdf",
-                file_url: `${tax.file_url}/${taxFile.filename}.${
-                  taxFile.mimetype.split("/")[1]
-                }`,
-                request_id: create_request.id,
-                upload_by_id: tax.upload_by_id,
-                upload_at: tax.upload_at,
-              },
-            });
-          }
-        }
-
-        if (
-          becomeSupplier.business_files &&
-          becomeSupplier.business_files.length > 0
-        ) {
-          const business_license = {
-            upload_by_id: becomeSupplier.user_id,
-            file_url: `/upload/user/${becomeSupplier.user_id}/evidence/license`,
-            file_type: becomeSupplier.type_service,
-            upload_at: new Date(),
-          };
-
-          for (let businessFile of becomeSupplier.business_files) {
-            const url = `${business_license.file_url}/${
-              businessFile.filename
-            }.${businessFile.mimetype.split("/")[1]}`;
-
-            await FileService.uploadFile(
-              businessFile,
-              business_license.file_url
-            );
-
-            const create_business_license =
-              await prisma.document_supplier.create({
-                data: {
-                  file_type: "pdf",
-                  file_url: url,
-                  request_id: create_request.id,
-                  upload_by_id: business_license.upload_by_id,
-                  upload_at: business_license.upload_at,
-                },
-              });
-          }
-        }
-
-        setImmediate(() => {
-          const emailService = new EmailService();
-        });
+    const transaction = await prisma.$transaction(async (tx) => {
+      const locationCreated = await tx.location.create({
+        data: {
+          ward_id: becomeSupplier.ward_id,
+          lat: becomeSupplier.lat,
+          lng: becomeSupplier.lng,
+          location: becomeSupplier.lcg,
+        },
       });
 
-      if (!checkIsDone) {
-        throw error("Lỗi trong quá trình thực thi", error);
+      let serviceId: string;
+
+      const create_request = await tx.request_become_supplier.create({
+        data: {
+          name: "service",
+          company_name: becomeSupplier.property_name,
+          status: StatusBecomeSupplier.PENDING,
+          user_id: becomeSupplier.user_id,
+          tax_code: becomeSupplier.tax_code,
+          location_id:locationCreated.id,
+          create_at: new Date()
+        },
+      });
+
+      if (becomeSupplier.tax_files && becomeSupplier.tax_files.length > 0) {
+        const tax = {
+          upload_by_id: becomeSupplier.user_id,
+          file_url: `/upload/user/${becomeSupplier.user_id}/evidence/tax`,
+          file_type: becomeSupplier.type_service,
+          upload_at: new Date(),
+        };
+        
+        for (let taxFile of becomeSupplier.tax_files) {
+          const file = await FileService.uploadFile(taxFile, tax.file_url);
+          const create_tax_file = await tx.document_supplier.create({
+            data: {
+              file_type: tax.file_type,
+              file_url: file.url,
+              request_id: create_request.id,
+              upload_by_id: tax.upload_by_id,
+              upload_at: tax.upload_at,
+            },
+          });
+        }
       }
 
-      return {
-        status: 200,
-        message: "Gửi yêu cầu thành công",
-        success: true,
-      };
-    } catch (error) {
-      console.error("error", error);
-      throw Error("Không thể gửi yêu cầu vui lòng thử lại");
+
+      if (becomeSupplier.business_files && becomeSupplier.business_files.length > 0) {
+        const business_license = {
+          upload_by_id: becomeSupplier.user_id,
+          file_url: `/upload/user/${becomeSupplier.user_id}/evidence/license`,
+          file_type: becomeSupplier.type_service,
+          upload_at: new Date(),
+        };
+
+        for (let businessFile of becomeSupplier.business_files) {
+          const url = `${business_license.file_url}/${
+            businessFile.filename
+          }.${businessFile.mimetype.split("/")[1]}`;
+
+          const file = await FileService.uploadFile(businessFile, business_license.file_url);
+
+  
+          const create_business_license = await tx.document_supplier.create({
+            data: {
+              file_type: business_license.file_type,
+              file_url: file.url,
+              request_id: create_request.id, 
+              upload_by_id: business_license.upload_by_id,
+              upload_at: business_license.upload_at,
+            },
+          });
+        }
+      }
+
+      return { create_request };
+    });
+
+    // Gửi email sau khi transaction thành công
+    setImmediate(() => {
+      const emailService = new EmailService();
+      // Gửi email thông báo
+    });
+
+    if (!transaction) {
+      throw new Error("Lỗi trong quá trình thực thi");
     }
+
+    return {
+      status: 200,
+      message: "Gửi yêu cầu thành công",
+      success: true,
+    };
+  } catch (error) {
+    console.error("error", error);
+    throw new Error("Không thể gửi yêu cầu vui lòng thử lại");
   }
+}
 
   static async handleFavorite(
     user_id: string,
@@ -304,7 +368,6 @@ export class userService {
       select: { id: true },
     });
 
-    console.log(service);
 
     const person = await prisma.person.findUnique({
       where: { id: user_id },

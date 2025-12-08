@@ -8,15 +8,21 @@ import jwt from "jsonwebtoken";
 import { randomUUID } from "crypto";
 import { OAuth2Client } from "google-auth-library";
 import type { ErrorResponse, SuccessResponse } from "@/model/api.model.js";
-import { createAccessToken, createRefreshToken, verifyRefreshToken } from "@/utils/token.js";
+import {
+  createAccessToken,
+  createRefreshToken,
+  verifyRefreshToken,
+} from "@/utils/token.js";
+import { status } from "@/enum/user.enum.js";
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
 export class AuthenticationService {
   static async login(
     email: string,
     password: string
   ): Promise<
     | SuccessResponse<{
+      role:string
         user_id: String;
         access_token: String;
         refresh_token: String;
@@ -26,7 +32,9 @@ export class AuthenticationService {
   > {
     const user = await prisma.person.findUnique({
       where: { email: email },
-      select: { id: true, password: true },
+      select: { id: true, password: true,role:{select:{
+        name:true,
+      }} },
     });
     try {
       if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -38,22 +46,22 @@ export class AuthenticationService {
       }
 
       const userId = user.id.toString();
-
+      const role = user.role.name.toString()
       const accessJti = randomUUID();
 
-      const accessToken = createAccessToken(  {
-          sub: userId,
-          jti: accessJti,
-          type: "access",
-        })
+      const accessToken = createAccessToken({
+        sub: userId,
+        jti: accessJti,
+        type: "access",
+      });
 
       await redisClient.set(`at:jti:${accessJti}`, userId, {
         EX: 15 * 60,
       });
 
       const refreshToken = createRefreshToken({
-        sub:userId
-      })
+        sub: userId,
+      });
 
       const tokenFamily = randomUUID();
 
@@ -62,9 +70,7 @@ export class AuthenticationService {
           userId: userId,
           tokenHash: refreshToken,
           family: tokenFamily,
-          expiresAt: new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000
-          ),
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
           ip: "",
           ua: "",
         },
@@ -72,6 +78,7 @@ export class AuthenticationService {
 
       return {
         data: {
+          role:role,
           user_id: userId,
           access_token: accessToken,
           refresh_token: refreshToken,
@@ -93,22 +100,33 @@ export class AuthenticationService {
 
   static async logout(refresh_token: string, user: any) {
     try {
-      const payload = user
+      const payload = user;
       const key_load = `at:jti:${payload.jti}`;
       await redisClient.del(key_load);
       const deleteRefeshToken = await prisma.refreshToken.deleteMany({
         where: {
-          tokenHash: await hashToken(refresh_token),
+          tokenHash: refresh_token,
         },
       });
 
+      if(!deleteRefeshToken){
+          return {
+        status:500,
+        success:false,
+        message: "Không thành công",
+      };
+      }
+
       return {
+        status:200,
+        success:true,
         message: "Thành công",
       };
     } catch (error) {
       return {
-        message: error,
-        status: 500,
+       status:500,
+        success:false,
+        message: "Không thành công",
       };
     }
   }
@@ -259,6 +277,7 @@ export class AuthenticationService {
           phone: trimmedPhone,
           role_id: Role.ROLE_USER,
           create_at: new Date(),
+          status:status.ACTIVE,
         },
         select: {
           id: true,
@@ -305,7 +324,7 @@ export class AuthenticationService {
     newPassword: string
   ): Promise<{ success: boolean; message: string; status: number }> {
     try {
-      const resetToken = token
+      const resetToken = token;
       const userId = await redisClient.get(`pwd-reset:${resetToken}`);
       if (!userId) {
         return {
@@ -380,7 +399,7 @@ export class AuthenticationService {
         };
       }
 
-      const resetToken = createAccessToken({email:email,user_id:user.id})
+      const resetToken = createAccessToken({ email: email, user_id: user.id });
       const redisKey = `pwd-reset:${resetToken}`;
       await redisClient.set(redisKey, user.id, {
         EX: 15 * 60,
@@ -408,9 +427,7 @@ export class AuthenticationService {
 
   static async verifyTokenResetPassword(token: string) {
     try {
-      const tokenVerify = await redisClient.get(
-        `pwd-reset:${token}`
-      );
+      const tokenVerify = await redisClient.get(`pwd-reset:${token}`);
       if (!tokenVerify) {
         return {
           message: "Không tồn tại token hoặc hết hạn",
@@ -432,41 +449,71 @@ export class AuthenticationService {
       };
     }
   }
-static async refreshAccessToken(refresh_token: string) {
-  try {
-    const decoded = await verifyRefreshToken(refresh_token);
-    console.log(decoded)
-    if (!decoded.valid) {
-      throw new Error(
-        decoded.expired 
-          ? "Refresh token expired" 
-          : "Invalid refresh token"
-      );
-    }
-    const payload = decoded.decoded;
+  static async refreshAccessToken(refresh_token: string) {
+    try {
 
-    if(!payload){
-      return {
-        message:"Lỗi trong quá trình thực thi"
+
+      if (!refresh_token) {
+        return {
+          message: "Lỗi",
+          success: false,
+        };
       }
+
+      const id = await prisma.refreshToken.findUnique({
+        where:{
+          tokenHash:refresh_token,
+        },
+        select:{
+          person:{
+            select:{
+              email:true,
+              id:true,
+            }
+          }
+        }
+      })
+
+      if(!id){
+        return {
+          message: "Lỗi khong ton tai refesh token",
+          success: false,
+        };
+      }
+
+      const verifyRefresh = await verifyRefreshToken(refresh_token);
+
+      if (!verifyRefresh.valid) {
+        throw new Error(
+          verifyRefresh.expired
+            ? "Refresh token expired"
+            : "Invalid refresh token"
+        );
+      }
+      const decoded = verifyRefresh.decoded;
+      if (!decoded) {
+        return {
+          message: "Lỗi trong quá trình thực thi",
+        };
+      }
+      const userId = await id.person.id
+      const accessJti = randomUUID();
+      const accessToken = createAccessToken({
+        sub: userId,
+        jti: accessJti,
+        type: "access",
+      });
+
+      return {
+        success: true,
+        access_token: accessToken,
+        refresh_token: refresh_token,
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message,
+      };
     }
-
-    const newAccessToken = createAccessToken({
-      id: payload.id,
-      userId: payload.userId,
-    });
-
-    return {
-      access_token: newAccessToken,
-      refresh_token:refresh_token, 
-    };
-
-  } catch (error: any) {
-    return {
-      error: true,
-      message: error.message
-    };
   }
-}
-
 }

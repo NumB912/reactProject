@@ -19,17 +19,61 @@ export class handleBecomeSupplierService {
   } = {}) {
     const skip = (page - 1) * limit;
 
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 2);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 2, 0);
     const where: Prisma.Request_become_supplierWhereInput = {
-      ...(status && { status }),
-      ...(search && {
-        OR: [
-          { name: { contains: search, mode: "insensitive" } },
-          { Person: { name: { contains: search, mode: "insensitive" } } },
-          { Person: { email: { contains: search, mode: "insensitive" } } },
-          { Person: { phone: { contains: search, mode: "insensitive" } } },
-        ],
-      }),
+      AND: [
+        ...(search
+          ? [
+              {
+                OR: [
+                  { company_name: { contains: search, mode: "insensitive" } },
+                  {
+                    person: { name: { contains: search, mode: "insensitive" } },
+                  },
+                  {
+                    person: {
+                      email: { contains: search, mode: "insensitive" },
+                    },
+                  },
+                  {
+                    person: {
+                      phone: { contains: search, mode: "insensitive" },
+                    },
+                  },
+                ],
+              } satisfies Prisma.Request_become_supplierWhereInput,
+            ]
+          : []),
+
+        {
+          create_at: {
+            gte: startOfMonth,
+            lt: endOfMonth,
+          },
+        },
+
+        ...(status
+          ? [{ status: status }]
+          : [{ status: { in: ["PENDING", "APPROVED", "CANCEL"] } }]),
+      ],
     };
+
+    const stat =await prisma.request_become_supplier.groupBy({
+      by: ["status"],
+      _count: {
+        status: true,
+      },
+      where: {
+        create_at: {
+          gte: startOfMonth,
+          lt: endOfMonth,
+        },
+      },
+    });
+
+
 
     const [requests, total] = await prisma.$transaction([
       prisma.request_become_supplier.findMany({
@@ -37,13 +81,14 @@ export class handleBecomeSupplierService {
         skip,
         take: limit,
         orderBy: { create_at: "desc" },
+
         select: {
           id: true,
+          company_name: true,
           name: true,
           status: true,
           create_at: true,
-
-          Person: {
+          person: {
             select: {
               id: true,
               name: true,
@@ -54,26 +99,17 @@ export class handleBecomeSupplierService {
               },
             },
           },
-
-          service: {
-            select: {
-              id: true,
-              service_name: true,
-              info: true,
-              imageServices: {
-                include: { image: true },
-                take: 1,
-              },
-            },
-          },
         },
       }),
 
       prisma.request_become_supplier.count({ where }),
+
     ]);
 
     return {
-      data: requests,
+      data: {
+        requests,stat
+      },
       pagination: {
         page,
         limit,
@@ -92,7 +128,7 @@ export class handleBecomeSupplierService {
 
         select: {
           name: true,
-          Person: {
+          person: {
             select: {
               name: true,
               phone: true,
@@ -105,29 +141,22 @@ export class handleBecomeSupplierService {
             },
           },
 
-          other_Document_supplier: {
+          documentSuppliers: {
             select: {
               file_url: true,
               file_type: true,
               upload_at: true,
             },
           },
+          create_at:true,
           tax_code: true,
           status: true,
-          service: {
-            select: {
-              service_name: true,
-              description: true,
-              info: true,
-              location: true,
-            },
-          },
         },
       });
 
     return requestBecomeSuppliers;
   }
-  
+
   static async handleBecomeSupplier(
     status: StatusBecomeSupplier,
     request_become_supplier_id: string
@@ -151,7 +180,7 @@ export class handleBecomeSupplierService {
           select: {
             id: true,
             status: true,
-            Person: true,
+            person: true,
           },
         });
 
@@ -178,7 +207,7 @@ export class handleBecomeSupplierService {
           },
           select: {
             id: true,
-            Person: {
+            person: {
               select: {
                 id: true,
                 name: true,
@@ -191,34 +220,21 @@ export class handleBecomeSupplierService {
                 },
               },
             },
-
-            service: {
-              select: {
-                id: true,
-              },
-            },
           },
         });
 
         if (
           status === StatusBecomeSupplier.APPROVED &&
           updatedRequest.id &&
-          updatedRequest.Person?.id &&
-          updatedRequest.service?.id
+          updatedRequest.person?.id
         ) {
           await tx.person.update({
-            where: { id: updatedRequest.Person.id },
+            where: { id: updatedRequest.person.id },
             data: {
               role_id: Role.ROLE_SUPPLIER,
             },
           });
 
-          await tx.service.update({
-            where: { id: updatedRequest.service.id },
-            data: {
-              status_id: StatusType.ACTIVE,
-            },
-          });
         }
       });
 

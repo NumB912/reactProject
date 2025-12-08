@@ -22,6 +22,7 @@ model Person {
   bio                     String?
   image_wallpaper         String?                   @db.VarChar(255)
   wallpaper_id            String?                   @unique @db.Uuid
+  status                  String?
   Document_supplier       Document_supplier[]
   favorites               Favorite[]
   image                   Image?                    @relation("PersonAvatar", fields: [image_id], references: [id])
@@ -30,7 +31,7 @@ model Person {
   refreshTokens           RefreshToken[]
   refundEvidences         RefundEvidence[]
   refundRequests          RefundRequest[]
-  Request_become_supplier Request_become_supplier[]
+  Request_become_supplier Request_become_supplier?  
   reviews                 Review[]
   services                Service[]
   bankAccounts            BankAccount[]             @relation("BankAccountOwner")
@@ -127,8 +128,6 @@ model Service {
   typeHotel      TypeHotel?     @relation(fields: [type_hotel_id], references: [id])
   serviceItems   ServiceItem[]
 
-  requestBecomeSuppliers Request_become_supplier[]
-
   @@index([supplier_id])
 }
 
@@ -174,6 +173,8 @@ model Location {
   bookings       Booking[] @relation("BookingDropoff")
   ward           Ward?     @relation(fields: [ward_id], references: [code])
   pickUpBookings Booking[] @relation("BookingPickup")
+
+  requestBecomeSuppliers Request_become_supplier[]
 }
 
 model AdministrativeRegion {
@@ -544,16 +545,19 @@ model Otp {
 
 model Request_become_supplier {
   id                      String              @id @default(uuid()) @db.Uuid
-  user_id                 String?             @db.Uuid
+  user_id                 String              @unique @db.Uuid    // BẮT BUỘC @unique cho 1-1
   status                  String?             @db.VarChar
   name                    String?             @db.VarChar
-  service_id              String?             @db.Uuid
-  tax_code                String?
+  tax_code                String?            
   proccess_at             DateTime?
-  other_Document_supplier Document_supplier[] @relation("Document_supplierToDocument_supplier")
-  Person                  Person?             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  service                 Service?            @relation(fields: [service_id], references: [id])
-  create_at               DateTime?
+  location_id             String?             @db.Uuid
+  company_name            String?
+  create_at               DateTime?           @default(now())
+
+  person                  Person              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  documents               Document_supplier[] @relation("Document_supplierToRequest_become_supplier")
+  location                Location?           @relation(fields: [location_id],references: [id],onDelete: Cascade) 
+  documentSuppliers Document_supplier[] @relation("Document_supplierToDocument_supplier")
 }
 
 model Document_supplier {
@@ -565,4 +569,6 @@ model Document_supplier {
   request_id        String?                  @db.Uuid
   Document_supplier Request_become_supplier? @relation("Document_supplierToDocument_supplier", fields: [request_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Request_become_supplier_evidence_request_id_fkey")
   Person            Person?                  @relation(fields: [upload_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Request_become_supplier_evidence_upload_by_id_fkey")
+  
+  requestBecomeSuppliers Request_become_supplier[] @relation("Document_supplierToRequest_become_supplier")
 }

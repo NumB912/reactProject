@@ -7,15 +7,16 @@ export interface Login {
     refeshToken: string;
     expireDate: string;
     user_id:string;
-
+    role:string,
     setUserId:(user_id:string)=>void;
     setRefeshToken: (refeshToken: string | null) => void;
     setExpireDate: (expireDate: string | null) => void;
     setAccessToken: (accessToken: string | null) => void;
     setIsLogin: (isLogin: boolean) => void;
     setShow: (isShow: boolean) => void;
-    login: (accessToken: string,user_id:string) => Promise<void>;
+    login: (accessToken: string,user_id:string,role:string) => Promise<void>;
     logout: () => Promise<void>;
+    setRole:(role:string)=>void;
 }
 
 const useStateLogin = create<Login>((set, get) => ({
@@ -25,23 +26,29 @@ const useStateLogin = create<Login>((set, get) => ({
     refeshToken: "",
     expireDate: "",
     user_id:"",
+    role:"",
+
+    setRole(role) {
+        set({role:role})
+    },
 
     ...(typeof window !== "undefined" && {
-    accessToken: localStorage.getItem("accessToken") || "",
+    accessToken: localStorage.getItem("access_token") || "",
     user_id: localStorage.getItem("user_id") || "",
     isLogin:
-      !!localStorage.getItem("accessToken") && !!localStorage.getItem("user_id"),
+      !!localStorage.getItem("access_token") && !!localStorage.getItem("user_id"),
   }),
 
     setUserId(user_id) {
         set({user_id:user_id})
     },
-    login: async (accessToken,user_id) => {
+    login: async (accessToken,user_id,role) => {
         get().setAccessToken(accessToken);
         get().setUserId(user_id)
         get().setIsLogin(true)
-
-        await localStorage.setItem("accessToken", accessToken)
+        get().setRole(role)
+        console.log(role)
+        await localStorage.setItem("access_token", accessToken)
         await localStorage.setItem("user_id",user_id)
     },
 
@@ -49,9 +56,11 @@ const useStateLogin = create<Login>((set, get) => ({
         get().setAccessToken(null);
         get().setUserId("")
         get().setIsLogin(false)
+        get().setRole("")
 
         localStorage.removeItem("user_id")
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token")
     },
 
     setExpireDate: (expireDate: string | null) => {

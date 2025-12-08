@@ -54,6 +54,7 @@ const NavBar = () => {
     },
   ];
 
+
   return (
     <>
       <div className="w-full flex justify-center items-center bg-white sticky top-0 border-b border-gray-200 shadow-sm text-sm max-md:hidden p-3 z-50">

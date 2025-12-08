@@ -1,6 +1,5 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Slider, { Settings } from "react-slick";
-import { useNavigate } from "react-router";
 
 const CustomPrevArrow: React.FC<any> = (props) => {
   const { onClick } = props;
@@ -29,26 +28,24 @@ const CustomNextArrow: React.FC<any> = (props) => {
 };
 
 interface ReusableSliderProps<T> {
-  items: T[];
-  renderItem: (item: T) => React.ReactNode;
+  children:ReactNode
   sliderSettings?: Settings;
   title?: string;
   subtitle?: string;
   containerClassName?: string;
-  itemWrapperClassName?: string;
-  infinite?:boolean
+  infinite?:boolean,
+  itemClassName:string
   nextButton?:React.ReactNode;
   prevButton?:React.ReactNode;
 }
 
 const ReusableSlider = <T extends { id: number | string}>({
-  items,
-  renderItem,
+  children,
   sliderSettings,
   title,
   subtitle,
   containerClassName = "w-full", 
-  itemWrapperClassName = "pl-2 pr-2 py-3" 
+  itemClassName="px-2",
 }: ReusableSliderProps<T>) => {
   const defaultSettings: Settings = {
     dots: false,
@@ -60,13 +57,13 @@ const ReusableSlider = <T extends { id: number | string}>({
     autoplaySpeed: 3000,
     prevArrow: <CustomPrevArrow/>,
     nextArrow: <CustomNextArrow/>,
-    // responsive: [
-    //   { breakpoint: 1400, settings: { slidesToShow: 5 } },
-    //   { breakpoint: 1200, settings: { slidesToShow: 4 } },
-    //   { breakpoint: 992, settings: { slidesToShow: 3 } },
-    //   { breakpoint: 768, settings: { slidesToShow: 2 } },
-    //   { breakpoint: 576, settings: { slidesToShow: 1 } },
-    // ],
+    responsive: [
+      { breakpoint: 1400, settings: { slidesToShow: 5 } },
+      { breakpoint: 1200, settings: { slidesToShow: 4 } },
+      { breakpoint: 992, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 576, settings: { slidesToShow: 1 } },
+    ],
   };
   const finalSettings = { ...defaultSettings, ...sliderSettings };
 
@@ -80,14 +77,7 @@ const ReusableSlider = <T extends { id: number | string}>({
       )}
 
       <Slider {...finalSettings}>
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className={itemWrapperClassName}
-          >
-            {renderItem(item)}
-          </div>
-        ))}
+            {children}
       </Slider>
     </div>
   );

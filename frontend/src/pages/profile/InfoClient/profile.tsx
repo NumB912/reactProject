@@ -3,124 +3,73 @@ import { Outlet, useParams } from "react-router-dom";
 import Tabs, { Tab } from "../../../component/UI/Tabs";
 import AvatarSection from "./AvatarSection";
 import EditProfileModal from "./ProfileEdit/EditProfileModal";
-import { ProfileUser } from "../../../interface/Profile";
 import useUploadPhoto from "../../../hook/useUploadPhoto";
 import { EditPhotoAvatarModal } from "./ProfileEdit/EditPhotoAvatarModal";
 import WallpaperSection from "./WallpaperSection";
+import api from "../../../../API/api";
+import { profile } from "../../../interface/Profile";
 
 const InfoClient = () => {
   const { id } = useParams();
-  const [isOpenEditProfileModal, setIsOpenEditProfileModal] = 
+  const [isOpenEditProfileModal, setIsOpenEditProfileModal] =
     useState<boolean>(false);
-  const [userProfile, setProfileUser] = useState<ProfileUser>({
-    name: "sups",
-    follower: 0,
-    following: 10,
-    avatarPhoto: {
-      description: "",
-      id: "",
-      url: "https://comicbook.com/wp-content/uploads/sites/4/2025/02/Bocchi-The-Rock-Season-2.jpg?resize=2000,1122",
-    },
-    introduce: {
-      email: "example@gmail.com",
-      introduceID: "1",
-      about: "",
-      location: "VietNam",
-      phoneNumber: "0123456789",
-    },
-    profileID: "",
-    userName: "sups112",
-    wallpaperPhoto: {
-      description: "",
-      id: "",
-      url: "",
-    },
-    photoShares: {
-      photos: [],
-      photoShareID: "1",
-    },
-    reviews: 5,
-  });
+  const [userProfile, setProfileUser] = useState<profile>();
 
   const nav: Tab[] = [
     {
-      navigationID: "1",
-      contentNavigation: "Reviews",
-      urlNavigation: `/profile/${id}/reviews`,
-    },
-    {
-      navigationID: "2",
-      contentNavigation: "Photos",
-      urlNavigation: `/profile/${id}/photos`,
-    },
-    {
-      navigationID: "3",
-      contentNavigation: "Trips",
-      urlNavigation: `/profile/${id}/Trips`,
-    },
-    {
       navigationID: "4",
       contentNavigation: "Favorite",
-      urlNavigation: `/profile/${id}/Favorites`,
+      urlNavigation: `/profile/Favorites`,
     },
     {
       navigationID: "5",
       contentNavigation: "Booking",
-      urlNavigation: `/profile/${id}/bookings`,
+      urlNavigation: `/profile/bookings`,
     },
   ];
 
   useEffect(() => {
-    setProfileUser({
-      name: "sups",
-      follower: 0,
-      following: 10,
-      avatarPhoto: {
-        description: "",
-        id: "2",
-        url: "https://comicbook.com/wp-content/uploads/sites/4/2025/02/Bocchi-The-Rock-Season-2.jpg?resize=2000,1122",
-      },
-      introduce: {
-        email: "example@gmail.com",
-        introduceID: "1",
-        about: "",
-        location: "VietNam",
-        phoneNumber: "0123456789",
-      },
-      profileID: "",
-      userName: "sups112",
-      wallpaperPhoto: {
-        description: "",
-        id: "",
-        url: "",
-      },
-      photoShares: {
-        photos: [],
-        photoShareID: "1",
-      },
-      reviews: 5,
-    });
+    api
+      .get("/user/detail")
+      .then((res) => {
+        setProfileUser(res.data.data.user);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
-  return (
-    <div className="w-full info relative flex flex-col justify-center items-center bg-gray-200 ">
-      <WallpaperSection />
+  const onSuccess = (profile:profile)=>{
+    setProfileUser(profile)
+  }
 
-      <div className="content -mt-10 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
+  useEffect(()=>{
+
+  })
+
+
+  if(!userProfile){
+    return <div>Vui lòng đăng nhập</div>
+  }
+
+  return (
+    <div className="w-full info relative flex flex-col justify-center items-center bg-gray-200 py-10">
+
+      <div className="content mt-30 grid grid-cols-[310px_1fr] m-2 w-9/12 z-30 gap-3 mb-">
         <AvatarSection
           userProfile={userProfile}
           setIsOpenEditProfileModal={setIsOpenEditProfileModal}
           isOpenEditProfileModal={isOpenEditProfileModal}
         />
+
         {isOpenEditProfileModal && (
           <EditProfileModal
             userProfile={userProfile}
             setIsOpenEditProfileModal={setIsOpenEditProfileModal}
             isOpenEditProfileModal={isOpenEditProfileModal}
+            onSuccess={onSuccess}
           />
         )}
 
-        <div className="content-profile p-3 bg-white border border-gray-200">
+        <div className="content-profile p-3 bg-white border border-gray-200 rounded-xl">
           <Tabs
             activeStyle="border-b-3 font-bold transition-all ease-in"
             elseActiveStyle="hover:bg-gray-200"

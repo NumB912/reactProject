@@ -2,11 +2,10 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 w-full bottom-0 mt-20">
+    <footer className=" w-full bottom-0">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
    <div className="grid grid-cols-5 gap-8 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-  {/* Company Info */}
   <div>
     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
       Company
@@ -23,7 +22,6 @@ const Footer = () => {
     </a>
   </div>
 
-  {/* Resources */}
   <div>
     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
       Resources
@@ -45,7 +43,6 @@ const Footer = () => {
     </ul>
   </div>
 
-  {/* Follow Us */}
   <div>
     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
       Follow us
@@ -86,7 +83,6 @@ const Footer = () => {
     </ul>
   </div>
 
-  {/* Legal */}
   <div>
     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">
       Legal
@@ -110,7 +106,6 @@ const Footer = () => {
     </ul>
   </div>
 
-  {/* Contact Us */}
   <div>
     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">
       Contact Us
@@ -132,7 +127,7 @@ const Footer = () => {
       </li>
     </ul>
   </div>
-</div>
+    </div>
 
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />

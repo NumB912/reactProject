@@ -73,7 +73,6 @@ export class ManagementService {
               tx
             );
 
-            console.log(update)
             if (!update.success) {
               throw Error("Cập nhật khôgn thành công");
             }

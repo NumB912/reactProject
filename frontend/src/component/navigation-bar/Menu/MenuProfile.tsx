@@ -3,10 +3,15 @@ import {
   ContentCopy,
   ContentCut,
   ContentPaste,
+  HelpOutline,
   Logout,
   PersonAdd,
+  PersonOutline,
+  RateReviewOutlined,
   Reviews,
   Settings,
+  SettingsOutlined,
+  StorefrontOutlined,
 } from "@mui/icons-material";
 import {
   Avatar,
@@ -22,19 +27,29 @@ import {
 import React from "react";
 import api from "../../../../API/api";
 import useStateLogin from "../../../store/LoginStore/login_store";
+import { useNavigate } from "react-router";
 interface MenuProfileProp {
   anchorE1: HTMLDivElement | null;
   open: boolean;
   onClose: () => void;
+  menuItems?: {
+    label: string;
+    icon: React.ReactNode;
+    path: string;
+    onHandle: () => void;
+  }[];
 }
-const MenuProfile = ({ anchorE1, open, onClose }: MenuProfileProp) => {
-  const { accessToken, logout } = useStateLogin();
-
+const MenuProfile = ({
+  anchorE1,
+  open,
+  onClose,
+  menuItems=[],
+}: MenuProfileProp) => {
+  const { logout } = useStateLogin();
+  const navigate = useNavigate();
   const handleLogout = async () => {
     const lg = await api
-      .post(
-        "/authentication/logout/"
-      )
+      .post("/authentication/logout/")
       .then((res) => {
         logout();
       })
@@ -42,6 +57,51 @@ const MenuProfile = ({ anchorE1, open, onClose }: MenuProfileProp) => {
         console.log(error);
       });
   };
+
+  if (!menuItems || menuItems.length == 0) {
+
+
+    menuItems = [
+      {
+        icon: <PersonOutline />,
+        label: "Hồ sơ cá nhân",
+        path: "/profile",
+        onHandle: () => {onClose();},
+      },
+      {
+        icon: <RateReviewOutlined />,
+        label: "Đánh giá của tôi",
+        path: "/my-reviews",
+        onHandle: () => {
+          onClose();
+        },
+      },
+      {
+        icon: <StorefrontOutlined />,
+        label: "Trở thành nhà cung cấp",
+        path: "/become_supplier",
+        onHandle: () => {
+          onClose();
+        },
+      },
+      {
+        icon: <SettingsOutlined />,
+        label: "Cài đặt",
+        path: "/settings",
+        onHandle: () => {
+          onClose();
+        },
+      },
+      {
+        icon: <HelpOutline />,
+        label: "Trợ giúp & Hỗ trợ",
+        path: "/help",
+        onHandle: () => {
+          onClose();
+        },
+      },
+    ];
+  }
 
   return (
     <Menu
@@ -81,18 +141,25 @@ const MenuProfile = ({ anchorE1, open, onClose }: MenuProfileProp) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem onClick={onClose}>Hồ sơ</MenuItem>
-      <MenuItem onClick={onClose}>Viết đánh giá</MenuItem>
+      {menuItems.map((item) => (
+        <MenuItem
+          onClick={() => {
+            item.onHandle();
+            navigate(item.path);
+            onClose();
+          }}
+        >
+          {item.label}
+        </MenuItem>
+      ))}
 
-      <MenuItem onClick={onClose}>Thêm hình ảnh</MenuItem>
-      <Divider />
       <MenuItem
         onClick={() => {
           handleLogout();
           onClose();
         }}
       >
-        Logout
+        Đăng xuất
       </MenuItem>
     </Menu>
   );

@@ -87,7 +87,6 @@ static async getRequestBecomeSupplierDetail(req: Request, res: Response): Promis
 static async handleBecomeSupplier(req: Request, res: Response): Promise<Response> {
     try {
       const { status_id, id } = req.body;
-
       if (!status_id || !id) {
         return res.status(400).json({
           success: false,

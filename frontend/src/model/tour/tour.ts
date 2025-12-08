@@ -1,6 +1,7 @@
 import { Service } from "../Service";
+import { ServiceItem } from "../service_item";
 
-export interface Tour{
+export interface Tour extends ServiceItem{
     service:Service;
 
 }

@@ -4,12 +4,14 @@ export interface location{
 }
 
 export interface ward{
+  code:string,
   fullName:string,
   name:string,
   province:province
 }
 
 export interface province{
+  code:string
   fullName:string,
   name:string
 }

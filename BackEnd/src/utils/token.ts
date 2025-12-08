@@ -3,7 +3,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET
 export const createAccessToken = (payload:any) => {
   return jwt.sign(payload, JWT_SECRET as string, {
-    expiresIn: "1s",
+    expiresIn: "1m",
   });
 };
 

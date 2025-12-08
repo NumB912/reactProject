@@ -12,7 +12,6 @@ const api: AxiosInstance = axios.create({
   baseURL: `${API_URL}/api`,
   timeout: 30_000,
   headers: {
-    'Content-Type': 'application/json',
     Accept: 'application/json',
   },
   withCredentials:true
@@ -30,7 +29,15 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response: AxiosResponse) => response,
+  (response: AxiosResponse) => {
+   if (response.headers["X-New-Access-Token"]) {
+    localStorage.removeItem("access_token")
+      localStorage.setItem("access_token", response.data.access_token);
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + response.data.access_token;
+    }
+    return response;
+  },
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('access_token');

@@ -7,7 +7,6 @@ import { AmenityHotel } from "./amenityHotel";
 import { room } from "./room/room";
 
 export interface Hotel extends Service {
-  id: string;
   imageServices: Image[];
   amenities_hotels: AmenityHotel[];
   typeHotel: HotelType | null;

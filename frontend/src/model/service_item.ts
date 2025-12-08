@@ -7,5 +7,5 @@ export interface ServiceItem {
   service_id?: string | null;    
   availiable_from?: string | null; 
   availiable_to?: string | null;  
-  imageServiceItems:Image[]
+  imageServicesItems?:Image[]
 }

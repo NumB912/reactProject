@@ -1,17 +1,17 @@
 // EditPhotoAvatarModal.tsx
 
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Box } from "@mui/material";
 import useSingleUploadPhoto from "../../../../hook/useUploadPhoto";
 import { Image } from "../../../../model/image";
 import UploadPhoto from "../../../../component/upload-photo/UploadPhoto";
+import { formatUrlImg } from "../../../../utils/urlFormat";
 
 const DEFAULT_AVATAR: Image = {
-  imageID: "default",
-  url: "https://via.placeholder.com/400?text=No+Image",
-  altText: "",
-  description: "",
-  fileName: "default.png",
+  image: {
+    url: "https://via.placeholder.com/400?text=No+Image",
+    alt: "",
+  },
 };
 
 interface EditPhotoAvatarModalProp {
@@ -24,7 +24,7 @@ interface EditPhotoAvatarModalProp {
 export const EditPhotoAvatarModal = ({
   isOpenModalUploadImageAvatar,
   setIsOpenModalUploadImageAvatar,
-  onApply,                    // DÙNG TÊN MỚI
+  onApply,
   currentPhoto,
 }: EditPhotoAvatarModalProp) => {
   const {
@@ -35,6 +35,8 @@ export const EditPhotoAvatarModal = ({
   } = useSingleUploadPhoto({
     initialPhoto: currentPhoto,
   });
+
+  console.log(currentPhoto)
 
   const handleApply = () => {
     if (selectedPhoto && selectedFile) {
@@ -54,8 +56,7 @@ export const EditPhotoAvatarModal = ({
     setIsOpenModalUploadImageAvatar(false);
   };
 
-  const displayPhoto = selectedPhoto || currentPhoto || DEFAULT_AVATAR;
-
+  const displayPhoto = selectedPhoto || DEFAULT_AVATAR;
   return (
     <Modal open={isOpenModalUploadImageAvatar} onClose={handleClose}>
       <Box
@@ -71,25 +72,36 @@ export const EditPhotoAvatarModal = ({
           p: 4,
         }}
       >
-        <h2 className="text-2xl font-bold text-center mb-6">Change Profile Photo</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Change Profile Photo
+        </h2>
 
         <div className="flex justify-center my-8">
           <img
-            src={displayPhoto.url}
+            src={displayPhoto.image.url}
             alt="Preview"
             className="w-72 h-72 rounded-full object-cover shadow-2xl ring-8 ring-gray-100 border-4 border-white"
           />
         </div>
 
         <div className="my-8">
-          <UploadPhoto photo={selectedPhoto || undefined} handleDrop={addPhoto} />
+          <UploadPhoto
+            photo={selectedPhoto || undefined}
+            handleDrop={addPhoto}
+          />
         </div>
 
         <div className="flex justify-center gap-6 mt-8">
-          <button onClick={handleRemove} className="text-red-600 hover:underline">
+          <button
+            onClick={handleRemove}
+            className="text-red-600 hover:underline"
+          >
             Remove Photo
           </button>
-          <button onClick={handleClose} className="text-gray-600 hover:text-gray-900">
+          <button
+            onClick={handleClose}
+            className="text-gray-600 hover:text-gray-900"
+          >
             Cancel
           </button>
           <button

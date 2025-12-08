@@ -33,7 +33,7 @@ const LoginEmail = ({
   const [credentialError, setCredentialError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const { login } = useStateLogin();
+  const { login, } = useStateLogin();
   const validateEmail = (email: string): boolean => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
@@ -75,14 +75,16 @@ const LoginEmail = ({
 
     setLoading(true);
 
-    const LoginApi = await api
+    await api
       .post("/authentication/login", {
         email: email,
         password: password,
       })
       .then((res) => {
-        login(res.data.access_token, res.data.user_id);
+        console.log(res)
+        login(res.data.access_token, res.data.user_id,res.data.role);
         setStep("success_login");
+        // window.location.reload()
       })
       .catch((error) => {
         setError(error.response.data.message);

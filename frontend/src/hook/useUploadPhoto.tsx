@@ -9,8 +9,6 @@ interface UseSingleUploadPhotoProps {
 }
  const useSingleUploadPhoto = (props: UseSingleUploadPhotoProps = {}) => {
   const { uploadFunction, initialPhoto } = props;
-
-  // Lưu cả File gốc + Image info
   const [file, setFile] = useState<File | null>(null);
   const [photo, setPhoto] = useState<Image | undefined>(initialPhoto);
   const [isUploading, setIsUploading] = useState(false);
@@ -18,7 +16,7 @@ interface UseSingleUploadPhotoProps {
   const addPhoto = useCallback(
     async (newFile: File) => {
       setIsUploading(true);
-      setFile(newFile); // ← LƯU FILE GỐC
+      setFile(newFile);
 
       try {
         const url = uploadFunction
@@ -26,11 +24,10 @@ interface UseSingleUploadPhotoProps {
           : URL.createObjectURL(newFile);
 
         setPhoto({
-          imageID: uuidv4(),
-          url,
-          altText: "",
-          description: "",
-          fileName: newFile.name,
+          image:{
+            url,
+          alt: "",
+          }
         });
       } catch (err) {
         console.error(err);
@@ -42,8 +39,8 @@ interface UseSingleUploadPhotoProps {
   );
 
   const deletePhoto = () => {
-    if (photo?.url.startsWith("blob:")) {
-      URL.revokeObjectURL(photo.url);
+    if (photo?.image.url.startsWith("blob:")) {
+      URL.revokeObjectURL(photo.image.url);
     }
     setFile(null);
     setPhoto(undefined);

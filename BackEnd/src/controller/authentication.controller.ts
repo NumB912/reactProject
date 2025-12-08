@@ -162,6 +162,7 @@ class AuthenticationController {
       });
 
       return res.json({
+        role:login.data.role,
         user_id: login.data.user_id,
         access_token: login.data.access_token,
         expires_in: login.data.expires_in,
@@ -225,29 +226,27 @@ class AuthenticationController {
     }
   }
 
-  static async googleLogin(req: Request, res: Response) {
-    const { tokenId } = req.query;
-    try {
-      const googleLogin = await AuthenticationService.loginWithGoogle(
-        tokenId as string
-      );
-      res.json(googleLogin);
-    } catch (error) {
-      console.error("Lỗi trong quá trình đăng nhập bằng Google:", error);
-      return res.status(500).json({
-        status: 500,
-        message: "Lỗi hệ thống, vui lòng thử lại sau",
-      });
-    }
-  }
+  // static async googleLogin(req: Request, res: Response) {
+  //   const { tokenId } = req.query;
+  //   try {
+  //     const googleLogin = await AuthenticationService.loginWithGoogle(
+  //       tokenId as string
+  //     );
+  //     res.json(googleLogin);
+  //   } catch (error) {
+  //     console.error("Lỗi trong quá trình đăng nhập bằng Google:", error);
+  //     return res.status(500).json({
+  //       status: 500,
+  //       message: "Lỗi hệ thống, vui lòng thử lại sau",
+  //     });
+  //   }
+  // }
 
   static async logout(req: Request, res: Response) {
     try {
 
       const refreshToken = req.cookies.refresh_token;
       const payload = req.user
-
-      console.log(payload)
 
       if (refreshToken && payload) {
         await AuthenticationService.logout(refreshToken, payload);

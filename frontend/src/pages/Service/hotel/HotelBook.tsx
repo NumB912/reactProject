@@ -288,11 +288,11 @@ const HotelBook: React.FC = () => {
             <div className="flex gap-4">
               <img
                 src={
-                  room.imageServiceItems?.[0]?.image?.url
-                    ? `${BASE_IMAGE_URL}${room.imageServiceItems[0].image.url}`
-                    : "https://via.placeholder.com/150"
+                  room.imageServicesItems?.[0]?.image?.url
+                    ? `${BASE_IMAGE_URL}${room.imageServicesItems[0].image.url}`
+                    : "http://localhost:6380/upload/service/default/images.png"
                 }
-                alt={room.name}
+                alt={""}
                 className="w-24 h-24 object-cover rounded-md bg-gray-100"
               />
               <div className="flex-1">

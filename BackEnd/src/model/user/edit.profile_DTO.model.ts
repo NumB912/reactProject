@@ -6,4 +6,6 @@ export interface EditProfileDTO {
   tax_code?:string;
   avatarFile?: Express.Multer.File;
   wallpaperFile?: Express.Multer.File;
+  status?:string,
 }
+

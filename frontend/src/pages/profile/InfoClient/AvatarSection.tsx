@@ -1,11 +1,12 @@
 import React, { ProfilerProps, useState } from "react";
-import { ProfileUser } from "../../../interface/Profile";
+import { profile } from "../../../interface/Profile";
 import { useNavigate } from "react-router";
+import {  formatUrlImg } from "../../../utils/urlFormat";
 
 interface AvatarSectionProp{
     isOpenEditProfileModal:boolean;
     setIsOpenEditProfileModal:(isOpenEditProfileModal:boolean)=>void
-    userProfile:ProfileUser|undefined
+    userProfile:profile|undefined
 }
 
 const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userProfile}:AvatarSectionProp) => {
@@ -16,8 +17,8 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
         <div className="image-avatar w-full flex justify-center items-center p-3">
           <img
             src={
-              userProfile?.avatarPhoto
-                ? userProfile.avatarPhoto.url
+              userProfile?.image?.url
+                ? formatUrlImg(userProfile.image.url)
                 : "https://m.media-amazon.com/images/M/MV5BMzg3N2I3OTAtNThlYy00ZTM0LWFiMjItZmRkNzE3NWQ5MTg2XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_QL75_UX500_CR0,0,500,281_.jpg"
             }
             className="w-[200px] aspect-square object-cover rounded-full border border-gray-300 cursor-pointer bg-center"
@@ -26,8 +27,7 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
         </div>
         <div className="flex justify-between items-center border-b-gray-200">
           <div className="profile-name">
-            <p className="font-bold text-2xl">{userProfile?userProfile.name:""}</p>
-            <p className="text-gray-400 text-[12px] font-semibold">@{userProfile?.userName}</p>
+            <p className="font-bold text-2xl">{userProfile?userProfile.name:"Chưa tồn tại tên người dùng"}</p>
           </div>
           <div className="profile-edit">
             <div className="flex justify-center items-center *:p-2 *:hover:bg-gray-200 *:text-[12px] border border-gray-200 *:cursor-pointer">
@@ -45,53 +45,28 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
             </div>
           </div>
         </div>
-        <div className="flex grow justify-center gap-10 items-center mt-5 *:text-center">
-          <div className="item *:w-full">
-            <p className="font-bold">Following</p>
-            <p className="text-gray-600 font-semibold">{userProfile?.following}</p>
-          </div>
-
-          <div className="item *:w-full">
-            <p className="font-bold">Follower</p>
-            <p className="text-gray-600 font-semibold">{userProfile?.follower}</p>
-          </div>
-
-          <div className="item *:w-full">
-            <p className="font-bold">Reviews</p>
-            <p className="text-gray-600 font-semibold">{userProfile?.reviews}</p>
-          </div>
-        </div>
       </div>
 
       <div className="border border-gray-200 shadow">
         <div className="intro">
-          <p className="font-bold text-sm">Intro</p>
+          <p className="font-bold text-sm">Thông tin người dùng</p>
         </div>
 
         <div className="intro-content flex flex-col">
-          <div className="intro-content_location flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-            <i className="fa-solid fa-location-dot"></i>
-            <p>{userProfile?.introduce.location}</p>
-          </div>
 
           <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
             <i className="fa-solid fa-phone"></i>
-            <p>{userProfile?.introduce.phoneNumber}</p>
-          </div>
-
-          <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer">
-            <i className="fa-solid fa-envelope"></i>
-            <p>{userProfile?.introduce.email}</p>
+            <p>{userProfile?.phone??"Chưa có thông tin"}</p>
           </div>
 
           <div className="intro-content_phone-number flex gap-2 items-center mt-3 text-[13px] cursor-pointer ">
             <i className="fa-solid fa-plus"></i>
-            <p>{userProfile?.introduce.about?userProfile.introduce.about:"Write something to introduce yourself"}</p>
+            <p>{userProfile?.bio?userProfile.bio:"Giới thiệu về bạn"}</p>
           </div>
         </div>
       </div>
 
-      <div className="border border-gray-200 shadow">
+      {/* <div className="border border-gray-200 shadow">
         <div className="intro">
           <p className="font-bold text-sm">Share your travel advice</p>
         </div>
@@ -109,7 +84,7 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
             <p>Share your reviews</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

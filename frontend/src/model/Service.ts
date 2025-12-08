@@ -2,6 +2,7 @@ import { Contact } from "./contact";
 import { Image } from "./image";
 import { location } from "./location";
 import { postPhoto, Review } from "./review";
+import { ServiceItem } from "./service_item";
 
 export type ServiceStatus = 'active' | 'inactive' | 'pending' | 'deleted';
 
@@ -18,5 +19,4 @@ export interface Service {
   price_from: string;
   price_to: string;
   location: location;
-  service_item:
 }

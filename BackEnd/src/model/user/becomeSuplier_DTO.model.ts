@@ -7,8 +7,8 @@ export interface BecomeSupplierDTO {
   lat: number;
   lng: number;
   ward_id: string;
-  account_number: string;
-  account_holder: string;
+  // account_number: string;
+  // account_holder: string;
   tax_code: string;
   tax_files?: Express.Multer.File[];
   business_files?: Express.Multer.File[];

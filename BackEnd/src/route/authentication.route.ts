@@ -12,7 +12,7 @@ router.post('/check-email',AuthenticationController.checkEmail)
 router.post('/login',loginValidationRules,AuthenticationController.login)
 router.post('/reset-password',AuthenticationController.resetPassword)
 router.post('/mail-reset-password',AuthenticationController.mailResetPassword)
-router.post('/google-login',AuthenticationController.googleLogin)
+// router.post('/google-login',AuthenticationController.googleLogin)
 router.post('/logout',authMiddleware,AuthenticationController.logout)
 router.post('/verify-reset-token',AuthenticationController.verifyToken)
 
