@@ -68,6 +68,45 @@ export class ManagementServiceItemController {
     }
   }
 
+  static async getServices(req: Request, res: Response) {
+    try {
+     const payload = req.user;
+      if (!payload || !payload.sub) {
+        return res.status(400).json({
+          message: "Không tồn tại người dùng",
+        });
+      }
+
+      const id = payload.sub;
+
+      const createService = await ManagementServiceItem.getServiceItems(id)
+      return res.status(createService.status).json(createService);
+    } catch (error) {
+      console.error("error", error);
+      return res.json(error);
+    }
+  }
+
+    static async getServiceDetail(req: Request, res: Response) {
+    try {
+     const payload = req.user;
+      if (!payload || !payload.sub) {
+        return res.status(400).json({
+          message: "Không tồn tại người dùng",
+        });
+      }
+
+      const id = payload.sub;
+
+      const createService = await ManagementServiceItem.getServiceItems(id)
+      return res.status(createService.status).json(createService);
+    } catch (error) {
+      console.error("error", error);
+      return res.json(error);
+    }
+  }
+
+
   // static async ChangeAmenity(req: Request, res: Response) {
   //   const { service_id, change_amenity } = req.body;
 

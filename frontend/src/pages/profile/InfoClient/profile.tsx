@@ -18,14 +18,18 @@ const InfoClient = () => {
   const nav: Tab[] = [
     {
       navigationID: "4",
-      contentNavigation: "Favorite",
+      contentNavigation: "Yêu thích",
       urlNavigation: `/profile/Favorites`,
     },
     {
       navigationID: "5",
       contentNavigation: "Booking",
       urlNavigation: `/profile/bookings`,
-    },
+    },{
+      navigationID: "5",
+      contentNavigation: "Tài liệu",
+      urlNavigation: `/profile/become_supplier`,
+    }
   ];
 
   useEffect(() => {

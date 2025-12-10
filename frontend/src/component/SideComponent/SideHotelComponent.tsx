@@ -52,7 +52,8 @@ const SideHotelComponent = () => {
       api
         .get<{ amenity: AmenityHotel[] }>("/amenity-service")
         .then((res) => {
-          setAmenitiesList(res.data.amenity);
+          console.log(res)
+          setAmenitiesList(res.data.data);
         })
         .catch((err) => {
           console.error("Failed to load amenities:", err);
@@ -107,7 +108,7 @@ const SideHotelComponent = () => {
       <SideContentComponent label="Amenities Hotel">
         <FormControl component="fieldset">
           <FormGroup>
-            {amenitiesList.map((amenity) => (
+            {amenitiesList?.map((amenity) => (
               <FormControlLabel
                 key={amenity.id}
                 control={

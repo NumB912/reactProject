@@ -6,7 +6,7 @@ export const RoleMiddleware = (...allowedRoles: Role[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = req.user?.sub;
-
+    
       if (!userId) {
         return res.status(401).json({
           message: "Không tìm thấy thông tin người dùng (Unauthorized)",
@@ -23,6 +23,7 @@ export const RoleMiddleware = (...allowedRoles: Role[]) => {
           message: "Người dùng không tồn tại",
         });
       }
+
 
       if (!allowedRoles.includes(user.role_id)) {
         return res.status(403).json({

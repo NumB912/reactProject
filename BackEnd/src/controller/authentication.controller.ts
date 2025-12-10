@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
-import { AuthenticationService } from "@/service/authentication.service.js";
+import { AuthenticationService } from "@/service/authentication.service";
 import { OtpService } from "@/service/otp.service";
 import jwt from "jsonwebtoken";
-import redisClient from "@/config/redis.config";
+import { getRedis } from "@/config/redis.config";
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 class AuthenticationController {
@@ -110,7 +110,7 @@ class AuthenticationController {
         { expiresIn: "5m" }
       );
 
-      const redis = await redisClient.set(
+      const redis = await getRedis().set(
         `token_register:${email}`,
         token_register
       );
@@ -136,6 +136,8 @@ class AuthenticationController {
         message: "Email không hợp lệ",
       });
     }
+
+    
     if (!password || typeof password !== "string" || !password.trim()) {
       return res.status(400).json({
         status: 400,
@@ -144,9 +146,9 @@ class AuthenticationController {
     }
 
     try {
-      const login = await AuthenticationService.login(email, password);
+      const login = await AuthenticationService.login(email.trim().toLowerCase(), password);
 
-      if (!login.success) {
+      if (!login || !login.success) {
         return res.status(login.status).json({
           status: login.status,
           message: login.message,
@@ -161,7 +163,7 @@ class AuthenticationController {
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
-      return res.json({
+      return res.status(login.status).json({
         role:login.data.role,
         user_id: login.data.user_id,
         access_token: login.data.access_token,
@@ -171,7 +173,6 @@ class AuthenticationController {
         success: login.success,
       });
     } catch (error) {
-      console.error("Lỗi đăng nhập:", error);
       return res.status(500).json({
         status: 500,
         message: "Lỗi hệ thống, vui lòng thử lại sau",
@@ -259,8 +260,9 @@ class AuthenticationController {
         path: "/",
       });
 
-      return res.json({
+      return res.status(200).json({
         message: "Đăng xuất thành công",
+        status:200,
         success: true,
       });
     } catch (error: any) {
@@ -278,6 +280,7 @@ class AuthenticationController {
       }
 
       return res.status(500).json({
+        status:500,
         message: "Lỗi hệ thống khi đăng xuất",
         error: error.message || "Unknown error",
       });

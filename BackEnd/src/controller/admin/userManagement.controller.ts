@@ -6,7 +6,6 @@ class ManagementUserController {
   static async updateUser(req: Request, res: Response) {
     try {
       const { status_user, id, name, phone, bio } = req.body;
-      console.log(status_user,id,name)
       if (!status_user || !id) {
         return res.status(400).json({
           message: "Loi khong co thong tin",

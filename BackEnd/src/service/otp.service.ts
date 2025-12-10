@@ -1,9 +1,8 @@
 import { EmailService } from "./email.Service";
-import redisClient from "@/config/redis.config";
+import { getRedis }  from "@/config/redis.config"; "@/config/redis.config";
 import Jwt from "jsonwebtoken";
 
 const ACCESS_TOKEN_EXPIRES = process.env.JWT_SECRET
-
 export class OtpService {
   static generateOtp() {
     return Math.floor(100000 + Math.random() * 900000).toString();
@@ -15,10 +14,12 @@ export class OtpService {
 ): Promise<
   | { email: string; status: number; success: boolean ,message:string}
   | { success: boolean; message: string; status: number }
-> {
-  const stored = await redisClient.hGet(`otp:${email}`, "otp");
+> { 
 
-  const attempts = await redisClient.get(`opt-attempts:${email}`);
+
+const stored = await getRedis().hGet(`otp:${email.toLowerCase()}`, 'otp');
+  console.log(stored)
+  const attempts = await getRedis().get(`opt-attempts:${email.toLowerCase()}`);
 
   if (!stored) {
     return {
@@ -27,8 +28,6 @@ export class OtpService {
       status: 400,
     };
   }
-
-
 
   if((attempts && Number(attempts) >= 5)){
     return {
@@ -39,7 +38,7 @@ export class OtpService {
   }
 
   if (otp !== stored) {
-    await redisClient.incr(`opt-attempts:${email}`);
+    await getRedis().incr(`opt-attempts:${email.toLowerCase()}`);
 
     return {
       success: false,
@@ -48,8 +47,8 @@ export class OtpService {
     };
   }
 
-  await redisClient.del(`otp:${email}`);
-  await redisClient.del(`opt-attempts:${email}`);
+  await getRedis().del(`otp:${email}`);
+  await getRedis().del(`opt-attempts:${email}`);
 
   return {
     message:"Thành công",
@@ -60,14 +59,14 @@ export class OtpService {
 }
 
   static async storeRedisOtp(email: string, otp: string) {
-    await redisClient.del(`otp:${email}`);
-    await redisClient.del(`opt-attempts:${email}`)
-    await redisClient.hSet(`otp:${email}`, {
+    await getRedis().del(`otp:${email}`);
+    await getRedis().del(`opt-attempts:${email}`)
+    await getRedis().hSet(`otp:${email}`, {
       otp: otp,
       create_at: Date.now().toString(),
     });
-    await redisClient.incr(`opt-attempts:${email}`);
-    await redisClient.expire(`otp:${email}`, 300);
+    await getRedis().incr(`opt-attempts:${email}`);
+    await getRedis().expire(`otp:${email}`, 120);
   }
 
   static async sendOtp(
@@ -79,6 +78,7 @@ export class OtpService {
 
     try {
       const otp = this.generateOtp();
+      console.log(otp)
       await this.storeRedisOtp(email, otp);
       await this.sendOtpEmail(email, otp);
       return { success: true, message: "Đã gửi OTP thành công" };

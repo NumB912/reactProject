@@ -37,7 +37,7 @@ const AvatarSection = ({isOpenEditProfileModal,setIsOpenEditProfileModal,userPro
                   setIsOpenEditProfileModal(true);
                 }}
               >
-                Edit profile
+                Chỉnh sửa
               </button>
               <button>
                 <i className="fa-solid fa-gear"></i>{" "}

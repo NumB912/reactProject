@@ -17,9 +17,17 @@ export class AmenityService {
                 }
             })
 
-            return amenityService
+            return {
+                status:200,
+                data:amenityService,
+                message:"Lấy dữ liệu thành công"
+            }
         }catch(error){
             console.error(error)
+               return {
+                status:500,
+                message:"Thát bại"
+            }
         }
 
     }

@@ -15,6 +15,8 @@ export class ManagementAmenityHotel {
     | ErrorResponse
   > {
     try {
+      
+
       let insert_amenity = 0;
       let delete_amenity = 0;
 
@@ -23,15 +25,14 @@ export class ManagementAmenityHotel {
         select: { amenity_id: true },
       });
 
-      console.log(existingRecords);
-      console.log(change_amenity);
 
       const existingAmenityIds = existingRecords.map(
         (record) => record.amenity_id
       );
 
-      const incomingAmenityIds = change_amenity;
 
+      const incomingAmenityIds = change_amenity;
+      
       const toDelete = existingAmenityIds.filter(
         (id) => !incomingAmenityIds.includes(id)
       );
@@ -47,6 +48,9 @@ export class ManagementAmenityHotel {
           },
         });
       }
+
+
+      console.log(toInsert)
 
       if (toInsert.length > 0) {
 

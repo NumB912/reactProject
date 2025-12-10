@@ -3,6 +3,7 @@ import api from "../../../../../API/api";
 import { Province, Ward } from "../../../../store";
 import Select from "react-select";
 import { Upload, X, FileText, CheckCircle, AlertCircle } from "lucide-react";
+import { useNavigate } from "react-router";
 
 interface DocumentFile {
   file: File;
@@ -29,7 +30,7 @@ export default function BecomeSupplierPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [progress, setProgress] = useState(0);
-
+  const navigate = useNavigate()
   const validate = () => {
     const newErrors: Record<string, string> = {};
     
@@ -92,7 +93,7 @@ export default function BecomeSupplierPage() {
     if (!files) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024;
     const maxCount = 4;
 
     const newFiles: DocumentFile[] = [];
@@ -198,17 +199,22 @@ export default function BecomeSupplierPage() {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
           setProgress(percentCompleted);
         }
+      }).then((res)=>{
+              setSubmitMessage({
+        type: 'success',
+        text: 'Đã gửi yêu cầu thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.'
+      });
+      navigate("/profile")
+      }).catch(error=>{
+         setSubmitMessage({
+        type: 'error',
+        text: 'Chưa thể gửi yêu cầu'
+      });
       });
 
       clearInterval(progressInterval);
       setProgress(100);
-
-      setSubmitMessage({
-        type: 'success',
-        text: 'Đã gửi yêu cầu thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.'
-      });
-
-      // Reset form after successful submission
+    
       setTimeout(() => {
         resetForm();
       }, 3000);

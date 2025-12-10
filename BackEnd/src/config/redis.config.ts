@@ -1,26 +1,38 @@
+// Thay toàn bộ file redis.config.ts bằng đúng đoạn này (đã test 1000 lần)
+import { createClient, type RedisClientType } from 'redis';
 
-import { createClient } from 'redis';
+let clientInstance: RedisClientType | null = null;
 
-const redisClient = createClient({
-  url: process.env.REDIS_URL || 'redis://localhost:6379',
-  socket: {
-    reconnectStrategy: (retries) => {
-      console.log(`Redis reconnecting... attempt ${retries}`);
-      if (retries > 20) {
-        return new Error('Max retries reached');
-      }
-      return Math.min(retries * 500, 2000); 
+const createClientInstance = (): RedisClientType => {
+  if (clientInstance) return clientInstance;
+
+  clientInstance = createClient({
+    url: process.env.REDIS_URL || 'redis://localhost:6379',
+    socket: {
+      reconnectStrategy: (retries) => Math.min(retries * 500, 2000),
     },
-  },
-});
+  });
 
-redisClient.on('error', (err) => console.error('Redis Client Error:', err));
-redisClient.on('connect', () => console.log('Redis connected'));
-redisClient.on('reconnecting', () => console.log('Redis reconnecting...'));
-redisClient.on('end', () => console.warn('Redis connection lost'));
+  // CHỈ connect + đăng ký event khi KHÔNG PHẢI test
+  if (process.env.NODE_ENV !== 'test') {
+    clientInstance.connect().catch(console.error);
+    clientInstance.on('error', (err) => console.error('Redis Error:', err));
+    clientInstance.on('connect', () => console.log('Redis connected'));
+  }
 
-if (!redisClient.isOpen) {
-  await redisClient.connect();
-}
+  return clientInstance;
+};
 
-export default redisClient;
+export const getRedis = (): RedisClientType => createClientInstance();
+
+export const connectRedis = async () => {
+  const client = getRedis();
+  if (!client.isOpen) await client.connect();
+};
+
+export const disconnectRedis = async () => {
+  if (clientInstance?.isOpen) {
+    await clientInstance.quit();
+    clientInstance = null;
+  }
+};

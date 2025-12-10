@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import UserController from '../controller/user.controller.js'
+import UserController from '../controller/user.controller'
 import multer from 'multer';
-import { handleMulterError } from '@/middleware/handleMutalError.middleware.js';
-import BookingController from '@/controller/booking.controller.js';
-import { authMiddleware } from '@/middleware/auth.token.middleware.js';
+import { handleMulterError } from '@/middleware/handleMutalError.middleware';
+import BookingController from '@/controller/booking.controller';
+import { authMiddleware } from '@/middleware/auth.token.middleware';
 const router = Router()
 const upload = multer({ dest: 'uploads/' });
 router.get('/',authMiddleware, UserController.getUsers) 
@@ -16,7 +16,7 @@ router.post('/become-supplier',upload.fields([{
 },{
     name:'business_file',maxCount:4
 }]),handleMulterError,authMiddleware,UserController.becomeSupplier)
-
+router.get('/get_request',authMiddleware,UserController.getRequest)
 router.post('/favorite',authMiddleware,UserController.handleFavorite)
 router.post('/booking',authMiddleware,BookingController.bookingService)
 router.get('/detail',authMiddleware,UserController.getUserOne)

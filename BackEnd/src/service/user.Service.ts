@@ -1,16 +1,16 @@
-import prisma from "../db.js";
-import FileService from "./file.service.js";
-import { ServiceType } from "@/enum/service/type.service.enum.js";
-import { StatusBecomeSupplier } from "@/enum/status.become.supplier.enum.js";
-import type { EditProfileDTO } from "@/model/user/edit.profile_DTO.model.js";
-import type { BecomeSupplierDTO } from "@/model/user/becomeSuplier_DTO.model.js";
-import factoryServiceCreator from "./factory/factory.service.creator.js";
-import { EmailService } from "./email.Service.js";
-import { isValidUUID } from "@/utils/isvalidateUuid.utils.js";
+import prisma from "../db";
+import FileService from "./file.service";
+import { ServiceType } from "@/enum/service/type.service.enum";
+import { StatusBecomeSupplier } from "@/enum/status.become.supplier.enum";
+import type { EditProfileDTO } from "@/model/user/edit.profile_DTO.model";
+import type { BecomeSupplierDTO } from "@/model/user/becomeSuplier_DTO.model";
+import factoryServiceCreator from "./factory/factory.service.creator";
+import { EmailService } from "./email.Service";
+import { isValidUUID } from "@/utils/isvalidateUuid.utils";
 import { error } from "console";
-import { StatusType } from "@/enum/service/status.service.enum.js";
+import { StatusType } from "@/enum/service/status.service.enum";
 import type { Service } from "@prisma/client";
-import type { SuccessResponse, ErrorResponse } from "@/model/api.model.js";
+import type { SuccessResponse, ErrorResponse } from "@/model/api.model";
 
 export class userService {
 static async getAllUsers(
@@ -139,6 +139,7 @@ static async getAllUsers(
         bio: profile.bio,
       };
 
+
       const avatarFile = profile.avatarFile;
       const wallpaperFile = profile.wallpaperFile;
 
@@ -256,6 +257,20 @@ static async becomeSupplier(
   try {
     let checkIsDone = {} as any;
 
+  const find = await prisma.request_become_supplier.findUnique({
+        where:{
+          user_id:becomeSupplier.user_id
+        }
+      })
+
+      if(find){
+        return {
+          success:false,
+          status:400,
+          message:"Người dùng đã tạo rồi không được tạo lại nữa",
+        }
+      }
+
     const transaction = await prisma.$transaction(async (tx) => {
       const locationCreated = await tx.location.create({
         data: {
@@ -353,6 +368,30 @@ static async becomeSupplier(
     console.error("error", error);
     throw new Error("Không thể gửi yêu cầu vui lòng thử lại");
   }
+}
+
+static async getRequestSupplier(id:string){
+    try{
+
+      const getRequest = await prisma.request_become_supplier.findUnique({
+        where:{
+          user_id:id
+        }
+      })
+
+      return {
+        success:true,
+        data:getRequest,
+        message:"Lấy thành công thông tin người dùng",
+        status:200,
+      }
+    }catch(error){
+      return {
+        success: false,
+        message: "Lỗi server",
+        status: 500,
+      };
+    }
 }
 
   static async handleFavorite(

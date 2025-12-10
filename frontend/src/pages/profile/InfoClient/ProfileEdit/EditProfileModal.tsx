@@ -115,7 +115,7 @@ const EditProfileModal = ({
           currentWallpaper={profile.wallpaper}
           onApply={handleWallpaperChange}
         /> */}
-          <h2 className="text-2xl font-bold mb-6 text-center">Edit Profile</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Chỉnh sửa</h2>
 
           <form
             onSubmit={handleSaveProfile}
@@ -134,7 +134,7 @@ const EditProfileModal = ({
                 <div className="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition">
                   <i className="fa-solid fa-camera text-4xl mb-2" />
-                  <p className="font-medium">Change Photo</p>
+                  <p className="font-medium">Thay hình </p>
                 </div>
               </div>
             </div>
@@ -142,7 +142,7 @@ const EditProfileModal = ({
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block font-semibold text-xs mb-1 text-gray-700">
-                  Name
+                  Tên
                 </label>
                 <input
                   type="text"
@@ -151,7 +151,7 @@ const EditProfileModal = ({
                   onChange={(e)=>{
                     setName(e.target.value)
                   }}
-                  placeholder="Your name"
+                  placeholder="Tên"
                   className={`w-full px-3 py-2 border rounded-md text-sm transition-colors
                     ${errorEdit.nameErr ? "border-red-500" : "border-gray-300"} 
                     focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -165,7 +165,7 @@ const EditProfileModal = ({
 
               <div>
                 <label className="block font-semibold text-xs mb-1 text-gray-700">
-                  Phone number
+                  Số điện thoại
                 </label>
                 <div className="relative">
                   <i className="fa-solid fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
@@ -195,12 +195,12 @@ const EditProfileModal = ({
 
               <div className="md:col-span-2">
                 <label className="block font-semibold text-xs mb-1 text-gray-700">
-                  About me
+                  Thông tin về tôi
                 </label>
                 <textarea
                   name="introduce.about"
                   value={bio|| ""}
-                  placeholder="Tell us about yourself..."
+                  placeholder="Về bản thân bạn"
                   onChange={(e)=>{
                     setBio(e.target.value)
                   }}
@@ -213,14 +213,14 @@ const EditProfileModal = ({
 
             <div className="md:col-span-2 flex justify-end gap-4 pt-4">
               <Button onClick={() => setIsOpenEditProfileModal(false)}>
-                Cancel
+                Hủy
               </Button>
               <Button
                 variant="contained"
                 type="submit"
                 className="bg-black hover:bg-gray-800"
               >
-                Save Changes
+                Thay đổi
               </Button>
             </div>
           </form>

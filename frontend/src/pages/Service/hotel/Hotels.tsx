@@ -89,7 +89,6 @@ const Hotels = () => {
 
 
   const handleSubmit = async () => {
-    console.log(dateSelectedCheckOut)
     await api
       .get("/service", {
         params: {
@@ -114,6 +113,8 @@ const Hotels = () => {
       .finally(() => {});
     navigate(`/hotels?search=${searchText}`);
   };
+
+  console.log(hotels)
 
   return (
     <div className="container grid grid-cols-1 lg:grid-cols-[250px_1fr] justify-center gap-5 mb-40">

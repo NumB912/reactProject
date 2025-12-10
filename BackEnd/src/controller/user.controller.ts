@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
-import { userService } from "../service/user.Service.js";
-import prisma from "@/db.js";
+import { userService } from "../service/user.Service";
 
 class UserController {
   static async getUsers(req: Request, res: Response) {
@@ -106,6 +105,8 @@ class UserController {
         | Express.Multer.File
         | undefined;
 
+
+
       const updatedProfile = await userService.editProfile({
         id: id,
         name: name,
@@ -177,9 +178,41 @@ class UserController {
         business_files: files.business_file,
       });
 
-      return res.json(result);
+      return res.status(result.status).json(result);
     } catch (error) {
-      console.error("Lỗi ", error);
+      console.log("Lỗi ", error);
+      return res.status(500).json({
+        success: false,
+        message: "Lỗi server",
+      });
+    }
+  }
+
+    static async getRequest(req: Request, res: Response) {
+    try {
+      const payload = req.user;
+      if (!payload || !payload.sub) {
+        return res.status(400).json({
+          message: "Không tồn tại người dùng",
+        });
+      }
+
+      const id = payload.sub;
+
+
+      if(!id){
+        return res.status(400).json({
+          message: "Không tồn tại người dùng",
+        });
+      }
+
+      const result = await userService.getRequestSupplier(
+        id
+      );
+
+      return res.status(result.status).json(result);
+    } catch (error) {
+      console.log("Lỗi ", error);
       return res.status(500).json({
         success: false,
         message: "Lỗi server",

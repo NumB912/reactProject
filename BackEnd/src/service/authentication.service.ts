@@ -1,19 +1,17 @@
-import prisma from "../db.js";
+import prisma from "../db";
 import bcrypt from "bcryptjs";
-import { EmailService } from "./email.Service.js";
-import { compareHash, hash, hashToken } from "@/utils/hash.utils.js";
-import { Role } from "@/enum/role.enum.js";
-import redisClient from "@/config/redis.config.js";
-import jwt from "jsonwebtoken";
+import { EmailService } from "./email.Service";
+import { compareHash, hash, hashToken } from "@/utils/hash.utils";
+import { Role } from "@/enum/role.enum";
+import { getRedis } from "@/config/redis.config";
 import { randomUUID } from "crypto";
-import { OAuth2Client } from "google-auth-library";
-import type { ErrorResponse, SuccessResponse } from "@/model/api.model.js";
+import type { ErrorResponse, SuccessResponse } from "@/model/api.model";
 import {
   createAccessToken,
   createRefreshToken,
   verifyRefreshToken,
-} from "@/utils/token.js";
-import { status } from "@/enum/user.enum.js";
+} from "@/utils/token";
+import { status } from "@/enum/user.enum";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 export class AuthenticationService {
@@ -22,7 +20,7 @@ export class AuthenticationService {
     password: string
   ): Promise<
     | SuccessResponse<{
-      role:string
+        role: string;
         user_id: String;
         access_token: String;
         refresh_token: String;
@@ -30,23 +28,48 @@ export class AuthenticationService {
       }>
     | ErrorResponse
   > {
-    const user = await prisma.person.findUnique({
-      where: { email: email },
-      select: { id: true, password: true,role:{select:{
-        name:true,
-      }} },
-    });
     try {
-      if (!user || !(await bcrypt.compare(password, user.password))) {
+      if (!email) {
         return {
-          status: 401,
+          status: 400,
+          message: "Email hoặc mật khẩu không đúng",
+          success: false,
+        };
+      }
+
+      const user = await prisma.person.findUnique({
+        where: { email: email },
+        select: {
+          id: true,
+          password: true,
+          role: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      let isPasswordValid = false;
+
+      if (user && user.password) {
+        isPasswordValid = await bcrypt.compare(password, user.password);
+      } else {
+        await bcrypt.compare(
+          password,
+          "$2a$10$invalidhashforsecuritypurpose12345678901234567890"
+        );
+      }
+      if (!user || !isPasswordValid) {
+        return {
+          status: 400,
           message: "Email hoặc mật khẩu không đúng",
           success: false,
         };
       }
 
       const userId = user.id.toString();
-      const role = user.role.name.toString()
+      const role = user.role.name.toString();
       const accessJti = randomUUID();
 
       const accessToken = createAccessToken({
@@ -55,7 +78,7 @@ export class AuthenticationService {
         type: "access",
       });
 
-      await redisClient.set(`at:jti:${accessJti}`, userId, {
+      await getRedis().set(`at:jti:${accessJti}`, userId, {
         EX: 15 * 60,
       });
 
@@ -78,7 +101,7 @@ export class AuthenticationService {
 
       return {
         data: {
-          role:role,
+          role: role,
           user_id: userId,
           access_token: accessToken,
           refresh_token: refreshToken,
@@ -89,7 +112,6 @@ export class AuthenticationService {
         message: "Đăng nhập thành công",
       };
     } catch (error) {
-      console.error("error", error);
       return {
         status: 401,
         message: "Email hoặc mật khẩu không đúng",
@@ -102,30 +124,32 @@ export class AuthenticationService {
     try {
       const payload = user;
       const key_load = `at:jti:${payload.jti}`;
-      await redisClient.del(key_load);
+      await getRedis().del(key_load);
+
+
       const deleteRefeshToken = await prisma.refreshToken.deleteMany({
         where: {
           tokenHash: refresh_token,
         },
       });
 
-      if(!deleteRefeshToken){
-          return {
-        status:500,
-        success:false,
-        message: "Không thành công",
-      };
+      if (!deleteRefeshToken) {
+        return {
+          status: 500,
+          success: false,
+          message: "Không thành công",
+        };
       }
 
       return {
-        status:200,
-        success:true,
+        status: 200,
+        success: true,
         message: "Thành công",
       };
     } catch (error) {
       return {
-       status:500,
-        success:false,
+        status: 500,
+        success: false,
         message: "Không thành công",
       };
     }
@@ -241,7 +265,7 @@ export class AuthenticationService {
     | { success: false; message: string; status: number }
   > {
     try {
-      const token = await redisClient.get(`token_register:${email}`);
+      const token = await getRedis().get(`token_register:${email}`);
 
       if (!token) {
         return {
@@ -277,7 +301,7 @@ export class AuthenticationService {
           phone: trimmedPhone,
           role_id: Role.ROLE_USER,
           create_at: new Date(),
-          status:status.ACTIVE,
+          status: status.ACTIVE,
         },
         select: {
           id: true,
@@ -325,7 +349,7 @@ export class AuthenticationService {
   ): Promise<{ success: boolean; message: string; status: number }> {
     try {
       const resetToken = token;
-      const userId = await redisClient.get(`pwd-reset:${resetToken}`);
+      const userId = await getRedis().get(`pwd-reset:${resetToken}`);
       if (!userId) {
         return {
           success: false,
@@ -371,7 +395,7 @@ export class AuthenticationService {
         };
       }
 
-      const deleteToken = await redisClient.del(`pwd-reset:${resetToken}`);
+      const deleteToken = await getRedis().del(`pwd-reset:${resetToken}`);
 
       return {
         success: true,
@@ -401,7 +425,7 @@ export class AuthenticationService {
 
       const resetToken = createAccessToken({ email: email, user_id: user.id });
       const redisKey = `pwd-reset:${resetToken}`;
-      await redisClient.set(redisKey, user.id, {
+      await getRedis().set(redisKey, user.id, {
         EX: 15 * 60,
       });
 
@@ -427,7 +451,7 @@ export class AuthenticationService {
 
   static async verifyTokenResetPassword(token: string) {
     try {
-      const tokenVerify = await redisClient.get(`pwd-reset:${token}`);
+      const tokenVerify = await getRedis().get(`pwd-reset:${token}`);
       if (!tokenVerify) {
         return {
           message: "Không tồn tại token hoặc hết hạn",
@@ -451,8 +475,6 @@ export class AuthenticationService {
   }
   static async refreshAccessToken(refresh_token: string) {
     try {
-
-
       if (!refresh_token) {
         return {
           message: "Lỗi",
@@ -461,20 +483,20 @@ export class AuthenticationService {
       }
 
       const id = await prisma.refreshToken.findUnique({
-        where:{
-          tokenHash:refresh_token,
+        where: {
+          tokenHash: refresh_token,
         },
-        select:{
-          person:{
-            select:{
-              email:true,
-              id:true,
-            }
-          }
-        }
-      })
+        select: {
+          person: {
+            select: {
+              email: true,
+              id: true,
+            },
+          },
+        },
+      });
 
-      if(!id){
+      if (!id) {
         return {
           message: "Lỗi khong ton tai refesh token",
           success: false,
@@ -496,7 +518,7 @@ export class AuthenticationService {
           message: "Lỗi trong quá trình thực thi",
         };
       }
-      const userId = await id.person.id
+      const userId = await id.person.id;
       const accessJti = randomUUID();
       const accessToken = createAccessToken({
         sub: userId,

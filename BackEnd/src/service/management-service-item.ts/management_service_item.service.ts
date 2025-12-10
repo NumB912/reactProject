@@ -171,4 +171,134 @@ export class ManagementServiceItem {
       },
     };
   }
+
+    static async getServiceItems(id: string) {
+    try {
+      const getService = await prisma.service.findMany({
+        where: {
+          supplier_id: id,
+        },
+        select: {
+          id:true,
+          service_name: true,
+          status_id:true,
+          status_service:{
+            select:{
+              statusService:true,
+            }
+          },
+          supplier:{
+            select:{
+              name:true,
+              Request_become_supplier:{
+                select:{
+                  company_name:true,
+                }
+              }
+            }
+          },
+          location: {
+            select: {
+              location: true,
+              ward: {
+                select: {
+                  fullName: true,
+                  code: true,
+                  province: {
+                    select: {
+                      fullName: true,
+                      code: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          serviceItems:{
+            select:{
+              _count:true,
+            }
+          }
+        },
+      });
+      
+
+      return {
+        data: getService,
+        message: "Thành công",
+        status: 200,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: 500,
+        message: "Lỗi không thực thi được",
+      };
+    }
+  }
+
+      static async getServiceItemDetail(id: string) {
+    try {
+      const getService = await prisma.service.findMany({
+        where: {
+          supplier_id: id,
+        },
+        select: {
+          id:true,
+          service_name: true,
+          status_id:true,
+          status_service:{
+            select:{
+              statusService:true,
+            }
+          },
+          supplier:{
+            select:{
+              name:true,
+              Request_become_supplier:{
+                select:{
+                  company_name:true,
+                }
+              }
+            }
+          },
+          location: {
+            select: {
+              location: true,
+              ward: {
+                select: {
+                  fullName: true,
+                  code: true,
+                  province: {
+                    select: {
+                      fullName: true,
+                      code: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          serviceItems:{
+            select:{
+              _count:true,
+            }
+          }
+        },
+      });
+      
+
+      return {
+        data: getService,
+        message: "Thành công",
+        status: 200,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: 500,
+        message: "Lỗi không thực thi được",
+      };
+    }
+  }
 }

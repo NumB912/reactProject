@@ -8,8 +8,8 @@ class AmenityServiceController {
 
             const amenity = await AmenityService.getAmenityService()
 
-            res.status(200).json({
-                amenity
+            res.status(amenity.status).json({
+                ...amenity
             })
 
         }catch(error){

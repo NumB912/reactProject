@@ -41,6 +41,11 @@ import UserManagement from "../pages/admin/adminUserManagement";
 import ServiceManagement from "../pages/admin/serviceManagement";
 import ApprovalManagement from "../pages/admin/aproveBecomeSupplier";
 import Dashboard from "../pages/admin/dashboard";
+import Document_become_supplier from "../pages/profile/InfoClient/document_become_supplier";
+import { SupplierDashboard } from "../component/supplier/supplier";
+import SupplierLayout from "../layout/supplier/layout";
+import ServiceManagementSupplier from "../pages/supplier/serviceManagement";
+import ServiceItemManagement from "../pages/supplier/serviceItemManagement";
 
 
 
@@ -73,7 +78,7 @@ const router = createBrowserRouter([
       { path: "Tours/:tourID/Booking/payment", element: <Payment_Tour /> },
 
       {
-        path: "Become_supplier",
+        path: "become-supplier",
         element: <Become_supplier />,
       },
       {
@@ -83,6 +88,7 @@ const router = createBrowserRouter([
           { index: true, element: <Booking /> },
           { path: "favorites", element: <Favorites /> },
           { path: "bookings", element: <Booking /> },
+           { path: "become_supplier", element: <Document_become_supplier /> },
         ],
       },
       { path: "reset-password", element: <ResetPasswordPage /> },
@@ -103,6 +109,16 @@ const router = createBrowserRouter([
       { path: "suppliers", element: <SupplierManagement /> },
       { path: "services", element: <ServiceManagement /> },
       { path: "approvals", element: <ApprovalManagement /> },
+    ],
+  },
+
+     {
+    path: "/supplier",
+    element: <SupplierLayout><SupplierDashboard /></SupplierLayout>,
+    children: [
+       { index: true, element: <Navigate to="/supplier/services" /> },
+      { path: "services", element: <ServiceManagementSupplier /> },
+      { path: "serviceItems", element: <ServiceItemManagement /> },
     ],
   },
 
